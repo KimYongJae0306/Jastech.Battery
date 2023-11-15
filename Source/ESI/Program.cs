@@ -42,7 +42,6 @@ namespace ESI
                 CameraMil.BufferPoolCount = 400;
                 //SystemHelper.StartChecker(@"D:\ATT_Memory_Test.txt");
                 //AppsConfig.Instance().UnitCount = 1;
-                List<double> gg = new List<double>();
         
                 ConfigSet.Instance().PathConfigCreated += ConfigSet_PathConfigCreated;
                 ConfigSet.Instance().OperationConfigCreated += ConfigSet_OperationConfigCreated;
