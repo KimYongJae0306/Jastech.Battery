@@ -59,7 +59,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppsInspModel.cs" />
+    <Compile Include="Data\AppsEnum.cs" />
+    <Compile Include="Data\SliceInspResult.cs" />
+    <Compile Include="Data\MaterialInfo.cs" />
+    <Compile Include="Data\TeachingData.cs" />
+    <Compile Include="ModelManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisionTool\AlgorithmTool.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Structure\Jastech.Framework.Structure.csproj">
+      <Project>{DCFF7B48-8DF8-4ED9-9F0F-F11C2CCB7547}</Project>
+      <Name>Jastech.Framework.Structure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

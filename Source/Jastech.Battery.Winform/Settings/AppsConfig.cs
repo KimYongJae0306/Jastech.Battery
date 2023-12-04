@@ -1,5 +1,6 @@
 ﻿using Jastech.Framework.Config;
 using Jastech.Framework.Util.Helper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,8 @@ namespace Jastech.Battery.Winform.Settings
         #endregion
 
         #region 속성
+        [JsonProperty]
+        public string MachineName { get; set; } = "ESI";
         #endregion
 
         #region 이벤트

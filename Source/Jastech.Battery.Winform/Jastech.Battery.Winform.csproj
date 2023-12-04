@@ -51,6 +51,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,10 +61,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ImageBuffer.cs" />
     <Compile Include="LineCamera.cs" />
     <Compile Include="LineCameraManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AppsConfig.cs" />
+    <Compile Include="UI\Forms\InspectionTeachingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\InspectionTeachingForm.Designer.cs">
+      <DependentUpon>InspectionTeachingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,14 +83,52 @@
       <Project>{F43DDCCA-E65C-4131-B789-DB4109E91B68}</Project>
       <Name>Jastech.Framework.Device</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Imaging\Jastech.Framework.Imaging.csproj">
+      <Project>{2380DA0F-851A-4430-9A43-E7B2DEEE29F2}</Project>
+      <Name>Jastech.Framework.Imaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Structure\Jastech.Framework.Structure.csproj">
+      <Project>{DCFF7B48-8DF8-4ED9-9F0F-F11C2CCB7547}</Project>
+      <Name>Jastech.Framework.Structure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Util\Jastech.Framework.Util.csproj">
       <Project>{07EF86CC-AC6A-454E-B12B-EB63454A1DCA}</Project>
       <Name>Jastech.Framework.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Winform\Jastech.Framework.Winform.csproj">
+      <Project>{D46C7263-535A-4BF9-AD14-5183EDE0A984}</Project>
+      <Name>Jastech.Framework.Winform</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework\Jastech.Framework.csproj">
       <Project>{28E92A79-C5AB-4B93-9ABA-A9F40DE4DBCE}</Project>
       <Name>Jastech.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Jastech.Battery.Structure\Jastech.Battery.Structure.csproj">
+      <Project>{9CC98476-12BD-4B94-B3FD-BC6303779DAC}</Project>
+      <Name>Jastech.Battery.Structure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Emgu.CV">
+      <Version>4.7.0.5276</Version>
+    </PackageReference>
+    <PackageReference Include="Emgu.CV.Bitmap">
+      <Version>4.7.0.5276</Version>
+    </PackageReference>
+    <PackageReference Include="Emgu.CV.runtime.windows">
+      <Version>4.7.0.5276</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Controls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\Forms\InspectionTeachingForm.resx">
+      <DependentUpon>InspectionTeachingForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

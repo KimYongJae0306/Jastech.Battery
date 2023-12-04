@@ -31,41 +31,41 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tlpMainForm = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblLightStateText = new System.Windows.Forms.Label();
+            this.lblBottomCamState = new System.Windows.Forms.Label();
+            this.lblTopCamState = new System.Windows.Forms.Label();
+            this.lblLightState = new System.Windows.Forms.Label();
             this.lblTopCamStateText = new System.Windows.Forms.Label();
+            this.lblBottomCamStateText = new System.Windows.Forms.Label();
+            this.lblPLCState = new System.Windows.Forms.Label();
             this.lblPlcStateText = new System.Windows.Forms.Label();
+            this.lblLightStateText = new System.Windows.Forms.Label();
             this.pnlPage = new System.Windows.Forms.Panel();
             this.tlpFunctionButtons = new System.Windows.Forms.TableLayoutPanel();
             this.lblCurrentTime = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tlpSelectLogPage = new System.Windows.Forms.TableLayoutPanel();
+            this.lblLogPageImage = new System.Windows.Forms.Label();
             this.lblLogPage = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tlpSelectDataPage = new System.Windows.Forms.TableLayoutPanel();
+            this.lblDataPageImage = new System.Windows.Forms.Label();
             this.lblDataPage = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.tlpSelectMainPage = new System.Windows.Forms.TableLayoutPanel();
+            this.lblInspectionPageImage = new System.Windows.Forms.Label();
             this.lblMainPage = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tlpSelectTeachPage = new System.Windows.Forms.TableLayoutPanel();
+            this.lblTeachingPageImage = new System.Windows.Forms.Label();
             this.lblTeachingPage = new System.Windows.Forms.Label();
             this.pnlMachineStatus = new System.Windows.Forms.Panel();
             this.tlpMachineStatus = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.lblCurrentUser = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lblCurrentModel = new System.Windows.Forms.Label();
             this.lblMachineName = new System.Windows.Forms.Label();
             this.lblDoorlockState = new System.Windows.Forms.Label();
-            this.lblBottomCamStateText = new System.Windows.Forms.Label();
-            this.lblBottomCamState = new System.Windows.Forms.Label();
-            this.lblTopCamState = new System.Windows.Forms.Label();
-            this.lblLightState = new System.Windows.Forms.Label();
-            this.lblPLCState = new System.Windows.Forms.Label();
-            this.lblLogPageImage = new System.Windows.Forms.Label();
-            this.lblDataPageImage = new System.Windows.Forms.Label();
-            this.lblInspectionPageImage = new System.Windows.Forms.Label();
-            this.lblTeachingPageImage = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tlpMainForm.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tlpFunctionButtons.SuspendLayout();
@@ -96,12 +96,12 @@
             this.tlpMainForm.Margin = new System.Windows.Forms.Padding(0);
             this.tlpMainForm.Name = "tlpMainForm";
             this.tlpMainForm.RowCount = 4;
-            this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpMainForm.Size = new System.Drawing.Size(1253, 492);
+            this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tlpMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tlpMainForm.Size = new System.Drawing.Size(1373, 678);
             this.tlpMainForm.TabIndex = 2;
             // 
             // tableLayoutPanel2
@@ -109,16 +109,16 @@
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
             this.tableLayoutPanel2.ColumnCount = 11;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.tableLayoutPanel2.Controls.Add(this.lblBottomCamState, 10, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblTopCamState, 8, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblLightState, 6, 0);
@@ -130,54 +130,113 @@
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.tableLayoutPanel2.ForeColor = System.Drawing.Color.White;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 467);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 651);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1253, 25);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1373, 27);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // lblLightStateText
+            // lblBottomCamState
             // 
-            this.lblLightStateText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLightStateText.Location = new System.Drawing.Point(908, 0);
-            this.lblLightStateText.Margin = new System.Windows.Forms.Padding(0);
-            this.lblLightStateText.Name = "lblLightStateText";
-            this.lblLightStateText.Size = new System.Drawing.Size(70, 25);
-            this.lblLightStateText.TabIndex = 7;
-            this.lblLightStateText.Text = "Light";
-            this.lblLightStateText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblBottomCamState.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblBottomCamState.Image = global::ESI.Properties.Resources.Circle_Red;
+            this.lblBottomCamState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblBottomCamState.Location = new System.Drawing.Point(1352, 0);
+            this.lblBottomCamState.Margin = new System.Windows.Forms.Padding(0);
+            this.lblBottomCamState.Name = "lblBottomCamState";
+            this.lblBottomCamState.Size = new System.Drawing.Size(21, 27);
+            this.lblBottomCamState.TabIndex = 5;
+            this.lblBottomCamState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblTopCamState
+            // 
+            this.lblTopCamState.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTopCamState.Image = global::ESI.Properties.Resources.Circle_Red;
+            this.lblTopCamState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTopCamState.Location = new System.Drawing.Point(1245, 0);
+            this.lblTopCamState.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTopCamState.Name = "lblTopCamState";
+            this.lblTopCamState.Size = new System.Drawing.Size(21, 27);
+            this.lblTopCamState.TabIndex = 9;
+            this.lblTopCamState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblLightState
+            // 
+            this.lblLightState.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLightState.Image = global::ESI.Properties.Resources.Circle_Red;
+            this.lblLightState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblLightState.Location = new System.Drawing.Point(1138, 0);
+            this.lblLightState.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLightState.Name = "lblLightState";
+            this.lblLightState.Size = new System.Drawing.Size(21, 27);
+            this.lblLightState.TabIndex = 8;
+            this.lblLightState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblTopCamStateText
             // 
             this.lblTopCamStateText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTopCamStateText.Location = new System.Drawing.Point(1003, 0);
+            this.lblTopCamStateText.Location = new System.Drawing.Point(1159, 0);
             this.lblTopCamStateText.Margin = new System.Windows.Forms.Padding(0);
             this.lblTopCamStateText.Name = "lblTopCamStateText";
-            this.lblTopCamStateText.Size = new System.Drawing.Size(100, 25);
+            this.lblTopCamStateText.Size = new System.Drawing.Size(86, 27);
             this.lblTopCamStateText.TabIndex = 6;
             this.lblTopCamStateText.Text = "TopCam";
             this.lblTopCamStateText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // lblBottomCamStateText
+            // 
+            this.lblBottomCamStateText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblBottomCamStateText.Location = new System.Drawing.Point(1266, 0);
+            this.lblBottomCamStateText.Margin = new System.Windows.Forms.Padding(0);
+            this.lblBottomCamStateText.Name = "lblBottomCamStateText";
+            this.lblBottomCamStateText.Size = new System.Drawing.Size(86, 27);
+            this.lblBottomCamStateText.TabIndex = 4;
+            this.lblBottomCamStateText.Text = "BottomCam";
+            this.lblBottomCamStateText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblPLCState
+            // 
+            this.lblPLCState.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPLCState.Image = ((System.Drawing.Image)(resources.GetObject("lblPLCState.Image")));
+            this.lblPLCState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPLCState.Location = new System.Drawing.Point(1057, 0);
+            this.lblPLCState.Margin = new System.Windows.Forms.Padding(0);
+            this.lblPLCState.Name = "lblPLCState";
+            this.lblPLCState.Size = new System.Drawing.Size(21, 27);
+            this.lblPLCState.TabIndex = 1;
+            this.lblPLCState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // lblPlcStateText
             // 
             this.lblPlcStateText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPlcStateText.Location = new System.Drawing.Point(813, 0);
+            this.lblPlcStateText.Location = new System.Drawing.Point(997, 0);
             this.lblPlcStateText.Margin = new System.Windows.Forms.Padding(0);
             this.lblPlcStateText.Name = "lblPlcStateText";
-            this.lblPlcStateText.Size = new System.Drawing.Size(70, 25);
+            this.lblPlcStateText.Size = new System.Drawing.Size(60, 27);
             this.lblPlcStateText.TabIndex = 0;
             this.lblPlcStateText.Text = "PLC";
             this.lblPlcStateText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // lblLightStateText
+            // 
+            this.lblLightStateText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLightStateText.Location = new System.Drawing.Point(1078, 0);
+            this.lblLightStateText.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLightStateText.Name = "lblLightStateText";
+            this.lblLightStateText.Size = new System.Drawing.Size(60, 27);
+            this.lblLightStateText.TabIndex = 7;
+            this.lblLightStateText.Text = "Light";
+            this.lblLightStateText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // pnlPage
             // 
             this.pnlPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPage.Location = new System.Drawing.Point(0, 100);
+            this.pnlPage.Location = new System.Drawing.Point(0, 108);
             this.pnlPage.Margin = new System.Windows.Forms.Padding(0);
             this.pnlPage.Name = "pnlPage";
-            this.pnlPage.Size = new System.Drawing.Size(1253, 367);
+            this.pnlPage.Size = new System.Drawing.Size(1373, 543);
             this.pnlPage.TabIndex = 3;
             // 
             // tlpFunctionButtons
@@ -199,12 +258,12 @@
             this.tlpFunctionButtons.Controls.Add(this.panel8, 0, 0);
             this.tlpFunctionButtons.Controls.Add(this.panel1, 1, 0);
             this.tlpFunctionButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpFunctionButtons.Location = new System.Drawing.Point(0, 50);
+            this.tlpFunctionButtons.Location = new System.Drawing.Point(0, 54);
             this.tlpFunctionButtons.Margin = new System.Windows.Forms.Padding(0);
             this.tlpFunctionButtons.Name = "tlpFunctionButtons";
             this.tlpFunctionButtons.RowCount = 1;
             this.tlpFunctionButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpFunctionButtons.Size = new System.Drawing.Size(1253, 50);
+            this.tlpFunctionButtons.Size = new System.Drawing.Size(1373, 54);
             this.tlpFunctionButtons.TabIndex = 0;
             // 
             // lblCurrentTime
@@ -216,7 +275,7 @@
             this.lblCurrentTime.Location = new System.Drawing.Point(1603, 3);
             this.lblCurrentTime.Margin = new System.Windows.Forms.Padding(3);
             this.lblCurrentTime.Name = "lblCurrentTime";
-            this.lblCurrentTime.Size = new System.Drawing.Size(1, 44);
+            this.lblCurrentTime.Size = new System.Drawing.Size(1, 48);
             this.lblCurrentTime.TabIndex = 3;
             this.lblCurrentTime.Text = "DateTime";
             this.lblCurrentTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -226,7 +285,7 @@
             this.panel4.Controls.Add(this.tlpSelectLogPage);
             this.panel4.Location = new System.Drawing.Point(603, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(194, 44);
+            this.panel4.Size = new System.Drawing.Size(165, 48);
             this.panel4.TabIndex = 20;
             // 
             // tlpSelectLogPage
@@ -242,9 +301,18 @@
             this.tlpSelectLogPage.Name = "tlpSelectLogPage";
             this.tlpSelectLogPage.RowCount = 1;
             this.tlpSelectLogPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSelectLogPage.Size = new System.Drawing.Size(194, 44);
+            this.tlpSelectLogPage.Size = new System.Drawing.Size(165, 48);
             this.tlpSelectLogPage.TabIndex = 0;
             this.tlpSelectLogPage.Tag = "3";
+            // 
+            // lblLogPageImage
+            // 
+            this.lblLogPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLogPageImage.Image = global::ESI.Properties.Resources.Log;
+            this.lblLogPageImage.Location = new System.Drawing.Point(3, 0);
+            this.lblLogPageImage.Name = "lblLogPageImage";
+            this.lblLogPageImage.Size = new System.Drawing.Size(44, 48);
+            this.lblLogPageImage.TabIndex = 1;
             // 
             // lblLogPage
             // 
@@ -253,7 +321,7 @@
             this.lblLogPage.ForeColor = System.Drawing.Color.White;
             this.lblLogPage.Location = new System.Drawing.Point(53, 0);
             this.lblLogPage.Name = "lblLogPage";
-            this.lblLogPage.Size = new System.Drawing.Size(138, 44);
+            this.lblLogPage.Size = new System.Drawing.Size(109, 48);
             this.lblLogPage.TabIndex = 0;
             this.lblLogPage.Text = "LOG";
             this.lblLogPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -264,7 +332,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(403, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(194, 44);
+            this.panel3.Size = new System.Drawing.Size(194, 48);
             this.panel3.TabIndex = 20;
             // 
             // tlpSelectDataPage
@@ -280,9 +348,18 @@
             this.tlpSelectDataPage.Name = "tlpSelectDataPage";
             this.tlpSelectDataPage.RowCount = 1;
             this.tlpSelectDataPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSelectDataPage.Size = new System.Drawing.Size(194, 44);
+            this.tlpSelectDataPage.Size = new System.Drawing.Size(194, 48);
             this.tlpSelectDataPage.TabIndex = 0;
             this.tlpSelectDataPage.Tag = "2";
+            // 
+            // lblDataPageImage
+            // 
+            this.lblDataPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDataPageImage.Image = global::ESI.Properties.Resources.Settings;
+            this.lblDataPageImage.Location = new System.Drawing.Point(3, 0);
+            this.lblDataPageImage.Name = "lblDataPageImage";
+            this.lblDataPageImage.Size = new System.Drawing.Size(44, 48);
+            this.lblDataPageImage.TabIndex = 1;
             // 
             // lblDataPage
             // 
@@ -291,7 +368,7 @@
             this.lblDataPage.ForeColor = System.Drawing.Color.White;
             this.lblDataPage.Location = new System.Drawing.Point(53, 0);
             this.lblDataPage.Name = "lblDataPage";
-            this.lblDataPage.Size = new System.Drawing.Size(138, 44);
+            this.lblDataPage.Size = new System.Drawing.Size(138, 48);
             this.lblDataPage.TabIndex = 0;
             this.lblDataPage.Text = "DATA";
             this.lblDataPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -302,7 +379,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(194, 44);
+            this.panel8.Size = new System.Drawing.Size(194, 48);
             this.panel8.TabIndex = 6;
             // 
             // tlpSelectMainPage
@@ -318,9 +395,19 @@
             this.tlpSelectMainPage.Name = "tlpSelectMainPage";
             this.tlpSelectMainPage.RowCount = 1;
             this.tlpSelectMainPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSelectMainPage.Size = new System.Drawing.Size(194, 44);
+            this.tlpSelectMainPage.Size = new System.Drawing.Size(194, 48);
             this.tlpSelectMainPage.TabIndex = 0;
             this.tlpSelectMainPage.Tag = "0";
+            // 
+            // lblInspectionPageImage
+            // 
+            this.lblInspectionPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblInspectionPageImage.Image = global::ESI.Properties.Resources.Inspection;
+            this.lblInspectionPageImage.Location = new System.Drawing.Point(3, 0);
+            this.lblInspectionPageImage.Name = "lblInspectionPageImage";
+            this.lblInspectionPageImage.Size = new System.Drawing.Size(44, 48);
+            this.lblInspectionPageImage.TabIndex = 1;
+            this.lblInspectionPageImage.Click += new System.EventHandler(this.lblMainPage_Click);
             // 
             // lblMainPage
             // 
@@ -329,10 +416,11 @@
             this.lblMainPage.ForeColor = System.Drawing.Color.White;
             this.lblMainPage.Location = new System.Drawing.Point(53, 0);
             this.lblMainPage.Name = "lblMainPage";
-            this.lblMainPage.Size = new System.Drawing.Size(138, 44);
+            this.lblMainPage.Size = new System.Drawing.Size(138, 48);
             this.lblMainPage.TabIndex = 0;
             this.lblMainPage.Text = "MAIN";
             this.lblMainPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblMainPage.Click += new System.EventHandler(this.lblMainPage_Click);
             // 
             // panel1
             // 
@@ -340,7 +428,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(203, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(194, 44);
+            this.panel1.Size = new System.Drawing.Size(194, 48);
             this.panel1.TabIndex = 18;
             // 
             // tlpSelectTeachPage
@@ -356,9 +444,19 @@
             this.tlpSelectTeachPage.Name = "tlpSelectTeachPage";
             this.tlpSelectTeachPage.RowCount = 1;
             this.tlpSelectTeachPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSelectTeachPage.Size = new System.Drawing.Size(194, 44);
+            this.tlpSelectTeachPage.Size = new System.Drawing.Size(194, 48);
             this.tlpSelectTeachPage.TabIndex = 0;
             this.tlpSelectTeachPage.Tag = "1";
+            // 
+            // lblTeachingPageImage
+            // 
+            this.lblTeachingPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTeachingPageImage.Image = global::ESI.Properties.Resources.Teaching;
+            this.lblTeachingPageImage.Location = new System.Drawing.Point(3, 0);
+            this.lblTeachingPageImage.Name = "lblTeachingPageImage";
+            this.lblTeachingPageImage.Size = new System.Drawing.Size(44, 48);
+            this.lblTeachingPageImage.TabIndex = 1;
+            this.lblTeachingPageImage.Click += new System.EventHandler(this.lblTeachingPage_Click);
             // 
             // lblTeachingPage
             // 
@@ -367,10 +465,11 @@
             this.lblTeachingPage.ForeColor = System.Drawing.Color.White;
             this.lblTeachingPage.Location = new System.Drawing.Point(53, 0);
             this.lblTeachingPage.Name = "lblTeachingPage";
-            this.lblTeachingPage.Size = new System.Drawing.Size(138, 44);
+            this.lblTeachingPage.Size = new System.Drawing.Size(138, 48);
             this.lblTeachingPage.TabIndex = 0;
             this.lblTeachingPage.Text = "TEACH";
             this.lblTeachingPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTeachingPage.Click += new System.EventHandler(this.lblTeachingPage_Click);
             // 
             // pnlMachineStatus
             // 
@@ -380,17 +479,17 @@
             this.pnlMachineStatus.Location = new System.Drawing.Point(0, 0);
             this.pnlMachineStatus.Margin = new System.Windows.Forms.Padding(0);
             this.pnlMachineStatus.Name = "pnlMachineStatus";
-            this.pnlMachineStatus.Size = new System.Drawing.Size(1253, 50);
+            this.pnlMachineStatus.Size = new System.Drawing.Size(1373, 54);
             this.pnlMachineStatus.TabIndex = 2;
             // 
             // tlpMachineStatus
             // 
             this.tlpMachineStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.tlpMachineStatus.ColumnCount = 4;
-            this.tlpMachineStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.tlpMachineStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 189F));
             this.tlpMachineStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMachineStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 323F));
-            this.tlpMachineStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
+            this.tlpMachineStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 277F));
+            this.tlpMachineStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 154F));
             this.tlpMachineStatus.Controls.Add(this.tableLayoutPanel5, 3, 0);
             this.tlpMachineStatus.Controls.Add(this.lblCurrentModel, 2, 0);
             this.tlpMachineStatus.Controls.Add(this.lblMachineName, 1, 0);
@@ -401,23 +500,23 @@
             this.tlpMachineStatus.Name = "tlpMachineStatus";
             this.tlpMachineStatus.RowCount = 1;
             this.tlpMachineStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMachineStatus.Size = new System.Drawing.Size(1251, 48);
+            this.tlpMachineStatus.Size = new System.Drawing.Size(1371, 52);
             this.tlpMachineStatus.TabIndex = 1;
             // 
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 2;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
             this.tableLayoutPanel5.Controls.Add(this.lblCurrentUser, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.pictureBox2, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(1071, 0);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(1217, 0);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(180, 48);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(154, 52);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // lblCurrentUser
@@ -429,10 +528,23 @@
             this.lblCurrentUser.Location = new System.Drawing.Point(3, 3);
             this.lblCurrentUser.Margin = new System.Windows.Forms.Padding(3);
             this.lblCurrentUser.Name = "lblCurrentUser";
-            this.lblCurrentUser.Size = new System.Drawing.Size(128, 42);
+            this.lblCurrentUser.Size = new System.Drawing.Size(109, 46);
             this.lblCurrentUser.TabIndex = 2;
             this.lblCurrentUser.Text = "Maker";
             this.lblCurrentUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox2.Image = global::ESI.Properties.Resources.People;
+            this.pictureBox2.Location = new System.Drawing.Point(115, 0);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Padding = new System.Windows.Forms.Padding(5, 7, 5, 7);
+            this.pictureBox2.Size = new System.Drawing.Size(39, 52);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 4;
+            this.pictureBox2.TabStop = false;
             // 
             // lblCurrentModel
             // 
@@ -440,10 +552,10 @@
             this.lblCurrentModel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCurrentModel.Font = new System.Drawing.Font("맑은 고딕", 15F, System.Drawing.FontStyle.Bold);
             this.lblCurrentModel.ForeColor = System.Drawing.Color.White;
-            this.lblCurrentModel.Location = new System.Drawing.Point(751, 3);
+            this.lblCurrentModel.Location = new System.Drawing.Point(943, 3);
             this.lblCurrentModel.Margin = new System.Windows.Forms.Padding(3);
             this.lblCurrentModel.Name = "lblCurrentModel";
-            this.lblCurrentModel.Size = new System.Drawing.Size(317, 42);
+            this.lblCurrentModel.Size = new System.Drawing.Size(271, 46);
             this.lblCurrentModel.TabIndex = 3;
             this.lblCurrentModel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -453,10 +565,10 @@
             this.lblMachineName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblMachineName.Font = new System.Drawing.Font("맑은 고딕", 20.2F, System.Drawing.FontStyle.Bold);
             this.lblMachineName.ForeColor = System.Drawing.Color.White;
-            this.lblMachineName.Location = new System.Drawing.Point(223, 3);
+            this.lblMachineName.Location = new System.Drawing.Point(192, 3);
             this.lblMachineName.Margin = new System.Windows.Forms.Padding(3);
             this.lblMachineName.Name = "lblMachineName";
-            this.lblMachineName.Size = new System.Drawing.Size(522, 42);
+            this.lblMachineName.Size = new System.Drawing.Size(745, 46);
             this.lblMachineName.TabIndex = 1;
             this.lblMachineName.Text = "ESI";
             this.lblMachineName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -469,129 +581,22 @@
             this.lblDoorlockState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.lblDoorlockState.Location = new System.Drawing.Point(3, 0);
             this.lblDoorlockState.Name = "lblDoorlockState";
-            this.lblDoorlockState.Size = new System.Drawing.Size(214, 48);
+            this.lblDoorlockState.Size = new System.Drawing.Size(183, 52);
             this.lblDoorlockState.TabIndex = 4;
             this.lblDoorlockState.Text = "Doorlock Opened";
             this.lblDoorlockState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblBottomCamStateText
-            // 
-            this.lblBottomCamStateText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblBottomCamStateText.Location = new System.Drawing.Point(1128, 0);
-            this.lblBottomCamStateText.Margin = new System.Windows.Forms.Padding(0);
-            this.lblBottomCamStateText.Name = "lblBottomCamStateText";
-            this.lblBottomCamStateText.Size = new System.Drawing.Size(100, 25);
-            this.lblBottomCamStateText.TabIndex = 4;
-            this.lblBottomCamStateText.Text = "BottomCam";
-            this.lblBottomCamStateText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblBottomCamState
-            // 
-            this.lblBottomCamState.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblBottomCamState.Image = global::ESI.Properties.Resources.Circle_Red;
-            this.lblBottomCamState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblBottomCamState.Location = new System.Drawing.Point(1228, 0);
-            this.lblBottomCamState.Margin = new System.Windows.Forms.Padding(0);
-            this.lblBottomCamState.Name = "lblBottomCamState";
-            this.lblBottomCamState.Size = new System.Drawing.Size(25, 25);
-            this.lblBottomCamState.TabIndex = 5;
-            this.lblBottomCamState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblTopCamState
-            // 
-            this.lblTopCamState.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTopCamState.Image = global::ESI.Properties.Resources.Circle_Red;
-            this.lblTopCamState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblTopCamState.Location = new System.Drawing.Point(1103, 0);
-            this.lblTopCamState.Margin = new System.Windows.Forms.Padding(0);
-            this.lblTopCamState.Name = "lblTopCamState";
-            this.lblTopCamState.Size = new System.Drawing.Size(25, 25);
-            this.lblTopCamState.TabIndex = 9;
-            this.lblTopCamState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblLightState
-            // 
-            this.lblLightState.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLightState.Image = global::ESI.Properties.Resources.Circle_Red;
-            this.lblLightState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblLightState.Location = new System.Drawing.Point(978, 0);
-            this.lblLightState.Margin = new System.Windows.Forms.Padding(0);
-            this.lblLightState.Name = "lblLightState";
-            this.lblLightState.Size = new System.Drawing.Size(25, 25);
-            this.lblLightState.TabIndex = 8;
-            this.lblLightState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblPLCState
-            // 
-            this.lblPLCState.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPLCState.Image = ((System.Drawing.Image)(resources.GetObject("lblPLCState.Image")));
-            this.lblPLCState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPLCState.Location = new System.Drawing.Point(883, 0);
-            this.lblPLCState.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPLCState.Name = "lblPLCState";
-            this.lblPLCState.Size = new System.Drawing.Size(25, 25);
-            this.lblPLCState.TabIndex = 1;
-            this.lblPLCState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblLogPageImage
-            // 
-            this.lblLogPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLogPageImage.Image = global::ESI.Properties.Resources.Log;
-            this.lblLogPageImage.Location = new System.Drawing.Point(3, 0);
-            this.lblLogPageImage.Name = "lblLogPageImage";
-            this.lblLogPageImage.Size = new System.Drawing.Size(44, 44);
-            this.lblLogPageImage.TabIndex = 1;
-            // 
-            // lblDataPageImage
-            // 
-            this.lblDataPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDataPageImage.Image = global::ESI.Properties.Resources.Settings;
-            this.lblDataPageImage.Location = new System.Drawing.Point(3, 0);
-            this.lblDataPageImage.Name = "lblDataPageImage";
-            this.lblDataPageImage.Size = new System.Drawing.Size(44, 44);
-            this.lblDataPageImage.TabIndex = 1;
-            // 
-            // lblInspectionPageImage
-            // 
-            this.lblInspectionPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblInspectionPageImage.Image = global::ESI.Properties.Resources.Inspection;
-            this.lblInspectionPageImage.Location = new System.Drawing.Point(3, 0);
-            this.lblInspectionPageImage.Name = "lblInspectionPageImage";
-            this.lblInspectionPageImage.Size = new System.Drawing.Size(44, 44);
-            this.lblInspectionPageImage.TabIndex = 1;
-            // 
-            // lblTeachingPageImage
-            // 
-            this.lblTeachingPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTeachingPageImage.Image = global::ESI.Properties.Resources.Teaching;
-            this.lblTeachingPageImage.Location = new System.Drawing.Point(3, 0);
-            this.lblTeachingPageImage.Name = "lblTeachingPageImage";
-            this.lblTeachingPageImage.Size = new System.Drawing.Size(44, 44);
-            this.lblTeachingPageImage.TabIndex = 1;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Image = global::ESI.Properties.Resources.People;
-            this.pictureBox2.Location = new System.Drawing.Point(134, 0);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Padding = new System.Windows.Forms.Padding(6);
-            this.pictureBox2.Size = new System.Drawing.Size(46, 48);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 4;
-            this.pictureBox2.TabStop = false;
-            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.ClientSize = new System.Drawing.Size(1253, 492);
+            this.ClientSize = new System.Drawing.Size(1373, 678);
             this.Controls.Add(this.tlpMainForm);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tlpMainForm.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tlpFunctionButtons.ResumeLayout(false);

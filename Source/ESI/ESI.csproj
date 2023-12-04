@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{78D7E3E0-8125-489A-B923-F55199AE09FA}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>ESI</RootNamespace>
     <AssemblyName>ESI</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
@@ -52,8 +52,21 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -66,6 +79,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AppsTask\InspProcessTask.cs" />
+    <Compile Include="Core\AppsTask\InspProcessTaskHandler.cs" />
+    <Compile Include="Core\ESIInspModelService.cs" />
+    <Compile Include="Core\ESIInspRunner.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +92,18 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManager.cs" />
+    <Compile Include="UI\Pages\MainPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Pages\MainPage.Designer.cs">
+      <DependentUpon>MainPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\TeachingPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Pages\TeachingPage.Designer.cs">
+      <DependentUpon>TeachingPage.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +117,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\Pages\MainPage.resx">
+      <DependentUpon>MainPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Pages\TeachingPage.resx">
+      <DependentUpon>TeachingPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -118,6 +154,10 @@
       <Project>{8B4B5CEF-5B39-423A-A460-A24F7FD8890E}</Project>
       <Name>Jastech.Framework.Matrox</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Structure\Jastech.Framework.Structure.csproj">
+      <Project>{DCFF7B48-8DF8-4ED9-9F0F-F11C2CCB7547}</Project>
+      <Name>Jastech.Framework.Structure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Util\Jastech.Framework.Util.csproj">
       <Project>{07EF86CC-AC6A-454E-B12B-EB63454A1DCA}</Project>
       <Name>Jastech.Framework.Util</Name>
@@ -125,6 +165,14 @@
     <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Winform\Jastech.Framework.Winform.csproj">
       <Project>{D46C7263-535A-4BF9-AD14-5183EDE0A984}</Project>
       <Name>Jastech.Framework.Winform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework\Jastech.Framework.csproj">
+      <Project>{28E92A79-C5AB-4B93-9ABA-A9F40DE4DBCE}</Project>
+      <Name>Jastech.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jastech.Battery.Structure\Jastech.Battery.Structure.csproj">
+      <Project>{9cc98476-12bd-4b94-b3fd-bc6303779dac}</Project>
+      <Name>Jastech.Battery.Structure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Jastech.Battery.Winform\Jastech.Battery.Winform.csproj">
       <Project>{977B2EAE-A783-47E3-8CD7-BF3FFF46F401}</Project>
@@ -151,6 +199,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\People.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Controls\" />
+    <Folder Include="UI\Forms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stop_White.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Start_White.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Emgu.CV">
+      <Version>4.7.0.5276</Version>
+    </PackageReference>
+    <PackageReference Include="Emgu.CV.Bitmap">
+      <Version>4.7.0.5276</Version>
+    </PackageReference>
+    <PackageReference Include="Emgu.CV.runtime.windows">
+      <Version>4.7.0.5276</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
