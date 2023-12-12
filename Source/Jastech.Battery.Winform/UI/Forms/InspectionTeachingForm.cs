@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +27,8 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private PixelValueGraphControl PixelValueGraphControl { get; set; } = null;
 
+        private ImageViewerControl ImageViewerControl { get; set; } = null;
+
         public InspectionTeachingForm()
         {
             InitializeComponent();
@@ -38,16 +42,20 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private void AddControl()
         {
-            DrawBoxControl = new DrawBoxControl();
-            DrawBoxControl.Dock = DockStyle.Fill;
-            DrawBoxControl.ViewColor = Color.Black;
-            DrawBoxControl.DisplayMode = DisplayMode.Panning;
-            DrawBoxControl.UseGrayLevel = true;
-            pnlDisplay.Controls.Add(DrawBoxControl);
+            //DrawBoxControl = new DrawBoxControl();
+            //DrawBoxControl.Dock = DockStyle.Fill;
+            //DrawBoxControl.ViewColor = Color.Black;
+            //DrawBoxControl.DisplayMode = DisplayMode.Panning;
+            //DrawBoxControl.UseGrayLevel = true;
+            //pnlDisplay.Controls.Add(DrawBoxControl);
 
             PixelValueGraphControl = new PixelValueGraphControl();
             PixelValueGraphControl.Dock = DockStyle.Fill;
             pnlGraph.Controls.Add(PixelValueGraphControl);
+
+            ImageViewerControl = new ImageViewerControl();
+            ImageViewerControl.Dock = DockStyle.Fill;
+            pnlDisplay.Controls.Add(ImageViewerControl);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -62,24 +70,48 @@ namespace Jastech.Battery.Winform.UI.Forms
         private void btnLoadImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Multiselect = true;
             dlg.ReadOnlyChecked = true;
             dlg.Filter = "BMP Files (*.bmp)|*.bmp; | "
                 + "JPG Files (*.jpg, *.jpeg)|*.jpg; *.jpeg; |"
                 + "모든 파일(*.*) | *.*;";
 
-            if(dlg.ShowDialog() == DialogResult.OK)
+            if (dlg.ShowDialog() == DialogResult.OK)
             {
-                OrgMat?.Dispose();
-                OrgMat = null;
+                //OrgMat?.Dispose();
+                //OrgMat = null;
 
-                OrgMat = new Mat(dlg.FileName, ImreadModes.Grayscale);
+                //OrgMat = new Mat(dlg.FileName, ImreadModes.Grayscale);
 
-                if(OrgMat != null)
+                //if (OrgMat != null)
+                //{
+                //    var bmp = OrgMat.ToBitmap();
+                //    DrawBoxControl.SetImage(bmp);
+                //    DrawBoxControl.FitZoom();
+                //}
+
+
+
+
+                //List<Mat> matList = new List<Mat>();
+
+                //foreach (var image in dlg.FileNames)
+                //    matList.Add(new Mat(image, ImreadModes.Grayscale));
+
+                List<ImageInfo> imageInfoList = new List<ImageInfo>();
+
+                foreach (string imagePath in dlg.FileNames)
                 {
-                    var bmp = OrgMat.ToBitmap();
-                    DrawBoxControl.SetImage(bmp);
-                    DrawBoxControl.FitZoom();
+                    ImageInfo imageInfo = new ImageInfo();
+
+                    imageInfo.OriginBitmap = new Bitmap(imagePath);
+                    imageInfo.ImagePath = imagePath;
+                    imageInfo.ImageName = Path.GetFileNameWithoutExtension(imagePath);
+
+                    imageInfoList.Add(imageInfo);
                 }
+
+                ImageViewerControl.SetImageInfo(imageInfoList);
             }
         }
     }
