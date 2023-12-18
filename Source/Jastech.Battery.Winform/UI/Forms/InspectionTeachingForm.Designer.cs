@@ -66,10 +66,10 @@
             // 
             this.pnlTeachingItems.Controls.Add(this.tableLayoutPanel3);
             this.pnlTeachingItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTeachingItems.Location = new System.Drawing.Point(1756, 0);
+            this.pnlTeachingItems.Location = new System.Drawing.Point(486, 0);
             this.pnlTeachingItems.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTeachingItems.Name = "pnlTeachingItems";
-            this.pnlTeachingItems.Size = new System.Drawing.Size(144, 911);
+            this.pnlTeachingItems.Size = new System.Drawing.Size(144, 286);
             this.pnlTeachingItems.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -87,7 +87,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(144, 911);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(144, 286);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // btnSave
@@ -96,7 +96,7 @@
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSave.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(2, 713);
+            this.btnSave.Location = new System.Drawing.Point(2, 88);
             this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(140, 96);
@@ -110,7 +110,7 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCancel.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(2, 813);
+            this.btnCancel.Location = new System.Drawing.Point(2, 188);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(140, 96);
@@ -134,7 +134,7 @@
             this.tlpTeachingItems.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlpTeachingItems.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlpTeachingItems.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpTeachingItems.Size = new System.Drawing.Size(144, 711);
+            this.tlpTeachingItems.Size = new System.Drawing.Size(144, 86);
             this.tlpTeachingItems.TabIndex = 0;
             // 
             // pnlTeachingPage
@@ -144,7 +144,7 @@
             this.pnlTeachingPage.Location = new System.Drawing.Point(0, 0);
             this.pnlTeachingPage.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTeachingPage.Name = "pnlTeachingPage";
-            this.pnlTeachingPage.Size = new System.Drawing.Size(1756, 911);
+            this.pnlTeachingPage.Size = new System.Drawing.Size(486, 286);
             this.pnlTeachingPage.TabIndex = 0;
             // 
             // tlpTeaching
@@ -160,7 +160,7 @@
             this.tlpTeaching.Name = "tlpTeaching";
             this.tlpTeaching.RowCount = 1;
             this.tlpTeaching.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpTeaching.Size = new System.Drawing.Size(1756, 911);
+            this.tlpTeaching.Size = new System.Drawing.Size(486, 286);
             this.tlpTeaching.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -179,7 +179,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(872, 905);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(237, 280);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // label2
@@ -189,10 +189,10 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(0, 465);
+            this.label2.Location = new System.Drawing.Point(0, -160);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(872, 40);
+            this.label2.Size = new System.Drawing.Size(237, 40);
             this.label2.TabIndex = 296;
             this.label2.Text = "Analysis Graph";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -207,7 +207,7 @@
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(872, 40);
+            this.label1.Size = new System.Drawing.Size(237, 40);
             this.label1.TabIndex = 295;
             this.label1.Text = "Image";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -219,7 +219,7 @@
             this.pnlDisplay.Location = new System.Drawing.Point(0, 40);
             this.pnlDisplay.Margin = new System.Windows.Forms.Padding(0);
             this.pnlDisplay.Name = "pnlDisplay";
-            this.pnlDisplay.Size = new System.Drawing.Size(872, 425);
+            this.pnlDisplay.Size = new System.Drawing.Size(237, 1);
             this.pnlDisplay.TabIndex = 0;
             // 
             // panel1
@@ -227,10 +227,10 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.tableLayoutPanel4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 505);
+            this.panel1.Location = new System.Drawing.Point(0, -120);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(872, 400);
+            this.panel1.Size = new System.Drawing.Size(237, 400);
             this.panel1.TabIndex = 297;
             // 
             // tableLayoutPanel4
@@ -245,7 +245,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(870, 398);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(235, 398);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // pnlGraph
@@ -254,7 +254,7 @@
             this.pnlGraph.Location = new System.Drawing.Point(100, 0);
             this.pnlGraph.Margin = new System.Windows.Forms.Padding(0);
             this.pnlGraph.Name = "pnlGraph";
-            this.pnlGraph.Size = new System.Drawing.Size(770, 398);
+            this.pnlGraph.Size = new System.Drawing.Size(135, 398);
             this.pnlGraph.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -264,7 +264,7 @@
             this.tableLayoutPanel1.Controls.Add(this.tlpCommon, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(880, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(245, 2);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -272,7 +272,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(874, 907);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 282);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel2
@@ -281,7 +281,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 80);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(874, 827);
+            this.panel2.Size = new System.Drawing.Size(239, 202);
             this.panel2.TabIndex = 1;
             // 
             // tlpCommon
@@ -296,7 +296,7 @@
             this.tlpCommon.RowCount = 2;
             this.tlpCommon.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpCommon.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpCommon.Size = new System.Drawing.Size(874, 80);
+            this.tlpCommon.Size = new System.Drawing.Size(239, 80);
             this.tlpCommon.TabIndex = 3;
             // 
             // tlpUnit
@@ -312,7 +312,7 @@
             this.tlpUnit.Name = "tlpUnit";
             this.tlpUnit.RowCount = 1;
             this.tlpUnit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpUnit.Size = new System.Drawing.Size(874, 40);
+            this.tlpUnit.Size = new System.Drawing.Size(239, 40);
             this.tlpUnit.TabIndex = 287;
             // 
             // lblDirection
@@ -325,7 +325,7 @@
             this.lblDirection.Location = new System.Drawing.Point(0, 0);
             this.lblDirection.Margin = new System.Windows.Forms.Padding(0);
             this.lblDirection.Name = "lblDirection";
-            this.lblDirection.Size = new System.Drawing.Size(582, 40);
+            this.lblDirection.Size = new System.Drawing.Size(159, 40);
             this.lblDirection.TabIndex = 294;
             this.lblDirection.Text = "CAM : ";
             this.lblDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -337,10 +337,10 @@
             this.btnLoadImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLoadImage.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
             this.btnLoadImage.ForeColor = System.Drawing.Color.White;
-            this.btnLoadImage.Location = new System.Drawing.Point(582, 0);
+            this.btnLoadImage.Location = new System.Drawing.Point(159, 0);
             this.btnLoadImage.Margin = new System.Windows.Forms.Padding(0);
             this.btnLoadImage.Name = "btnLoadImage";
-            this.btnLoadImage.Size = new System.Drawing.Size(292, 40);
+            this.btnLoadImage.Size = new System.Drawing.Size(80, 40);
             this.btnLoadImage.TabIndex = 201;
             this.btnLoadImage.Text = "LOAD IMAGE";
             this.btnLoadImage.UseVisualStyleBackColor = false;
@@ -353,13 +353,14 @@
             this.tlpTeachingPage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 144F));
             this.tlpTeachingPage.Controls.Add(this.pnlTeachingPage, 0, 0);
             this.tlpTeachingPage.Controls.Add(this.pnlTeachingItems, 1, 0);
-            this.tlpTeachingPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpTeachingPage.Location = new System.Drawing.Point(0, 0);
+            this.tlpTeachingPage.Enabled = false;
+            this.tlpTeachingPage.Location = new System.Drawing.Point(468, 119);
             this.tlpTeachingPage.Name = "tlpTeachingPage";
             this.tlpTeachingPage.RowCount = 1;
             this.tlpTeachingPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpTeachingPage.Size = new System.Drawing.Size(1900, 911);
+            this.tlpTeachingPage.Size = new System.Drawing.Size(630, 286);
             this.tlpTeachingPage.TabIndex = 2;
+            this.tlpTeachingPage.Visible = false;
             // 
             // InspectionTeachingForm
             // 
@@ -372,7 +373,7 @@
             this.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "InspectionTeachingForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "InspectionTeachingForm";
             this.Load += new System.EventHandler(this.InspectionTeachingForm_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.InspectionTeachingForm_DragDrop);
