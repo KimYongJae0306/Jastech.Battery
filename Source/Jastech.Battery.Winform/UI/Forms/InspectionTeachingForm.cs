@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace Jastech.Battery.Winform.UI.Forms
 {
@@ -89,30 +90,38 @@ namespace Jastech.Battery.Winform.UI.Forms
                 //    DrawBoxControl.SetImage(bmp);
                 //    DrawBoxControl.FitZoom();
                 //}
-
-
-
-
-                //List<Mat> matList = new List<Mat>();
-
-                //foreach (var image in dlg.FileNames)
-                //    matList.Add(new Mat(image, ImreadModes.Grayscale));
-
-                List<ImageInfo> imageInfoList = new List<ImageInfo>();
-
-                foreach (string imagePath in dlg.FileNames)
-                {
-                    ImageInfo imageInfo = new ImageInfo();
-
-                    imageInfo.OriginBitmap = new Bitmap(imagePath);
-                    imageInfo.ImagePath = imagePath;
-                    imageInfo.ImageName = Path.GetFileNameWithoutExtension(imagePath);
-
-                    imageInfoList.Add(imageInfo);
-                }
-
-                ImageViewerControl.SetImageInfo(imageInfoList);
+                LoadImage(dlg.FileNames);
             }
+        }
+
+        private void LoadImage(string[] imageFilePathes)
+        {
+            List<ImageInfo> imageInfoList = new List<ImageInfo>();
+
+            foreach (string imagePath in imageFilePathes)
+            {
+                ImageInfo imageInfo = new ImageInfo();
+
+                imageInfo.OriginBitmap = new Bitmap(imagePath);
+                imageInfo.ImagePath = imagePath;
+                imageInfo.ImageName = Path.GetFileNameWithoutExtension(imagePath);
+
+                imageInfoList.Add(imageInfo);
+            }
+
+            ImageViewerControl.SetImageInfo(imageInfoList);
+        }
+
+        private void InspectionTeachingForm_DragDrop(object sender, DragEventArgs e)
+        {
+            int gg = 0;
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            LoadImage(files);
+        }
+
+        private void InspectionTeachingForm_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
         }
     }
 }
