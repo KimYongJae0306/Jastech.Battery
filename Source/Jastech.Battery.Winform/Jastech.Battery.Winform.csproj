@@ -72,6 +72,12 @@
     <Compile Include="UI\Forms\InspectionTeachingForm.Designer.cs">
       <DependentUpon>InspectionTeachingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\OpticTeachingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\OpticTeachingForm.designer.cs">
+      <DependentUpon>OpticTeachingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +134,9 @@
   <ItemGroup>
     <EmbeddedResource Include="UI\Forms\InspectionTeachingForm.resx">
       <DependentUpon>InspectionTeachingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\OpticTeachingForm.resx">
+      <DependentUpon>OpticTeachingForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
