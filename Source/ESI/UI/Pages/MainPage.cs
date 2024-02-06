@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Jastech.Framework.Structure.Defect;
+using Jastech.Battery.Structure.Data;
+using static Jastech.Framework.Structure.Defect.DefectDefine;   //테스트 후 삭제
 using Jastech.Framework.Winform.Controls;
 using Jastech.Framework.Winform.Helper;
 
@@ -25,6 +26,8 @@ namespace ESI.UI.Pages
         private DrawBoxControl _rightDrawBox = null;
 
         private DataGridView _dgvDefectData = null;
+
+        private PixelValueGraphControl _pixelValueGraph = null;
 
         private readonly BindingList<ElectrodeDefectInfo> _defectInfos = new BindingList<ElectrodeDefectInfo>();
         #endregion
@@ -72,7 +75,7 @@ namespace ESI.UI.Pages
             pnlDefectMap.Controls.Add(_defectMap);
             pnlImages.Controls.Add(_leftDrawBox);
             pnlImages.Controls.Add(_rightDrawBox);
-            pnlDataArea.Controls.Add(_dgvDefectData);
+            SelectDefectData_Click(lblSelectDefectData, null);
         }
 
         private void ClearDatas()
@@ -113,15 +116,16 @@ namespace ESI.UI.Pages
                     var testInfo = new ElectrodeDefectInfo
                     {
                         Index = _defectInfos.Count,
+                        InspectionTime = DateTime.Now,
                         Judgement = "NG",
                         DefectLevel = rand.Next(1, 6),
-                        DefectType = (DefectDefine.DefectTypes)rand.Next(1, 6),
-                        CamDirection = rand.Next(2) == 0 ? "Upper" : "Lower",
+                        DefectType = (DefectTypes)rand.Next(1, 6),
+                        CameraName = rand.Next(2) == 0 ? "Upper" : "Lower",
                         Lane = 1
                     };
 
                     #region 보기싫은 if문
-                    if (testInfo.CamDirection == "Upper")
+                    if (testInfo.CameraName == "Upper")
                     {
                         lblUpperJudgement.Text = "NG";
                         lblUpperJudgement.BackColor = Color.Red;
@@ -132,7 +136,7 @@ namespace ESI.UI.Pages
                         lblUpperJudgement.BackColor = Color.LimeGreen;
                     }
 
-                    if (testInfo.CamDirection == "Lower")
+                    if (testInfo.CameraName == "Lower")
                     {
                         lblLowerJudgement.Text = "NG";
                         lblLowerJudgement.BackColor = Color.Red;
@@ -144,20 +148,20 @@ namespace ESI.UI.Pages
                     }
                     #endregion
 
-                    testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.X, typeof(float));
-                    testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.Y, typeof(float));
+                    testInfo.SetFeatureDataType(FeatureTypes.X, typeof(float));
+                    testInfo.SetFeatureDataType(FeatureTypes.Y, typeof(float));
 
-                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.X, rand.Next(16383));            // TODO: maximage width 받을 것
-                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.Y, yValue);
+                    testInfo.SetFeatureValue(FeatureTypes.X, rand.Next(16383));            // TODO: maximage width 받을 것
+                    testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
 
-                    testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.Width, typeof(float));
-                    testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.Height, typeof(float));
-                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
-                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
+                    testInfo.SetFeatureDataType(FeatureTypes.Width, typeof(float));
+                    testInfo.SetFeatureDataType(FeatureTypes.Height, typeof(float));
+                    testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
+                    testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
 
-                    testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.LocalImagePath, typeof(string));
+                    testInfo.SetFeatureDataType(FeatureTypes.LocalImagePath, typeof(string));
 
-                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.LocalImagePath, imgPath);
+                    testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
 
                     _defectInfos.Add(testInfo);
                     _defectInfoContainer.AddDefectInfo(testInfo);
@@ -185,15 +189,35 @@ namespace ESI.UI.Pages
             _rightDrawBox.Width = pnlImages.Width / 2;
         }
 
-        private void lblSelectDataType_Click(object sender, EventArgs e)
+        private void ClearDataViewSelection()
         {
-            var clickedLabel = sender as Label;
+            foreach (Control control in tlpDataLayout.Controls)
+                control.ForeColor = Color.White;
             pnlDataArea.Controls.Clear();
+        }
 
-            if (clickedLabel.Tag is "DefectData")
-                pnlDataArea.Controls.Add(_dgvDefectData);
-            else if (clickedLabel.Tag is "DefectImage")
-                pnlDataArea.Controls.Add(_defectInfoContainer);
+        private void SelectDefectData_Click(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            ClearDataViewSelection();
+            pnlDataArea.Controls.Add(_dgvDefectData);
+            label.ForeColor = Color.DodgerBlue;
+        }
+
+        private void SelectDefectImage_Click(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            ClearDataViewSelection();
+            pnlDataArea.Controls.Add(_defectInfoContainer);
+            label.ForeColor = Color.DodgerBlue;
+        }
+
+        private void SelectMisMatch_Click(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            ClearDataViewSelection();
+            pnlDataArea.Controls.Add(_pixelValueGraph);
+            label.ForeColor = Color.DodgerBlue;
         }
     }
 }

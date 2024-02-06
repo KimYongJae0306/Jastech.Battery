@@ -47,10 +47,10 @@
             this.lblUpperJudgement = new System.Windows.Forms.Label();
             this.tlpDataLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlDataArea = new System.Windows.Forms.Panel();
-            this.lblSelectMissmatch = new System.Windows.Forms.Label();
+            this.preCreatedDefectDataGridView = new System.Windows.Forms.DataGridView();
+            this.lblSelectMismatch = new System.Windows.Forms.Label();
             this.lblSelectDefectImage = new System.Windows.Forms.Label();
             this.lblSelectDefectData = new System.Windows.Forms.Label();
-            this.preCreatedDefectDataGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -281,7 +281,7 @@
             this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpDataLayout.Controls.Add(this.pnlDataArea, 0, 1);
-            this.tlpDataLayout.Controls.Add(this.lblSelectMissmatch, 2, 0);
+            this.tlpDataLayout.Controls.Add(this.lblSelectMismatch, 2, 0);
             this.tlpDataLayout.Controls.Add(this.lblSelectDefectImage, 1, 0);
             this.tlpDataLayout.Controls.Add(this.lblSelectDefectData, 0, 0);
             this.tlpDataLayout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -305,54 +305,6 @@
             this.pnlDataArea.Size = new System.Drawing.Size(1168, 188);
             this.pnlDataArea.TabIndex = 6;
             // 
-            // lblSelectMissmatch
-            // 
-            this.lblSelectMissmatch.AutoSize = true;
-            this.lblSelectMissmatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.lblSelectMissmatch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSelectMissmatch.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblSelectMissmatch.ForeColor = System.Drawing.Color.White;
-            this.lblSelectMissmatch.Location = new System.Drawing.Point(785, 0);
-            this.lblSelectMissmatch.Name = "lblSelectMissmatch";
-            this.lblSelectMissmatch.Size = new System.Drawing.Size(386, 50);
-            this.lblSelectMissmatch.TabIndex = 8;
-            this.lblSelectMissmatch.Tag = "MissMatchData";
-            this.lblSelectMissmatch.Text = "U/L MissMatch";
-            this.lblSelectMissmatch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblSelectMissmatch.Click += new System.EventHandler(this.lblSelectDataType_Click);
-            // 
-            // lblSelectDefectImage
-            // 
-            this.lblSelectDefectImage.AutoSize = true;
-            this.lblSelectDefectImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.lblSelectDefectImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSelectDefectImage.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblSelectDefectImage.ForeColor = System.Drawing.Color.White;
-            this.lblSelectDefectImage.Location = new System.Drawing.Point(394, 0);
-            this.lblSelectDefectImage.Name = "lblSelectDefectImage";
-            this.lblSelectDefectImage.Size = new System.Drawing.Size(385, 50);
-            this.lblSelectDefectImage.TabIndex = 7;
-            this.lblSelectDefectImage.Tag = "DefectImage";
-            this.lblSelectDefectImage.Text = "Defect Image";
-            this.lblSelectDefectImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblSelectDefectImage.Click += new System.EventHandler(this.lblSelectDataType_Click);
-            // 
-            // lblSelectDefectData
-            // 
-            this.lblSelectDefectData.AutoSize = true;
-            this.lblSelectDefectData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.lblSelectDefectData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSelectDefectData.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblSelectDefectData.ForeColor = System.Drawing.Color.White;
-            this.lblSelectDefectData.Location = new System.Drawing.Point(3, 0);
-            this.lblSelectDefectData.Name = "lblSelectDefectData";
-            this.lblSelectDefectData.Size = new System.Drawing.Size(385, 50);
-            this.lblSelectDefectData.TabIndex = 6;
-            this.lblSelectDefectData.Tag = "DefectData";
-            this.lblSelectDefectData.Text = "Defect Data";
-            this.lblSelectDefectData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblSelectDefectData.Click += new System.EventHandler(this.lblSelectDataType_Click);
-            // 
             // preCreatedDefectDataGridView
             // 
             this.preCreatedDefectDataGridView.AllowUserToAddRows = false;
@@ -363,7 +315,7 @@
             this.preCreatedDefectDataGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
@@ -372,7 +324,7 @@
             this.preCreatedDefectDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Indigo;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
@@ -389,6 +341,54 @@
             this.preCreatedDefectDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.preCreatedDefectDataGridView.Size = new System.Drawing.Size(1168, 188);
             this.preCreatedDefectDataGridView.TabIndex = 0;
+            // 
+            // lblSelectMismatch
+            // 
+            this.lblSelectMismatch.AutoSize = true;
+            this.lblSelectMismatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectMismatch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectMismatch.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblSelectMismatch.ForeColor = System.Drawing.Color.White;
+            this.lblSelectMismatch.Location = new System.Drawing.Point(785, 0);
+            this.lblSelectMismatch.Name = "lblSelectMismatch";
+            this.lblSelectMismatch.Size = new System.Drawing.Size(386, 50);
+            this.lblSelectMismatch.TabIndex = 8;
+            this.lblSelectMismatch.Tag = "MissMatchData";
+            this.lblSelectMismatch.Text = "U/L Mismatch";
+            this.lblSelectMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSelectMismatch.Click += new System.EventHandler(this.SelectMisMatch_Click);
+            // 
+            // lblSelectDefectImage
+            // 
+            this.lblSelectDefectImage.AutoSize = true;
+            this.lblSelectDefectImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectDefectImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectDefectImage.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblSelectDefectImage.ForeColor = System.Drawing.Color.White;
+            this.lblSelectDefectImage.Location = new System.Drawing.Point(394, 0);
+            this.lblSelectDefectImage.Name = "lblSelectDefectImage";
+            this.lblSelectDefectImage.Size = new System.Drawing.Size(385, 50);
+            this.lblSelectDefectImage.TabIndex = 7;
+            this.lblSelectDefectImage.Tag = "DefectImage";
+            this.lblSelectDefectImage.Text = "Defect Image";
+            this.lblSelectDefectImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSelectDefectImage.Click += new System.EventHandler(this.SelectDefectImage_Click);
+            // 
+            // lblSelectDefectData
+            // 
+            this.lblSelectDefectData.AutoSize = true;
+            this.lblSelectDefectData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectDefectData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectDefectData.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblSelectDefectData.ForeColor = System.Drawing.Color.White;
+            this.lblSelectDefectData.Location = new System.Drawing.Point(3, 0);
+            this.lblSelectDefectData.Name = "lblSelectDefectData";
+            this.lblSelectDefectData.Size = new System.Drawing.Size(385, 50);
+            this.lblSelectDefectData.TabIndex = 6;
+            this.lblSelectDefectData.Tag = "DefectData";
+            this.lblSelectDefectData.Text = "Defect Data";
+            this.lblSelectDefectData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSelectDefectData.Click += new System.EventHandler(this.SelectDefectData_Click);
             // 
             // MainPage
             // 
@@ -432,7 +432,7 @@
         private System.Windows.Forms.TableLayoutPanel tlpDataLayout;
         private System.Windows.Forms.Label lblSelectDefectImage;
         private System.Windows.Forms.Label lblSelectDefectData;
-        private System.Windows.Forms.Label lblSelectMissmatch;
+        private System.Windows.Forms.Label lblSelectMismatch;
         private System.Windows.Forms.Label lblLowerJudgement;
         private System.Windows.Forms.Label lblUpperJudgement;
         private System.Windows.Forms.Panel pnlDataArea;
