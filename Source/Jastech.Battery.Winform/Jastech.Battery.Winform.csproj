@@ -71,11 +71,23 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\AppsConfig.cs" />
+    <Compile Include="UI\Controls\LogControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\LogControl.Designer.cs">
+      <DependentUpon>LogControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\InspectionTeachingForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Forms\InspectionTeachingForm.Designer.cs">
       <DependentUpon>InspectionTeachingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\OperationSettingsForm.cs">
       <SubType>Form</SubType>
@@ -148,16 +160,20 @@
       <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\LogControl.resx">
+      <DependentUpon>LogControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\InspectionTeachingForm.resx">
       <DependentUpon>InspectionTeachingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\OperationSettingsForm.resx">
       <DependentUpon>OperationSettingsForm.cs</DependentUpon>

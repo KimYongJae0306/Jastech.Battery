@@ -22,9 +22,9 @@ namespace ESI.UI.Pages
 
         private DefectInfoContainerControl _defectInfoContainer = null;
 
-        private DrawBoxControl _leftDrawBox = null;
+        private DrawBoxControl _upperDrawBox = null;
 
-        private DrawBoxControl _rightDrawBox = null;
+        private DrawBoxControl _lowerDrawBox = null;
 
         private DataGridView _dgvDefectData = null;
 
@@ -60,8 +60,8 @@ namespace ESI.UI.Pages
 
         private void AddControls()
         {
-            _leftDrawBox = new DrawBoxControl { Dock = DockStyle.Right };
-            _rightDrawBox = new DrawBoxControl { Dock = DockStyle.Right };
+            _upperDrawBox = new DrawBoxControl { Dock = DockStyle.Fill };
+            _lowerDrawBox = new DrawBoxControl { Dock = DockStyle.Fill };
             _defectInfoContainer = new DefectInfoContainerControl { Dock = DockStyle.Fill };
             _defectMap = new CompactDefectMapControl { Dock = DockStyle.Fill };
             _dgvDefectData = new DataGridView
@@ -73,37 +73,40 @@ namespace ESI.UI.Pages
                 EnableHeadersVisualStyles = false,
                 RowHeadersVisible = false,
                 Dock = DockStyle.Fill,
-                GridColor = Color.DarkGray,
                 Size = new Size(1168, 188),
+                GridColor = Color.FromArgb(52, 52, 52),
                 BackgroundColor = Color.FromArgb(52, 52, 52),
                 EditMode = DataGridViewEditMode.EditProgrammatically,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
+                ColumnHeadersHeight = 25,
+                ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single,
                 ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
                 {
-                    BackColor = Color.FromArgb(104, 104, 104),
+                    Font = new Font("맑은고딕", 13, FontStyle.Bold),
                     ForeColor = Color.White,
-                    SelectionBackColor = Color.FromArgb(127, 127, 127),
+                    BackColor = Color.FromArgb(26, 26, 26),
+                    SelectionBackColor = Color.FromArgb(26, 26, 26),
                 },
                 DefaultCellStyle = new DataGridViewCellStyle
                 {
-                    BackColor = Color.FromArgb(52, 52, 52),
-                    ForeColor = Color.White,
-                    SelectionBackColor = Color.Indigo,
+                    BackColor = Color.AliceBlue,
+                    ForeColor = Color.Black,
+                    SelectionForeColor = Color.White,
+                    SelectionBackColor = Color.MediumPurple,
                 }
             };
 
-            _leftDrawBox.DisableFunctionButtons();
-            _rightDrawBox.DisableFunctionButtons();
+            _upperDrawBox.DisableFunctionButtons();
+            _lowerDrawBox.DisableFunctionButtons();
 
             _dgvDefectData.DataSource = _defectInfos;
             _defectInfoContainer.isVertical = false;
             _defectMap.SelectedDefectChanged += _defectInfoContainer.SelectedControlIndexChanged;
 
             pnlDefectMap.Controls.Add(_defectMap);
-            pnlImages.Controls.Add(_leftDrawBox);
-            pnlImages.Controls.Add(_rightDrawBox);
+            pnlUpperImage.Controls.Add(_upperDrawBox);
+            pnlLowerImage.Controls.Add(_lowerDrawBox);
             SelectDefectData_Click(lblSelectDefectData, null);
         }
 
@@ -135,8 +138,8 @@ namespace ESI.UI.Pages
 
             ClearDatas();
 
-            _leftDrawBox.EnableBitmapBrush(false);
-            _rightDrawBox.EnableBitmapBrush(false);
+            _upperDrawBox.EnableBitmapBrush(false);
+            _lowerDrawBox.EnableBitmapBrush(false);
 
             for (int yValue = 0; yValue <= _defectMap.maximumMeter * 50000; yValue += 50000)
             {
@@ -156,24 +159,24 @@ namespace ESI.UI.Pages
                     #region 보기싫은 if문
                     if (testInfo.CameraName == "Upper")
                     {
-                        lblUpperJudgement.Text = "NG";
-                        lblUpperJudgement.BackColor = Color.Red;
+                        btnUpperJudgement.Text = "NG";
+                        btnUpperJudgement.BackColor = Color.Red;
                     }
                     else
                     {
-                        lblUpperJudgement.Text = "OK";
-                        lblUpperJudgement.BackColor = Color.LimeGreen;
+                        btnUpperJudgement.Text = "OK";
+                        btnUpperJudgement.BackColor = Color.LimeGreen;
                     }
 
                     if (testInfo.CameraName == "Lower")
                     {
-                        lblLowerJudgement.Text = "NG";
-                        lblLowerJudgement.BackColor = Color.Red;
+                        btnLowerJudgement.Text = "NG";
+                        btnLowerJudgement.BackColor = Color.Red;
                     }
                     else
                     {
-                        lblLowerJudgement.Text = "OK";
-                        lblLowerJudgement.BackColor = Color.LimeGreen;
+                        btnLowerJudgement.Text = "OK";
+                        btnLowerJudgement.BackColor = Color.LimeGreen;
                     }
                     #endregion
 
@@ -200,53 +203,59 @@ namespace ESI.UI.Pages
                 _defectMap.maximumY = yValue;
                 _defectMap.Invalidate();
 
-                _leftDrawBox.SetImage((Bitmap)testBitmap.Clone());
-                _leftDrawBox.FitZoom();
-                _rightDrawBox.SetImage((Bitmap)testBitmap.Clone());
-                _rightDrawBox.FitZoom();
+                _upperDrawBox.SetImage((Bitmap)testBitmap.Clone());
+                _upperDrawBox.FitZoom();
+                _lowerDrawBox.SetImage((Bitmap)testBitmap.Clone());
+                _lowerDrawBox.FitZoom();
 
                 Application.DoEvents();
             }
 
-            _leftDrawBox.EnableBitmapBrush(true);
-            _rightDrawBox.EnableBitmapBrush(true);
-        }
-
-        private void pnlImages_SizeChanged(object sender, EventArgs e)
-        {
-            _leftDrawBox.Width = pnlImages.Width / 2;
-            _rightDrawBox.Width = pnlImages.Width / 2;
+            _upperDrawBox.EnableBitmapBrush(true);
+            _lowerDrawBox.EnableBitmapBrush(true);
         }
 
         private void ClearDataViewSelection()
         {
             foreach (Control control in tlpDataLayout.Controls)
-                control.ForeColor = Color.White;
+            {
+                if (control.Name.Contains("Select"))
+                    control.ForeColor = Color.Black;
+                else if (control.Name.Contains("Highlight"))
+                    control.BackColor = Color.FromArgb(104, 104, 104);
+            }
             pnlDataArea.Controls.Clear();
         }
 
         private void SelectDefectData_Click(object sender, EventArgs e)
         {
-            var label = sender as Label;
             ClearDataViewSelection();
             pnlDataArea.Controls.Add(_dgvDefectData);
-            label.ForeColor = Color.DodgerBlue;
+            lblSelectDefectData.ForeColor = Color.White;
+            lblHighlightDefectData.BackColor = Color.Tomato;
         }
 
         private void SelectDefectImage_Click(object sender, EventArgs e)
         {
-            var label = sender as Label;
             ClearDataViewSelection();
             pnlDataArea.Controls.Add(_defectInfoContainer);
-            label.ForeColor = Color.DodgerBlue;
+            lblSelectDefectImage.ForeColor = Color.White;
+            lblHighlightDefectImage.BackColor = Color.Tomato;
         }
 
         private void SelectMisMatch_Click(object sender, EventArgs e)
         {
-            var label = sender as Label;
             ClearDataViewSelection();
             pnlDataArea.Controls.Add(_pixelValueGraph);
-            label.ForeColor = Color.DodgerBlue;
+            lblSelectMismatch.ForeColor = Color.White;
+            lblHighlightMismatch.BackColor = Color.Tomato;
+        }
+
+        private void MainPage_SizeChanged(object sender, EventArgs e)
+        {
+            _upperDrawBox.Width = pnlUpperImage.Width / 2;
+            _lowerDrawBox.Width = pnlLowerImage.Width / 2;
+            _defectMap.Invalidate();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ESI.Core;
 using ESI.UI.Pages;
 using Jastech.Battery.Winform;
+using Jastech.Battery.Winform.Forms;
 using Jastech.Battery.Winform.Settings;
 using Jastech.Framework.Users;
 using Jastech.Framework.Winform.Helper;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -24,13 +26,13 @@ namespace ESI
         #region 속성
         private List<UserControl> PageControlList { get; set; } = null;
 
-        private List<Label> PageLabelList { get; set; } = null;
-
         private MainPage MainPageControl { get; set; } = null;
 
         private TeachingPage TeachingPageControl { get; set; } = null;
 
         private DataPage DataPageControl { get; set; } = null;
+
+        private LogForm LogForm { get; set; } = null;
         #endregion
 
         #region 이벤트
@@ -50,7 +52,7 @@ namespace ESI
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (UserManager.Instance().CurrentUser.Type == AuthorityType.Maker)
-                this.Text = " ";
+                Text = " ";
 
             lblMachineName.Text = AppsConfig.Instance().MachineName;
 
@@ -77,6 +79,8 @@ namespace ESI
             DataPageControl = new DataPage();
             DataPageControl.Dock = DockStyle.Fill;
             PageControlList.Add(DataPageControl);
+
+            LogForm = new LogForm();
         }
 
         private void SelectMainPage()
@@ -125,6 +129,7 @@ namespace ESI
         private void lblLogPage_Click(object sender, EventArgs e)
         {
             SetSelectLabel(sender);
+            LogForm.ShowDialog();
         }
         #endregion
     }
