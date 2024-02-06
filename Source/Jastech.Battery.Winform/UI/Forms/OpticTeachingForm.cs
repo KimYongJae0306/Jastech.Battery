@@ -29,7 +29,7 @@ using System.Windows.Forms;
 using System.Windows.Markup;
 using static Jastech.Framework.Device.Motions.AxisMovingParam;
 
-namespace Jastech.Battery.Winform.Forms
+namespace Jastech.Battery.Winform.UI.Forms
 {
     public partial class OpticTeachingForm : Form
     {

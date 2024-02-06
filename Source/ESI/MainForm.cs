@@ -3,6 +3,7 @@ using ESI.UI.Pages;
 using Jastech.Battery.Winform;
 using Jastech.Battery.Winform.Settings;
 using Jastech.Framework.Users;
+using Jastech.Framework.Winform.Helper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,6 +29,8 @@ namespace ESI
         private MainPage MainPageControl { get; set; } = null;
 
         private TeachingPage TeachingPageControl { get; set; } = null;
+
+        private DataPage DataPageControl { get; set; } = null;
         #endregion
 
         #region 이벤트
@@ -56,7 +59,7 @@ namespace ESI
 
             ESIInspRunner test = new ESIInspRunner();
             test.Initialize();
-        }
+        }   
 
         private void AddControls()
         {
@@ -71,10 +74,9 @@ namespace ESI
             TeachingPageControl.Dock = DockStyle.Fill;
             PageControlList.Add(TeachingPageControl);
 
-            // Button List
-            PageLabelList = new List<Label>();
-            PageLabelList.Add(lblMainPage);
-            PageLabelList.Add(lblTeachingPage);
+            DataPageControl = new DataPage();
+            DataPageControl.Dock = DockStyle.Fill;
+            PageControlList.Add(DataPageControl);
         }
 
         private void SelectMainPage()
@@ -85,12 +87,11 @@ namespace ESI
 
         private void SetSelectLabel(object sender)
         {
-            foreach (Label label in PageLabelList)
-                label.ForeColor = Color.White;
+            foreach (Control control in ControlHelper.GetAllControlsUsingRecursive(tlpFunctionButtons))
+                control.ForeColor = Color.White;
 
             Label currentLabel = sender as Label;
-            int labelIndex = Convert.ToInt32(currentLabel.Parent.Tag);
-            PageLabelList[labelIndex].ForeColor = Color.DodgerBlue;
+            currentLabel.ForeColor = Color.DodgerBlue;
         }
 
         private void SetSelectPage(UserControl selectedControl)
@@ -113,6 +114,17 @@ namespace ESI
         {
             SetSelectLabel(sender);
             SetSelectPage(TeachingPageControl);
+        }
+
+        private void lblDataPage_Click(object sender, EventArgs e)
+        {
+            SetSelectLabel(sender);
+            SetSelectPage(DataPageControl);
+        }
+
+        private void lblLogPage_Click(object sender, EventArgs e)
+        {
+            SetSelectLabel(sender);
         }
         #endregion
     }
