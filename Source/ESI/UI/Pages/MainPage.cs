@@ -11,6 +11,7 @@ using Jastech.Battery.Structure.Data;
 using static Jastech.Framework.Structure.Defect.DefectDefine;   //테스트 후 삭제
 using Jastech.Framework.Winform.Controls;
 using Jastech.Framework.Winform.Helper;
+using System.Drawing.Drawing2D;
 
 namespace ESI.UI.Pages
 {
@@ -62,8 +63,36 @@ namespace ESI.UI.Pages
             _leftDrawBox = new DrawBoxControl { Dock = DockStyle.Right };
             _rightDrawBox = new DrawBoxControl { Dock = DockStyle.Right };
             _defectInfoContainer = new DefectInfoContainerControl { Dock = DockStyle.Fill };
-            _defectMap = new CompactDefectMapControl { Dock = DockStyle.Fill};
-            _dgvDefectData = preCreatedDefectDataGridView;
+            _defectMap = new CompactDefectMapControl { Dock = DockStyle.Fill };
+            _dgvDefectData = new DataGridView
+            {
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                AllowUserToOrderColumns = true,
+                AllowUserToResizeRows = false,
+                EnableHeadersVisualStyles = false,
+                RowHeadersVisible = false,
+                Dock = DockStyle.Fill,
+                GridColor = Color.DarkGray,
+                Size = new Size(1168, 188),
+                BackgroundColor = Color.FromArgb(52, 52, 52),
+                EditMode = DataGridViewEditMode.EditProgrammatically,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
+                ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                {
+                    BackColor = Color.FromArgb(104, 104, 104),
+                    ForeColor = Color.White,
+                    SelectionBackColor = Color.FromArgb(127, 127, 127),
+                },
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    BackColor = Color.FromArgb(52, 52, 52),
+                    ForeColor = Color.White,
+                    SelectionBackColor = Color.Indigo,
+                }
+            };
 
             _leftDrawBox.DisableFunctionButtons();
             _rightDrawBox.DisableFunctionButtons();

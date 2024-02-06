@@ -1,4 +1,6 @@
-﻿namespace ESI.UI.Pages
+﻿using Jastech.Framework.Winform.Controls;
+
+namespace ESI.UI.Pages
 {
     partial class MainPage
     {
@@ -47,7 +49,6 @@
             this.lblUpperJudgement = new System.Windows.Forms.Label();
             this.tlpDataLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlDataArea = new System.Windows.Forms.Panel();
-            this.preCreatedDefectDataGridView = new System.Windows.Forms.DataGridView();
             this.lblSelectMismatch = new System.Windows.Forms.Label();
             this.lblSelectDefectImage = new System.Windows.Forms.Label();
             this.lblSelectDefectData = new System.Windows.Forms.Label();
@@ -59,7 +60,6 @@
             this.tlpFunctionLayout.SuspendLayout();
             this.tlpDataLayout.SuspendLayout();
             this.pnlDataArea.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.preCreatedDefectDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel3
@@ -298,49 +298,11 @@
             // pnlDataArea
             // 
             this.tlpDataLayout.SetColumnSpan(this.pnlDataArea, 3);
-            this.pnlDataArea.Controls.Add(this.preCreatedDefectDataGridView);
             this.pnlDataArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlDataArea.Location = new System.Drawing.Point(3, 53);
             this.pnlDataArea.Name = "pnlDataArea";
             this.pnlDataArea.Size = new System.Drawing.Size(1168, 188);
             this.pnlDataArea.TabIndex = 6;
-            // 
-            // preCreatedDefectDataGridView
-            // 
-            this.preCreatedDefectDataGridView.AllowUserToAddRows = false;
-            this.preCreatedDefectDataGridView.AllowUserToDeleteRows = false;
-            this.preCreatedDefectDataGridView.AllowUserToOrderColumns = true;
-            this.preCreatedDefectDataGridView.AllowUserToResizeRows = false;
-            this.preCreatedDefectDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.preCreatedDefectDataGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.preCreatedDefectDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.preCreatedDefectDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Indigo;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.preCreatedDefectDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            this.preCreatedDefectDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.preCreatedDefectDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.preCreatedDefectDataGridView.EnableHeadersVisualStyles = false;
-            this.preCreatedDefectDataGridView.GridColor = System.Drawing.Color.DarkGray;
-            this.preCreatedDefectDataGridView.Location = new System.Drawing.Point(0, 0);
-            this.preCreatedDefectDataGridView.Name = "preCreatedDefectDataGridView";
-            this.preCreatedDefectDataGridView.RowHeadersVisible = false;
-            this.preCreatedDefectDataGridView.RowTemplate.Height = 23;
-            this.preCreatedDefectDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.preCreatedDefectDataGridView.Size = new System.Drawing.Size(1168, 188);
-            this.preCreatedDefectDataGridView.TabIndex = 0;
             // 
             // lblSelectMismatch
             // 
@@ -410,7 +372,6 @@
             this.tlpDataLayout.ResumeLayout(false);
             this.tlpDataLayout.PerformLayout();
             this.pnlDataArea.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.preCreatedDefectDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -437,6 +398,5 @@
         private System.Windows.Forms.Label lblUpperJudgement;
         private System.Windows.Forms.Panel pnlDataArea;
         private System.Windows.Forms.Panel pnlDefectMap;
-        private System.Windows.Forms.DataGridView preCreatedDefectDataGridView;
     }
 }

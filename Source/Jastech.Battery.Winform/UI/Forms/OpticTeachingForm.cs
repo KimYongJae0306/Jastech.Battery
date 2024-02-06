@@ -88,7 +88,7 @@ namespace Jastech.Battery.Winform.Forms
             InitializeUI();
             InitializeData();
 
-            lblCamInfo.Text = $"CAM : {LineCamera.Camera.Name}";
+            //lblCamInfo.Text = $"CAM : {LineCamera.Camera.Name}";
 
             //SelectedAxis = AxisHandler.GetAxis(AxisName.X);
 
