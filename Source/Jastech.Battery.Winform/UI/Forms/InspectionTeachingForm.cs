@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Jastech.Battery.Structure.Data;
+using Jastech.Battery.Winform.UI.Controls;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform.Controls;
 using System;
@@ -20,10 +21,16 @@ namespace Jastech.Battery.Winform.UI.Forms
 {
     public partial class InspectionTeachingForm : Form
     {
-        
+        #region 필드
+        private Color _selectedColor;
+
+        private Color _nonSelectedColor;
+        #endregion
+
+        #region 속성
         private Mat OrgMat { get; set; } = null;
 
-        public InspDirection InspDirection { get; set; }
+        //public InspDirection InspDirection { get; set; }
 
         private DrawBoxControl DrawBoxControl { get; set; } = null;
 
@@ -31,15 +38,46 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private ImageViewerControl ImageViewerControl { get; set; } = null;
 
+        private DisplayType _displayType { get; set; } = DisplayType.FindEdge;
+
+        public LineCamera LineCamera { get; set; }
+
+        private FindEdgeControl FindEdgeContorl { get; set; } = null;
+
+        private CoatingControl CoatingControl { get; set; } = null;
+
+        private NonCoatingControl NonCoatingControl { get; set; } = null;
+        #endregion
+
+        #region 이벤트
+        #endregion
+
+        #region 델리게이트
+        #endregion
+
+        #region 생성자
         public InspectionTeachingForm()
         {
             InitializeComponent();
         }
-
+        #endregion
+        
+        #region 메서드
         private void InspectionTeachingForm_Load(object sender, EventArgs e)
         {
-            //TeachingData.Instance().
+            InitializeUI();
             AddControl();
+        }
+
+        private void InitializeUI()
+        {
+            _selectedColor = Color.FromArgb(104, 104, 104);
+            _nonSelectedColor = Color.FromArgb(26, 26, 26);
+
+            if (LineCamera == null)
+                lblDirection.Text = $"CAM : ";
+            else
+                lblDirection.Text = $"CAM : {LineCamera.Camera.Name}";
         }
 
         private void AddControl()
@@ -58,6 +96,18 @@ namespace Jastech.Battery.Winform.UI.Forms
             ImageViewerControl = new ImageViewerControl();
             ImageViewerControl.Dock = DockStyle.Fill;
             pnlDisplay.Controls.Add(ImageViewerControl);
+
+            FindEdgeContorl = new FindEdgeControl();
+            FindEdgeContorl.Dock = DockStyle.Fill;
+            pnlTeach.Controls.Add(FindEdgeContorl);
+
+            CoatingControl = new CoatingControl();
+            CoatingControl.Dock = DockStyle.Fill;
+            pnlTeach.Controls.Add(CoatingControl);
+
+            NonCoatingControl = new NonCoatingControl();
+            NonCoatingControl.Dock = DockStyle.Fill;
+            pnlTeach.Controls.Add(NonCoatingControl);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -123,5 +173,71 @@ namespace Jastech.Battery.Winform.UI.Forms
         {
             e.Effect = DragDropEffects.Copy;
         }
+
+        private void btnFindEdge_Click(object sender, EventArgs e)
+        {
+            SelectPage(DisplayType.FindEdge);
+        }
+
+        private void btnCoating_Click(object sender, EventArgs e)
+        {
+            SelectPage(DisplayType.Coating);
+        }
+
+        private void btnNonCoating_Click(object sender, EventArgs e)
+        {
+            SelectPage(DisplayType.NonCoating);
+        }
+
+        private void SelectPage(DisplayType displayType)
+        {
+            ClearSelectedButton();
+            SetTeachingControl(displayType);
+        }
+
+        private void ClearSelectedButton()
+        {
+            pnlTeach.Controls.Clear();
+
+            foreach (Control control in tlpTeachingItems.Controls)
+            {
+                if (control is Button)
+                    control.BackColor = _nonSelectedColor;
+            }
+        }
+
+        private void SetTeachingControl(DisplayType displayType)
+        {
+            _displayType = displayType;
+
+            switch (displayType)
+            {
+                case DisplayType.FindEdge:
+                    btnFindEdge.BackColor = _selectedColor;
+                    pnlTeach.Controls.Add(FindEdgeContorl);
+                    break;
+
+                case DisplayType.Coating:
+                    btnCoating.BackColor = _selectedColor;
+                    pnlTeach.Controls.Add(FindEdgeContorl);
+                    break;
+
+                case DisplayType.NonCoating:
+                    btnNonCoating.BackColor = _selectedColor;
+                    pnlTeach.Controls.Add(FindEdgeContorl);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        #endregion
+    }
+
+    public enum DisplayType
+    {
+        FindEdge,
+        Coating,
+        NonCoating,
     }
 }

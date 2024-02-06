@@ -71,6 +71,24 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\AppsConfig.cs" />
+    <Compile Include="UI\Controls\CoatingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\CoatingControl.Designer.cs">
+      <DependentUpon>CoatingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\FindEdgeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\FindEdgeControl.Designer.cs">
+      <DependentUpon>FindEdgeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\NonCoatingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\NonCoatingControl.Designer.cs">
+      <DependentUpon>NonCoatingControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\InspectionTeachingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,13 +166,20 @@
       <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\CoatingControl.resx">
+      <DependentUpon>CoatingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\FindEdgeControl.resx">
+      <DependentUpon>FindEdgeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\NonCoatingControl.resx">
+      <DependentUpon>NonCoatingControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\InspectionTeachingForm.resx">
       <DependentUpon>InspectionTeachingForm.cs</DependentUpon>
