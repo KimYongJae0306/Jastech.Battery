@@ -27,6 +27,8 @@ namespace ESI.UI.Pages
 
         private DataGridView _dgvDefectData = null;
 
+        private PixelValueGraphControl _pixelValueGraph = null;
+
         private readonly BindingList<ElectrodeDefectInfo> _defectInfos = new BindingList<ElectrodeDefectInfo>();
         #endregion
 
@@ -73,7 +75,7 @@ namespace ESI.UI.Pages
             pnlDefectMap.Controls.Add(_defectMap);
             pnlImages.Controls.Add(_leftDrawBox);
             pnlImages.Controls.Add(_rightDrawBox);
-            pnlDataArea.Controls.Add(_dgvDefectData);
+            SelectDefectData_Click(lblSelectDefectData, null);
         }
 
         private void ClearDatas()
@@ -187,15 +189,35 @@ namespace ESI.UI.Pages
             _rightDrawBox.Width = pnlImages.Width / 2;
         }
 
-        private void lblSelectDataType_Click(object sender, EventArgs e)
+        private void ClearDataViewSelection()
         {
-            var clickedLabel = sender as Label;
+            foreach (Control control in tlpDataLayout.Controls)
+                control.ForeColor = Color.White;
             pnlDataArea.Controls.Clear();
+        }
 
-            if (clickedLabel.Tag is "DefectData")
-                pnlDataArea.Controls.Add(_dgvDefectData);
-            else if (clickedLabel.Tag is "DefectImage")
-                pnlDataArea.Controls.Add(_defectInfoContainer);
+        private void SelectDefectData_Click(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            ClearDataViewSelection();
+            pnlDataArea.Controls.Add(_dgvDefectData);
+            label.ForeColor = Color.DodgerBlue;
+        }
+
+        private void SelectDefectImage_Click(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            ClearDataViewSelection();
+            pnlDataArea.Controls.Add(_defectInfoContainer);
+            label.ForeColor = Color.DodgerBlue;
+        }
+
+        private void SelectMisMatch_Click(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            ClearDataViewSelection();
+            pnlDataArea.Controls.Add(_pixelValueGraph);
+            label.ForeColor = Color.DodgerBlue;
         }
     }
 }
