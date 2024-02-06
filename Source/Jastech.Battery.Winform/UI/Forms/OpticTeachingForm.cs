@@ -239,8 +239,6 @@ namespace Jastech.Battery.Winform.Forms
             StopGrab();
         }
 
-        float[] OrgHistData;
-        byte[] OrgCompressedData;
         private void btnLoadImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -286,9 +284,6 @@ namespace Jastech.Battery.Winform.Forms
                     return;
 
                 DrawBoxControl.SetImage(image.ToBitmap());
-
-                CalculateHistogram(image);
-                CalculateCompressedImageData(image);
             }
         }
 
@@ -325,69 +320,6 @@ namespace Jastech.Battery.Winform.Forms
             return false;
         }
 
-        private void DataViewOptions_CheckedChanged(object sender, EventArgs e)
-        {
-            var radio = sender as RadioButton;
-            string name = radio.Name;
-
-            if (rdoGraphArrowTypeView.Checked)
-            {
-                DataGraphControl.SetPenColor(Color.Blue);
-                DrawBoxControl.Refresh();
-            }
-            else if (rdoGraphHistTypeView.Checked)
-            {
-                DataGraphControl.SetCaption("GrayLevel", "Count");
-                DataGraphControl.SetPenColor(Color.Yellow);
-                DataGraphControl.SetData(OrgHistData);
-            }
-            else if (rdoGraphCompressedTypeView.Checked)
-            {
-                if (OrgCompressedData == null)
-                    return;
-
-                float[] compressedData = OrgCompressedData.Select(value => Convert.ToSingle(value)).ToArray();
-                DataGraphControl.SetPenColor(Color.IndianRed);
-                DataGraphControl.SetCaption("Pixel", "Deviation");
-                DataGraphControl.SetData(compressedData);
-            }
-            else if (rdoGraphDerivedTypeView.Checked)
-            {
-                if (OrgCompressedData == null)
-                    return;
-
-                float[] derived2ndData = MathHelper.GetDerivedArray(OrgCompressedData, 2).Select(value => Convert.ToSingle(value)).ToArray();
-                DataGraphControl.SetPenColor(Color.OrangeRed);
-                DataGraphControl.SetCaption("Pixel", "Deviation");
-                DataGraphControl.SetData(derived2ndData);
-            }
-            else if (rdoGraphMoveAvgTypeView.Checked)
-            {
-                if (OrgCompressedData == null)
-                    return;
-
-                float[] derived2ndData = MathHelper.GetDerivedArray(OrgCompressedData, 2).Select(value => Convert.ToSingle(value)).ToArray();
-                float[] movingAverage = MathHelper.GetMovingAverage(derived2ndData, 2);
-                DataGraphControl.SetPenColor(Color.SaddleBrown);
-                DataGraphControl.SetCaption("Pixel", "Deviation");
-                DataGraphControl.SetData(movingAverage);
-            }
-        }
-
-        private void CalculateHistogram(Mat image)
-        {
-            OrgHistData = MatHelper.GetHistogram(image, null);
-        }
-
-        private void CalculateCompressedImageData(Mat image)
-        {
-            Mat avgResult = new Mat();
-            CvInvoke.Reduce(image, avgResult, ReduceDimension.SingleRow, ReduceType.ReduceAvg, image.Depth);
-            CvInvoke.Normalize(avgResult, avgResult, 0, 255, NormType.MinMax, image.Depth);
-            OrgCompressedData = new byte[avgResult.Width * avgResult.Height];
-            Marshal.Copy(avgResult.DataPointer, OrgCompressedData, 0, OrgCompressedData.Length);
-        }
-
         private void StopGrab()
         {
             //LineCamera.StopGrab();
@@ -420,24 +352,5 @@ namespace Jastech.Battery.Winform.Forms
             btnGrabStop.Enabled = isEnable;
         }
         #endregion
-
-        private void trkDataXMin_Scroll(object sender, EventArgs e)
-        {
-        }
-
-        private void trkDataXMax_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-        private void trkDataYMin_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-        private void trkDataYMax_Scroll(object sender, EventArgs e)
-        {
-
-        }
     }
 }
