@@ -82,9 +82,10 @@ namespace ESI.UI.Pages
             _defectInfoContainer.ClearDefectInfo();
         }
 
-        Bitmap testBitmap = new Bitmap(@"Y:\16kTestImg.bmp");
         private void Test_Click(object sender, EventArgs e)
         {
+            string imgPath = @"Y:\16kTestImg.bmp";
+            Bitmap testBitmap = new Bitmap(imgPath);
             Random rand = new Random();
 
             ClearDatas();
@@ -143,7 +144,7 @@ namespace ESI.UI.Pages
 
                     testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.LocalImagePath, typeof(string));
 
-                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.LocalImagePath, @"Y:\TestImg.bmp");
+                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.LocalImagePath, imgPath);
 
                     _defectInfos.Add(testInfo);
                     _defectInfoContainer.AddDefectInfo(testInfo);
