@@ -235,7 +235,7 @@ namespace Jastech.Battery.Winform.Forms
 
         private void btnGrabStop_Click(object sender, EventArgs e)
         {
-            LineCamera.IsLive = false;
+            //LineCamera.IsLive = false;
             StopGrab();
         }
 
