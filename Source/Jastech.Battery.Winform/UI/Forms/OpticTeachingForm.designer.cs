@@ -46,16 +46,6 @@ namespace Jastech.Battery.Winform.Forms
             this.btnGrabStop = new System.Windows.Forms.Button();
             this.btnGrabStart = new System.Windows.Forms.Button();
             this.pnlTeach = new System.Windows.Forms.Panel();
-            this.pnlGraphTest = new System.Windows.Forms.Panel();
-            this.trkDataYMax = new System.Windows.Forms.TrackBar();
-            this.trkDataYMin = new System.Windows.Forms.TrackBar();
-            this.trkDataXMax = new System.Windows.Forms.TrackBar();
-            this.trkDataXMin = new System.Windows.Forms.TrackBar();
-            this.rdoGraphArrowTypeView = new System.Windows.Forms.RadioButton();
-            this.rdoGraphMoveAvgTypeView = new System.Windows.Forms.RadioButton();
-            this.rdoGraphHistTypeView = new System.Windows.Forms.RadioButton();
-            this.rdoGraphCompressedTypeView = new System.Windows.Forms.RadioButton();
-            this.rdoGraphDerivedTypeView = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHistogram = new System.Windows.Forms.Panel();
             this.pnlDisplay = new System.Windows.Forms.Panel();
@@ -68,12 +58,6 @@ namespace Jastech.Battery.Winform.Forms
             this.tlpCommon.SuspendLayout();
             this.tlpUnit.SuspendLayout();
             this.tlpLoadImage.SuspendLayout();
-            this.pnlTeach.SuspendLayout();
-            this.pnlGraphTest.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDataYMax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDataYMin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDataXMax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDataXMin)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlDisplay.SuspendLayout();
             this.SuspendLayout();
@@ -305,130 +289,12 @@ namespace Jastech.Battery.Winform.Forms
             // 
             // pnlTeach
             // 
-            this.pnlTeach.Controls.Add(this.pnlGraphTest);
             this.pnlTeach.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTeach.Location = new System.Drawing.Point(0, 80);
             this.pnlTeach.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTeach.Name = "pnlTeach";
             this.pnlTeach.Size = new System.Drawing.Size(851, 781);
             this.pnlTeach.TabIndex = 0;
-            // 
-            // pnlGraphTest
-            // 
-            this.pnlGraphTest.Controls.Add(this.trkDataYMax);
-            this.pnlGraphTest.Controls.Add(this.trkDataYMin);
-            this.pnlGraphTest.Controls.Add(this.trkDataXMax);
-            this.pnlGraphTest.Controls.Add(this.trkDataXMin);
-            this.pnlGraphTest.Controls.Add(this.rdoGraphArrowTypeView);
-            this.pnlGraphTest.Controls.Add(this.rdoGraphMoveAvgTypeView);
-            this.pnlGraphTest.Controls.Add(this.rdoGraphHistTypeView);
-            this.pnlGraphTest.Controls.Add(this.rdoGraphCompressedTypeView);
-            this.pnlGraphTest.Controls.Add(this.rdoGraphDerivedTypeView);
-            this.pnlGraphTest.Location = new System.Drawing.Point(15, 522);
-            this.pnlGraphTest.Name = "pnlGraphTest";
-            this.pnlGraphTest.Size = new System.Drawing.Size(465, 200);
-            this.pnlGraphTest.TabIndex = 304;
-            // 
-            // trkDataYMax
-            // 
-            this.trkDataYMax.Location = new System.Drawing.Point(401, 28);
-            this.trkDataYMax.Maximum = 1000;
-            this.trkDataYMax.Name = "trkDataYMax";
-            this.trkDataYMax.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trkDataYMax.Size = new System.Drawing.Size(45, 167);
-            this.trkDataYMax.TabIndex = 307;
-            this.trkDataYMax.TickFrequency = 100;
-            this.trkDataYMax.Value = 1000;
-            this.trkDataYMax.Scroll += new System.EventHandler(this.trkDataYMax_Scroll);
-            // 
-            // trkDataYMin
-            // 
-            this.trkDataYMin.Location = new System.Drawing.Point(353, 28);
-            this.trkDataYMin.Maximum = 1000;
-            this.trkDataYMin.Name = "trkDataYMin";
-            this.trkDataYMin.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trkDataYMin.Size = new System.Drawing.Size(45, 167);
-            this.trkDataYMin.TabIndex = 306;
-            this.trkDataYMin.TickFrequency = 100;
-            this.trkDataYMin.Scroll += new System.EventHandler(this.trkDataYMin_Scroll);
-            // 
-            // trkDataXMax
-            // 
-            this.trkDataXMax.Location = new System.Drawing.Point(166, 150);
-            this.trkDataXMax.Maximum = 1000;
-            this.trkDataXMax.Name = "trkDataXMax";
-            this.trkDataXMax.Size = new System.Drawing.Size(172, 45);
-            this.trkDataXMax.TabIndex = 305;
-            this.trkDataXMax.TickFrequency = 100;
-            this.trkDataXMax.Value = 1000;
-            this.trkDataXMax.Scroll += new System.EventHandler(this.trkDataXMax_Scroll);
-            // 
-            // trkDataXMin
-            // 
-            this.trkDataXMin.Location = new System.Drawing.Point(166, 115);
-            this.trkDataXMin.Maximum = 1000;
-            this.trkDataXMin.Name = "trkDataXMin";
-            this.trkDataXMin.Size = new System.Drawing.Size(172, 45);
-            this.trkDataXMin.TabIndex = 304;
-            this.trkDataXMin.TickFrequency = 100;
-            this.trkDataXMin.Scroll += new System.EventHandler(this.trkDataXMin_Scroll);
-            // 
-            // rdoGraphArrowTypeView
-            // 
-            this.rdoGraphArrowTypeView.AutoSize = true;
-            this.rdoGraphArrowTypeView.Checked = true;
-            this.rdoGraphArrowTypeView.Location = new System.Drawing.Point(15, 14);
-            this.rdoGraphArrowTypeView.Name = "rdoGraphArrowTypeView";
-            this.rdoGraphArrowTypeView.Size = new System.Drawing.Size(212, 24);
-            this.rdoGraphArrowTypeView.TabIndex = 299;
-            this.rdoGraphArrowTypeView.TabStop = true;
-            this.rdoGraphArrowTypeView.Text = "화살표 긋는거(기존에 있던)";
-            this.rdoGraphArrowTypeView.UseVisualStyleBackColor = true;
-            this.rdoGraphArrowTypeView.CheckedChanged += new System.EventHandler(this.DataViewOptions_CheckedChanged);
-            // 
-            // rdoGraphMoveAvgTypeView
-            // 
-            this.rdoGraphMoveAvgTypeView.AutoSize = true;
-            this.rdoGraphMoveAvgTypeView.Location = new System.Drawing.Point(15, 116);
-            this.rdoGraphMoveAvgTypeView.Name = "rdoGraphMoveAvgTypeView";
-            this.rdoGraphMoveAvgTypeView.Size = new System.Drawing.Size(102, 24);
-            this.rdoGraphMoveAvgTypeView.TabIndex = 303;
-            this.rdoGraphMoveAvgTypeView.Text = "이동평균량";
-            this.rdoGraphMoveAvgTypeView.UseVisualStyleBackColor = true;
-            this.rdoGraphMoveAvgTypeView.CheckedChanged += new System.EventHandler(this.DataViewOptions_CheckedChanged);
-            // 
-            // rdoGraphHistTypeView
-            // 
-            this.rdoGraphHistTypeView.AutoSize = true;
-            this.rdoGraphHistTypeView.Location = new System.Drawing.Point(15, 44);
-            this.rdoGraphHistTypeView.Name = "rdoGraphHistTypeView";
-            this.rdoGraphHistTypeView.Size = new System.Drawing.Size(102, 24);
-            this.rdoGraphHistTypeView.TabIndex = 300;
-            this.rdoGraphHistTypeView.Text = "히스토그램";
-            this.rdoGraphHistTypeView.UseVisualStyleBackColor = true;
-            this.rdoGraphHistTypeView.CheckedChanged += new System.EventHandler(this.DataViewOptions_CheckedChanged);
-            // 
-            // rdoGraphCompressedTypeView
-            // 
-            this.rdoGraphCompressedTypeView.AutoSize = true;
-            this.rdoGraphCompressedTypeView.Location = new System.Drawing.Point(15, 68);
-            this.rdoGraphCompressedTypeView.Name = "rdoGraphCompressedTypeView";
-            this.rdoGraphCompressedTypeView.Size = new System.Drawing.Size(87, 24);
-            this.rdoGraphCompressedTypeView.TabIndex = 301;
-            this.rdoGraphCompressedTypeView.Text = "가로압축";
-            this.rdoGraphCompressedTypeView.UseVisualStyleBackColor = true;
-            this.rdoGraphCompressedTypeView.CheckedChanged += new System.EventHandler(this.DataViewOptions_CheckedChanged);
-            // 
-            // rdoGraphDerivedTypeView
-            // 
-            this.rdoGraphDerivedTypeView.AutoSize = true;
-            this.rdoGraphDerivedTypeView.Location = new System.Drawing.Point(15, 92);
-            this.rdoGraphDerivedTypeView.Name = "rdoGraphDerivedTypeView";
-            this.rdoGraphDerivedTypeView.Size = new System.Drawing.Size(81, 24);
-            this.rdoGraphDerivedTypeView.TabIndex = 302;
-            this.rdoGraphDerivedTypeView.Text = "2차미분";
-            this.rdoGraphDerivedTypeView.UseVisualStyleBackColor = true;
-            this.rdoGraphDerivedTypeView.CheckedChanged += new System.EventHandler(this.DataViewOptions_CheckedChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -502,13 +368,6 @@ namespace Jastech.Battery.Winform.Forms
             this.tlpCommon.ResumeLayout(false);
             this.tlpUnit.ResumeLayout(false);
             this.tlpLoadImage.ResumeLayout(false);
-            this.pnlTeach.ResumeLayout(false);
-            this.pnlGraphTest.ResumeLayout(false);
-            this.pnlGraphTest.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDataYMax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDataYMin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDataXMax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDataXMin)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.pnlDisplay.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -536,15 +395,5 @@ namespace Jastech.Battery.Winform.Forms
         private System.Windows.Forms.Panel pnlTeach;
         private System.Windows.Forms.Timer StatusTimer;
         private System.Windows.Forms.Panel pnlDisplay;
-        private System.Windows.Forms.RadioButton rdoGraphDerivedTypeView;
-        private System.Windows.Forms.RadioButton rdoGraphCompressedTypeView;
-        private System.Windows.Forms.RadioButton rdoGraphHistTypeView;
-        private System.Windows.Forms.RadioButton rdoGraphArrowTypeView;
-        private System.Windows.Forms.RadioButton rdoGraphMoveAvgTypeView;
-        private System.Windows.Forms.Panel pnlGraphTest;
-        private System.Windows.Forms.TrackBar trkDataYMax;
-        private System.Windows.Forms.TrackBar trkDataYMin;
-        private System.Windows.Forms.TrackBar trkDataXMax;
-        private System.Windows.Forms.TrackBar trkDataXMin;
     }
 }

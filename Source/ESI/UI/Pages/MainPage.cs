@@ -147,7 +147,7 @@ namespace ESI.UI.Pages
                     testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.X, typeof(float));
                     testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.Y, typeof(float));
 
-                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.X, rand.Next(160000));            // TODO: maximage width 받을 것
+                    testInfo.SetFeatureValue(DefectDefine.FeatureTypes.X, rand.Next(16383));            // TODO: maximage width 받을 것
                     testInfo.SetFeatureValue(DefectDefine.FeatureTypes.Y, yValue);
 
                     testInfo.SetFeatureDataType(DefectDefine.FeatureTypes.Width, typeof(float));
