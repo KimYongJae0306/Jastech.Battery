@@ -117,14 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lblPLCState.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAKpJREFUKFNjgIHFZmYOnWZm55eYm7+famb2b56Z2fp4U9MEqDQELDAza1xrbv5/
-        KxY80cysHqwow9Q0AJciEN4CxCA1DLPMzLZiU4CMV5qbr2dYbm7+GJskMga5m2GxuflHbJLIeJm5+SuG
-        fjOzM9gkkTHIeQzAIAjAJgnDII9WmJlFgX2ea2raj0tRi5lZP1gRDNSYmYUCA3o/KLBBjp8EZDeYmQVC
-        ZBkYALbGrUlPL+8HAAAAAElFTkSuQmCC
-</value>
-  </data>
 </root>

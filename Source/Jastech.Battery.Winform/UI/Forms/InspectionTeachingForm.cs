@@ -115,7 +115,6 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private void InspectionTeachingForm_DragDrop(object sender, DragEventArgs e)
         {
-            int gg = 0;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             LoadImage(files);
         }

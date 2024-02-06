@@ -52,7 +52,7 @@
             this.lblDataPage = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.tlpSelectMainPage = new System.Windows.Forms.TableLayoutPanel();
-            this.lblInspectionPageImage = new System.Windows.Forms.Label();
+            this.lblMainPageImage = new System.Windows.Forms.Label();
             this.lblMainPage = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tlpSelectTeachPage = new System.Windows.Forms.TableLayoutPanel();
@@ -313,6 +313,7 @@
             this.lblLogPageImage.Name = "lblLogPageImage";
             this.lblLogPageImage.Size = new System.Drawing.Size(44, 48);
             this.lblLogPageImage.TabIndex = 1;
+            this.lblLogPageImage.Click += new System.EventHandler(this.lblLogPage_Click);
             // 
             // lblLogPage
             // 
@@ -325,6 +326,7 @@
             this.lblLogPage.TabIndex = 0;
             this.lblLogPage.Text = "LOG";
             this.lblLogPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblLogPage.Click += new System.EventHandler(this.lblLogPage_Click);
             // 
             // panel3
             // 
@@ -360,6 +362,7 @@
             this.lblDataPageImage.Name = "lblDataPageImage";
             this.lblDataPageImage.Size = new System.Drawing.Size(44, 48);
             this.lblDataPageImage.TabIndex = 1;
+            this.lblDataPageImage.Click += new System.EventHandler(this.lblDataPage_Click);
             // 
             // lblDataPage
             // 
@@ -372,6 +375,7 @@
             this.lblDataPage.TabIndex = 0;
             this.lblDataPage.Text = "DATA";
             this.lblDataPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblDataPage.Click += new System.EventHandler(this.lblDataPage_Click);
             // 
             // panel8
             // 
@@ -387,7 +391,7 @@
             this.tlpSelectMainPage.ColumnCount = 2;
             this.tlpSelectMainPage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tlpSelectMainPage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSelectMainPage.Controls.Add(this.lblInspectionPageImage, 0, 0);
+            this.tlpSelectMainPage.Controls.Add(this.lblMainPageImage, 0, 0);
             this.tlpSelectMainPage.Controls.Add(this.lblMainPage, 1, 0);
             this.tlpSelectMainPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpSelectMainPage.Location = new System.Drawing.Point(0, 0);
@@ -399,15 +403,15 @@
             this.tlpSelectMainPage.TabIndex = 0;
             this.tlpSelectMainPage.Tag = "0";
             // 
-            // lblInspectionPageImage
+            // lblMainPageImage
             // 
-            this.lblInspectionPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblInspectionPageImage.Image = global::ESI.Properties.Resources.Inspection;
-            this.lblInspectionPageImage.Location = new System.Drawing.Point(3, 0);
-            this.lblInspectionPageImage.Name = "lblInspectionPageImage";
-            this.lblInspectionPageImage.Size = new System.Drawing.Size(44, 48);
-            this.lblInspectionPageImage.TabIndex = 1;
-            this.lblInspectionPageImage.Click += new System.EventHandler(this.lblMainPage_Click);
+            this.lblMainPageImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMainPageImage.Image = global::ESI.Properties.Resources.Inspection;
+            this.lblMainPageImage.Location = new System.Drawing.Point(3, 0);
+            this.lblMainPageImage.Name = "lblMainPageImage";
+            this.lblMainPageImage.Size = new System.Drawing.Size(44, 48);
+            this.lblMainPageImage.TabIndex = 1;
+            this.lblMainPageImage.Click += new System.EventHandler(this.lblMainPage_Click);
             // 
             // lblMainPage
             // 
@@ -639,7 +643,7 @@
         private System.Windows.Forms.Label lblDataPage;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.TableLayoutPanel tlpSelectMainPage;
-        private System.Windows.Forms.Label lblInspectionPageImage;
+        private System.Windows.Forms.Label lblMainPageImage;
         private System.Windows.Forms.Label lblMainPage;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tlpSelectTeachPage;

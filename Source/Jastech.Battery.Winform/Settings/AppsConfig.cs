@@ -19,6 +19,9 @@ namespace Jastech.Battery.Winform.Settings
         #region 속성
         [JsonProperty]
         public string MachineName { get; set; } = "ESI";
+
+        [JsonProperty]
+        public bool EnablePLCTime { get; set; } = false;
         #endregion
 
         #region 이벤트

@@ -1,6 +1,6 @@
 ﻿using Jastech.Framework.Winform.Controls;
 
-namespace Jastech.Battery.Winform.Forms
+namespace Jastech.Battery.Winform.UI.Forms
 {
     partial class OpticTeachingForm
     {
