@@ -1,32 +1,19 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Jastech.Battery.Structure;
-using Jastech.Battery.Structure.Data;
-using Jastech.Battery.Winform;
-using Jastech.Battery.Winform.Core;
 using Jastech.Framework.Config;
 using Jastech.Framework.Device.Cameras;
-using Jastech.Framework.Device.LAFCtrl;
 using Jastech.Framework.Device.Motions;
-using Jastech.Framework.Imaging;
 using Jastech.Framework.Imaging.Helper;
 using Jastech.Framework.Structure;
 using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform.Controls;
 using Jastech.Framework.Winform.Forms;
-using Jastech.Framework.Winform.Helper;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Markup;
 using static Jastech.Framework.Device.Motions.AxisMovingParam;
 
 namespace Jastech.Battery.Winform.UI.Forms
