@@ -85,7 +85,20 @@ namespace ESI.UI.Pages
 
         private void Test_Click(object sender, EventArgs e)
         {
-            string imgPath = @"Y:\16kTestImg.bmp";
+            string imgPath = string.Empty;
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.ReadOnlyChecked = true;
+            ofd.Filter = "BMP Files (*.bmp)|*.bmp; | "
+                + "JPG Files (*.jpg, *.jpeg)|*.jpg; *.jpeg; |"
+                + "모든 파일(*.*) | *.*;";
+            ofd.ShowDialog();
+            if (ofd.FileName != "")
+                imgPath = ofd.FileName;
+
+            if (imgPath == string.Empty)
+                return;
+
             Bitmap testBitmap = new Bitmap(imgPath);
             Random rand = new Random();
 

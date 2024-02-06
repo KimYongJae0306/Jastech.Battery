@@ -62,7 +62,7 @@ namespace ESI.Core.AppsTask
 
             for (int i = 0; i < threadCount; i++)
             {
-                InspProcessTask task = new InspProcessTask(lineCamera, InspDirection.Top);
+                InspProcessTask task = new InspProcessTask(lineCamera, InspDirection.Upper);
                 task.SliceInspectDoneDelegateEvent += SliceInspectDone;
                 task.StartTask();
 
@@ -76,7 +76,7 @@ namespace ESI.Core.AppsTask
 
             for (int i = 0; i < threadCount; i++)
             {
-                InspProcessTask task = new InspProcessTask(lineCamera, InspDirection.Bottom);
+                InspProcessTask task = new InspProcessTask(lineCamera, InspDirection.Lower);
                 task.SliceInspectDoneDelegateEvent += SliceInspectDone;
                 task.StartTask();
 
@@ -106,7 +106,7 @@ namespace ESI.Core.AppsTask
 
         private void SliceInspectDone(SliceInspResult sliceInspResult)
         {
-            if(sliceInspResult.InspDirection == InspDirection.Top)
+            if(sliceInspResult.InspDirection == InspDirection.Upper)
             {
 
             }

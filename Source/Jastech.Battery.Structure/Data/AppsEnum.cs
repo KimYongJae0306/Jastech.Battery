@@ -8,7 +8,7 @@ namespace Jastech.Battery.Structure.Data
 {
     public enum InspDirection
     {
-        Top,
-        Bottom,
+        Upper,
+        Lower,
     }
 }
