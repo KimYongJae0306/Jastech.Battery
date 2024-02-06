@@ -28,25 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnTest = new System.Windows.Forms.Button();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.lblStop = new System.Windows.Forms.Label();
             this.lblStopText = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.lblStart = new System.Windows.Forms.Label();
             this.lblStartText = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlLaneView = new System.Windows.Forms.Panel();
+            this.tlpFunctionLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlDefectMap = new System.Windows.Forms.Panel();
+            this.pnlImages = new System.Windows.Forms.Panel();
+            this.lblLowerJudgement = new System.Windows.Forms.Label();
+            this.lblUpperJudgement = new System.Windows.Forms.Label();
+            this.tlpDataLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlDataArea = new System.Windows.Forms.Panel();
+            this.lblSelectMissmatch = new System.Windows.Forms.Label();
+            this.lblSelectDefectImage = new System.Windows.Forms.Label();
+            this.lblSelectDefectData = new System.Windows.Forms.Label();
+            this.preCreatedDefectDataGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.tlpFunctionLayout.SuspendLayout();
+            this.tlpDataLayout.SuspendLayout();
+            this.pnlDataArea.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.preCreatedDefectDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel3
@@ -55,14 +68,14 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel7, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel1, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.tlpFunctionLayout, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(959, 558);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1700, 800);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // tableLayoutPanel7
@@ -76,8 +89,8 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 558F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(70, 558);
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 800F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(70, 800);
             this.tableLayoutPanel7.TabIndex = 2;
             // 
             // tableLayoutPanel4
@@ -85,6 +98,7 @@
             this.tableLayoutPanel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Controls.Add(this.btnTest, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel6, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -95,8 +109,21 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(70, 558);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(70, 800);
             this.tableLayoutPanel4.TabIndex = 1;
+            // 
+            // btnTest
+            // 
+            this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTest.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTest.ForeColor = System.Drawing.Color.Red;
+            this.btnTest.Location = new System.Drawing.Point(3, 163);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(64, 64);
+            this.btnTest.TabIndex = 2;
+            this.btnTest.Text = "TEST";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.Test_Click);
             // 
             // tableLayoutPanel5
             // 
@@ -176,62 +203,214 @@
             this.lblStartText.Text = "START";
             this.lblStartText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tableLayoutPanel1
+            // tlpFunctionLayout
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(70, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 498F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(889, 558);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tlpFunctionLayout.ColumnCount = 3;
+            this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 450F));
+            this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpFunctionLayout.Controls.Add(this.pnlDefectMap, 0, 0);
+            this.tlpFunctionLayout.Controls.Add(this.pnlImages, 1, 0);
+            this.tlpFunctionLayout.Controls.Add(this.lblLowerJudgement, 1, 1);
+            this.tlpFunctionLayout.Controls.Add(this.lblUpperJudgement, 1, 1);
+            this.tlpFunctionLayout.Controls.Add(this.tlpDataLayout, 1, 2);
+            this.tlpFunctionLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpFunctionLayout.Location = new System.Drawing.Point(70, 0);
+            this.tlpFunctionLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpFunctionLayout.Name = "tlpFunctionLayout";
+            this.tlpFunctionLayout.RowCount = 3;
+            this.tlpFunctionLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 450F));
+            this.tlpFunctionLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpFunctionLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFunctionLayout.Size = new System.Drawing.Size(1630, 800);
+            this.tlpFunctionLayout.TabIndex = 0;
             // 
-            // tableLayoutPanel2
+            // pnlDefectMap
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 500F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.pnlLaneView, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(889, 558);
-            this.tableLayoutPanel2.TabIndex = 4;
+            this.pnlDefectMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDefectMap.Location = new System.Drawing.Point(3, 3);
+            this.pnlDefectMap.Name = "pnlDefectMap";
+            this.tlpFunctionLayout.SetRowSpan(this.pnlDefectMap, 3);
+            this.pnlDefectMap.Size = new System.Drawing.Size(444, 794);
+            this.pnlDefectMap.TabIndex = 7;
             // 
-            // pnlLaneView
+            // pnlImages
             // 
-            this.pnlLaneView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlLaneView.Location = new System.Drawing.Point(5, 5);
-            this.pnlLaneView.Margin = new System.Windows.Forms.Padding(5);
-            this.pnlLaneView.Name = "pnlLaneView";
-            this.pnlLaneView.Size = new System.Drawing.Size(490, 548);
-            this.pnlLaneView.TabIndex = 0;
+            this.tlpFunctionLayout.SetColumnSpan(this.pnlImages, 2);
+            this.pnlImages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlImages.Location = new System.Drawing.Point(453, 3);
+            this.pnlImages.Name = "pnlImages";
+            this.pnlImages.Size = new System.Drawing.Size(1174, 444);
+            this.pnlImages.TabIndex = 5;
+            this.pnlImages.SizeChanged += new System.EventHandler(this.pnlImages_SizeChanged);
+            // 
+            // lblLowerJudgement
+            // 
+            this.lblLowerJudgement.AutoSize = true;
+            this.lblLowerJudgement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblLowerJudgement.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLowerJudgement.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLowerJudgement.ForeColor = System.Drawing.Color.White;
+            this.lblLowerJudgement.Location = new System.Drawing.Point(1043, 450);
+            this.lblLowerJudgement.Name = "lblLowerJudgement";
+            this.lblLowerJudgement.Size = new System.Drawing.Size(584, 100);
+            this.lblLowerJudgement.TabIndex = 8;
+            this.lblLowerJudgement.Text = "Judgement";
+            this.lblLowerJudgement.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblUpperJudgement
+            // 
+            this.lblUpperJudgement.AutoSize = true;
+            this.lblUpperJudgement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblUpperJudgement.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblUpperJudgement.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUpperJudgement.ForeColor = System.Drawing.Color.White;
+            this.lblUpperJudgement.Location = new System.Drawing.Point(453, 450);
+            this.lblUpperJudgement.Name = "lblUpperJudgement";
+            this.lblUpperJudgement.Size = new System.Drawing.Size(584, 100);
+            this.lblUpperJudgement.TabIndex = 7;
+            this.lblUpperJudgement.Text = "Judgement";
+            this.lblUpperJudgement.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tlpDataLayout
+            // 
+            this.tlpDataLayout.ColumnCount = 3;
+            this.tlpFunctionLayout.SetColumnSpan(this.tlpDataLayout, 2);
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpDataLayout.Controls.Add(this.pnlDataArea, 0, 1);
+            this.tlpDataLayout.Controls.Add(this.lblSelectMissmatch, 2, 0);
+            this.tlpDataLayout.Controls.Add(this.lblSelectDefectImage, 1, 0);
+            this.tlpDataLayout.Controls.Add(this.lblSelectDefectData, 0, 0);
+            this.tlpDataLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpDataLayout.ForeColor = System.Drawing.Color.White;
+            this.tlpDataLayout.Location = new System.Drawing.Point(453, 553);
+            this.tlpDataLayout.Name = "tlpDataLayout";
+            this.tlpDataLayout.RowCount = 2;
+            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpDataLayout.Size = new System.Drawing.Size(1174, 244);
+            this.tlpDataLayout.TabIndex = 6;
+            // 
+            // pnlDataArea
+            // 
+            this.tlpDataLayout.SetColumnSpan(this.pnlDataArea, 3);
+            this.pnlDataArea.Controls.Add(this.preCreatedDefectDataGridView);
+            this.pnlDataArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDataArea.Location = new System.Drawing.Point(3, 53);
+            this.pnlDataArea.Name = "pnlDataArea";
+            this.pnlDataArea.Size = new System.Drawing.Size(1168, 188);
+            this.pnlDataArea.TabIndex = 6;
+            // 
+            // lblSelectMissmatch
+            // 
+            this.lblSelectMissmatch.AutoSize = true;
+            this.lblSelectMissmatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectMissmatch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectMissmatch.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblSelectMissmatch.ForeColor = System.Drawing.Color.White;
+            this.lblSelectMissmatch.Location = new System.Drawing.Point(785, 0);
+            this.lblSelectMissmatch.Name = "lblSelectMissmatch";
+            this.lblSelectMissmatch.Size = new System.Drawing.Size(386, 50);
+            this.lblSelectMissmatch.TabIndex = 8;
+            this.lblSelectMissmatch.Tag = "MissMatchData";
+            this.lblSelectMissmatch.Text = "U/L MissMatch";
+            this.lblSelectMissmatch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSelectMissmatch.Click += new System.EventHandler(this.lblSelectDataType_Click);
+            // 
+            // lblSelectDefectImage
+            // 
+            this.lblSelectDefectImage.AutoSize = true;
+            this.lblSelectDefectImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectDefectImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectDefectImage.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblSelectDefectImage.ForeColor = System.Drawing.Color.White;
+            this.lblSelectDefectImage.Location = new System.Drawing.Point(394, 0);
+            this.lblSelectDefectImage.Name = "lblSelectDefectImage";
+            this.lblSelectDefectImage.Size = new System.Drawing.Size(385, 50);
+            this.lblSelectDefectImage.TabIndex = 7;
+            this.lblSelectDefectImage.Tag = "DefectImage";
+            this.lblSelectDefectImage.Text = "Defect Image";
+            this.lblSelectDefectImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSelectDefectImage.Click += new System.EventHandler(this.lblSelectDataType_Click);
+            // 
+            // lblSelectDefectData
+            // 
+            this.lblSelectDefectData.AutoSize = true;
+            this.lblSelectDefectData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectDefectData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectDefectData.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblSelectDefectData.ForeColor = System.Drawing.Color.White;
+            this.lblSelectDefectData.Location = new System.Drawing.Point(3, 0);
+            this.lblSelectDefectData.Name = "lblSelectDefectData";
+            this.lblSelectDefectData.Size = new System.Drawing.Size(385, 50);
+            this.lblSelectDefectData.TabIndex = 6;
+            this.lblSelectDefectData.Tag = "DefectData";
+            this.lblSelectDefectData.Text = "Defect Data";
+            this.lblSelectDefectData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSelectDefectData.Click += new System.EventHandler(this.lblSelectDataType_Click);
+            // 
+            // preCreatedDefectDataGridView
+            // 
+            this.preCreatedDefectDataGridView.AllowUserToAddRows = false;
+            this.preCreatedDefectDataGridView.AllowUserToDeleteRows = false;
+            this.preCreatedDefectDataGridView.AllowUserToOrderColumns = true;
+            this.preCreatedDefectDataGridView.AllowUserToResizeRows = false;
+            this.preCreatedDefectDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.preCreatedDefectDataGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.preCreatedDefectDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.preCreatedDefectDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Indigo;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.preCreatedDefectDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            this.preCreatedDefectDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.preCreatedDefectDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.preCreatedDefectDataGridView.EnableHeadersVisualStyles = false;
+            this.preCreatedDefectDataGridView.GridColor = System.Drawing.Color.DarkGray;
+            this.preCreatedDefectDataGridView.Location = new System.Drawing.Point(0, 0);
+            this.preCreatedDefectDataGridView.Name = "preCreatedDefectDataGridView";
+            this.preCreatedDefectDataGridView.RowHeadersVisible = false;
+            this.preCreatedDefectDataGridView.RowTemplate.Height = 23;
+            this.preCreatedDefectDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.preCreatedDefectDataGridView.Size = new System.Drawing.Size(1168, 188);
+            this.preCreatedDefectDataGridView.TabIndex = 0;
             // 
             // MainPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.Controls.Add(this.tableLayoutPanel3);
+            this.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.Name = "MainPage";
-            this.Size = new System.Drawing.Size(959, 558);
+            this.Size = new System.Drawing.Size(1700, 800);
             this.Load += new System.EventHandler(this.MainPage_Load);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tlpFunctionLayout.ResumeLayout(false);
+            this.tlpFunctionLayout.PerformLayout();
+            this.tlpDataLayout.ResumeLayout(false);
+            this.tlpDataLayout.PerformLayout();
+            this.pnlDataArea.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.preCreatedDefectDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -247,8 +426,17 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Label lblStart;
         private System.Windows.Forms.Label lblStartText;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Panel pnlLaneView;
+        private System.Windows.Forms.TableLayoutPanel tlpFunctionLayout;
+        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Panel pnlImages;
+        private System.Windows.Forms.TableLayoutPanel tlpDataLayout;
+        private System.Windows.Forms.Label lblSelectDefectImage;
+        private System.Windows.Forms.Label lblSelectDefectData;
+        private System.Windows.Forms.Label lblSelectMissmatch;
+        private System.Windows.Forms.Label lblLowerJudgement;
+        private System.Windows.Forms.Label lblUpperJudgement;
+        private System.Windows.Forms.Panel pnlDataArea;
+        private System.Windows.Forms.Panel pnlDefectMap;
+        private System.Windows.Forms.DataGridView preCreatedDefectDataGridView;
     }
 }
