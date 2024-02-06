@@ -30,10 +30,10 @@
         {
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnTopCameraSetting = new System.Windows.Forms.Button();
+            this.btnUpperCameraSetting = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnBottomCameraSetting = new System.Windows.Forms.Button();
+            this.btnLowerCameraSetting = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.btnTopInspectionPage = new System.Windows.Forms.Button();
@@ -51,7 +51,7 @@
             this.tableLayoutPanel6.ColumnCount = 1;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.btnTopCameraSetting, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.btnUpperCameraSetting, 0, 1);
             this.tableLayoutPanel6.Location = new System.Drawing.Point(31, 36);
             this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -76,26 +76,26 @@
             this.label6.Text = "Optic";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnTopCameraSetting
+            // btnUpperCameraSetting
             // 
-            this.btnTopCameraSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnTopCameraSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnTopCameraSetting.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
-            this.btnTopCameraSetting.ForeColor = System.Drawing.Color.White;
-            this.btnTopCameraSetting.Location = new System.Drawing.Point(4, 33);
-            this.btnTopCameraSetting.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnTopCameraSetting.Name = "btnTopCameraSetting";
-            this.btnTopCameraSetting.Size = new System.Drawing.Size(233, 65);
-            this.btnTopCameraSetting.TabIndex = 1;
-            this.btnTopCameraSetting.Text = "Top Camera";
-            this.btnTopCameraSetting.UseVisualStyleBackColor = false;
+            this.btnUpperCameraSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnUpperCameraSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUpperCameraSetting.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
+            this.btnUpperCameraSetting.ForeColor = System.Drawing.Color.White;
+            this.btnUpperCameraSetting.Location = new System.Drawing.Point(3, 33);
+            this.btnUpperCameraSetting.Name = "btnUpperCameraSetting";
+            this.btnUpperCameraSetting.Size = new System.Drawing.Size(235, 65);
+            this.btnUpperCameraSetting.TabIndex = 1;
+            this.btnUpperCameraSetting.Text = "Upper Camera";
+            this.btnUpperCameraSetting.UseVisualStyleBackColor = false;
+            this.btnUpperCameraSetting.Click += new System.EventHandler(this.btnUpperCameraSetting_Click);
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnBottomCameraSetting, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnLowerCameraSetting, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(31, 160);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -120,19 +120,19 @@
             this.label1.Text = "Optic";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnBottomCameraSetting
+            // btnLowerCameraSetting
             // 
-            this.btnBottomCameraSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnBottomCameraSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnBottomCameraSetting.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
-            this.btnBottomCameraSetting.ForeColor = System.Drawing.Color.White;
-            this.btnBottomCameraSetting.Location = new System.Drawing.Point(4, 33);
-            this.btnBottomCameraSetting.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnBottomCameraSetting.Name = "btnBottomCameraSetting";
-            this.btnBottomCameraSetting.Size = new System.Drawing.Size(233, 65);
-            this.btnBottomCameraSetting.TabIndex = 1;
-            this.btnBottomCameraSetting.Text = "Bottom Camera";
-            this.btnBottomCameraSetting.UseVisualStyleBackColor = false;
+            this.btnLowerCameraSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnLowerCameraSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLowerCameraSetting.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
+            this.btnLowerCameraSetting.ForeColor = System.Drawing.Color.White;
+            this.btnLowerCameraSetting.Location = new System.Drawing.Point(3, 33);
+            this.btnLowerCameraSetting.Name = "btnLowerCameraSetting";
+            this.btnLowerCameraSetting.Size = new System.Drawing.Size(235, 65);
+            this.btnLowerCameraSetting.TabIndex = 1;
+            this.btnLowerCameraSetting.Text = "Lower Camera";
+            this.btnLowerCameraSetting.UseVisualStyleBackColor = false;
+            this.btnLowerCameraSetting.Click += new System.EventHandler(this.btnLowerCameraSetting_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -170,10 +170,9 @@
             this.btnTopInspectionPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnTopInspectionPage.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
             this.btnTopInspectionPage.ForeColor = System.Drawing.Color.White;
-            this.btnTopInspectionPage.Location = new System.Drawing.Point(4, 33);
-            this.btnTopInspectionPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnTopInspectionPage.Location = new System.Drawing.Point(3, 33);
             this.btnTopInspectionPage.Name = "btnTopInspectionPage";
-            this.btnTopInspectionPage.Size = new System.Drawing.Size(233, 65);
+            this.btnTopInspectionPage.Size = new System.Drawing.Size(235, 65);
             this.btnTopInspectionPage.TabIndex = 1;
             this.btnTopInspectionPage.Text = "Top Inspection";
             this.btnTopInspectionPage.UseVisualStyleBackColor = false;
@@ -215,10 +214,9 @@
             this.btnBottomInspectionPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnBottomInspectionPage.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
             this.btnBottomInspectionPage.ForeColor = System.Drawing.Color.White;
-            this.btnBottomInspectionPage.Location = new System.Drawing.Point(4, 33);
-            this.btnBottomInspectionPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnBottomInspectionPage.Location = new System.Drawing.Point(3, 33);
             this.btnBottomInspectionPage.Name = "btnBottomInspectionPage";
-            this.btnBottomInspectionPage.Size = new System.Drawing.Size(233, 65);
+            this.btnBottomInspectionPage.Size = new System.Drawing.Size(235, 65);
             this.btnBottomInspectionPage.TabIndex = 1;
             this.btnBottomInspectionPage.Text = "Bottom Inspection";
             this.btnBottomInspectionPage.UseVisualStyleBackColor = false;
@@ -248,10 +246,10 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btnTopCameraSetting;
+        private System.Windows.Forms.Button btnUpperCameraSetting;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnBottomCameraSetting;
+        private System.Windows.Forms.Button btnLowerCameraSetting;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnTopInspectionPage;
