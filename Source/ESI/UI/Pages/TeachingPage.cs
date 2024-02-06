@@ -21,17 +21,17 @@ namespace ESI.UI.Pages
             InitializeComponent();
         }
 
-        private void btnTopInspectionPage_Click(object sender, EventArgs e)
+        private void btnLowerInspectionPage_Click(object sender, EventArgs e)
         {
             InspectionTeachingForm form = new InspectionTeachingForm();
-            form.InspDirection = InspDirection.Top;
+            form.InspDirection = InspDirection.Upper;
             form.ShowDialog();
         }
 
-        private void btnBottomInspectionPage_Click(object sender, EventArgs e)
+        private void btnUpperInspectionPage_Click(object sender, EventArgs e)
         {
             InspectionTeachingForm form = new InspectionTeachingForm();
-            form.InspDirection = InspDirection.Bottom;
+            form.InspDirection = InspDirection.Lower;
             form.ShowDialog();
         }
 
@@ -48,5 +48,7 @@ namespace ESI.UI.Pages
             form.LineCamera = LineCameraManager.Instance().GetLineCamera("Lower");
             form.ShowDialog();
         }
+
+        
     }
 }

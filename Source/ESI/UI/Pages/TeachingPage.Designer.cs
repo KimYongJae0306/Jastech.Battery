@@ -36,10 +36,10 @@
             this.btnLowerCameraSetting = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnTopInspectionPage = new System.Windows.Forms.Button();
+            this.btnUpperInspectionPage = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnBottomInspectionPage = new System.Windows.Forms.Button();
+            this.btnLowerInspectionPage = new System.Windows.Forms.Button();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -139,7 +139,7 @@
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnTopInspectionPage, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.btnUpperInspectionPage, 0, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(287, 36);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -164,26 +164,26 @@
             this.label2.Text = "Inspection";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnTopInspectionPage
+            // btnUpperInspectionPage
             // 
-            this.btnTopInspectionPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnTopInspectionPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnTopInspectionPage.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
-            this.btnTopInspectionPage.ForeColor = System.Drawing.Color.White;
-            this.btnTopInspectionPage.Location = new System.Drawing.Point(3, 33);
-            this.btnTopInspectionPage.Name = "btnTopInspectionPage";
-            this.btnTopInspectionPage.Size = new System.Drawing.Size(235, 65);
-            this.btnTopInspectionPage.TabIndex = 1;
-            this.btnTopInspectionPage.Text = "Top Inspection";
-            this.btnTopInspectionPage.UseVisualStyleBackColor = false;
-            this.btnTopInspectionPage.Click += new System.EventHandler(this.btnTopInspectionPage_Click);
+            this.btnUpperInspectionPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnUpperInspectionPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUpperInspectionPage.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
+            this.btnUpperInspectionPage.ForeColor = System.Drawing.Color.White;
+            this.btnUpperInspectionPage.Location = new System.Drawing.Point(3, 33);
+            this.btnUpperInspectionPage.Name = "btnUpperInspectionPage";
+            this.btnUpperInspectionPage.Size = new System.Drawing.Size(235, 65);
+            this.btnUpperInspectionPage.TabIndex = 1;
+            this.btnUpperInspectionPage.Text = "Upper Inspection";
+            this.btnUpperInspectionPage.UseVisualStyleBackColor = false;
+            this.btnUpperInspectionPage.Click += new System.EventHandler(this.btnUpperInspectionPage_Click);
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnBottomInspectionPage, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.btnLowerInspectionPage, 0, 1);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(287, 163);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -208,19 +208,19 @@
             this.label3.Text = "Inspection";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnBottomInspectionPage
+            // btnLowerInspectionPage
             // 
-            this.btnBottomInspectionPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.btnBottomInspectionPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnBottomInspectionPage.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
-            this.btnBottomInspectionPage.ForeColor = System.Drawing.Color.White;
-            this.btnBottomInspectionPage.Location = new System.Drawing.Point(3, 33);
-            this.btnBottomInspectionPage.Name = "btnBottomInspectionPage";
-            this.btnBottomInspectionPage.Size = new System.Drawing.Size(235, 65);
-            this.btnBottomInspectionPage.TabIndex = 1;
-            this.btnBottomInspectionPage.Text = "Bottom Inspection";
-            this.btnBottomInspectionPage.UseVisualStyleBackColor = false;
-            this.btnBottomInspectionPage.Click += new System.EventHandler(this.btnBottomInspectionPage_Click);
+            this.btnLowerInspectionPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.btnLowerInspectionPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLowerInspectionPage.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
+            this.btnLowerInspectionPage.ForeColor = System.Drawing.Color.White;
+            this.btnLowerInspectionPage.Location = new System.Drawing.Point(3, 33);
+            this.btnLowerInspectionPage.Name = "btnLowerInspectionPage";
+            this.btnLowerInspectionPage.Size = new System.Drawing.Size(235, 65);
+            this.btnLowerInspectionPage.TabIndex = 1;
+            this.btnLowerInspectionPage.Text = "Lower Inspection";
+            this.btnLowerInspectionPage.UseVisualStyleBackColor = false;
+            this.btnLowerInspectionPage.Click += new System.EventHandler(this.btnLowerInspectionPage_Click);
             // 
             // TeachingPage
             // 
@@ -252,9 +252,9 @@
         private System.Windows.Forms.Button btnLowerCameraSetting;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnTopInspectionPage;
+        private System.Windows.Forms.Button btnUpperInspectionPage;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnBottomInspectionPage;
+        private System.Windows.Forms.Button btnLowerInspectionPage;
     }
 }

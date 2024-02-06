@@ -20,6 +20,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 {
     public partial class InspectionTeachingForm : Form
     {
+        
         private Mat OrgMat { get; set; } = null;
 
         public InspDirection InspDirection { get; set; }
