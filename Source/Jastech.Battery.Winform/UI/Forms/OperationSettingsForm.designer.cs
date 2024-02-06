@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.tlpConfigure = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlConfigureGroup4 = new System.Windows.Forms.Panel();
+            this.pnlConfigureGroup1 = new System.Windows.Forms.Panel();
+            this.pnlConfigureGroup2 = new System.Windows.Forms.Panel();
             this.tlpImageSaveNG = new System.Windows.Forms.TableLayoutPanel();
             this.mcbxNGExtension = new MetroFramework.Controls.MetroComboBox();
             this.label23 = new System.Windows.Forms.Label();
@@ -52,98 +52,119 @@
             this.txtDataStoringDays = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label19 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.pnlConfigureGroup3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.label41 = new System.Windows.Forms.Label();
             this.mtgEnablePlcTime = new MetroFramework.Controls.MetroToggle();
             this.label42 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.tlpLogSaveAkkonLeadResult = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpLogSaveInspectionResult = new System.Windows.Forms.TableLayoutPanel();
             this.label29 = new System.Windows.Forms.Label();
             this.mtgLogAkkonLead = new MetroFramework.Controls.MetroToggle();
             this.panel14 = new System.Windows.Forms.Panel();
             this.label30 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpOperationSettingLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlCommonFunction = new System.Windows.Forms.Panel();
+            this.tlpCommonFunction = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlCancel = new System.Windows.Forms.Panel();
+            this.tlpCancel = new System.Windows.Forms.TableLayoutPanel();
             this.lblCancelImage = new System.Windows.Forms.Label();
             this.lblCancel = new System.Windows.Forms.Label();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblApplyImage = new System.Windows.Forms.Label();
+            this.pnlSave = new System.Windows.Forms.Panel();
+            this.tlpSave = new System.Windows.Forms.TableLayoutPanel();
+            this.lblSaveImage = new System.Windows.Forms.Label();
             this.lblSave = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
+            this.metroToggle2 = new MetroFramework.Controls.MetroToggle();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.mtgInspectionUsageEdge = new MetroFramework.Controls.MetroToggle();
+            this.mtgInspectionUsageCoating = new MetroFramework.Controls.MetroToggle();
+            this.lblInspectionEdge = new System.Windows.Forms.Label();
+            this.lblInspectionCoating = new System.Windows.Forms.Label();
+            this.lblInspectionNonCoating = new System.Windows.Forms.Label();
+            this.mtgInspectionUsageNonCoating = new MetroFramework.Controls.MetroToggle();
+            this.tlpConfigure.SuspendLayout();
+            this.pnlConfigureGroup1.SuspendLayout();
+            this.pnlConfigureGroup2.SuspendLayout();
             this.tlpImageSaveNG.SuspendLayout();
             this.tlpImageSaveOK.SuspendLayout();
             this.tlpDataStoreCapacity.SuspendLayout();
             this.tlpDataStoreDuration.SuspendLayout();
-            this.panel4.SuspendLayout();
+            this.pnlConfigureGroup3.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
-            this.tlpLogSaveAkkonLeadResult.SuspendLayout();
-            this.tableLayoutPanel13.SuspendLayout();
-            this.panel9.SuspendLayout();
-            this.tableLayoutPanel14.SuspendLayout();
-            this.panel10.SuspendLayout();
-            this.tableLayoutPanel15.SuspendLayout();
-            this.panel11.SuspendLayout();
-            this.tableLayoutPanel16.SuspendLayout();
+            this.tlpLogSaveInspectionResult.SuspendLayout();
+            this.tlpOperationSettingLayout.SuspendLayout();
+            this.pnlCommonFunction.SuspendLayout();
+            this.tlpCommonFunction.SuspendLayout();
+            this.pnlCancel.SuspendLayout();
+            this.tlpCancel.SuspendLayout();
+            this.pnlSave.SuspendLayout();
+            this.tlpSave.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // tlpConfigure
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Controls.Add(this.panel13, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel4, 2, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 808F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 808F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1554, 808);
-            this.tableLayoutPanel1.TabIndex = 6;
+            this.tlpConfigure.ColumnCount = 4;
+            this.tlpConfigure.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpConfigure.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpConfigure.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpConfigure.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpConfigure.Controls.Add(this.pnlConfigureGroup1, 0, 0);
+            this.tlpConfigure.Controls.Add(this.pnlConfigureGroup2, 1, 0);
+            this.tlpConfigure.Controls.Add(this.pnlConfigureGroup3, 2, 0);
+            this.tlpConfigure.Controls.Add(this.pnlConfigureGroup4, 3, 0);
+            this.tlpConfigure.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpConfigure.Location = new System.Drawing.Point(3, 3);
+            this.tlpConfigure.Name = "tlpConfigure";
+            this.tlpConfigure.RowCount = 1;
+            this.tlpConfigure.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpConfigure.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 808F));
+            this.tlpConfigure.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 808F));
+            this.tlpConfigure.Size = new System.Drawing.Size(1554, 808);
+            this.tlpConfigure.TabIndex = 6;
             // 
-            // panel13
+            // pnlConfigureGroup4
             // 
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(1167, 3);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(384, 802);
-            this.panel13.TabIndex = 27;
+            this.pnlConfigureGroup4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlConfigureGroup4.Location = new System.Drawing.Point(1167, 3);
+            this.pnlConfigureGroup4.Name = "pnlConfigureGroup4";
+            this.pnlConfigureGroup4.Size = new System.Drawing.Size(384, 802);
+            this.pnlConfigureGroup4.TabIndex = 27;
             // 
-            // panel1
+            // pnlConfigureGroup1
             // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(382, 802);
-            this.panel1.TabIndex = 0;
+            this.pnlConfigureGroup1.Controls.Add(this.tableLayoutPanel2);
+            this.pnlConfigureGroup1.Controls.Add(this.panel2);
+            this.pnlConfigureGroup1.Controls.Add(this.label3);
+            this.pnlConfigureGroup1.Controls.Add(this.tlpLogSaveInspectionResult);
+            this.pnlConfigureGroup1.Controls.Add(this.label30);
+            this.pnlConfigureGroup1.Controls.Add(this.panel14);
+            this.pnlConfigureGroup1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlConfigureGroup1.Location = new System.Drawing.Point(3, 3);
+            this.pnlConfigureGroup1.Name = "pnlConfigureGroup1";
+            this.pnlConfigureGroup1.Size = new System.Drawing.Size(382, 802);
+            this.pnlConfigureGroup1.TabIndex = 0;
             // 
-            // panel3
+            // pnlConfigureGroup2
             // 
-            this.panel3.Controls.Add(this.tlpImageSaveNG);
-            this.panel3.Controls.Add(this.tlpImageSaveOK);
-            this.panel3.Controls.Add(this.panel6);
-            this.panel3.Controls.Add(this.label22);
-            this.panel3.Controls.Add(this.tlpDataStoreCapacity);
-            this.panel3.Controls.Add(this.tlpDataStoreDuration);
-            this.panel3.Controls.Add(this.panel5);
-            this.panel3.Controls.Add(this.label19);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(391, 3);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(382, 802);
-            this.panel3.TabIndex = 1;
+            this.pnlConfigureGroup2.Controls.Add(this.tlpImageSaveNG);
+            this.pnlConfigureGroup2.Controls.Add(this.tlpImageSaveOK);
+            this.pnlConfigureGroup2.Controls.Add(this.panel6);
+            this.pnlConfigureGroup2.Controls.Add(this.label22);
+            this.pnlConfigureGroup2.Controls.Add(this.tlpDataStoreCapacity);
+            this.pnlConfigureGroup2.Controls.Add(this.tlpDataStoreDuration);
+            this.pnlConfigureGroup2.Controls.Add(this.panel5);
+            this.pnlConfigureGroup2.Controls.Add(this.label19);
+            this.pnlConfigureGroup2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlConfigureGroup2.Location = new System.Drawing.Point(391, 3);
+            this.pnlConfigureGroup2.Name = "pnlConfigureGroup2";
+            this.pnlConfigureGroup2.Size = new System.Drawing.Size(382, 802);
+            this.pnlConfigureGroup2.TabIndex = 1;
             // 
             // tlpImageSaveNG
             // 
@@ -154,7 +175,7 @@
             this.tlpImageSaveNG.Controls.Add(this.mcbxNGExtension, 2, 0);
             this.tlpImageSaveNG.Controls.Add(this.label23, 0, 0);
             this.tlpImageSaveNG.Controls.Add(this.mtgSaveNG, 1, 0);
-            this.tlpImageSaveNG.Location = new System.Drawing.Point(61, 435);
+            this.tlpImageSaveNG.Location = new System.Drawing.Point(62, 278);
             this.tlpImageSaveNG.Name = "tlpImageSaveNG";
             this.tlpImageSaveNG.RowCount = 1;
             this.tlpImageSaveNG.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -211,7 +232,7 @@
             this.tlpImageSaveOK.Controls.Add(this.mcbxOKExtension, 2, 0);
             this.tlpImageSaveOK.Controls.Add(this.label24, 0, 0);
             this.tlpImageSaveOK.Controls.Add(this.mtgSaveOK, 1, 0);
-            this.tlpImageSaveOK.Location = new System.Drawing.Point(61, 389);
+            this.tlpImageSaveOK.Location = new System.Drawing.Point(62, 232);
             this.tlpImageSaveOK.Name = "tlpImageSaveOK";
             this.tlpImageSaveOK.RowCount = 1;
             this.tlpImageSaveOK.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -260,7 +281,7 @@
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel6.Location = new System.Drawing.Point(17, 376);
+            this.panel6.Location = new System.Drawing.Point(18, 219);
             this.panel6.Margin = new System.Windows.Forms.Padding(0);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(345, 2);
@@ -270,7 +291,7 @@
             // 
             this.label22.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(12, 343);
+            this.label22.Location = new System.Drawing.Point(13, 186);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(323, 33);
             this.label22.TabIndex = 22;
@@ -286,7 +307,8 @@
             this.tlpDataStoreCapacity.Controls.Add(this.label15, 2, 0);
             this.tlpDataStoreCapacity.Controls.Add(this.label16, 0, 0);
             this.tlpDataStoreCapacity.Controls.Add(this.txtDataStoringCapacity, 1, 0);
-            this.tlpDataStoreCapacity.Location = new System.Drawing.Point(61, 263);
+            this.tlpDataStoreCapacity.Location = new System.Drawing.Point(68, 99);
+            this.tlpDataStoreCapacity.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.tlpDataStoreCapacity.Name = "tlpDataStoreCapacity";
             this.tlpDataStoreCapacity.RowCount = 1;
             this.tlpDataStoreCapacity.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -342,7 +364,8 @@
             this.tlpDataStoreDuration.Controls.Add(this.label17, 2, 0);
             this.tlpDataStoreDuration.Controls.Add(this.label18, 0, 0);
             this.tlpDataStoreDuration.Controls.Add(this.txtDataStoringDays, 1, 0);
-            this.tlpDataStoreDuration.Location = new System.Drawing.Point(61, 217);
+            this.tlpDataStoreDuration.Location = new System.Drawing.Point(68, 53);
+            this.tlpDataStoreDuration.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.tlpDataStoreDuration.Name = "tlpDataStoreDuration";
             this.tlpDataStoreDuration.RowCount = 1;
             this.tlpDataStoreDuration.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -392,7 +415,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel5.Location = new System.Drawing.Point(20, 202);
+            this.panel5.Location = new System.Drawing.Point(21, 45);
             this.panel5.Margin = new System.Windows.Forms.Padding(0);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(345, 2);
@@ -402,26 +425,23 @@
             // 
             this.label19.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(15, 169);
+            this.label19.Location = new System.Drawing.Point(16, 12);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(320, 33);
             this.label19.TabIndex = 18;
             this.label19.Text = "Data Store Options";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panel4
+            // pnlConfigureGroup3
             // 
-            this.panel4.Controls.Add(this.tableLayoutPanel8);
-            this.panel4.Controls.Add(this.label42);
-            this.panel4.Controls.Add(this.panel19);
-            this.panel4.Controls.Add(this.tlpLogSaveAkkonLeadResult);
-            this.panel4.Controls.Add(this.panel14);
-            this.panel4.Controls.Add(this.label30);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(779, 3);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(382, 802);
-            this.panel4.TabIndex = 2;
+            this.pnlConfigureGroup3.Controls.Add(this.tableLayoutPanel8);
+            this.pnlConfigureGroup3.Controls.Add(this.label42);
+            this.pnlConfigureGroup3.Controls.Add(this.panel19);
+            this.pnlConfigureGroup3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlConfigureGroup3.Location = new System.Drawing.Point(779, 3);
+            this.pnlConfigureGroup3.Name = "pnlConfigureGroup3";
+            this.pnlConfigureGroup3.Size = new System.Drawing.Size(382, 802);
+            this.pnlConfigureGroup3.TabIndex = 2;
             // 
             // tableLayoutPanel8
             // 
@@ -431,7 +451,8 @@
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel8.Controls.Add(this.label41, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.mtgEnablePlcTime, 1, 0);
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(76, 289);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(76, 293);
+            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -484,20 +505,28 @@
             this.panel19.Size = new System.Drawing.Size(345, 2);
             this.panel19.TabIndex = 39;
             // 
-            // tlpLogSaveAkkonLeadResult
+            // tlpLogSaveInspectionResult
             // 
-            this.tlpLogSaveAkkonLeadResult.ColumnCount = 3;
-            this.tlpLogSaveAkkonLeadResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tlpLogSaveAkkonLeadResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLogSaveAkkonLeadResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tlpLogSaveAkkonLeadResult.Controls.Add(this.label29, 0, 0);
-            this.tlpLogSaveAkkonLeadResult.Controls.Add(this.mtgLogAkkonLead, 1, 0);
-            this.tlpLogSaveAkkonLeadResult.Location = new System.Drawing.Point(70, 52);
-            this.tlpLogSaveAkkonLeadResult.Name = "tlpLogSaveAkkonLeadResult";
-            this.tlpLogSaveAkkonLeadResult.RowCount = 1;
-            this.tlpLogSaveAkkonLeadResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLogSaveAkkonLeadResult.Size = new System.Drawing.Size(298, 36);
-            this.tlpLogSaveAkkonLeadResult.TabIndex = 33;
+            this.tlpLogSaveInspectionResult.ColumnCount = 3;
+            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpLogSaveInspectionResult.Controls.Add(this.metroToggle2, 1, 2);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.metroToggle1, 1, 1);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.label2, 0, 2);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.label1, 0, 1);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.label29, 0, 0);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.mtgLogAkkonLead, 1, 0);
+            this.tlpLogSaveInspectionResult.Location = new System.Drawing.Point(69, 636);
+            this.tlpLogSaveInspectionResult.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.tlpLogSaveInspectionResult.Name = "tlpLogSaveInspectionResult";
+            this.tlpLogSaveInspectionResult.RowCount = 3;
+            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpLogSaveInspectionResult.Size = new System.Drawing.Size(298, 108);
+            this.tlpLogSaveInspectionResult.TabIndex = 33;
             // 
             // label29
             // 
@@ -508,7 +537,7 @@
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(114, 36);
             this.label29.TabIndex = 5;
-            this.label29.Text = "AkkonLead";
+            this.label29.Text = "Edge";
             this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mtgLogAkkonLead
@@ -528,7 +557,7 @@
             // panel14
             // 
             this.panel14.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel14.Location = new System.Drawing.Point(23, 43);
+            this.panel14.Location = new System.Drawing.Point(22, 626);
             this.panel14.Margin = new System.Windows.Forms.Padding(0);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(345, 2);
@@ -538,82 +567,82 @@
             // 
             this.label30.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(18, 10);
+            this.label30.Location = new System.Drawing.Point(17, 593);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(323, 33);
             this.label30.TabIndex = 24;
             this.label30.Text = "Log Save Options";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tableLayoutPanel13
+            // tlpOperationSettingLayout
             // 
-            this.tableLayoutPanel13.ColumnCount = 1;
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel13.Controls.Add(this.panel9, 0, 1);
-            this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel1, 0, 0);
-            this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel13.Name = "tableLayoutPanel13";
-            this.tableLayoutPanel13.RowCount = 2;
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(1560, 884);
-            this.tableLayoutPanel13.TabIndex = 7;
+            this.tlpOperationSettingLayout.ColumnCount = 1;
+            this.tlpOperationSettingLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpOperationSettingLayout.Controls.Add(this.pnlCommonFunction, 0, 1);
+            this.tlpOperationSettingLayout.Controls.Add(this.tlpConfigure, 0, 0);
+            this.tlpOperationSettingLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpOperationSettingLayout.Location = new System.Drawing.Point(0, 0);
+            this.tlpOperationSettingLayout.Name = "tlpOperationSettingLayout";
+            this.tlpOperationSettingLayout.RowCount = 2;
+            this.tlpOperationSettingLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpOperationSettingLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tlpOperationSettingLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpOperationSettingLayout.Size = new System.Drawing.Size(1560, 884);
+            this.tlpOperationSettingLayout.TabIndex = 7;
             // 
-            // panel9
+            // pnlCommonFunction
             // 
-            this.panel9.Controls.Add(this.tableLayoutPanel14);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(3, 817);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1554, 64);
-            this.panel9.TabIndex = 1;
+            this.pnlCommonFunction.Controls.Add(this.tlpCommonFunction);
+            this.pnlCommonFunction.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlCommonFunction.Location = new System.Drawing.Point(3, 817);
+            this.pnlCommonFunction.Name = "pnlCommonFunction";
+            this.pnlCommonFunction.Size = new System.Drawing.Size(1554, 64);
+            this.pnlCommonFunction.TabIndex = 1;
             // 
-            // tableLayoutPanel14
+            // tlpCommonFunction
             // 
-            this.tableLayoutPanel14.ColumnCount = 3;
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel14.Controls.Add(this.panel10, 2, 0);
-            this.tableLayoutPanel14.Controls.Add(this.panel11, 1, 0);
-            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel14.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel14.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
-            this.tableLayoutPanel14.RowCount = 1;
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(1554, 64);
-            this.tableLayoutPanel14.TabIndex = 3;
+            this.tlpCommonFunction.ColumnCount = 3;
+            this.tlpCommonFunction.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCommonFunction.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tlpCommonFunction.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tlpCommonFunction.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpCommonFunction.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpCommonFunction.Controls.Add(this.pnlCancel, 2, 0);
+            this.tlpCommonFunction.Controls.Add(this.pnlSave, 1, 0);
+            this.tlpCommonFunction.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpCommonFunction.Location = new System.Drawing.Point(0, 0);
+            this.tlpCommonFunction.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpCommonFunction.Name = "tlpCommonFunction";
+            this.tlpCommonFunction.RowCount = 1;
+            this.tlpCommonFunction.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCommonFunction.Size = new System.Drawing.Size(1554, 64);
+            this.tlpCommonFunction.TabIndex = 3;
             // 
-            // panel10
+            // pnlCancel
             // 
-            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel10.Controls.Add(this.tableLayoutPanel15);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel10.Location = new System.Drawing.Point(1357, 3);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(194, 58);
-            this.panel10.TabIndex = 4;
+            this.pnlCancel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlCancel.Controls.Add(this.tlpCancel);
+            this.pnlCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlCancel.Location = new System.Drawing.Point(1357, 3);
+            this.pnlCancel.Name = "pnlCancel";
+            this.pnlCancel.Size = new System.Drawing.Size(194, 58);
+            this.pnlCancel.TabIndex = 4;
             // 
-            // tableLayoutPanel15
+            // tlpCancel
             // 
-            this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel15.Controls.Add(this.lblCancelImage, 0, 0);
-            this.tableLayoutPanel15.Controls.Add(this.lblCancel, 1, 0);
-            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
-            this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(192, 56);
-            this.tableLayoutPanel15.TabIndex = 0;
+            this.tlpCancel.ColumnCount = 2;
+            this.tlpCancel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tlpCancel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCancel.Controls.Add(this.lblCancelImage, 0, 0);
+            this.tlpCancel.Controls.Add(this.lblCancel, 1, 0);
+            this.tlpCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpCancel.Location = new System.Drawing.Point(0, 0);
+            this.tlpCancel.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpCancel.Name = "tlpCancel";
+            this.tlpCancel.RowCount = 1;
+            this.tlpCancel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCancel.Size = new System.Drawing.Size(192, 56);
+            this.tlpCancel.TabIndex = 0;
             // 
             // lblCancelImage
             // 
@@ -637,40 +666,40 @@
             this.lblCancel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblCancel.Click += new System.EventHandler(this.lblCancel_Click);
             // 
-            // panel11
+            // pnlSave
             // 
-            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel11.Controls.Add(this.tableLayoutPanel16);
-            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel11.Location = new System.Drawing.Point(1157, 3);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(194, 58);
-            this.panel11.TabIndex = 5;
+            this.pnlSave.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSave.Controls.Add(this.tlpSave);
+            this.pnlSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlSave.Location = new System.Drawing.Point(1157, 3);
+            this.pnlSave.Name = "pnlSave";
+            this.pnlSave.Size = new System.Drawing.Size(194, 58);
+            this.pnlSave.TabIndex = 5;
             // 
-            // tableLayoutPanel16
+            // tlpSave
             // 
-            this.tableLayoutPanel16.ColumnCount = 2;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.Controls.Add(this.lblApplyImage, 0, 0);
-            this.tableLayoutPanel16.Controls.Add(this.lblSave, 1, 0);
-            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel16.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel16.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
-            this.tableLayoutPanel16.RowCount = 1;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(192, 56);
-            this.tableLayoutPanel16.TabIndex = 0;
+            this.tlpSave.ColumnCount = 2;
+            this.tlpSave.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tlpSave.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpSave.Controls.Add(this.lblSaveImage, 0, 0);
+            this.tlpSave.Controls.Add(this.lblSave, 1, 0);
+            this.tlpSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpSave.Location = new System.Drawing.Point(0, 0);
+            this.tlpSave.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpSave.Name = "tlpSave";
+            this.tlpSave.RowCount = 1;
+            this.tlpSave.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpSave.Size = new System.Drawing.Size(192, 56);
+            this.tlpSave.TabIndex = 0;
             // 
-            // lblApplyImage
+            // lblSaveImage
             // 
-            this.lblApplyImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblApplyImage.Location = new System.Drawing.Point(3, 0);
-            this.lblApplyImage.Name = "lblApplyImage";
-            this.lblApplyImage.Size = new System.Drawing.Size(44, 56);
-            this.lblApplyImage.TabIndex = 1;
-            this.lblApplyImage.Click += new System.EventHandler(this.lblSave_Click);
+            this.lblSaveImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSaveImage.Location = new System.Drawing.Point(3, 0);
+            this.lblSaveImage.Name = "lblSaveImage";
+            this.lblSaveImage.Size = new System.Drawing.Size(44, 56);
+            this.lblSaveImage.TabIndex = 1;
+            this.lblSaveImage.Click += new System.EventHandler(this.lblSave_Click);
             // 
             // lblSave
             // 
@@ -685,13 +714,181 @@
             this.lblSave.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblSave.Click += new System.EventHandler(this.lblSave_Click);
             // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(3, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(114, 36);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Coating";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(3, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(114, 36);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Non-Coating";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metroToggle1
+            // 
+            this.metroToggle1.AutoSize = true;
+            this.metroToggle1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroToggle1.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.metroToggle1.Location = new System.Drawing.Point(123, 39);
+            this.metroToggle1.Name = "metroToggle1";
+            this.metroToggle1.Size = new System.Drawing.Size(72, 30);
+            this.metroToggle1.TabIndex = 15;
+            this.metroToggle1.Text = "Off";
+            this.metroToggle1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroToggle1.UseSelectable = true;
+            // 
+            // metroToggle2
+            // 
+            this.metroToggle2.AutoSize = true;
+            this.metroToggle2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroToggle2.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.metroToggle2.Location = new System.Drawing.Point(123, 75);
+            this.metroToggle2.Name = "metroToggle2";
+            this.metroToggle2.Size = new System.Drawing.Size(72, 30);
+            this.metroToggle2.TabIndex = 16;
+            this.metroToggle2.Text = "Off";
+            this.metroToggle2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroToggle2.UseSelectable = true;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Highlight;
+            this.panel2.Location = new System.Drawing.Point(22, 453);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(345, 2);
+            this.panel2.TabIndex = 25;
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(17, 420);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(323, 33);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "Inspection Options";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.lblInspectionEdge, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.lblInspectionCoating, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblInspectionNonCoating, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageEdge, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageCoating, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageNonCoating, 1, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(69, 463);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(298, 108);
+            this.tableLayoutPanel2.TabIndex = 34;
+            // 
+            // mtgInspectionUsageEdge
+            // 
+            this.mtgInspectionUsageEdge.AutoSize = true;
+            this.mtgInspectionUsageEdge.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mtgInspectionUsageEdge.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.mtgInspectionUsageEdge.Location = new System.Drawing.Point(123, 3);
+            this.mtgInspectionUsageEdge.Name = "mtgInspectionUsageEdge";
+            this.mtgInspectionUsageEdge.Size = new System.Drawing.Size(72, 30);
+            this.mtgInspectionUsageEdge.TabIndex = 16;
+            this.mtgInspectionUsageEdge.Text = "Off";
+            this.mtgInspectionUsageEdge.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.mtgInspectionUsageEdge.UseSelectable = true;
+            // 
+            // mtgInspectionUsageCoating
+            // 
+            this.mtgInspectionUsageCoating.AutoSize = true;
+            this.mtgInspectionUsageCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mtgInspectionUsageCoating.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.mtgInspectionUsageCoating.Location = new System.Drawing.Point(123, 39);
+            this.mtgInspectionUsageCoating.Name = "mtgInspectionUsageCoating";
+            this.mtgInspectionUsageCoating.Size = new System.Drawing.Size(72, 30);
+            this.mtgInspectionUsageCoating.TabIndex = 15;
+            this.mtgInspectionUsageCoating.Text = "Off";
+            this.mtgInspectionUsageCoating.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.mtgInspectionUsageCoating.UseSelectable = true;
+            // 
+            // lblInspectionEdge
+            // 
+            this.lblInspectionEdge.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblInspectionEdge.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblInspectionEdge.ForeColor = System.Drawing.Color.White;
+            this.lblInspectionEdge.Location = new System.Drawing.Point(3, 72);
+            this.lblInspectionEdge.Name = "lblInspectionEdge";
+            this.lblInspectionEdge.Size = new System.Drawing.Size(114, 36);
+            this.lblInspectionEdge.TabIndex = 14;
+            this.lblInspectionEdge.Text = "NonCoating";
+            this.lblInspectionEdge.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblInspectionCoating
+            // 
+            this.lblInspectionCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblInspectionCoating.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblInspectionCoating.ForeColor = System.Drawing.Color.White;
+            this.lblInspectionCoating.Location = new System.Drawing.Point(3, 36);
+            this.lblInspectionCoating.Name = "lblInspectionCoating";
+            this.lblInspectionCoating.Size = new System.Drawing.Size(114, 36);
+            this.lblInspectionCoating.TabIndex = 13;
+            this.lblInspectionCoating.Text = "Coating";
+            this.lblInspectionCoating.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblInspectionNonCoating
+            // 
+            this.lblInspectionNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblInspectionNonCoating.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblInspectionNonCoating.ForeColor = System.Drawing.Color.White;
+            this.lblInspectionNonCoating.Location = new System.Drawing.Point(3, 0);
+            this.lblInspectionNonCoating.Name = "lblInspectionNonCoating";
+            this.lblInspectionNonCoating.Size = new System.Drawing.Size(114, 36);
+            this.lblInspectionNonCoating.TabIndex = 5;
+            this.lblInspectionNonCoating.Text = "Edge";
+            this.lblInspectionNonCoating.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // mtgInspectionUsageNonCoating
+            // 
+            this.mtgInspectionUsageNonCoating.AutoSize = true;
+            this.mtgInspectionUsageNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mtgInspectionUsageNonCoating.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.mtgInspectionUsageNonCoating.Location = new System.Drawing.Point(123, 75);
+            this.mtgInspectionUsageNonCoating.Name = "mtgInspectionUsageNonCoating";
+            this.mtgInspectionUsageNonCoating.Size = new System.Drawing.Size(72, 30);
+            this.mtgInspectionUsageNonCoating.TabIndex = 12;
+            this.mtgInspectionUsageNonCoating.Text = "Off";
+            this.mtgInspectionUsageNonCoating.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.mtgInspectionUsageNonCoating.UseSelectable = true;
+            // 
             // OperationSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.ClientSize = new System.Drawing.Size(1560, 884);
-            this.Controls.Add(this.tableLayoutPanel13);
+            this.Controls.Add(this.tlpOperationSettingLayout);
             this.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "OperationSettingsForm";
@@ -699,8 +896,9 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OperationSettingsForm_FormClosed);
             this.Load += new System.EventHandler(this.OperationSettingsForm_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
+            this.tlpConfigure.ResumeLayout(false);
+            this.pnlConfigureGroup1.ResumeLayout(false);
+            this.pnlConfigureGroup2.ResumeLayout(false);
             this.tlpImageSaveNG.ResumeLayout(false);
             this.tlpImageSaveNG.PerformLayout();
             this.tlpImageSaveOK.ResumeLayout(false);
@@ -709,26 +907,28 @@
             this.tlpDataStoreCapacity.PerformLayout();
             this.tlpDataStoreDuration.ResumeLayout(false);
             this.tlpDataStoreDuration.PerformLayout();
-            this.panel4.ResumeLayout(false);
+            this.pnlConfigureGroup3.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
-            this.tlpLogSaveAkkonLeadResult.ResumeLayout(false);
-            this.tlpLogSaveAkkonLeadResult.PerformLayout();
-            this.tableLayoutPanel13.ResumeLayout(false);
-            this.panel9.ResumeLayout(false);
-            this.tableLayoutPanel14.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
-            this.tableLayoutPanel15.ResumeLayout(false);
-            this.panel11.ResumeLayout(false);
-            this.tableLayoutPanel16.ResumeLayout(false);
+            this.tlpLogSaveInspectionResult.ResumeLayout(false);
+            this.tlpLogSaveInspectionResult.PerformLayout();
+            this.tlpOperationSettingLayout.ResumeLayout(false);
+            this.pnlCommonFunction.ResumeLayout(false);
+            this.tlpCommonFunction.ResumeLayout(false);
+            this.pnlCancel.ResumeLayout(false);
+            this.tlpCancel.ResumeLayout(false);
+            this.pnlSave.ResumeLayout(false);
+            this.tlpSave.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.TableLayoutPanel tlpConfigure;
+        private System.Windows.Forms.Panel pnlConfigureGroup1;
+        private System.Windows.Forms.Panel pnlConfigureGroup2;
         private System.Windows.Forms.TableLayoutPanel tlpDataStoreCapacity;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
@@ -749,20 +949,20 @@
         private MetroFramework.Controls.MetroToggle mtgSaveOK;
         private MetroFramework.Controls.MetroComboBox mcbxOKExtension;
         private MetroFramework.Controls.MetroComboBox mcbxNGExtension;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
+        private System.Windows.Forms.TableLayoutPanel tlpOperationSettingLayout;
+        private System.Windows.Forms.Panel pnlCommonFunction;
+        private System.Windows.Forms.TableLayoutPanel tlpCommonFunction;
+        private System.Windows.Forms.Panel pnlCancel;
+        private System.Windows.Forms.TableLayoutPanel tlpCancel;
         private System.Windows.Forms.Label lblCancelImage;
         private System.Windows.Forms.Label lblCancel;
-        private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
-        private System.Windows.Forms.Label lblApplyImage;
+        private System.Windows.Forms.Panel pnlSave;
+        private System.Windows.Forms.TableLayoutPanel tlpSave;
+        private System.Windows.Forms.Label lblSaveImage;
         private System.Windows.Forms.Label lblSave;
-        private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TableLayoutPanel tlpLogSaveAkkonLeadResult;
+        private System.Windows.Forms.Panel pnlConfigureGroup4;
+        private System.Windows.Forms.Panel pnlConfigureGroup3;
+        private System.Windows.Forms.TableLayoutPanel tlpLogSaveInspectionResult;
         private System.Windows.Forms.Label label29;
         private MetroFramework.Controls.MetroToggle mtgLogAkkonLead;
         private System.Windows.Forms.Panel panel14;
@@ -772,5 +972,18 @@
         private MetroFramework.Controls.MetroToggle mtgEnablePlcTime;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Panel panel19;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private MetroFramework.Controls.MetroToggle mtgInspectionUsageEdge;
+        private MetroFramework.Controls.MetroToggle mtgInspectionUsageCoating;
+        private System.Windows.Forms.Label lblInspectionEdge;
+        private System.Windows.Forms.Label lblInspectionCoating;
+        private System.Windows.Forms.Label lblInspectionNonCoating;
+        private MetroFramework.Controls.MetroToggle mtgInspectionUsageNonCoating;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label3;
+        private MetroFramework.Controls.MetroToggle metroToggle2;
+        private MetroFramework.Controls.MetroToggle metroToggle1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
