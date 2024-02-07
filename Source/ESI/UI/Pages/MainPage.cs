@@ -13,6 +13,7 @@ using System.Drawing.Drawing2D;
 using Jastech.Battery.Winform.UI.Controls;
 using Jastech.Framework.Winform.Controls;
 using static Jastech.Battery.Structure.Data.DefectDefine;      //테스트 후 삭제
+using System.IO;
 
 namespace ESI.UI.Pages
 {
@@ -133,7 +134,8 @@ namespace ESI.UI.Pages
             if (imgPath == string.Empty)
                 return;
 
-            Bitmap testBitmap = new Bitmap(imgPath);
+            Bitmap testUpperBitmap = new Bitmap(imgPath);
+            Bitmap testLowerBitmap = (Bitmap)testUpperBitmap.Clone();
             Random rand = new Random();
 
             ClearDatas();
@@ -195,7 +197,10 @@ namespace ESI.UI.Pages
                         testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
                         testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
                         testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
-                        testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
+                        if (File.Exists(@"Y:\TestImg.bmp"))
+                            testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, @"Y:\TestImg.bmp");
+                        else
+                            testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
 
                         BeginInvoke(new Action(() =>
                         {
@@ -206,8 +211,8 @@ namespace ESI.UI.Pages
                     }
                     _defectMapControl.maximumY = yValue;
 
-                    _upperDrawBoxControl.SetImage(testBitmap, false);
-                    _lowerDrawBoxControl.SetImage(testBitmap, false);
+                    _upperDrawBoxControl.SetImage(testUpperBitmap, false);
+                    _lowerDrawBoxControl.SetImage(testLowerBitmap, false);
                     _upperDrawBoxControl.FitZoom();
                     _lowerDrawBoxControl.FitZoom();
                 }
@@ -223,7 +228,7 @@ namespace ESI.UI.Pages
                 if (control is Button button)
                 {
                     button.ForeColor = Color.FromArgb(52, 52, 52);
-                    button.FlatAppearance.BorderSize = 1;
+                    button.FlatAppearance.BorderSize = 0;
                 }
             }
             pnlDataArea.Controls.Clear();
