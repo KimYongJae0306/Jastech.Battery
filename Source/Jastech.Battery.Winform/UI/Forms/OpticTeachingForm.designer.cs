@@ -30,7 +30,6 @@ namespace Jastech.Battery.Winform.UI.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.tlpLinescanTeach = new System.Windows.Forms.TableLayoutPanel();
             this.tlpTeachingItem = new System.Windows.Forms.TableLayoutPanel();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -39,7 +38,6 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.tlpTeach = new System.Windows.Forms.TableLayoutPanel();
             this.tlpCommon = new System.Windows.Forms.TableLayoutPanel();
             this.tlpUnit = new System.Windows.Forms.TableLayoutPanel();
-            this.btnMotionPopup = new System.Windows.Forms.Button();
             this.lblCamInfo = new System.Windows.Forms.Label();
             this.tlpLoadImage = new System.Windows.Forms.TableLayoutPanel();
             this.btnLoadImage = new System.Windows.Forms.Button();
@@ -65,7 +63,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.pnlHistogram = new System.Windows.Forms.Panel();
             this.pnlDisplay = new System.Windows.Forms.Panel();
             this.pnlDrawBox = new System.Windows.Forms.Panel();
-            this.StatusTimer = new System.Windows.Forms.Timer(this.components);
+            this.StatusTimer = new System.Windows.Forms.Timer();
             this.tlpLinescanTeach.SuspendLayout();
             this.tlpTeachingItem.SuspendLayout();
             this.pnlLinescanTeach.SuspendLayout();
@@ -198,10 +196,8 @@ namespace Jastech.Battery.Winform.UI.Forms
             // 
             // tlpUnit
             // 
-            this.tlpUnit.ColumnCount = 2;
+            this.tlpUnit.ColumnCount = 1;
             this.tlpUnit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66F));
-            this.tlpUnit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tlpUnit.Controls.Add(this.btnMotionPopup, 0, 0);
             this.tlpUnit.Controls.Add(this.lblCamInfo, 0, 0);
             this.tlpUnit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpUnit.Location = new System.Drawing.Point(0, 0);
@@ -209,24 +205,9 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.tlpUnit.Name = "tlpUnit";
             this.tlpUnit.RowCount = 1;
             this.tlpUnit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpUnit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpUnit.Size = new System.Drawing.Size(851, 40);
             this.tlpUnit.TabIndex = 287;
-            // 
-            // btnMotionPopup
-            // 
-            this.btnMotionPopup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.btnMotionPopup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnMotionPopup.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMotionPopup.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
-            this.btnMotionPopup.ForeColor = System.Drawing.Color.White;
-            this.btnMotionPopup.Location = new System.Drawing.Point(567, 0);
-            this.btnMotionPopup.Margin = new System.Windows.Forms.Padding(0);
-            this.btnMotionPopup.Name = "btnMotionPopup";
-            this.btnMotionPopup.Size = new System.Drawing.Size(284, 40);
-            this.btnMotionPopup.TabIndex = 295;
-            this.btnMotionPopup.Text = "MOTION";
-            this.btnMotionPopup.UseVisualStyleBackColor = false;
-            this.btnMotionPopup.Click += new System.EventHandler(this.btnMotionPopup_Click);
             // 
             // lblCamInfo
             // 
@@ -238,7 +219,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.lblCamInfo.Location = new System.Drawing.Point(0, 0);
             this.lblCamInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lblCamInfo.Name = "lblCamInfo";
-            this.lblCamInfo.Size = new System.Drawing.Size(567, 40);
+            this.lblCamInfo.Size = new System.Drawing.Size(851, 40);
             this.lblCamInfo.TabIndex = 294;
             this.lblCamInfo.Text = "CAM :";
             this.lblCamInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -250,9 +231,9 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.tlpLoadImage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpLoadImage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpLoadImage.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLoadImage.Controls.Add(this.btnLoadImage, 0, 0);
             this.tlpLoadImage.Controls.Add(this.btnGrabStop, 0, 0);
-            this.tlpLoadImage.Controls.Add(this.btnGrabStart, 0, 0);
+            this.tlpLoadImage.Controls.Add(this.btnGrabStart, 1, 0);
+            this.tlpLoadImage.Controls.Add(this.btnLoadImage, 2, 0);
             this.tlpLoadImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpLoadImage.Location = new System.Drawing.Point(0, 40);
             this.tlpLoadImage.Margin = new System.Windows.Forms.Padding(0);
@@ -286,7 +267,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.btnGrabStop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnGrabStop.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
             this.btnGrabStop.ForeColor = System.Drawing.Color.White;
-            this.btnGrabStop.Location = new System.Drawing.Point(283, 0);
+            this.btnGrabStop.Location = new System.Drawing.Point(0, 0);
             this.btnGrabStop.Margin = new System.Windows.Forms.Padding(0);
             this.btnGrabStop.Name = "btnGrabStop";
             this.btnGrabStop.Size = new System.Drawing.Size(283, 40);
@@ -302,7 +283,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.btnGrabStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnGrabStart.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
             this.btnGrabStart.ForeColor = System.Drawing.Color.White;
-            this.btnGrabStart.Location = new System.Drawing.Point(0, 0);
+            this.btnGrabStart.Location = new System.Drawing.Point(283, 0);
             this.btnGrabStart.Margin = new System.Windows.Forms.Padding(0);
             this.btnGrabStart.Name = "btnGrabStart";
             this.btnGrabStart.Size = new System.Drawing.Size(283, 40);
@@ -316,6 +297,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.pnlTeach.Controls.Add(this.tlpCameraParameter);
             this.pnlTeach.Controls.Add(this.pnlLight);
             this.pnlTeach.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTeach.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.pnlTeach.Location = new System.Drawing.Point(0, 80);
             this.pnlTeach.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTeach.Name = "pnlTeach";
@@ -638,7 +620,6 @@ namespace Jastech.Battery.Winform.UI.Forms
         private System.Windows.Forms.TableLayoutPanel tlpTeach;
         private System.Windows.Forms.TableLayoutPanel tlpCommon;
         private System.Windows.Forms.TableLayoutPanel tlpUnit;
-        private System.Windows.Forms.Button btnMotionPopup;
         private System.Windows.Forms.Label lblCamInfo;
         private System.Windows.Forms.TableLayoutPanel tlpLoadImage;
         private System.Windows.Forms.Button btnLoadImage;
