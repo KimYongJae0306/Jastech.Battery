@@ -18,17 +18,17 @@ namespace ESI.UI.Pages
     public partial class MainPage : UserControl
     {
         #region 필드
-        private CompactDefectMapControl _defectMap = null;
+        private CompactDefectMapControl _defectMapControl = null;
 
-        private DefectInfoContainerControl _defectInfoContainer = null;
+        private DefectInfoContainerControl _defectInfoContainerControl = null;
 
-        private DrawBoxControl _leftDrawBox = null;
+        private DrawBoxControl _upperDrawBoxControl = null;
 
-        private DrawBoxControl _rightDrawBox = null;
+        private DrawBoxControl _lowerDrawBoxControl = null;
 
         private DataGridView _dgvDefectData = null;
 
-        private PixelValueGraphControl _pixelValueGraph = null;
+        private PixelValueGraphControl _pixelValueGraphControl = null;
 
         private readonly BindingList<ElectrodeDefectInfo> _defectInfos = new BindingList<ElectrodeDefectInfo>();
         #endregion
@@ -60,10 +60,10 @@ namespace ESI.UI.Pages
 
         private void AddControls()
         {
-            _leftDrawBox = new DrawBoxControl { Dock = DockStyle.Right };
-            _rightDrawBox = new DrawBoxControl { Dock = DockStyle.Right };
-            _defectInfoContainer = new DefectInfoContainerControl { Dock = DockStyle.Fill };
-            _defectMap = new CompactDefectMapControl { Dock = DockStyle.Fill };
+            _upperDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
+            _lowerDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
+            _defectMapControl = new CompactDefectMapControl { Dock = DockStyle.Fill };
+            _defectInfoContainerControl = new DefectInfoContainerControl { Dock = DockStyle.Fill };
             _dgvDefectData = new DataGridView
             {
                 AllowUserToAddRows = false,
@@ -73,45 +73,47 @@ namespace ESI.UI.Pages
                 EnableHeadersVisualStyles = false,
                 RowHeadersVisible = false,
                 Dock = DockStyle.Fill,
-                GridColor = Color.DarkGray,
-                Size = new Size(1168, 188),
+                GridColor = Color.FromArgb(52, 52, 52),
                 BackgroundColor = Color.FromArgb(52, 52, 52),
                 EditMode = DataGridViewEditMode.EditProgrammatically,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
+                ColumnHeadersHeight = 25,
+                ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single,
                 ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
                 {
-                    BackColor = Color.FromArgb(104, 104, 104),
+                    Font = new Font("맑은고딕", 13, FontStyle.Bold),
                     ForeColor = Color.White,
-                    SelectionBackColor = Color.FromArgb(127, 127, 127),
+                    BackColor = Color.FromArgb(26, 26, 26),
+                    SelectionBackColor = Color.FromArgb(26, 26, 26),
                 },
                 DefaultCellStyle = new DataGridViewCellStyle
                 {
-                    BackColor = Color.FromArgb(52, 52, 52),
-                    ForeColor = Color.White,
-                    SelectionBackColor = Color.Indigo,
+                    BackColor = Color.AliceBlue,
+                    ForeColor = Color.Black,
+                    SelectionForeColor = Color.White,
+                    SelectionBackColor = Color.MediumPurple,
                 }
             };
 
-            _leftDrawBox.DisableFunctionButtons();
-            _rightDrawBox.DisableFunctionButtons();
+            _upperDrawBoxControl.DisableFunctionButtons();
+            _lowerDrawBoxControl.DisableFunctionButtons();
 
             _dgvDefectData.DataSource = _defectInfos;
-            _defectInfoContainer.isVertical = false;
-            _defectMap.SelectedDefectChanged += _defectInfoContainer.SelectedControlIndexChanged;
+            _defectInfoContainerControl.isVertical = false;
+            _defectMapControl.SelectedDefectChanged += _defectInfoContainerControl.SelectedControlIndexChanged;
 
-            pnlDefectMap.Controls.Add(_defectMap);
-            pnlImages.Controls.Add(_leftDrawBox);
-            pnlImages.Controls.Add(_rightDrawBox);
-            SelectDefectData_Click(lblSelectDefectData, null);
+            pnlDefectMap.Controls.Add(_defectMapControl);
+            pnlUpperImage.Controls.Add(_upperDrawBoxControl);
+            pnlLowerImage.Controls.Add(_lowerDrawBoxControl);
+            SelectDefectData_Click(null, null);
         }
 
         private void ClearDatas()
         {
             _defectInfos.Clear();
-            _defectMap.Clear();
-            _defectInfoContainer.ClearDefectInfo();
+            _defectMapControl.Clear();
+            _defectInfoContainerControl.ClearDefectInfo();
         }
 
         private void Test_Click(object sender, EventArgs e)
@@ -135,118 +137,130 @@ namespace ESI.UI.Pages
 
             ClearDatas();
 
-            _leftDrawBox.EnableBitmapBrush(false);
-            _rightDrawBox.EnableBitmapBrush(false);
-
-            for (int yValue = 0; yValue <= _defectMap.maximumMeter * 50000; yValue += 50000)
+            Task.Run(async () =>
             {
-                if (rand.Next(40) == 0)
+                _upperDrawBoxControl.EnableInteractive(false);
+                _lowerDrawBoxControl.EnableInteractive(false);
+
+                for (int yValue = 0; yValue <= _defectMapControl.maximumMeter * 50000; yValue += 50000)
                 {
-                    var testInfo = new ElectrodeDefectInfo
+                    if (rand.Next(40) == 0)
                     {
-                        Index = _defectInfos.Count,
-                        InspectionTime = DateTime.Now,
-                        Judgement = "NG",
-                        DefectLevel = rand.Next(1, 6),
-                        DefectType = (DefectTypes)rand.Next(1, 6),
-                        CameraName = rand.Next(2) == 0 ? "Upper" : "Lower",
-                        Lane = 1
-                    };
+                        var testInfo = new ElectrodeDefectInfo
+                        {
+                            Index = _defectInfos.Count,
+                            InspectionTime = DateTime.Now,
+                            Judgement = "NG",
+                            DefectLevel = rand.Next(1, 6),
+                            DefectType = (DefectTypes)rand.Next(1, 6),
+                            CameraName = rand.Next(2) == 0 ? "Upper" : "Lower",
+                            Lane = 1
+                        };
 
-                    #region 보기싫은 if문
-                    if (testInfo.CameraName == "Upper")
-                    {
-                        lblUpperJudgement.Text = "NG";
-                        lblUpperJudgement.BackColor = Color.Red;
+                        #region 보기싫은 if문
+                        BeginInvoke(new Action(() =>
+                        {
+                            if (testInfo.CameraName == "Upper")
+                            {
+                                btnUpperJudgement.Text = "NG";
+                                btnUpperJudgement.BackColor = Color.Red;
+                            }
+                            else
+                            {
+                                btnUpperJudgement.Text = "OK";
+                                btnUpperJudgement.BackColor = Color.LimeGreen;
+                            }
+
+                            if (testInfo.CameraName == "Lower")
+                            {
+                                btnLowerJudgement.Text = "NG";
+                                btnLowerJudgement.BackColor = Color.Red;
+                            }
+                            else
+                            {
+                                btnLowerJudgement.Text = "OK";
+                                btnLowerJudgement.BackColor = Color.LimeGreen;
+                            }
+                        }));
+                        #endregion
+
+                        testInfo.SetFeatureDataType(FeatureTypes.X, typeof(float));
+                        testInfo.SetFeatureDataType(FeatureTypes.Y, typeof(float));
+                        testInfo.SetFeatureDataType(FeatureTypes.Width, typeof(float));
+                        testInfo.SetFeatureDataType(FeatureTypes.Height, typeof(float));
+                        testInfo.SetFeatureDataType(FeatureTypes.LocalImagePath, typeof(string));
+
+                        testInfo.SetFeatureValue(FeatureTypes.X, rand.Next(16383));            // TODO: maximage width 받을 것
+                        testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
+                        testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
+                        testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
+                        testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
+
+                        BeginInvoke(new Action(() =>
+                        {
+                            _defectInfos.Add(testInfo);
+                            _defectInfoContainerControl.AddDefectInfo(testInfo);
+                            _defectMapControl.AddCoordinates(new ElectrodeDefectInfo[] { testInfo });
+                        }));
                     }
-                    else
-                    {
-                        lblUpperJudgement.Text = "OK";
-                        lblUpperJudgement.BackColor = Color.LimeGreen;
-                    }
+                    _defectMapControl.maximumY = yValue;
 
-                    if (testInfo.CameraName == "Lower")
-                    {
-                        lblLowerJudgement.Text = "NG";
-                        lblLowerJudgement.BackColor = Color.Red;
-                    }
-                    else
-                    {
-                        lblLowerJudgement.Text = "OK";
-                        lblLowerJudgement.BackColor = Color.LimeGreen;
-                    }
-                    #endregion
-
-                    testInfo.SetFeatureDataType(FeatureTypes.X, typeof(float));
-                    testInfo.SetFeatureDataType(FeatureTypes.Y, typeof(float));
-
-                    testInfo.SetFeatureValue(FeatureTypes.X, rand.Next(16383));            // TODO: maximage width 받을 것
-                    testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
-
-                    testInfo.SetFeatureDataType(FeatureTypes.Width, typeof(float));
-                    testInfo.SetFeatureDataType(FeatureTypes.Height, typeof(float));
-                    testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
-                    testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
-
-                    testInfo.SetFeatureDataType(FeatureTypes.LocalImagePath, typeof(string));
-
-                    testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
-
-                    _defectInfos.Add(testInfo);
-                    _defectInfoContainer.AddDefectInfo(testInfo);
-                    _defectMap.AddCoordinates(new ElectrodeDefectInfo[] { testInfo });
+                    _upperDrawBoxControl.SetImage(testBitmap, false);
+                    _lowerDrawBoxControl.SetImage(testBitmap, false);
+                    _upperDrawBoxControl.FitZoom();
+                    _lowerDrawBoxControl.FitZoom();
                 }
-
-                _defectMap.maximumY = yValue;
-                _defectMap.Invalidate();
-
-                _leftDrawBox.SetImage((Bitmap)testBitmap.Clone());
-                _leftDrawBox.FitZoom();
-                _rightDrawBox.SetImage((Bitmap)testBitmap.Clone());
-                _rightDrawBox.FitZoom();
-
-                Application.DoEvents();
-            }
-
-            _leftDrawBox.EnableBitmapBrush(true);
-            _rightDrawBox.EnableBitmapBrush(true);
-        }
-
-        private void pnlImages_SizeChanged(object sender, EventArgs e)
-        {
-            _leftDrawBox.Width = pnlImages.Width / 2;
-            _rightDrawBox.Width = pnlImages.Width / 2;
+                _upperDrawBoxControl.EnableInteractive(true);
+                _lowerDrawBoxControl.EnableInteractive(true);
+            });
         }
 
         private void ClearDataViewSelection()
         {
             foreach (Control control in tlpDataLayout.Controls)
-                control.ForeColor = Color.White;
+            {
+                if (control is Button button)
+                {
+                    button.ForeColor = Color.FromArgb(52, 52, 52);
+                    button.FlatAppearance.BorderSize = 1;
+                }
+            }
             pnlDataArea.Controls.Clear();
         }
 
         private void SelectDefectData_Click(object sender, EventArgs e)
         {
-            var label = sender as Label;
             ClearDataViewSelection();
             pnlDataArea.Controls.Add(_dgvDefectData);
-            label.ForeColor = Color.DodgerBlue;
+            btnDefectData.ForeColor = Color.White;
+            btnDefectData.FlatAppearance.BorderSize = 3;
+            //lblHighlightDefectData.BackColor = Color.Tomato;
         }
 
         private void SelectDefectImage_Click(object sender, EventArgs e)
         {
-            var label = sender as Label;
             ClearDataViewSelection();
-            pnlDataArea.Controls.Add(_defectInfoContainer);
-            label.ForeColor = Color.DodgerBlue;
+            pnlDataArea.Controls.Add(_defectInfoContainerControl);
+            btnDefectImage.ForeColor = Color.White;
+            btnDefectImage.FlatAppearance.BorderSize = 3;
+            //lblHighlightDefectImage.BackColor = Color.Tomato;
         }
 
         private void SelectMisMatch_Click(object sender, EventArgs e)
         {
-            var label = sender as Label;
             ClearDataViewSelection();
-            pnlDataArea.Controls.Add(_pixelValueGraph);
-            label.ForeColor = Color.DodgerBlue;
+            pnlDataArea.Controls.Add(_pixelValueGraphControl);
+            btnUpperLowerMismatch.ForeColor = Color.White;
+            btnUpperLowerMismatch.FlatAppearance.BorderSize = 3;
+            //lblHighlightMismatch.BackColor = Color.Tomato;
+        }
+
+        private void MainPage_SizeChanged(object sender, EventArgs e)
+        {
+            _upperDrawBoxControl.Width = pnlUpperImage.Width / 2;
+            _lowerDrawBoxControl.Width = pnlLowerImage.Width / 2;
+            _defectInfoContainerControl.Size = pnlDataArea.Size;
+            _defectMapControl.Invalidate();
         }
     }
 }
