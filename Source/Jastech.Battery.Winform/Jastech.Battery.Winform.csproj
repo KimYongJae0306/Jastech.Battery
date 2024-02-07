@@ -89,6 +89,18 @@
     <Compile Include="UI\Controls\DefectInfoControl.Designer.cs">
       <DependentUpon>DefectInfoControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\CoatingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\CoatingControl.Designer.cs">
+      <DependentUpon>CoatingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\DistanceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\DistanceControl.Designer.cs">
+      <DependentUpon>DistanceControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controls\LightControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +112,12 @@
     </Compile>
     <Compile Include="UI\Controls\LogControl.Designer.cs">
       <DependentUpon>LogControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\NonCoatingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\NonCoatingControl.Designer.cs">
+      <DependentUpon>NonCoatingControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\InspectionTeachingForm.cs">
       <SubType>Form</SubType>
@@ -184,32 +202,7 @@
       <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Arrow_down_White.png" />
-    <Content Include="Resources\Arrow_Left_White.png" />
-    <Content Include="Resources\Arrow_Right_White.png" />
-    <Content Include="Resources\Arrow_Up_White.png" />
-    <Content Include="Resources\ATT_Recipe.png" />
-    <Content Include="Resources\Cancel.png" />
-    <Content Include="Resources\Cancel_White.png" />
-    <Content Include="Resources\Copy_Horizontal_White.png" />
-    <Content Include="Resources\Copy_Vertical_White.png" />
-    <Content Include="Resources\Copy_White.png" />
-    <Content Include="Resources\Delete_White.png" />
-    <Content Include="Resources\Edit_White.png" />
-    <Content Include="Resources\Exit_White.png" />
-    <Content Include="Resources\Exit_White1.png" />
-    <Content Include="Resources\New_White.png" />
-    <Content Include="Resources\Next.png" />
-    <Content Include="Resources\Next_White.png" />
-    <Content Include="Resources\Prev.png" />
-    <Content Include="Resources\Prev_White.png" />
-    <Content Include="Resources\Save_White.png" />
-    <Content Include="Resources\Save_White1.png" />
-    <Content Include="Resources\Select_White.png" />
-    <Content Include="Resources\Stop_Circle_White.png" />
-    <Content Include="Resources\Warning.png" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -224,11 +217,20 @@
     <EmbeddedResource Include="UI\Controls\DefectInfoControl.resx">
       <DependentUpon>DefectInfoControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\CoatingControl.resx">
+      <DependentUpon>CoatingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\DistanceControl.resx">
+      <DependentUpon>DistanceControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\LightControl.resx">
       <DependentUpon>LightControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\LogControl.resx">
       <DependentUpon>LogControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\NonCoatingControl.resx">
+      <DependentUpon>NonCoatingControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\InspectionTeachingForm.resx">
       <DependentUpon>InspectionTeachingForm.cs</DependentUpon>

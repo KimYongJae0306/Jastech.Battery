@@ -31,6 +31,8 @@
             this.pnlTeachingItems = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tlpTeachingItems = new System.Windows.Forms.TableLayoutPanel();
+            this.btnDistance = new System.Windows.Forms.Button();
+            this.btnCoating = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.pnlTeachingPage = new System.Windows.Forms.Panel();
@@ -40,7 +42,7 @@
             this.tlpUnit = new System.Windows.Forms.TableLayoutPanel();
             this.btnLoadImage = new System.Windows.Forms.Button();
             this.lblDirection = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.pnlTeach = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -49,8 +51,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tlpTeachingPage = new System.Windows.Forms.TableLayoutPanel();
+            this.btnNonCoating = new System.Windows.Forms.Button();
             this.pnlTeachingItems.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.tlpTeachingItems.SuspendLayout();
             this.pnlTeachingPage.SuspendLayout();
             this.tlpTeaching.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -94,6 +98,9 @@
             // 
             this.tlpTeachingItems.ColumnCount = 1;
             this.tlpTeachingItems.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpTeachingItems.Controls.Add(this.btnDistance, 0, 0);
+            this.tlpTeachingItems.Controls.Add(this.btnCoating, 0, 1);
+            this.tlpTeachingItems.Controls.Add(this.btnNonCoating, 0, 2);
             this.tlpTeachingItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpTeachingItems.Location = new System.Drawing.Point(0, 0);
             this.tlpTeachingItems.Margin = new System.Windows.Forms.Padding(0);
@@ -107,6 +114,36 @@
             this.tlpTeachingItems.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpTeachingItems.Size = new System.Drawing.Size(144, 711);
             this.tlpTeachingItems.TabIndex = 0;
+            // 
+            // btnDistance
+            // 
+            this.btnDistance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnDistance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDistance.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
+            this.btnDistance.ForeColor = System.Drawing.Color.White;
+            this.btnDistance.Location = new System.Drawing.Point(2, 2);
+            this.btnDistance.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDistance.Name = "btnDistance";
+            this.btnDistance.Size = new System.Drawing.Size(140, 96);
+            this.btnDistance.TabIndex = 20;
+            this.btnDistance.Text = "Distance";
+            this.btnDistance.UseVisualStyleBackColor = false;
+            this.btnDistance.Click += new System.EventHandler(this.btnDistance_Click);
+            // 
+            // btnCoating
+            // 
+            this.btnCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCoating.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
+            this.btnCoating.ForeColor = System.Drawing.Color.White;
+            this.btnCoating.Location = new System.Drawing.Point(2, 102);
+            this.btnCoating.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCoating.Name = "btnCoating";
+            this.btnCoating.Size = new System.Drawing.Size(140, 96);
+            this.btnCoating.TabIndex = 21;
+            this.btnCoating.Text = "Coating";
+            this.btnCoating.UseVisualStyleBackColor = false;
+            this.btnCoating.Click += new System.EventHandler(this.btnCoating_Click);
             // 
             // btnCancel
             // 
@@ -168,7 +205,7 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.tlpCommon, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pnlTeach, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(880, 2);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
@@ -243,14 +280,14 @@
             this.lblDirection.Text = "CAM : ";
             this.lblDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // panel2
+            // pnlTeach
             // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 80);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(874, 827);
-            this.panel2.TabIndex = 1;
+            this.pnlTeach.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTeach.Location = new System.Drawing.Point(0, 80);
+            this.pnlTeach.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTeach.Name = "pnlTeach";
+            this.pnlTeach.Size = new System.Drawing.Size(874, 827);
+            this.pnlTeach.TabIndex = 1;
             // 
             // tableLayoutPanel2
             // 
@@ -361,6 +398,21 @@
             this.tlpTeachingPage.Size = new System.Drawing.Size(1900, 911);
             this.tlpTeachingPage.TabIndex = 2;
             // 
+            // btnNonCoating
+            // 
+            this.btnNonCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnNonCoating.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
+            this.btnNonCoating.ForeColor = System.Drawing.Color.White;
+            this.btnNonCoating.Location = new System.Drawing.Point(2, 202);
+            this.btnNonCoating.Margin = new System.Windows.Forms.Padding(2);
+            this.btnNonCoating.Name = "btnNonCoating";
+            this.btnNonCoating.Size = new System.Drawing.Size(140, 96);
+            this.btnNonCoating.TabIndex = 21;
+            this.btnNonCoating.Text = "Non\r\nCoating";
+            this.btnNonCoating.UseVisualStyleBackColor = false;
+            this.btnNonCoating.Click += new System.EventHandler(this.btnNonCoating_Click);
+            // 
             // InspectionTeachingForm
             // 
             this.AllowDrop = true;
@@ -379,6 +431,7 @@
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.InspectionTeachingForm_DragEnter);
             this.pnlTeachingItems.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
+            this.tlpTeachingItems.ResumeLayout(false);
             this.pnlTeachingPage.ResumeLayout(false);
             this.tlpTeaching.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -406,7 +459,7 @@
         private System.Windows.Forms.TableLayoutPanel tlpUnit;
         private System.Windows.Forms.Button btnLoadImage;
         private System.Windows.Forms.Label lblDirection;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnlTeach;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
@@ -415,5 +468,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel tlpTeachingPage;
+        private System.Windows.Forms.Button btnDistance;
+        private System.Windows.Forms.Button btnCoating;
+        private System.Windows.Forms.Button btnNonCoating;
     }
 }
