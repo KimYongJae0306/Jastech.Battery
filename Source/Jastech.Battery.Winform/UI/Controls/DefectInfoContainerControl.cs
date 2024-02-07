@@ -63,7 +63,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             Invalidate();
         }
 
-        public void ClearDefectInfo()
+        public void Clear()
         {
             pnlContainer.Controls.Clear();
             pnlContainer.VerticalScroll.Value = 0;

@@ -30,7 +30,7 @@ namespace ESI.UI.Pages
 
         private DataGridView _dgvDefectData = null;
 
-        private PixelValueGraphControl _pixelValueGraphControl = null;
+        private DataGraphControl _dataGraphControl = null;
 
         private readonly BindingList<DefectInfo> _defectInfos = new BindingList<DefectInfo>();
         #endregion
@@ -66,6 +66,7 @@ namespace ESI.UI.Pages
             _lowerDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
             _defectMapControl = new CompactDefectMapControl { Dock = DockStyle.Fill };
             _defectInfoContainerControl = new DefectInfoContainerControl { Dock = DockStyle.Fill };
+            _dataGraphControl = new DataGraphControl {  Dock = DockStyle.Fill };
             _dgvDefectData = new DataGridView
             {
                 AllowUserToAddRows = false,
@@ -91,7 +92,7 @@ namespace ESI.UI.Pages
                 },
                 DefaultCellStyle = new DataGridViewCellStyle
                 {
-                    BackColor = Color.AliceBlue,
+                    BackColor = SystemColors.Window,
                     ForeColor = Color.Black,
                     SelectionForeColor = Color.White,
                     SelectionBackColor = Color.MediumPurple,
@@ -101,6 +102,12 @@ namespace ESI.UI.Pages
             _upperDrawBoxControl.DisableFunctionButtons();
             _lowerDrawBoxControl.DisableFunctionButtons();
 
+            _dataGraphControl.Initialize();
+            _dataGraphControl.SetCaption("m", "mm");
+            _dataGraphControl.AddLegend("Left", 0, Color.LightSalmon);
+            _dataGraphControl.AddLegend("Center", 1, Color.DodgerBlue);
+            _dataGraphControl.AddLegend("Right", 2, Color.LimeGreen);
+
             _dgvDefectData.DataSource = _defectInfos;
             _defectInfoContainerControl.isVertical = false;
             _defectMapControl.SelectedDefectChanged += _defectInfoContainerControl.SelectedControlIndexChanged;
@@ -108,14 +115,15 @@ namespace ESI.UI.Pages
             pnlDefectMap.Controls.Add(_defectMapControl);
             pnlUpperImage.Controls.Add(_upperDrawBoxControl);
             pnlLowerImage.Controls.Add(_lowerDrawBoxControl);
-            SelectDefectData_Click(null, null);
+            SelectDefectData_Click(null, null); 
         }
 
         private void ClearDatas()
         {
             _defectInfos.Clear();
             _defectMapControl.Clear();
-            _defectInfoContainerControl.ClearDefectInfo();
+            _defectInfoContainerControl.Clear();
+            _dataGraphControl.Clear();
         }
 
         private void Test_Click(object sender, EventArgs e)
@@ -197,6 +205,7 @@ namespace ESI.UI.Pages
                         testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
                         testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
                         testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
+
                         if (File.Exists(@"Y:\TestImg.bmp"))
                             testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, @"Y:\TestImg.bmp");
                         else
@@ -209,6 +218,15 @@ namespace ESI.UI.Pages
                             _defectMapControl.AddCoordinates(new DefectInfo[] { testInfo });
                         }));
                     }
+
+                    float testLeftMismatch = (rand.Next(1000, 1150) / 100f);
+                    float testCenterMismatch = (rand.Next(2300, 2550) / 100f);
+                    float testRightMismatch = (rand.Next(1200, 1300) / 100f);
+
+                    _dataGraphControl.AddData("Left", testLeftMismatch);
+                    _dataGraphControl.AddData("Center", testCenterMismatch);
+                    _dataGraphControl.AddData("Right", testRightMismatch, true);
+
                     _defectMapControl.maximumY = yValue;
 
                     _upperDrawBoxControl.SetImage(testUpperBitmap, false);
@@ -255,7 +273,7 @@ namespace ESI.UI.Pages
         private void SelectMisMatch_Click(object sender, EventArgs e)
         {
             ClearDataViewSelection();
-            pnlDataArea.Controls.Add(_pixelValueGraphControl);
+            pnlDataArea.Controls.Add(_dataGraphControl);
             btnUpperLowerMismatch.ForeColor = Color.White;
             btnUpperLowerMismatch.FlatAppearance.BorderSize = 3;
             //lblHighlightMismatch.BackColor = Color.Tomato;

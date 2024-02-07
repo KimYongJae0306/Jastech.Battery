@@ -99,31 +99,10 @@ namespace Jastech.Battery.Winform.UI.Controls
         
         private void pnlMapArea_Paint(object sender, PaintEventArgs e)
         {
-            //e.Graphics.Clear(Color.FromArgb(52, 52, 52));
             e.Graphics.TranslateTransform(pnlMapArea.AutoScrollPosition.X, pnlMapArea.AutoScrollPosition.Y);
             DisplayArea = GetDisplayArea();
 
-            foreach (var defectInfo in _defectInfos)
-                DrawDefectShape(e.Graphics, defectInfo);
-
-            // Drawing Grid and Length
-            double maximumHeight = maximumY / 1000;;
-            double gridMargin = maximumHeight / 10;
-            for (int count = 0; count <= 10; count++)
-            {
-                int drawingHeight = (int)(count * (DisplayArea.Height / 10)) + (int)DisplayArea.Top;
-                var dashPen = new Pen(Color.FromArgb(208, 208, 208))
-                {
-                    DashStyle = DashStyle.Dash,
-                    Width = 0.3f
-                };
-                e.Graphics.DrawLine(dashPen, new Point((int)DisplayArea.Left, drawingHeight), new Point((int)DisplayArea.Left + (int)DisplayArea.Width, drawingHeight));
-                Font stringFont = new Font(Font.FontFamily, 9, FontStyle.Bold);
-                e.Graphics.DrawString($"{((maximumHeight - (count * gridMargin)) * PixelResolution) / 1000:N2}m", stringFont, Brushes.White, new PointF(5, drawingHeight - Font.Size / 2));
-            }
-
-            //var dispRect = new Rectangle((int)DisplayArea.Left, (int)DisplayArea.Top - 15, (int)DisplayArea.Width, (int)DisplayArea.Height + 30);
-            //e.Graphics.DrawRectangle(Pens.White, dispRect);
+            // Draw Side Lines
             Pen sideLinePen = new Pen(Color.FromArgb(208,208,208))
             {
                 Width = 5,
@@ -131,6 +110,26 @@ namespace Jastech.Battery.Winform.UI.Controls
             };
             e.Graphics.DrawLine(sideLinePen, new Point((int)DisplayArea.Left, 5), new Point((int)DisplayArea.Left, Height));
             e.Graphics.DrawLine(sideLinePen, new Point((int)DisplayArea.Right, 5), new Point((int)DisplayArea.Right, Height));
+
+            // Drawing Grid and Length
+            double maximumHeight = maximumY / 1000;;
+            double gridMargin = maximumHeight / 10;
+            Font stringFont = new Font("맑은 고딕", 9, FontStyle.Bold);
+            var dashPen = new Pen(Color.FromArgb(208, 208, 208))
+            {
+                DashStyle = DashStyle.Dash,
+                Width = 0.3f
+            };
+            for (int count = 0; count <= 10; count++)
+            {
+                int drawingHeight = (int)(count * (DisplayArea.Height / 10)) + (int)DisplayArea.Top;
+                
+                e.Graphics.DrawLine(dashPen, new Point((int)DisplayArea.Left, drawingHeight), new Point((int)DisplayArea.Left + (int)DisplayArea.Width, drawingHeight));
+                e.Graphics.DrawString($"{((maximumHeight - (count * gridMargin)) * PixelResolution) / 1000:N2}m", stringFont, Brushes.White, new PointF(5, drawingHeight - Font.Size / 2));
+            }
+
+            foreach (var defectInfo in _defectInfos)
+                DrawDefectShape(e.Graphics, defectInfo);
 
             pnlMapArea.ResumeLayout(true);
         }
