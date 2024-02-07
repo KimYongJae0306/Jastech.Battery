@@ -62,7 +62,8 @@
   <ItemGroup>
     <Compile Include="AppsInspModel.cs" />
     <Compile Include="Data\AppsEnum.cs" />
-    <Compile Include="Data\ElectrodeDefectInfo.cs" />
+    <Compile Include="Data\DefectDefine.cs" />
+    <Compile Include="Data\DefectInfo.cs" />
     <Compile Include="Data\SliceInspResult.cs" />
     <Compile Include="Data\MaterialInfo.cs" />
     <Compile Include="Data\TeachingData.cs" />

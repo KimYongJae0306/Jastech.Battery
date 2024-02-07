@@ -71,7 +71,25 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\AppsConfig.cs" />
-    <Compile Include="UI\Controls\NonCoatingControl.cs">
+    <Compile Include="UI\Controls\CompactDefectMapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\CompactDefectMapControl.Designer.cs">
+      <DependentUpon>CompactDefectMapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\DefectInfoContainerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\DefectInfoContainerControl.Designer.cs">
+      <DependentUpon>DefectInfoContainerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\DefectInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\DefectInfoControl.Designer.cs">
+      <DependentUpon>DefectInfoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\LightControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\Controls\NonCoatingControl.Designer.cs">
@@ -172,8 +190,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\NonCoatingControl.resx">
-      <DependentUpon>NonCoatingControl.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Controls\CompactDefectMapControl.resx">
+      <DependentUpon>CompactDefectMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\DefectInfoContainerControl.resx">
+      <DependentUpon>DefectInfoContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\DefectInfoControl.resx">
+      <DependentUpon>DefectInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\LightControl.resx">
+      <DependentUpon>LightControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\CoatingControl.resx">
       <DependentUpon>CoatingControl.cs</DependentUpon>
