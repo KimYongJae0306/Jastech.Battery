@@ -31,6 +31,8 @@
             this.pnlTeachingItems = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tlpTeachingItems = new System.Windows.Forms.TableLayoutPanel();
+            this.btnDistance = new System.Windows.Forms.Button();
+            this.btnCoating = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.pnlTeachingPage = new System.Windows.Forms.Panel();
@@ -49,8 +51,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tlpTeachingPage = new System.Windows.Forms.TableLayoutPanel();
-            this.btnFindEdge = new System.Windows.Forms.Button();
-            this.btnCoating = new System.Windows.Forms.Button();
             this.btnNonCoating = new System.Windows.Forms.Button();
             this.pnlTeachingItems.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -98,7 +98,7 @@
             // 
             this.tlpTeachingItems.ColumnCount = 1;
             this.tlpTeachingItems.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpTeachingItems.Controls.Add(this.btnFindEdge, 0, 0);
+            this.tlpTeachingItems.Controls.Add(this.btnDistance, 0, 0);
             this.tlpTeachingItems.Controls.Add(this.btnCoating, 0, 1);
             this.tlpTeachingItems.Controls.Add(this.btnNonCoating, 0, 2);
             this.tlpTeachingItems.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -114,6 +114,36 @@
             this.tlpTeachingItems.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpTeachingItems.Size = new System.Drawing.Size(144, 711);
             this.tlpTeachingItems.TabIndex = 0;
+            // 
+            // btnDistance
+            // 
+            this.btnDistance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnDistance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDistance.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
+            this.btnDistance.ForeColor = System.Drawing.Color.White;
+            this.btnDistance.Location = new System.Drawing.Point(2, 2);
+            this.btnDistance.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDistance.Name = "btnDistance";
+            this.btnDistance.Size = new System.Drawing.Size(140, 96);
+            this.btnDistance.TabIndex = 20;
+            this.btnDistance.Text = "Distance";
+            this.btnDistance.UseVisualStyleBackColor = false;
+            this.btnDistance.Click += new System.EventHandler(this.btnDistance_Click);
+            // 
+            // btnCoating
+            // 
+            this.btnCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCoating.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
+            this.btnCoating.ForeColor = System.Drawing.Color.White;
+            this.btnCoating.Location = new System.Drawing.Point(2, 102);
+            this.btnCoating.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCoating.Name = "btnCoating";
+            this.btnCoating.Size = new System.Drawing.Size(140, 96);
+            this.btnCoating.TabIndex = 21;
+            this.btnCoating.Text = "Coating";
+            this.btnCoating.UseVisualStyleBackColor = false;
+            this.btnCoating.Click += new System.EventHandler(this.btnCoating_Click);
             // 
             // btnCancel
             // 
@@ -368,36 +398,6 @@
             this.tlpTeachingPage.Size = new System.Drawing.Size(1900, 911);
             this.tlpTeachingPage.TabIndex = 2;
             // 
-            // btnFindEdge
-            // 
-            this.btnFindEdge.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.btnFindEdge.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnFindEdge.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
-            this.btnFindEdge.ForeColor = System.Drawing.Color.White;
-            this.btnFindEdge.Location = new System.Drawing.Point(2, 2);
-            this.btnFindEdge.Margin = new System.Windows.Forms.Padding(2);
-            this.btnFindEdge.Name = "btnFindEdge";
-            this.btnFindEdge.Size = new System.Drawing.Size(140, 96);
-            this.btnFindEdge.TabIndex = 20;
-            this.btnFindEdge.Text = "Find Edge";
-            this.btnFindEdge.UseVisualStyleBackColor = false;
-            this.btnFindEdge.Click += new System.EventHandler(this.btnFindEdge_Click);
-            // 
-            // btnCoating
-            // 
-            this.btnCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.btnCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCoating.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
-            this.btnCoating.ForeColor = System.Drawing.Color.White;
-            this.btnCoating.Location = new System.Drawing.Point(2, 102);
-            this.btnCoating.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCoating.Name = "btnCoating";
-            this.btnCoating.Size = new System.Drawing.Size(140, 96);
-            this.btnCoating.TabIndex = 21;
-            this.btnCoating.Text = "Coating";
-            this.btnCoating.UseVisualStyleBackColor = false;
-            this.btnCoating.Click += new System.EventHandler(this.btnCoating_Click);
-            // 
             // btnNonCoating
             // 
             this.btnNonCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
@@ -468,7 +468,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel tlpTeachingPage;
-        private System.Windows.Forms.Button btnFindEdge;
+        private System.Windows.Forms.Button btnDistance;
         private System.Windows.Forms.Button btnCoating;
         private System.Windows.Forms.Button btnNonCoating;
     }

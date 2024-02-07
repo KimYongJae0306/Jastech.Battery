@@ -38,11 +38,11 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private ImageViewerControl ImageViewerControl { get; set; } = null;
 
-        private DisplayType _displayType { get; set; } = DisplayType.FindEdge;
+        private DisplayType _displayType { get; set; } = DisplayType.Distance;
 
         public LineCamera LineCamera { get; set; }
 
-        private FindEdgeControl FindEdgeContorl { get; set; } = null;
+        private DistanceControl DistanceControl { get; set; } = null;
 
         private CoatingControl CoatingControl { get; set; } = null;
 
@@ -67,6 +67,8 @@ namespace Jastech.Battery.Winform.UI.Forms
         {
             InitializeUI();
             AddControl();
+
+            SelectPage(DisplayType.Distance);
         }
 
         private void InitializeUI()
@@ -97,9 +99,9 @@ namespace Jastech.Battery.Winform.UI.Forms
             ImageViewerControl.Dock = DockStyle.Fill;
             pnlDisplay.Controls.Add(ImageViewerControl);
 
-            FindEdgeContorl = new FindEdgeControl();
-            FindEdgeContorl.Dock = DockStyle.Fill;
-            pnlTeach.Controls.Add(FindEdgeContorl);
+            DistanceControl = new DistanceControl();
+            DistanceControl.Dock = DockStyle.Fill;
+            pnlTeach.Controls.Add(DistanceControl);
 
             CoatingControl = new CoatingControl();
             CoatingControl.Dock = DockStyle.Fill;
@@ -174,9 +176,9 @@ namespace Jastech.Battery.Winform.UI.Forms
             e.Effect = DragDropEffects.Copy;
         }
 
-        private void btnFindEdge_Click(object sender, EventArgs e)
+        private void btnDistance_Click(object sender, EventArgs e)
         {
-            SelectPage(DisplayType.FindEdge);
+            SelectPage(DisplayType.Distance);
         }
 
         private void btnCoating_Click(object sender, EventArgs e)
@@ -212,19 +214,19 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             switch (displayType)
             {
-                case DisplayType.FindEdge:
-                    btnFindEdge.BackColor = _selectedColor;
-                    pnlTeach.Controls.Add(FindEdgeContorl);
+                case DisplayType.Distance:
+                    btnDistance.BackColor = _selectedColor;
+                    pnlTeach.Controls.Add(DistanceControl);
                     break;
 
                 case DisplayType.Coating:
                     btnCoating.BackColor = _selectedColor;
-                    pnlTeach.Controls.Add(FindEdgeContorl);
+                    pnlTeach.Controls.Add(CoatingControl);
                     break;
 
                 case DisplayType.NonCoating:
                     btnNonCoating.BackColor = _selectedColor;
-                    pnlTeach.Controls.Add(FindEdgeContorl);
+                    pnlTeach.Controls.Add(NonCoatingControl);
                     break;
 
                 default:
@@ -236,7 +238,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
     public enum DisplayType
     {
-        FindEdge,
+        Distance,
         Coating,
         NonCoating,
     }

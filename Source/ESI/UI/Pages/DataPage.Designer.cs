@@ -48,12 +48,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnSettings, 0, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(406, 31);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(260, 30);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(171, 109);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(200, 100);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
             // label3
@@ -64,7 +64,7 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(3, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(165, 32);
+            this.label3.Size = new System.Drawing.Size(194, 30);
             this.label3.TabIndex = 0;
             this.label3.Text = "System Data";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -75,9 +75,9 @@
             this.btnSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSettings.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
             this.btnSettings.ForeColor = System.Drawing.Color.White;
-            this.btnSettings.Location = new System.Drawing.Point(3, 35);
+            this.btnSettings.Location = new System.Drawing.Point(3, 33);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(165, 71);
+            this.btnSettings.Size = new System.Drawing.Size(194, 64);
             this.btnSettings.TabIndex = 1;
             this.btnSettings.Text = "Settings";
             this.btnSettings.UseVisualStyleBackColor = false;
@@ -89,12 +89,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnModelPage, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(18, 31);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(30, 30);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(171, 109);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 100);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // label1
@@ -105,7 +105,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(165, 32);
+            this.label1.Size = new System.Drawing.Size(194, 30);
             this.label1.TabIndex = 0;
             this.label1.Text = "Model Data";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -116,9 +116,9 @@
             this.btnModelPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnModelPage.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
             this.btnModelPage.ForeColor = System.Drawing.Color.White;
-            this.btnModelPage.Location = new System.Drawing.Point(3, 35);
+            this.btnModelPage.Location = new System.Drawing.Point(3, 33);
             this.btnModelPage.Name = "btnModelPage";
-            this.btnModelPage.Size = new System.Drawing.Size(165, 71);
+            this.btnModelPage.Size = new System.Drawing.Size(194, 64);
             this.btnModelPage.TabIndex = 1;
             this.btnModelPage.Text = "Model List";
             this.btnModelPage.UseVisualStyleBackColor = false;
@@ -130,12 +130,12 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnOpenPLCViewer, 0, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(601, 31);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(490, 30);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(171, 109);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(200, 100);
             this.tableLayoutPanel4.TabIndex = 7;
             // 
             // label4
@@ -146,7 +146,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(165, 32);
+            this.label4.Size = new System.Drawing.Size(194, 30);
             this.label4.TabIndex = 0;
             this.label4.Text = "PLC";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -157,9 +157,9 @@
             this.btnOpenPLCViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnOpenPLCViewer.Font = new System.Drawing.Font("맑은 고딕", 13F, System.Drawing.FontStyle.Bold);
             this.btnOpenPLCViewer.ForeColor = System.Drawing.Color.White;
-            this.btnOpenPLCViewer.Location = new System.Drawing.Point(3, 35);
+            this.btnOpenPLCViewer.Location = new System.Drawing.Point(3, 33);
             this.btnOpenPLCViewer.Name = "btnOpenPLCViewer";
-            this.btnOpenPLCViewer.Size = new System.Drawing.Size(165, 71);
+            this.btnOpenPLCViewer.Size = new System.Drawing.Size(194, 64);
             this.btnOpenPLCViewer.TabIndex = 1;
             this.btnOpenPLCViewer.Text = "Viewer";
             this.btnOpenPLCViewer.UseVisualStyleBackColor = false;
@@ -167,14 +167,14 @@
             // 
             // DataPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.Controls.Add(this.tableLayoutPanel4);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "DataPage";
-            this.Size = new System.Drawing.Size(909, 499);
+            this.Size = new System.Drawing.Size(1060, 461);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);

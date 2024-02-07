@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Jastech.Battery.Winform.UI.Controls
 {
-    public partial class FindEdgeControl : UserControl
+    public partial class DistanceControl : UserControl
     {
-        public FindEdgeControl()
+        public DistanceControl()
         {
             InitializeComponent();
         }
