@@ -29,8 +29,25 @@
         private void InitializeComponent()
         {
             this.tlpConfigure = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlConfigureGroup4 = new System.Windows.Forms.Panel();
             this.pnlConfigureGroup1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblInspectionEdge = new System.Windows.Forms.Label();
+            this.lblInspectionCoating = new System.Windows.Forms.Label();
+            this.lblInspectionNonCoating = new System.Windows.Forms.Label();
+            this.mtgInspectionUsageEdge = new MetroFramework.Controls.MetroToggle();
+            this.mtgInspectionUsageCoating = new MetroFramework.Controls.MetroToggle();
+            this.mtgInspectionUsageNonCoating = new MetroFramework.Controls.MetroToggle();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tlpLogSaveInspectionResult = new System.Windows.Forms.TableLayoutPanel();
+            this.metroToggle2 = new MetroFramework.Controls.MetroToggle();
+            this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.mtgLogAkkonLead = new MetroFramework.Controls.MetroToggle();
+            this.label30 = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
             this.pnlConfigureGroup2 = new System.Windows.Forms.Panel();
             this.tlpImageSaveNG = new System.Windows.Forms.TableLayoutPanel();
             this.mcbxNGExtension = new MetroFramework.Controls.MetroComboBox();
@@ -58,11 +75,7 @@
             this.mtgEnablePlcTime = new MetroFramework.Controls.MetroToggle();
             this.label42 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.tlpLogSaveInspectionResult = new System.Windows.Forms.TableLayoutPanel();
-            this.label29 = new System.Windows.Forms.Label();
-            this.mtgLogAkkonLead = new MetroFramework.Controls.MetroToggle();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.label30 = new System.Windows.Forms.Label();
+            this.pnlConfigureGroup4 = new System.Windows.Forms.Panel();
             this.tlpOperationSettingLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlCommonFunction = new System.Windows.Forms.Panel();
             this.tlpCommonFunction = new System.Windows.Forms.TableLayoutPanel();
@@ -74,21 +87,10 @@
             this.tlpSave = new System.Windows.Forms.TableLayoutPanel();
             this.lblSaveImage = new System.Windows.Forms.Label();
             this.lblSave = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
-            this.metroToggle2 = new MetroFramework.Controls.MetroToggle();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.mtgInspectionUsageEdge = new MetroFramework.Controls.MetroToggle();
-            this.mtgInspectionUsageCoating = new MetroFramework.Controls.MetroToggle();
-            this.lblInspectionEdge = new System.Windows.Forms.Label();
-            this.lblInspectionCoating = new System.Windows.Forms.Label();
-            this.lblInspectionNonCoating = new System.Windows.Forms.Label();
-            this.mtgInspectionUsageNonCoating = new MetroFramework.Controls.MetroToggle();
             this.tlpConfigure.SuspendLayout();
             this.pnlConfigureGroup1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tlpLogSaveInspectionResult.SuspendLayout();
             this.pnlConfigureGroup2.SuspendLayout();
             this.tlpImageSaveNG.SuspendLayout();
             this.tlpImageSaveOK.SuspendLayout();
@@ -96,7 +98,6 @@
             this.tlpDataStoreDuration.SuspendLayout();
             this.pnlConfigureGroup3.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
-            this.tlpLogSaveInspectionResult.SuspendLayout();
             this.tlpOperationSettingLayout.SuspendLayout();
             this.pnlCommonFunction.SuspendLayout();
             this.tlpCommonFunction.SuspendLayout();
@@ -104,7 +105,6 @@
             this.tlpCancel.SuspendLayout();
             this.pnlSave.SuspendLayout();
             this.tlpSave.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpConfigure
@@ -128,14 +128,6 @@
             this.tlpConfigure.Size = new System.Drawing.Size(1554, 808);
             this.tlpConfigure.TabIndex = 6;
             // 
-            // pnlConfigureGroup4
-            // 
-            this.pnlConfigureGroup4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlConfigureGroup4.Location = new System.Drawing.Point(1167, 3);
-            this.pnlConfigureGroup4.Name = "pnlConfigureGroup4";
-            this.pnlConfigureGroup4.Size = new System.Drawing.Size(384, 802);
-            this.pnlConfigureGroup4.TabIndex = 27;
-            // 
             // pnlConfigureGroup1
             // 
             this.pnlConfigureGroup1.Controls.Add(this.tableLayoutPanel2);
@@ -149,6 +141,243 @@
             this.pnlConfigureGroup1.Name = "pnlConfigureGroup1";
             this.pnlConfigureGroup1.Size = new System.Drawing.Size(382, 802);
             this.pnlConfigureGroup1.TabIndex = 0;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.lblInspectionEdge, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.lblInspectionCoating, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblInspectionNonCoating, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageEdge, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageCoating, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageNonCoating, 1, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(68, 57);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(298, 108);
+            this.tableLayoutPanel2.TabIndex = 34;
+            // 
+            // lblInspectionEdge
+            // 
+            this.lblInspectionEdge.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblInspectionEdge.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblInspectionEdge.ForeColor = System.Drawing.Color.White;
+            this.lblInspectionEdge.Location = new System.Drawing.Point(3, 72);
+            this.lblInspectionEdge.Name = "lblInspectionEdge";
+            this.lblInspectionEdge.Size = new System.Drawing.Size(114, 36);
+            this.lblInspectionEdge.TabIndex = 14;
+            this.lblInspectionEdge.Text = "NonCoating";
+            this.lblInspectionEdge.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblInspectionCoating
+            // 
+            this.lblInspectionCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblInspectionCoating.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblInspectionCoating.ForeColor = System.Drawing.Color.White;
+            this.lblInspectionCoating.Location = new System.Drawing.Point(3, 36);
+            this.lblInspectionCoating.Name = "lblInspectionCoating";
+            this.lblInspectionCoating.Size = new System.Drawing.Size(114, 36);
+            this.lblInspectionCoating.TabIndex = 13;
+            this.lblInspectionCoating.Text = "Coating";
+            this.lblInspectionCoating.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblInspectionNonCoating
+            // 
+            this.lblInspectionNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblInspectionNonCoating.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblInspectionNonCoating.ForeColor = System.Drawing.Color.White;
+            this.lblInspectionNonCoating.Location = new System.Drawing.Point(3, 0);
+            this.lblInspectionNonCoating.Name = "lblInspectionNonCoating";
+            this.lblInspectionNonCoating.Size = new System.Drawing.Size(114, 36);
+            this.lblInspectionNonCoating.TabIndex = 5;
+            this.lblInspectionNonCoating.Text = "Edge";
+            this.lblInspectionNonCoating.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // mtgInspectionUsageEdge
+            // 
+            this.mtgInspectionUsageEdge.AutoSize = true;
+            this.mtgInspectionUsageEdge.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mtgInspectionUsageEdge.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.mtgInspectionUsageEdge.Location = new System.Drawing.Point(123, 3);
+            this.mtgInspectionUsageEdge.Name = "mtgInspectionUsageEdge";
+            this.mtgInspectionUsageEdge.Size = new System.Drawing.Size(72, 30);
+            this.mtgInspectionUsageEdge.TabIndex = 16;
+            this.mtgInspectionUsageEdge.Text = "Off";
+            this.mtgInspectionUsageEdge.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.mtgInspectionUsageEdge.UseSelectable = true;
+            // 
+            // mtgInspectionUsageCoating
+            // 
+            this.mtgInspectionUsageCoating.AutoSize = true;
+            this.mtgInspectionUsageCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mtgInspectionUsageCoating.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.mtgInspectionUsageCoating.Location = new System.Drawing.Point(123, 39);
+            this.mtgInspectionUsageCoating.Name = "mtgInspectionUsageCoating";
+            this.mtgInspectionUsageCoating.Size = new System.Drawing.Size(72, 30);
+            this.mtgInspectionUsageCoating.TabIndex = 15;
+            this.mtgInspectionUsageCoating.Text = "Off";
+            this.mtgInspectionUsageCoating.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.mtgInspectionUsageCoating.UseSelectable = true;
+            // 
+            // mtgInspectionUsageNonCoating
+            // 
+            this.mtgInspectionUsageNonCoating.AutoSize = true;
+            this.mtgInspectionUsageNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mtgInspectionUsageNonCoating.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.mtgInspectionUsageNonCoating.Location = new System.Drawing.Point(123, 75);
+            this.mtgInspectionUsageNonCoating.Name = "mtgInspectionUsageNonCoating";
+            this.mtgInspectionUsageNonCoating.Size = new System.Drawing.Size(72, 30);
+            this.mtgInspectionUsageNonCoating.TabIndex = 12;
+            this.mtgInspectionUsageNonCoating.Text = "Off";
+            this.mtgInspectionUsageNonCoating.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.mtgInspectionUsageNonCoating.UseSelectable = true;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Highlight;
+            this.panel2.Location = new System.Drawing.Point(21, 47);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(345, 2);
+            this.panel2.TabIndex = 25;
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(16, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(323, 33);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "Inspection Options";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tlpLogSaveInspectionResult
+            // 
+            this.tlpLogSaveInspectionResult.ColumnCount = 3;
+            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpLogSaveInspectionResult.Controls.Add(this.metroToggle2, 1, 2);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.metroToggle1, 1, 1);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.label2, 0, 2);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.label1, 0, 1);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.label29, 0, 0);
+            this.tlpLogSaveInspectionResult.Controls.Add(this.mtgLogAkkonLead, 1, 0);
+            this.tlpLogSaveInspectionResult.Location = new System.Drawing.Point(68, 230);
+            this.tlpLogSaveInspectionResult.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.tlpLogSaveInspectionResult.Name = "tlpLogSaveInspectionResult";
+            this.tlpLogSaveInspectionResult.RowCount = 3;
+            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpLogSaveInspectionResult.Size = new System.Drawing.Size(298, 108);
+            this.tlpLogSaveInspectionResult.TabIndex = 33;
+            // 
+            // metroToggle2
+            // 
+            this.metroToggle2.AutoSize = true;
+            this.metroToggle2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroToggle2.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.metroToggle2.Location = new System.Drawing.Point(123, 75);
+            this.metroToggle2.Name = "metroToggle2";
+            this.metroToggle2.Size = new System.Drawing.Size(72, 30);
+            this.metroToggle2.TabIndex = 16;
+            this.metroToggle2.Text = "Off";
+            this.metroToggle2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroToggle2.UseSelectable = true;
+            // 
+            // metroToggle1
+            // 
+            this.metroToggle1.AutoSize = true;
+            this.metroToggle1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metroToggle1.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.metroToggle1.Location = new System.Drawing.Point(123, 39);
+            this.metroToggle1.Name = "metroToggle1";
+            this.metroToggle1.Size = new System.Drawing.Size(72, 30);
+            this.metroToggle1.TabIndex = 15;
+            this.metroToggle1.Text = "Off";
+            this.metroToggle1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroToggle1.UseSelectable = true;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(3, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(114, 36);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Non-Coating";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(3, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(114, 36);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Coating";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label29
+            // 
+            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label29.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label29.ForeColor = System.Drawing.Color.White;
+            this.label29.Location = new System.Drawing.Point(3, 0);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(114, 36);
+            this.label29.TabIndex = 5;
+            this.label29.Text = "Edge";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // mtgLogAkkonLead
+            // 
+            this.mtgLogAkkonLead.AutoSize = true;
+            this.mtgLogAkkonLead.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mtgLogAkkonLead.FontWeight = MetroFramework.MetroLinkWeight.Bold;
+            this.mtgLogAkkonLead.Location = new System.Drawing.Point(123, 3);
+            this.mtgLogAkkonLead.Name = "mtgLogAkkonLead";
+            this.mtgLogAkkonLead.Size = new System.Drawing.Size(72, 30);
+            this.mtgLogAkkonLead.TabIndex = 12;
+            this.mtgLogAkkonLead.Text = "Off";
+            this.mtgLogAkkonLead.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.mtgLogAkkonLead.UseSelectable = true;
+            this.mtgLogAkkonLead.CheckedChanged += new System.EventHandler(this.mtgOperationSetting_CheckedChanged);
+            // 
+            // label30
+            // 
+            this.label30.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label30.ForeColor = System.Drawing.Color.White;
+            this.label30.Location = new System.Drawing.Point(16, 187);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(323, 33);
+            this.label30.TabIndex = 24;
+            this.label30.Text = "Log Save Options";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel14
+            // 
+            this.panel14.BackColor = System.Drawing.SystemColors.Highlight;
+            this.panel14.Location = new System.Drawing.Point(21, 220);
+            this.panel14.Margin = new System.Windows.Forms.Padding(0);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(345, 2);
+            this.panel14.TabIndex = 23;
             // 
             // pnlConfigureGroup2
             // 
@@ -175,7 +404,7 @@
             this.tlpImageSaveNG.Controls.Add(this.mcbxNGExtension, 2, 0);
             this.tlpImageSaveNG.Controls.Add(this.label23, 0, 0);
             this.tlpImageSaveNG.Controls.Add(this.mtgSaveNG, 1, 0);
-            this.tlpImageSaveNG.Location = new System.Drawing.Point(62, 278);
+            this.tlpImageSaveNG.Location = new System.Drawing.Point(60, 279);
             this.tlpImageSaveNG.Name = "tlpImageSaveNG";
             this.tlpImageSaveNG.RowCount = 1;
             this.tlpImageSaveNG.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -232,7 +461,7 @@
             this.tlpImageSaveOK.Controls.Add(this.mcbxOKExtension, 2, 0);
             this.tlpImageSaveOK.Controls.Add(this.label24, 0, 0);
             this.tlpImageSaveOK.Controls.Add(this.mtgSaveOK, 1, 0);
-            this.tlpImageSaveOK.Location = new System.Drawing.Point(62, 232);
+            this.tlpImageSaveOK.Location = new System.Drawing.Point(60, 233);
             this.tlpImageSaveOK.Name = "tlpImageSaveOK";
             this.tlpImageSaveOK.RowCount = 1;
             this.tlpImageSaveOK.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -281,7 +510,7 @@
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel6.Location = new System.Drawing.Point(18, 219);
+            this.panel6.Location = new System.Drawing.Point(16, 220);
             this.panel6.Margin = new System.Windows.Forms.Padding(0);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(345, 2);
@@ -291,7 +520,7 @@
             // 
             this.label22.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(13, 186);
+            this.label22.Location = new System.Drawing.Point(11, 187);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(323, 33);
             this.label22.TabIndex = 22;
@@ -307,7 +536,7 @@
             this.tlpDataStoreCapacity.Controls.Add(this.label15, 2, 0);
             this.tlpDataStoreCapacity.Controls.Add(this.label16, 0, 0);
             this.tlpDataStoreCapacity.Controls.Add(this.txtDataStoringCapacity, 1, 0);
-            this.tlpDataStoreCapacity.Location = new System.Drawing.Point(68, 99);
+            this.tlpDataStoreCapacity.Location = new System.Drawing.Point(63, 101);
             this.tlpDataStoreCapacity.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.tlpDataStoreCapacity.Name = "tlpDataStoreCapacity";
             this.tlpDataStoreCapacity.RowCount = 1;
@@ -364,7 +593,7 @@
             this.tlpDataStoreDuration.Controls.Add(this.label17, 2, 0);
             this.tlpDataStoreDuration.Controls.Add(this.label18, 0, 0);
             this.tlpDataStoreDuration.Controls.Add(this.txtDataStoringDays, 1, 0);
-            this.tlpDataStoreDuration.Location = new System.Drawing.Point(68, 53);
+            this.tlpDataStoreDuration.Location = new System.Drawing.Point(63, 55);
             this.tlpDataStoreDuration.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.tlpDataStoreDuration.Name = "tlpDataStoreDuration";
             this.tlpDataStoreDuration.RowCount = 1;
@@ -415,7 +644,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel5.Location = new System.Drawing.Point(21, 45);
+            this.panel5.Location = new System.Drawing.Point(16, 47);
             this.panel5.Margin = new System.Windows.Forms.Padding(0);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(345, 2);
@@ -425,7 +654,7 @@
             // 
             this.label19.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(16, 12);
+            this.label19.Location = new System.Drawing.Point(11, 14);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(320, 33);
             this.label19.TabIndex = 18;
@@ -451,7 +680,7 @@
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel8.Controls.Add(this.label41, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.mtgEnablePlcTime, 1, 0);
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(76, 293);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(68, 57);
             this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
@@ -489,7 +718,7 @@
             // 
             this.label42.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label42.ForeColor = System.Drawing.Color.White;
-            this.label42.Location = new System.Drawing.Point(24, 250);
+            this.label42.Location = new System.Drawing.Point(16, 14);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(347, 33);
             this.label42.TabIndex = 40;
@@ -499,80 +728,19 @@
             // panel19
             // 
             this.panel19.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel19.Location = new System.Drawing.Point(29, 283);
+            this.panel19.Location = new System.Drawing.Point(21, 47);
             this.panel19.Margin = new System.Windows.Forms.Padding(0);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(345, 2);
             this.panel19.TabIndex = 39;
             // 
-            // tlpLogSaveInspectionResult
+            // pnlConfigureGroup4
             // 
-            this.tlpLogSaveInspectionResult.ColumnCount = 3;
-            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLogSaveInspectionResult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tlpLogSaveInspectionResult.Controls.Add(this.metroToggle2, 1, 2);
-            this.tlpLogSaveInspectionResult.Controls.Add(this.metroToggle1, 1, 1);
-            this.tlpLogSaveInspectionResult.Controls.Add(this.label2, 0, 2);
-            this.tlpLogSaveInspectionResult.Controls.Add(this.label1, 0, 1);
-            this.tlpLogSaveInspectionResult.Controls.Add(this.label29, 0, 0);
-            this.tlpLogSaveInspectionResult.Controls.Add(this.mtgLogAkkonLead, 1, 0);
-            this.tlpLogSaveInspectionResult.Location = new System.Drawing.Point(69, 636);
-            this.tlpLogSaveInspectionResult.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.tlpLogSaveInspectionResult.Name = "tlpLogSaveInspectionResult";
-            this.tlpLogSaveInspectionResult.RowCount = 3;
-            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tlpLogSaveInspectionResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLogSaveInspectionResult.Size = new System.Drawing.Size(298, 108);
-            this.tlpLogSaveInspectionResult.TabIndex = 33;
-            // 
-            // label29
-            // 
-            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label29.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(3, 0);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(114, 36);
-            this.label29.TabIndex = 5;
-            this.label29.Text = "Edge";
-            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // mtgLogAkkonLead
-            // 
-            this.mtgLogAkkonLead.AutoSize = true;
-            this.mtgLogAkkonLead.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtgLogAkkonLead.FontWeight = MetroFramework.MetroLinkWeight.Bold;
-            this.mtgLogAkkonLead.Location = new System.Drawing.Point(123, 3);
-            this.mtgLogAkkonLead.Name = "mtgLogAkkonLead";
-            this.mtgLogAkkonLead.Size = new System.Drawing.Size(72, 30);
-            this.mtgLogAkkonLead.TabIndex = 12;
-            this.mtgLogAkkonLead.Text = "Off";
-            this.mtgLogAkkonLead.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.mtgLogAkkonLead.UseSelectable = true;
-            this.mtgLogAkkonLead.CheckedChanged += new System.EventHandler(this.mtgOperationSetting_CheckedChanged);
-            // 
-            // panel14
-            // 
-            this.panel14.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel14.Location = new System.Drawing.Point(22, 626);
-            this.panel14.Margin = new System.Windows.Forms.Padding(0);
-            this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(345, 2);
-            this.panel14.TabIndex = 23;
-            // 
-            // label30
-            // 
-            this.label30.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(17, 593);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(323, 33);
-            this.label30.TabIndex = 24;
-            this.label30.Text = "Log Save Options";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pnlConfigureGroup4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlConfigureGroup4.Location = new System.Drawing.Point(1167, 3);
+            this.pnlConfigureGroup4.Name = "pnlConfigureGroup4";
+            this.pnlConfigureGroup4.Size = new System.Drawing.Size(384, 802);
+            this.pnlConfigureGroup4.TabIndex = 27;
             // 
             // tlpOperationSettingLayout
             // 
@@ -714,174 +882,6 @@
             this.lblSave.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblSave.Click += new System.EventHandler(this.lblSave_Click);
             // 
-            // label1
-            // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 36);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 36);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Coating";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label2
-            // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 72);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 36);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Non-Coating";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // metroToggle1
-            // 
-            this.metroToggle1.AutoSize = true;
-            this.metroToggle1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroToggle1.FontWeight = MetroFramework.MetroLinkWeight.Bold;
-            this.metroToggle1.Location = new System.Drawing.Point(123, 39);
-            this.metroToggle1.Name = "metroToggle1";
-            this.metroToggle1.Size = new System.Drawing.Size(72, 30);
-            this.metroToggle1.TabIndex = 15;
-            this.metroToggle1.Text = "Off";
-            this.metroToggle1.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroToggle1.UseSelectable = true;
-            // 
-            // metroToggle2
-            // 
-            this.metroToggle2.AutoSize = true;
-            this.metroToggle2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metroToggle2.FontWeight = MetroFramework.MetroLinkWeight.Bold;
-            this.metroToggle2.Location = new System.Drawing.Point(123, 75);
-            this.metroToggle2.Name = "metroToggle2";
-            this.metroToggle2.Size = new System.Drawing.Size(72, 30);
-            this.metroToggle2.TabIndex = 16;
-            this.metroToggle2.Text = "Off";
-            this.metroToggle2.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroToggle2.UseSelectable = true;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Highlight;
-            this.panel2.Location = new System.Drawing.Point(22, 453);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(345, 2);
-            this.panel2.TabIndex = 25;
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(17, 420);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(323, 33);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "Inspection Options";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.lblInspectionEdge, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.lblInspectionCoating, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblInspectionNonCoating, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageEdge, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageCoating, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.mtgInspectionUsageNonCoating, 1, 2);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(69, 463);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(298, 108);
-            this.tableLayoutPanel2.TabIndex = 34;
-            // 
-            // mtgInspectionUsageEdge
-            // 
-            this.mtgInspectionUsageEdge.AutoSize = true;
-            this.mtgInspectionUsageEdge.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtgInspectionUsageEdge.FontWeight = MetroFramework.MetroLinkWeight.Bold;
-            this.mtgInspectionUsageEdge.Location = new System.Drawing.Point(123, 3);
-            this.mtgInspectionUsageEdge.Name = "mtgInspectionUsageEdge";
-            this.mtgInspectionUsageEdge.Size = new System.Drawing.Size(72, 30);
-            this.mtgInspectionUsageEdge.TabIndex = 16;
-            this.mtgInspectionUsageEdge.Text = "Off";
-            this.mtgInspectionUsageEdge.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.mtgInspectionUsageEdge.UseSelectable = true;
-            // 
-            // mtgInspectionUsageCoating
-            // 
-            this.mtgInspectionUsageCoating.AutoSize = true;
-            this.mtgInspectionUsageCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtgInspectionUsageCoating.FontWeight = MetroFramework.MetroLinkWeight.Bold;
-            this.mtgInspectionUsageCoating.Location = new System.Drawing.Point(123, 39);
-            this.mtgInspectionUsageCoating.Name = "mtgInspectionUsageCoating";
-            this.mtgInspectionUsageCoating.Size = new System.Drawing.Size(72, 30);
-            this.mtgInspectionUsageCoating.TabIndex = 15;
-            this.mtgInspectionUsageCoating.Text = "Off";
-            this.mtgInspectionUsageCoating.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.mtgInspectionUsageCoating.UseSelectable = true;
-            // 
-            // lblInspectionEdge
-            // 
-            this.lblInspectionEdge.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblInspectionEdge.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblInspectionEdge.ForeColor = System.Drawing.Color.White;
-            this.lblInspectionEdge.Location = new System.Drawing.Point(3, 72);
-            this.lblInspectionEdge.Name = "lblInspectionEdge";
-            this.lblInspectionEdge.Size = new System.Drawing.Size(114, 36);
-            this.lblInspectionEdge.TabIndex = 14;
-            this.lblInspectionEdge.Text = "NonCoating";
-            this.lblInspectionEdge.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblInspectionCoating
-            // 
-            this.lblInspectionCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblInspectionCoating.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblInspectionCoating.ForeColor = System.Drawing.Color.White;
-            this.lblInspectionCoating.Location = new System.Drawing.Point(3, 36);
-            this.lblInspectionCoating.Name = "lblInspectionCoating";
-            this.lblInspectionCoating.Size = new System.Drawing.Size(114, 36);
-            this.lblInspectionCoating.TabIndex = 13;
-            this.lblInspectionCoating.Text = "Coating";
-            this.lblInspectionCoating.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblInspectionNonCoating
-            // 
-            this.lblInspectionNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblInspectionNonCoating.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblInspectionNonCoating.ForeColor = System.Drawing.Color.White;
-            this.lblInspectionNonCoating.Location = new System.Drawing.Point(3, 0);
-            this.lblInspectionNonCoating.Name = "lblInspectionNonCoating";
-            this.lblInspectionNonCoating.Size = new System.Drawing.Size(114, 36);
-            this.lblInspectionNonCoating.TabIndex = 5;
-            this.lblInspectionNonCoating.Text = "Edge";
-            this.lblInspectionNonCoating.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // mtgInspectionUsageNonCoating
-            // 
-            this.mtgInspectionUsageNonCoating.AutoSize = true;
-            this.mtgInspectionUsageNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtgInspectionUsageNonCoating.FontWeight = MetroFramework.MetroLinkWeight.Bold;
-            this.mtgInspectionUsageNonCoating.Location = new System.Drawing.Point(123, 75);
-            this.mtgInspectionUsageNonCoating.Name = "mtgInspectionUsageNonCoating";
-            this.mtgInspectionUsageNonCoating.Size = new System.Drawing.Size(72, 30);
-            this.mtgInspectionUsageNonCoating.TabIndex = 12;
-            this.mtgInspectionUsageNonCoating.Text = "Off";
-            this.mtgInspectionUsageNonCoating.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.mtgInspectionUsageNonCoating.UseSelectable = true;
-            // 
             // OperationSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -898,6 +898,10 @@
             this.Load += new System.EventHandler(this.OperationSettingsForm_Load);
             this.tlpConfigure.ResumeLayout(false);
             this.pnlConfigureGroup1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tlpLogSaveInspectionResult.ResumeLayout(false);
+            this.tlpLogSaveInspectionResult.PerformLayout();
             this.pnlConfigureGroup2.ResumeLayout(false);
             this.tlpImageSaveNG.ResumeLayout(false);
             this.tlpImageSaveNG.PerformLayout();
@@ -910,8 +914,6 @@
             this.pnlConfigureGroup3.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
-            this.tlpLogSaveInspectionResult.ResumeLayout(false);
-            this.tlpLogSaveInspectionResult.PerformLayout();
             this.tlpOperationSettingLayout.ResumeLayout(false);
             this.pnlCommonFunction.ResumeLayout(false);
             this.tlpCommonFunction.ResumeLayout(false);
@@ -919,8 +921,6 @@
             this.tlpCancel.ResumeLayout(false);
             this.pnlSave.ResumeLayout(false);
             this.tlpSave.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }

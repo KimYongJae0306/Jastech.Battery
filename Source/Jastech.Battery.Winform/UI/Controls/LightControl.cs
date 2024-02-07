@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 
-namespace Jastech.Apps.Winform.UI.Controls
+namespace Jastech.Battery.Winform.UI.Controls
 {
     public partial class LightControl : UserControl
     {

@@ -1,4 +1,4 @@
-﻿namespace Jastech.Apps.Winform.UI.Controls
+﻿namespace Jastech.Battery.Winform.UI.Controls
 {
     partial class LightControl
     {
@@ -271,7 +271,7 @@
             this.lblNextChannel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblNextChannel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblNextChannel.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblNextChannel.Image = global::Jastech.Apps.Winform.Properties.Resources.Next_White;
+            this.lblNextChannel.Image = global::Jastech.Battery.Winform.Properties.Resources.Next_White;
             this.lblNextChannel.Location = new System.Drawing.Point(328, 0);
             this.lblNextChannel.Margin = new System.Windows.Forms.Padding(0);
             this.lblNextChannel.Name = "lblNextChannel";
@@ -286,7 +286,7 @@
             this.lblPrevChannel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblPrevChannel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPrevChannel.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblPrevChannel.Image = global::Jastech.Apps.Winform.Properties.Resources.Prev_White;
+            this.lblPrevChannel.Image = global::Jastech.Battery.Winform.Properties.Resources.Prev_White;
             this.lblPrevChannel.Location = new System.Drawing.Point(278, 0);
             this.lblPrevChannel.Margin = new System.Windows.Forms.Padding(0);
             this.lblPrevChannel.Name = "lblPrevChannel";
@@ -338,7 +338,7 @@
             this.lblNextControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.lblNextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblNextControl.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblNextControl.Image = global::Jastech.Apps.Winform.Properties.Resources.Next_White;
+            this.lblNextControl.Image = global::Jastech.Battery.Winform.Properties.Resources.Next_White;
             this.lblNextControl.Location = new System.Drawing.Point(328, 0);
             this.lblNextControl.Margin = new System.Windows.Forms.Padding(0);
             this.lblNextControl.Name = "lblNextControl";
@@ -353,7 +353,7 @@
             this.lblPrevControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblPrevControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPrevControl.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblPrevControl.Image = global::Jastech.Apps.Winform.Properties.Resources.Prev_White;
+            this.lblPrevControl.Image = global::Jastech.Battery.Winform.Properties.Resources.Prev_White;
             this.lblPrevControl.Location = new System.Drawing.Point(278, 0);
             this.lblPrevControl.Margin = new System.Windows.Forms.Padding(0);
             this.lblPrevControl.Name = "lblPrevControl";

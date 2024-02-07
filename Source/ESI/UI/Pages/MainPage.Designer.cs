@@ -43,30 +43,24 @@ namespace ESI.UI.Pages
             this.tlpFunctionLayout = new System.Windows.Forms.TableLayoutPanel();
             this.tlpDefectMap = new System.Windows.Forms.TableLayoutPanel();
             this.lblDefectMap = new System.Windows.Forms.Label();
-            this.lblDefectMapDecorativeBar = new System.Windows.Forms.Label();
             this.pnlDefectMap = new System.Windows.Forms.Panel();
             this.tlpImages = new System.Windows.Forms.TableLayoutPanel();
-            this.lblImagesDecorativeBar = new System.Windows.Forms.Label();
             this.lblUpperCam = new System.Windows.Forms.Label();
             this.lblLowerCam = new System.Windows.Forms.Label();
             this.pnlUpperImage = new System.Windows.Forms.Panel();
             this.pnlLowerImage = new System.Windows.Forms.Panel();
-            this.tlpDataLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlDataArea = new System.Windows.Forms.Panel();
-            this.lblSelectDefectData = new System.Windows.Forms.Label();
-            this.lblHighlightDefectData = new System.Windows.Forms.Label();
-            this.lblSelectDefectImage = new System.Windows.Forms.Label();
-            this.lblHighlightDefectImage = new System.Windows.Forms.Label();
-            this.lblSelectMismatch = new System.Windows.Forms.Label();
-            this.lblHighlightMismatch = new System.Windows.Forms.Label();
             this.tlpSummaryLayout = new System.Windows.Forms.TableLayoutPanel();
             this.lblUpperMismatch = new System.Windows.Forms.Label();
-            this.lblLowerSummary = new System.Windows.Forms.Label();
-            this.btnLowerJudgement = new System.Windows.Forms.Button();
-            this.btnUpperJudgement = new System.Windows.Forms.Button();
-            this.lblLowerMismatch = new System.Windows.Forms.Label();
             this.lblUpperDefectSummary = new System.Windows.Forms.Label();
-            this.lblDataDecorativeBar = new System.Windows.Forms.Label();
+            this.btnUpperJudgement = new System.Windows.Forms.Button();
+            this.lblLowerSummary = new System.Windows.Forms.Label();
+            this.lblLowerMismatch = new System.Windows.Forms.Label();
+            this.btnLowerJudgement = new System.Windows.Forms.Button();
+            this.tlpDataLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.btnUpperLowerMismatch = new System.Windows.Forms.Button();
+            this.btnDefectImage = new System.Windows.Forms.Button();
+            this.btnDefectData = new System.Windows.Forms.Button();
+            this.pnlDataArea = new System.Windows.Forms.Panel();
             this.tlpMainPageLayout.SuspendLayout();
             this.tlpSideBarLayout.SuspendLayout();
             this.tlpCommonFunctionLayout.SuspendLayout();
@@ -75,8 +69,8 @@ namespace ESI.UI.Pages
             this.tlpFunctionLayout.SuspendLayout();
             this.tlpDefectMap.SuspendLayout();
             this.tlpImages.SuspendLayout();
-            this.tlpDataLayout.SuspendLayout();
             this.tlpSummaryLayout.SuspendLayout();
+            this.tlpDataLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMainPageLayout
@@ -247,7 +241,6 @@ namespace ESI.UI.Pages
             this.tlpDefectMap.ColumnCount = 1;
             this.tlpDefectMap.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpDefectMap.Controls.Add(this.lblDefectMap, 0, 0);
-            this.tlpDefectMap.Controls.Add(this.lblDefectMapDecorativeBar, 1, 0);
             this.tlpDefectMap.Controls.Add(this.pnlDefectMap, 0, 2);
             this.tlpDefectMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpDefectMap.Location = new System.Drawing.Point(0, 0);
@@ -265,30 +258,20 @@ namespace ESI.UI.Pages
             // lblDefectMap
             // 
             this.lblDefectMap.AutoSize = true;
-            this.lblDefectMap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.lblDefectMap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblDefectMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDefectMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDefectMap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblDefectMap.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblDefectMap.ForeColor = System.Drawing.Color.White;
-            this.lblDefectMap.Location = new System.Drawing.Point(3, 0);
+            this.lblDefectMap.Location = new System.Drawing.Point(0, 0);
+            this.lblDefectMap.Margin = new System.Windows.Forms.Padding(0);
             this.lblDefectMap.Name = "lblDefectMap";
-            this.lblDefectMap.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblDefectMap.Size = new System.Drawing.Size(439, 35);
+            this.lblDefectMap.Size = new System.Drawing.Size(445, 35);
             this.lblDefectMap.TabIndex = 8;
             this.lblDefectMap.Tag = "";
             this.lblDefectMap.Text = "DEFECT MAP";
             this.lblDefectMap.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDefectMapDecorativeBar
-            // 
-            this.lblDefectMapDecorativeBar.AutoSize = true;
-            this.lblDefectMapDecorativeBar.BackColor = System.Drawing.Color.DodgerBlue;
-            this.tlpDefectMap.SetColumnSpan(this.lblDefectMapDecorativeBar, 2);
-            this.lblDefectMapDecorativeBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDefectMapDecorativeBar.Location = new System.Drawing.Point(1, 35);
-            this.lblDefectMapDecorativeBar.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.lblDefectMapDecorativeBar.Name = "lblDefectMapDecorativeBar";
-            this.lblDefectMapDecorativeBar.Size = new System.Drawing.Size(443, 2);
-            this.lblDefectMapDecorativeBar.TabIndex = 11;
             // 
             // pnlDefectMap
             // 
@@ -306,7 +289,6 @@ namespace ESI.UI.Pages
             this.tlpFunctionLayout.SetColumnSpan(this.tlpImages, 2);
             this.tlpImages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpImages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpImages.Controls.Add(this.lblImagesDecorativeBar, 0, 1);
             this.tlpImages.Controls.Add(this.lblUpperCam, 0, 0);
             this.tlpImages.Controls.Add(this.lblLowerCam, 1, 0);
             this.tlpImages.Controls.Add(this.pnlUpperImage, 0, 2);
@@ -322,29 +304,18 @@ namespace ESI.UI.Pages
             this.tlpImages.Size = new System.Drawing.Size(1175, 450);
             this.tlpImages.TabIndex = 0;
             // 
-            // lblImagesDecorativeBar
-            // 
-            this.lblImagesDecorativeBar.AutoSize = true;
-            this.lblImagesDecorativeBar.BackColor = System.Drawing.Color.DodgerBlue;
-            this.tlpImages.SetColumnSpan(this.lblImagesDecorativeBar, 2);
-            this.lblImagesDecorativeBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblImagesDecorativeBar.Location = new System.Drawing.Point(1, 35);
-            this.lblImagesDecorativeBar.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.lblImagesDecorativeBar.Name = "lblImagesDecorativeBar";
-            this.lblImagesDecorativeBar.Size = new System.Drawing.Size(1173, 2);
-            this.lblImagesDecorativeBar.TabIndex = 10;
-            // 
             // lblUpperCam
             // 
             this.lblUpperCam.AutoSize = true;
-            this.lblUpperCam.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.lblUpperCam.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblUpperCam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblUpperCam.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperCam.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblUpperCam.ForeColor = System.Drawing.Color.White;
-            this.lblUpperCam.Location = new System.Drawing.Point(3, 0);
+            this.lblUpperCam.Location = new System.Drawing.Point(0, 0);
+            this.lblUpperCam.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperCam.Name = "lblUpperCam";
-            this.lblUpperCam.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblUpperCam.Size = new System.Drawing.Size(581, 35);
+            this.lblUpperCam.Size = new System.Drawing.Size(587, 35);
             this.lblUpperCam.TabIndex = 7;
             this.lblUpperCam.Tag = "";
             this.lblUpperCam.Text = "UPPER CAM";
@@ -353,14 +324,15 @@ namespace ESI.UI.Pages
             // lblLowerCam
             // 
             this.lblLowerCam.AutoSize = true;
-            this.lblLowerCam.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.lblLowerCam.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblLowerCam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblLowerCam.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerCam.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblLowerCam.ForeColor = System.Drawing.Color.White;
-            this.lblLowerCam.Location = new System.Drawing.Point(590, 0);
+            this.lblLowerCam.Location = new System.Drawing.Point(587, 0);
+            this.lblLowerCam.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerCam.Name = "lblLowerCam";
-            this.lblLowerCam.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblLowerCam.Size = new System.Drawing.Size(582, 35);
+            this.lblLowerCam.Size = new System.Drawing.Size(588, 35);
             this.lblLowerCam.TabIndex = 8;
             this.lblLowerCam.Tag = "";
             this.lblLowerCam.Text = "LOWER CAM";
@@ -386,136 +358,6 @@ namespace ESI.UI.Pages
             this.pnlLowerImage.Size = new System.Drawing.Size(587, 413);
             this.pnlLowerImage.TabIndex = 9;
             // 
-            // tlpDataLayout
-            // 
-            this.tlpDataLayout.ColumnCount = 7;
-            this.tlpFunctionLayout.SetColumnSpan(this.tlpDataLayout, 2);
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDataLayout.Controls.Add(this.pnlDataArea, 0, 3);
-            this.tlpDataLayout.Controls.Add(this.lblDataDecorativeBar, 0, 2);
-            this.tlpDataLayout.Controls.Add(this.lblSelectDefectData, 0, 0);
-            this.tlpDataLayout.Controls.Add(this.lblHighlightDefectData, 0, 1);
-            this.tlpDataLayout.Controls.Add(this.lblSelectDefectImage, 1, 0);
-            this.tlpDataLayout.Controls.Add(this.lblHighlightDefectImage, 1, 1);
-            this.tlpDataLayout.Controls.Add(this.lblSelectMismatch, 2, 0);
-            this.tlpDataLayout.Controls.Add(this.lblHighlightMismatch, 2, 1);
-            this.tlpDataLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpDataLayout.ForeColor = System.Drawing.Color.White;
-            this.tlpDataLayout.Location = new System.Drawing.Point(450, 545);
-            this.tlpDataLayout.Margin = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.tlpDataLayout.Name = "tlpDataLayout";
-            this.tlpDataLayout.RowCount = 4;
-            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 4F));
-            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDataLayout.Size = new System.Drawing.Size(1175, 255);
-            this.tlpDataLayout.TabIndex = 6;
-            // 
-            // pnlDataArea
-            // 
-            this.pnlDataArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tlpDataLayout.SetColumnSpan(this.pnlDataArea, 7);
-            this.pnlDataArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlDataArea.Location = new System.Drawing.Point(0, 49);
-            this.pnlDataArea.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlDataArea.Name = "pnlDataArea";
-            this.pnlDataArea.Size = new System.Drawing.Size(1175, 206);
-            this.pnlDataArea.TabIndex = 6;
-            // 
-            // lblSelectDefectData
-            // 
-            this.lblSelectDefectData.AutoSize = true;
-            this.lblSelectDefectData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblSelectDefectData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSelectDefectData.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblSelectDefectData.ForeColor = System.Drawing.Color.Black;
-            this.lblSelectDefectData.Location = new System.Drawing.Point(3, 0);
-            this.lblSelectDefectData.Name = "lblSelectDefectData";
-            this.lblSelectDefectData.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblSelectDefectData.Size = new System.Drawing.Size(154, 40);
-            this.lblSelectDefectData.TabIndex = 6;
-            this.lblSelectDefectData.Tag = "";
-            this.lblSelectDefectData.Text = "DEFECT DATA";
-            this.lblSelectDefectData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblSelectDefectData.Click += new System.EventHandler(this.SelectDefectData_Click);
-            // 
-            // lblHighlightDefectData
-            // 
-            this.lblHighlightDefectData.AutoSize = true;
-            this.lblHighlightDefectData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.lblHighlightDefectData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblHighlightDefectData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHighlightDefectData.Location = new System.Drawing.Point(10, 40);
-            this.lblHighlightDefectData.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.lblHighlightDefectData.Name = "lblHighlightDefectData";
-            this.lblHighlightDefectData.Size = new System.Drawing.Size(140, 5);
-            this.lblHighlightDefectData.TabIndex = 9;
-            // 
-            // lblSelectDefectImage
-            // 
-            this.lblSelectDefectImage.AutoSize = true;
-            this.lblSelectDefectImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblSelectDefectImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSelectDefectImage.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblSelectDefectImage.ForeColor = System.Drawing.Color.Black;
-            this.lblSelectDefectImage.Location = new System.Drawing.Point(163, 0);
-            this.lblSelectDefectImage.Name = "lblSelectDefectImage";
-            this.lblSelectDefectImage.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblSelectDefectImage.Size = new System.Drawing.Size(154, 40);
-            this.lblSelectDefectImage.TabIndex = 7;
-            this.lblSelectDefectImage.Tag = "";
-            this.lblSelectDefectImage.Text = "DEFECT IMAGE";
-            this.lblSelectDefectImage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblSelectDefectImage.Click += new System.EventHandler(this.SelectDefectImage_Click);
-            // 
-            // lblHighlightDefectImage
-            // 
-            this.lblHighlightDefectImage.AutoSize = true;
-            this.lblHighlightDefectImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.lblHighlightDefectImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblHighlightDefectImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHighlightDefectImage.Location = new System.Drawing.Point(165, 40);
-            this.lblHighlightDefectImage.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.lblHighlightDefectImage.Name = "lblHighlightDefectImage";
-            this.lblHighlightDefectImage.Size = new System.Drawing.Size(150, 5);
-            this.lblHighlightDefectImage.TabIndex = 10;
-            // 
-            // lblSelectMismatch
-            // 
-            this.lblSelectMismatch.AutoSize = true;
-            this.lblSelectMismatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblSelectMismatch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSelectMismatch.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblSelectMismatch.ForeColor = System.Drawing.Color.Black;
-            this.lblSelectMismatch.Location = new System.Drawing.Point(323, 0);
-            this.lblSelectMismatch.Name = "lblSelectMismatch";
-            this.lblSelectMismatch.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.lblSelectMismatch.Size = new System.Drawing.Size(154, 40);
-            this.lblSelectMismatch.TabIndex = 8;
-            this.lblSelectMismatch.Tag = "";
-            this.lblSelectMismatch.Text = "U/L MISMATCH";
-            this.lblSelectMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblSelectMismatch.Click += new System.EventHandler(this.SelectMisMatch_Click);
-            // 
-            // lblHighlightMismatch
-            // 
-            this.lblHighlightMismatch.AutoSize = true;
-            this.lblHighlightMismatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.lblHighlightMismatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblHighlightMismatch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHighlightMismatch.Location = new System.Drawing.Point(325, 40);
-            this.lblHighlightMismatch.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.lblHighlightMismatch.Name = "lblHighlightMismatch";
-            this.lblHighlightMismatch.Size = new System.Drawing.Size(150, 5);
-            this.lblHighlightMismatch.TabIndex = 11;
-            // 
             // tlpSummaryLayout
             // 
             this.tlpSummaryLayout.ColumnCount = 6;
@@ -525,7 +367,7 @@ namespace ESI.UI.Pages
             this.tlpSummaryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlpSummaryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tlpSummaryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tlpSummaryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpSummaryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
             this.tlpSummaryLayout.Controls.Add(this.lblUpperMismatch, 0, 0);
             this.tlpSummaryLayout.Controls.Add(this.lblUpperDefectSummary, 1, 0);
             this.tlpSummaryLayout.Controls.Add(this.btnUpperJudgement, 2, 0);
@@ -552,77 +394,10 @@ namespace ESI.UI.Pages
             this.lblUpperMismatch.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperMismatch.Name = "lblUpperMismatch";
             this.lblUpperMismatch.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.lblUpperMismatch.Size = new System.Drawing.Size(195, 80);
+            this.lblUpperMismatch.Size = new System.Drawing.Size(194, 80);
             this.lblUpperMismatch.TabIndex = 7;
-            this.lblUpperMismatch.Text = "Left : 0.00mm\r\nCenter : 0.00mm\r\nRight : 0.00mm";
+            this.lblUpperMismatch.Text = "Left : 12.3mm\r\nCenter : 24.0mm\r\nRight : 11.9mm";
             this.lblUpperMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblLowerSummary
-            // 
-            this.lblLowerSummary.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblLowerSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblLowerSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLowerSummary.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLowerSummary.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummary.Location = new System.Drawing.Point(782, 0);
-            this.lblLowerSummary.Margin = new System.Windows.Forms.Padding(0);
-            this.lblLowerSummary.Name = "lblLowerSummary";
-            this.lblLowerSummary.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.lblLowerSummary.Size = new System.Drawing.Size(292, 80);
-            this.lblLowerSummary.TabIndex = 8;
-            this.lblLowerSummary.Text = "Pinhole x ea           Dent x ea\r\nDrag x ea               Island x ea\r\nCrater x e" +
-    "a";
-            this.lblLowerSummary.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // btnLowerJudgement
-            // 
-            this.btnLowerJudgement.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnLowerJudgement.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLowerJudgement.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnLowerJudgement.FlatAppearance.BorderSize = 2;
-            this.btnLowerJudgement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLowerJudgement.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnLowerJudgement.ForeColor = System.Drawing.Color.White;
-            this.btnLowerJudgement.Location = new System.Drawing.Point(1074, 0);
-            this.btnLowerJudgement.Margin = new System.Windows.Forms.Padding(0);
-            this.btnLowerJudgement.Name = "btnLowerJudgement";
-            this.btnLowerJudgement.Size = new System.Drawing.Size(101, 80);
-            this.btnLowerJudgement.TabIndex = 9;
-            this.btnLowerJudgement.Text = "Judge";
-            this.btnLowerJudgement.UseVisualStyleBackColor = false;
-            // 
-            // btnUpperJudgement
-            // 
-            this.btnUpperJudgement.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnUpperJudgement.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnUpperJudgement.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnUpperJudgement.FlatAppearance.BorderSize = 2;
-            this.btnUpperJudgement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpperJudgement.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnUpperJudgement.ForeColor = System.Drawing.Color.White;
-            this.btnUpperJudgement.Location = new System.Drawing.Point(487, 0);
-            this.btnUpperJudgement.Margin = new System.Windows.Forms.Padding(0);
-            this.btnUpperJudgement.Name = "btnUpperJudgement";
-            this.btnUpperJudgement.Size = new System.Drawing.Size(100, 80);
-            this.btnUpperJudgement.TabIndex = 10;
-            this.btnUpperJudgement.Text = "Judge";
-            this.btnUpperJudgement.UseVisualStyleBackColor = false;
-            // 
-            // lblLowerMismatch
-            // 
-            this.lblLowerMismatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblLowerMismatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblLowerMismatch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLowerMismatch.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLowerMismatch.ForeColor = System.Drawing.Color.White;
-            this.lblLowerMismatch.Location = new System.Drawing.Point(587, 0);
-            this.lblLowerMismatch.Margin = new System.Windows.Forms.Padding(0);
-            this.lblLowerMismatch.Name = "lblLowerMismatch";
-            this.lblLowerMismatch.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.lblLowerMismatch.Size = new System.Drawing.Size(195, 80);
-            this.lblLowerMismatch.TabIndex = 12;
-            this.lblLowerMismatch.Text = "Left : 0.00mm\r\nCenter : 0.00mm\r\nRight : 0.00mm";
-            this.lblLowerMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblUpperDefectSummary
             // 
@@ -631,27 +406,172 @@ namespace ESI.UI.Pages
             this.lblUpperDefectSummary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperDefectSummary.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperDefectSummary.ForeColor = System.Drawing.Color.White;
-            this.lblUpperDefectSummary.Location = new System.Drawing.Point(195, 0);
+            this.lblUpperDefectSummary.Location = new System.Drawing.Point(194, 0);
             this.lblUpperDefectSummary.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperDefectSummary.Name = "lblUpperDefectSummary";
             this.lblUpperDefectSummary.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.lblUpperDefectSummary.Size = new System.Drawing.Size(292, 80);
             this.lblUpperDefectSummary.TabIndex = 11;
-            this.lblUpperDefectSummary.Text = "Pinhole x ea           Dent x ea\r\nDrag x ea               Island x ea\r\nCrater x e" +
+            this.lblUpperDefectSummary.Text = "Pinhole 1 ea           Dent 4 ea\r\nDrag 2 ea               Island 5 ea\r\nCrater 3 e" +
     "a";
             this.lblUpperDefectSummary.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblDataDecorativeBar
+            // btnUpperJudgement
             // 
-            this.lblDataDecorativeBar.AutoSize = true;
-            this.lblDataDecorativeBar.BackColor = System.Drawing.Color.DodgerBlue;
-            this.tlpDataLayout.SetColumnSpan(this.lblDataDecorativeBar, 7);
-            this.lblDataDecorativeBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDataDecorativeBar.Location = new System.Drawing.Point(0, 47);
-            this.lblDataDecorativeBar.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblDataDecorativeBar.Name = "lblDataDecorativeBar";
-            this.lblDataDecorativeBar.Size = new System.Drawing.Size(1175, 2);
-            this.lblDataDecorativeBar.TabIndex = 12;
+            this.btnUpperJudgement.BackColor = System.Drawing.Color.LimeGreen;
+            this.btnUpperJudgement.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUpperJudgement.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnUpperJudgement.FlatAppearance.BorderSize = 2;
+            this.btnUpperJudgement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpperJudgement.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnUpperJudgement.ForeColor = System.Drawing.Color.White;
+            this.btnUpperJudgement.Location = new System.Drawing.Point(486, 0);
+            this.btnUpperJudgement.Margin = new System.Windows.Forms.Padding(0);
+            this.btnUpperJudgement.Name = "btnUpperJudgement";
+            this.btnUpperJudgement.Size = new System.Drawing.Size(100, 80);
+            this.btnUpperJudgement.TabIndex = 10;
+            this.btnUpperJudgement.Text = "OK";
+            this.btnUpperJudgement.UseVisualStyleBackColor = false;
+            // 
+            // lblLowerSummary
+            // 
+            this.lblLowerSummary.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.lblLowerSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblLowerSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLowerSummary.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLowerSummary.ForeColor = System.Drawing.Color.White;
+            this.lblLowerSummary.Location = new System.Drawing.Point(780, 0);
+            this.lblLowerSummary.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLowerSummary.Name = "lblLowerSummary";
+            this.lblLowerSummary.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.lblLowerSummary.Size = new System.Drawing.Size(292, 80);
+            this.lblLowerSummary.TabIndex = 8;
+            this.lblLowerSummary.Text = "Pinhole 1 ea           Dent 4 ea\r\nDrag 2 ea               Island 5 ea\r\nCrater 3 e" +
+    "a\r\n";
+            this.lblLowerSummary.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblLowerMismatch
+            // 
+            this.lblLowerMismatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.lblLowerMismatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblLowerMismatch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLowerMismatch.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLowerMismatch.ForeColor = System.Drawing.Color.White;
+            this.lblLowerMismatch.Location = new System.Drawing.Point(586, 0);
+            this.lblLowerMismatch.Margin = new System.Windows.Forms.Padding(0);
+            this.lblLowerMismatch.Name = "lblLowerMismatch";
+            this.lblLowerMismatch.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.lblLowerMismatch.Size = new System.Drawing.Size(194, 80);
+            this.lblLowerMismatch.TabIndex = 12;
+            this.lblLowerMismatch.Text = "Left : 11.8mm\r\nCenter : 23.8mm\r\nRight : 12.2mm";
+            this.lblLowerMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnLowerJudgement
+            // 
+            this.btnLowerJudgement.BackColor = System.Drawing.Color.LimeGreen;
+            this.btnLowerJudgement.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLowerJudgement.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnLowerJudgement.FlatAppearance.BorderSize = 2;
+            this.btnLowerJudgement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLowerJudgement.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnLowerJudgement.ForeColor = System.Drawing.Color.White;
+            this.btnLowerJudgement.Location = new System.Drawing.Point(1072, 0);
+            this.btnLowerJudgement.Margin = new System.Windows.Forms.Padding(0);
+            this.btnLowerJudgement.Name = "btnLowerJudgement";
+            this.btnLowerJudgement.Size = new System.Drawing.Size(103, 80);
+            this.btnLowerJudgement.TabIndex = 9;
+            this.btnLowerJudgement.Text = "OK";
+            this.btnLowerJudgement.UseVisualStyleBackColor = false;
+            // 
+            // tlpDataLayout
+            // 
+            this.tlpDataLayout.ColumnCount = 7;
+            this.tlpFunctionLayout.SetColumnSpan(this.tlpDataLayout, 2);
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpDataLayout.Controls.Add(this.btnUpperLowerMismatch, 2, 0);
+            this.tlpDataLayout.Controls.Add(this.btnDefectImage, 1, 0);
+            this.tlpDataLayout.Controls.Add(this.btnDefectData, 0, 0);
+            this.tlpDataLayout.Controls.Add(this.pnlDataArea, 0, 1);
+            this.tlpDataLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpDataLayout.ForeColor = System.Drawing.Color.White;
+            this.tlpDataLayout.Location = new System.Drawing.Point(450, 545);
+            this.tlpDataLayout.Margin = new System.Windows.Forms.Padding(0, 15, 0, 0);
+            this.tlpDataLayout.Name = "tlpDataLayout";
+            this.tlpDataLayout.RowCount = 2;
+            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpDataLayout.Size = new System.Drawing.Size(1175, 255);
+            this.tlpDataLayout.TabIndex = 6;
+            // 
+            // btnUpperLowerMismatch
+            // 
+            this.btnUpperLowerMismatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.btnUpperLowerMismatch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUpperLowerMismatch.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnUpperLowerMismatch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpperLowerMismatch.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnUpperLowerMismatch.ForeColor = System.Drawing.Color.White;
+            this.btnUpperLowerMismatch.Location = new System.Drawing.Point(320, 0);
+            this.btnUpperLowerMismatch.Margin = new System.Windows.Forms.Padding(0);
+            this.btnUpperLowerMismatch.Name = "btnUpperLowerMismatch";
+            this.btnUpperLowerMismatch.Size = new System.Drawing.Size(160, 40);
+            this.btnUpperLowerMismatch.TabIndex = 13;
+            this.btnUpperLowerMismatch.Text = "U/L MISMATCH";
+            this.btnUpperLowerMismatch.UseVisualStyleBackColor = false;
+            this.btnUpperLowerMismatch.Click += new System.EventHandler(this.SelectMisMatch_Click);
+            // 
+            // btnDefectImage
+            // 
+            this.btnDefectImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.btnDefectImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDefectImage.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnDefectImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDefectImage.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnDefectImage.ForeColor = System.Drawing.Color.White;
+            this.btnDefectImage.Location = new System.Drawing.Point(160, 0);
+            this.btnDefectImage.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDefectImage.Name = "btnDefectImage";
+            this.btnDefectImage.Size = new System.Drawing.Size(160, 40);
+            this.btnDefectImage.TabIndex = 12;
+            this.btnDefectImage.Text = "DEFECT IMAGE";
+            this.btnDefectImage.UseVisualStyleBackColor = false;
+            this.btnDefectImage.Click += new System.EventHandler(this.SelectDefectImage_Click);
+            // 
+            // btnDefectData
+            // 
+            this.btnDefectData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.btnDefectData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDefectData.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnDefectData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDefectData.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnDefectData.ForeColor = System.Drawing.Color.White;
+            this.btnDefectData.Location = new System.Drawing.Point(0, 0);
+            this.btnDefectData.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDefectData.Name = "btnDefectData";
+            this.btnDefectData.Size = new System.Drawing.Size(160, 40);
+            this.btnDefectData.TabIndex = 11;
+            this.btnDefectData.Text = "DEFECT DATA";
+            this.btnDefectData.UseVisualStyleBackColor = false;
+            this.btnDefectData.Click += new System.EventHandler(this.SelectDefectData_Click);
+            // 
+            // pnlDataArea
+            // 
+            this.pnlDataArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tlpDataLayout.SetColumnSpan(this.pnlDataArea, 7);
+            this.pnlDataArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDataArea.Location = new System.Drawing.Point(0, 40);
+            this.pnlDataArea.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlDataArea.Name = "pnlDataArea";
+            this.pnlDataArea.Size = new System.Drawing.Size(1175, 215);
+            this.pnlDataArea.TabIndex = 6;
             // 
             // MainPage
             // 
@@ -674,9 +594,8 @@ namespace ESI.UI.Pages
             this.tlpDefectMap.PerformLayout();
             this.tlpImages.ResumeLayout(false);
             this.tlpImages.PerformLayout();
-            this.tlpDataLayout.ResumeLayout(false);
-            this.tlpDataLayout.PerformLayout();
             this.tlpSummaryLayout.ResumeLayout(false);
+            this.tlpDataLayout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -696,29 +615,23 @@ namespace ESI.UI.Pages
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Panel pnlUpperImage;
         private System.Windows.Forms.TableLayoutPanel tlpDataLayout;
-        private System.Windows.Forms.Label lblSelectDefectImage;
-        private System.Windows.Forms.Label lblSelectDefectData;
-        private System.Windows.Forms.Label lblSelectMismatch;
         private System.Windows.Forms.Label lblLowerSummary;
         private System.Windows.Forms.Label lblUpperMismatch;
         private System.Windows.Forms.Panel pnlDataArea;
         private System.Windows.Forms.Panel pnlDefectMap;
         private System.Windows.Forms.TableLayoutPanel tlpImages;
-        private System.Windows.Forms.Label lblHighlightDefectData;
-        private System.Windows.Forms.Label lblHighlightDefectImage;
-        private System.Windows.Forms.Label lblHighlightMismatch;
         private System.Windows.Forms.Label lblLowerCam;
         private System.Windows.Forms.Label lblUpperCam;
         private System.Windows.Forms.Panel pnlLowerImage;
-        private System.Windows.Forms.Label lblImagesDecorativeBar;
         private System.Windows.Forms.TableLayoutPanel tlpDefectMap;
-        private System.Windows.Forms.Label lblDefectMapDecorativeBar;
         private System.Windows.Forms.Label lblDefectMap;
         private System.Windows.Forms.TableLayoutPanel tlpSummaryLayout;
         private System.Windows.Forms.Label lblUpperDefectSummary;
         private System.Windows.Forms.Button btnUpperJudgement;
         private System.Windows.Forms.Label lblLowerMismatch;
         private System.Windows.Forms.Button btnLowerJudgement;
-        private System.Windows.Forms.Label lblDataDecorativeBar;
+        private System.Windows.Forms.Button btnUpperLowerMismatch;
+        private System.Windows.Forms.Button btnDefectImage;
+        private System.Windows.Forms.Button btnDefectData;
     }
 }

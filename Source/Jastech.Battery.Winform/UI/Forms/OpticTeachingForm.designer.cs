@@ -46,24 +46,6 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.btnGrabStop = new System.Windows.Forms.Button();
             this.btnGrabStart = new System.Windows.Forms.Button();
             this.pnlTeach = new System.Windows.Forms.Panel();
-            this.tlpLight = new System.Windows.Forms.TableLayoutPanel();
-            this.tlpLightFunction = new System.Windows.Forms.TableLayoutPanel();
-            this.tlpLightValueSelector = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlTrbDimmingLevelValue = new System.Windows.Forms.Panel();
-            this.trbLightLevelValue = new System.Windows.Forms.TrackBar();
-            this.lblLightValue = new System.Windows.Forms.Label();
-            this.nupdnLightLevel = new System.Windows.Forms.NumericUpDown();
-            this.lblLight = new System.Windows.Forms.Label();
-            this.tlpLightChannelSelector = new System.Windows.Forms.TableLayoutPanel();
-            this.cbxChannelNameList = new System.Windows.Forms.ComboBox();
-            this.lblNextChannel = new System.Windows.Forms.Label();
-            this.lblPrevChannel = new System.Windows.Forms.Label();
-            this.lblChannelValue = new System.Windows.Forms.Label();
-            this.tlpLightControllerSelector = new System.Windows.Forms.TableLayoutPanel();
-            this.lblNextControl = new System.Windows.Forms.Label();
-            this.lblPrevControl = new System.Windows.Forms.Label();
-            this.cbxControlNameList = new System.Windows.Forms.ComboBox();
-            this.lblType = new System.Windows.Forms.Label();
             this.tlpCameraParameter = new System.Windows.Forms.TableLayoutPanel();
             this.lblCamera = new System.Windows.Forms.Label();
             this.pnlCameraParameter = new System.Windows.Forms.Panel();
@@ -78,14 +60,12 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.lblExposureValue = new System.Windows.Forms.Label();
             this.tlpShading = new System.Windows.Forms.TableLayoutPanel();
             this.lblShading = new System.Windows.Forms.Label();
-            this.btnExcuteShading = new System.Windows.Forms.Button();
+            this.pnlLight = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHistogram = new System.Windows.Forms.Panel();
             this.pnlDisplay = new System.Windows.Forms.Panel();
             this.pnlDrawBox = new System.Windows.Forms.Panel();
             this.StatusTimer = new System.Windows.Forms.Timer(this.components);
-            this.btnLightOn = new System.Windows.Forms.Button();
-            this.btnLightOff = new System.Windows.Forms.Button();
             this.tlpLinescanTeach.SuspendLayout();
             this.tlpTeachingItem.SuspendLayout();
             this.pnlLinescanTeach.SuspendLayout();
@@ -94,14 +74,6 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.tlpUnit.SuspendLayout();
             this.tlpLoadImage.SuspendLayout();
             this.pnlTeach.SuspendLayout();
-            this.tlpLight.SuspendLayout();
-            this.tlpLightFunction.SuspendLayout();
-            this.tlpLightValueSelector.SuspendLayout();
-            this.pnlTrbDimmingLevelValue.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trbLightLevelValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupdnLightLevel)).BeginInit();
-            this.tlpLightChannelSelector.SuspendLayout();
-            this.tlpLightControllerSelector.SuspendLayout();
             this.tlpCameraParameter.SuspendLayout();
             this.pnlCameraParameter.SuspendLayout();
             this.tlpAnalogGain.SuspendLayout();
@@ -341,306 +313,14 @@ namespace Jastech.Battery.Winform.UI.Forms
             // 
             // pnlTeach
             // 
-            this.pnlTeach.Controls.Add(this.tlpLight);
             this.pnlTeach.Controls.Add(this.tlpCameraParameter);
+            this.pnlTeach.Controls.Add(this.pnlLight);
             this.pnlTeach.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTeach.Location = new System.Drawing.Point(0, 80);
             this.pnlTeach.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTeach.Name = "pnlTeach";
             this.pnlTeach.Size = new System.Drawing.Size(851, 781);
             this.pnlTeach.TabIndex = 0;
-            // 
-            // tlpLight
-            // 
-            this.tlpLight.ColumnCount = 1;
-            this.tlpLight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 350F));
-            this.tlpLight.Controls.Add(this.tlpLightFunction, 0, 4);
-            this.tlpLight.Controls.Add(this.tlpLightValueSelector, 0, 3);
-            this.tlpLight.Controls.Add(this.lblLight, 0, 0);
-            this.tlpLight.Controls.Add(this.tlpLightChannelSelector, 0, 2);
-            this.tlpLight.Controls.Add(this.tlpLightControllerSelector, 0, 1);
-            this.tlpLight.Location = new System.Drawing.Point(422, 30);
-            this.tlpLight.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpLight.Name = "tlpLight";
-            this.tlpLight.RowCount = 6;
-            this.tlpLight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tlpLight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpLight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpLight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpLight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpLight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLight.Size = new System.Drawing.Size(350, 190);
-            this.tlpLight.TabIndex = 297;
-            // 
-            // tlpLightFunction
-            // 
-            this.tlpLightFunction.ColumnCount = 2;
-            this.tlpLightFunction.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLightFunction.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLightFunction.Controls.Add(this.btnLightOff, 1, 0);
-            this.tlpLightFunction.Controls.Add(this.btnLightOn, 0, 0);
-            this.tlpLightFunction.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpLightFunction.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.tlpLightFunction.ForeColor = System.Drawing.Color.White;
-            this.tlpLightFunction.Location = new System.Drawing.Point(0, 150);
-            this.tlpLightFunction.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpLightFunction.Name = "tlpLightFunction";
-            this.tlpLightFunction.RowCount = 1;
-            this.tlpLightFunction.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLightFunction.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLightFunction.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLightFunction.Size = new System.Drawing.Size(350, 40);
-            this.tlpLightFunction.TabIndex = 305;
-            // 
-            // tlpLightValueSelector
-            // 
-            this.tlpLightValueSelector.ColumnCount = 3;
-            this.tlpLightValueSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLightValueSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLightValueSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
-            this.tlpLightValueSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLightValueSelector.Controls.Add(this.pnlTrbDimmingLevelValue, 1, 0);
-            this.tlpLightValueSelector.Controls.Add(this.lblLightValue, 0, 0);
-            this.tlpLightValueSelector.Controls.Add(this.nupdnLightLevel, 2, 0);
-            this.tlpLightValueSelector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpLightValueSelector.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.tlpLightValueSelector.ForeColor = System.Drawing.Color.White;
-            this.tlpLightValueSelector.Location = new System.Drawing.Point(0, 110);
-            this.tlpLightValueSelector.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpLightValueSelector.Name = "tlpLightValueSelector";
-            this.tlpLightValueSelector.RowCount = 1;
-            this.tlpLightValueSelector.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLightValueSelector.Size = new System.Drawing.Size(350, 40);
-            this.tlpLightValueSelector.TabIndex = 305;
-            // 
-            // pnlTrbDimmingLevelValue
-            // 
-            this.pnlTrbDimmingLevelValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlTrbDimmingLevelValue.Controls.Add(this.trbLightLevelValue);
-            this.pnlTrbDimmingLevelValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTrbDimmingLevelValue.Location = new System.Drawing.Point(124, 0);
-            this.pnlTrbDimmingLevelValue.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlTrbDimmingLevelValue.Name = "pnlTrbDimmingLevelValue";
-            this.pnlTrbDimmingLevelValue.Padding = new System.Windows.Forms.Padding(0, 9, 0, 0);
-            this.pnlTrbDimmingLevelValue.Size = new System.Drawing.Size(124, 40);
-            this.pnlTrbDimmingLevelValue.TabIndex = 209;
-            // 
-            // trbLightLevelValue
-            // 
-            this.trbLightLevelValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.trbLightLevelValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trbLightLevelValue.Location = new System.Drawing.Point(0, 9);
-            this.trbLightLevelValue.Margin = new System.Windows.Forms.Padding(0);
-            this.trbLightLevelValue.Maximum = 255;
-            this.trbLightLevelValue.Name = "trbLightLevelValue";
-            this.trbLightLevelValue.Size = new System.Drawing.Size(122, 29);
-            this.trbLightLevelValue.TabIndex = 208;
-            this.trbLightLevelValue.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // lblLightValue
-            // 
-            this.lblLightValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblLightValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblLightValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLightValue.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblLightValue.Location = new System.Drawing.Point(0, 0);
-            this.lblLightValue.Margin = new System.Windows.Forms.Padding(0);
-            this.lblLightValue.Name = "lblLightValue";
-            this.lblLightValue.Size = new System.Drawing.Size(124, 40);
-            this.lblLightValue.TabIndex = 302;
-            this.lblLightValue.Text = "Value";
-            this.lblLightValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // nupdnLightLevel
-            // 
-            this.nupdnLightLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.nupdnLightLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nupdnLightLevel.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.nupdnLightLevel.ForeColor = System.Drawing.Color.White;
-            this.nupdnLightLevel.Location = new System.Drawing.Point(248, 0);
-            this.nupdnLightLevel.Margin = new System.Windows.Forms.Padding(0);
-            this.nupdnLightLevel.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.nupdnLightLevel.Name = "nupdnLightLevel";
-            this.nupdnLightLevel.ReadOnly = true;
-            this.nupdnLightLevel.Size = new System.Drawing.Size(100, 27);
-            this.nupdnLightLevel.TabIndex = 303;
-            this.nupdnLightLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblLight
-            // 
-            this.lblLight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.lblLight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblLight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLight.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
-            this.lblLight.ForeColor = System.Drawing.Color.White;
-            this.lblLight.Location = new System.Drawing.Point(0, 0);
-            this.lblLight.Margin = new System.Windows.Forms.Padding(0);
-            this.lblLight.Name = "lblLight";
-            this.lblLight.Size = new System.Drawing.Size(350, 30);
-            this.lblLight.TabIndex = 299;
-            this.lblLight.Text = "LIGHT";
-            this.lblLight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tlpLightChannelSelector
-            // 
-            this.tlpLightChannelSelector.ColumnCount = 4;
-            this.tlpLightChannelSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLightChannelSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLightChannelSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpLightChannelSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpLightChannelSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLightChannelSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLightChannelSelector.Controls.Add(this.cbxChannelNameList, 0, 0);
-            this.tlpLightChannelSelector.Controls.Add(this.lblNextChannel, 3, 0);
-            this.tlpLightChannelSelector.Controls.Add(this.lblPrevChannel, 2, 0);
-            this.tlpLightChannelSelector.Controls.Add(this.lblChannelValue, 0, 0);
-            this.tlpLightChannelSelector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpLightChannelSelector.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.tlpLightChannelSelector.ForeColor = System.Drawing.Color.White;
-            this.tlpLightChannelSelector.Location = new System.Drawing.Point(0, 70);
-            this.tlpLightChannelSelector.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpLightChannelSelector.Name = "tlpLightChannelSelector";
-            this.tlpLightChannelSelector.RowCount = 1;
-            this.tlpLightChannelSelector.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLightChannelSelector.Size = new System.Drawing.Size(350, 40);
-            this.tlpLightChannelSelector.TabIndex = 304;
-            // 
-            // cbxChannelNameList
-            // 
-            this.cbxChannelNameList.BackColor = System.Drawing.Color.White;
-            this.cbxChannelNameList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbxChannelNameList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbxChannelNameList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxChannelNameList.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.cbxChannelNameList.ForeColor = System.Drawing.Color.Black;
-            this.cbxChannelNameList.FormattingEnabled = true;
-            this.cbxChannelNameList.Location = new System.Drawing.Point(125, 0);
-            this.cbxChannelNameList.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxChannelNameList.Name = "cbxChannelNameList";
-            this.cbxChannelNameList.Size = new System.Drawing.Size(125, 28);
-            this.cbxChannelNameList.TabIndex = 307;
-            // 
-            // lblNextChannel
-            // 
-            this.lblNextChannel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblNextChannel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblNextChannel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNextChannel.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblNextChannel.Location = new System.Drawing.Point(300, 0);
-            this.lblNextChannel.Margin = new System.Windows.Forms.Padding(0);
-            this.lblNextChannel.Name = "lblNextChannel";
-            this.lblNextChannel.Size = new System.Drawing.Size(50, 40);
-            this.lblNextChannel.TabIndex = 306;
-            this.lblNextChannel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblPrevChannel
-            // 
-            this.lblPrevChannel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblPrevChannel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblPrevChannel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPrevChannel.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblPrevChannel.Location = new System.Drawing.Point(250, 0);
-            this.lblPrevChannel.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPrevChannel.Name = "lblPrevChannel";
-            this.lblPrevChannel.Size = new System.Drawing.Size(50, 40);
-            this.lblPrevChannel.TabIndex = 305;
-            this.lblPrevChannel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblChannelValue
-            // 
-            this.lblChannelValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblChannelValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblChannelValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblChannelValue.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblChannelValue.Location = new System.Drawing.Point(0, 0);
-            this.lblChannelValue.Margin = new System.Windows.Forms.Padding(0);
-            this.lblChannelValue.Name = "lblChannelValue";
-            this.lblChannelValue.Size = new System.Drawing.Size(125, 40);
-            this.lblChannelValue.TabIndex = 302;
-            this.lblChannelValue.Text = "Channel";
-            this.lblChannelValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tlpLightControllerSelector
-            // 
-            this.tlpLightControllerSelector.ColumnCount = 4;
-            this.tlpLightControllerSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLightControllerSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpLightControllerSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpLightControllerSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpLightControllerSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLightControllerSelector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLightControllerSelector.Controls.Add(this.lblNextControl, 3, 0);
-            this.tlpLightControllerSelector.Controls.Add(this.lblPrevControl, 2, 0);
-            this.tlpLightControllerSelector.Controls.Add(this.cbxControlNameList, 1, 0);
-            this.tlpLightControllerSelector.Controls.Add(this.lblType, 0, 0);
-            this.tlpLightControllerSelector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpLightControllerSelector.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.tlpLightControllerSelector.ForeColor = System.Drawing.Color.White;
-            this.tlpLightControllerSelector.Location = new System.Drawing.Point(0, 30);
-            this.tlpLightControllerSelector.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpLightControllerSelector.Name = "tlpLightControllerSelector";
-            this.tlpLightControllerSelector.RowCount = 1;
-            this.tlpLightControllerSelector.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpLightControllerSelector.Size = new System.Drawing.Size(350, 40);
-            this.tlpLightControllerSelector.TabIndex = 301;
-            // 
-            // lblNextControl
-            // 
-            this.lblNextControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblNextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblNextControl.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblNextControl.Location = new System.Drawing.Point(300, 0);
-            this.lblNextControl.Margin = new System.Windows.Forms.Padding(0);
-            this.lblNextControl.Name = "lblNextControl";
-            this.lblNextControl.Size = new System.Drawing.Size(50, 40);
-            this.lblNextControl.TabIndex = 307;
-            this.lblNextControl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblPrevControl
-            // 
-            this.lblPrevControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblPrevControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblPrevControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPrevControl.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblPrevControl.Location = new System.Drawing.Point(250, 0);
-            this.lblPrevControl.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPrevControl.Name = "lblPrevControl";
-            this.lblPrevControl.Size = new System.Drawing.Size(50, 40);
-            this.lblPrevControl.TabIndex = 306;
-            this.lblPrevControl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cbxControlNameList
-            // 
-            this.cbxControlNameList.BackColor = System.Drawing.Color.White;
-            this.cbxControlNameList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbxControlNameList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbxControlNameList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxControlNameList.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.cbxControlNameList.ForeColor = System.Drawing.Color.Black;
-            this.cbxControlNameList.FormattingEnabled = true;
-            this.cbxControlNameList.Location = new System.Drawing.Point(125, 0);
-            this.cbxControlNameList.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxControlNameList.Name = "cbxControlNameList";
-            this.cbxControlNameList.Size = new System.Drawing.Size(125, 28);
-            this.cbxControlNameList.TabIndex = 304;
-            // 
-            // lblType
-            // 
-            this.lblType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.lblType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblType.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblType.Location = new System.Drawing.Point(0, 0);
-            this.lblType.Margin = new System.Windows.Forms.Padding(0);
-            this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(125, 40);
-            this.lblType.TabIndex = 302;
-            this.lblType.Text = "TYPE";
-            this.lblType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tlpCameraParameter
             // 
@@ -688,7 +368,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             // 
             this.tlpAnalogGain.ColumnCount = 2;
             this.tlpAnalogGain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpAnalogGain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tlpAnalogGain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
             this.tlpAnalogGain.Controls.Add(this.lblAnalogGainValue, 1, 0);
             this.tlpAnalogGain.Controls.Add(this.lblAnalogGain, 0, 0);
             this.tlpAnalogGain.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -733,7 +413,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             // 
             this.tlpDigitalGain.ColumnCount = 2;
             this.tlpDigitalGain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDigitalGain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tlpDigitalGain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
             this.tlpDigitalGain.Controls.Add(this.lblDigitalGainValue, 1, 0);
             this.tlpDigitalGain.Controls.Add(this.lblDigitalGain, 0, 0);
             this.tlpDigitalGain.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -779,7 +459,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             // 
             this.tlpExposure.ColumnCount = 2;
             this.tlpExposure.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpExposure.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tlpExposure.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
             this.tlpExposure.Controls.Add(this.lblExposure, 0, 0);
             this.tlpExposure.Controls.Add(this.lblExposureValue, 1, 0);
             this.tlpExposure.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -825,9 +505,8 @@ namespace Jastech.Battery.Winform.UI.Forms
             // 
             this.tlpShading.ColumnCount = 2;
             this.tlpShading.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpShading.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
-            this.tlpShading.Controls.Add(this.lblShading, 0, 0);
-            this.tlpShading.Controls.Add(this.btnExcuteShading, 1, 0);
+            this.tlpShading.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
+            this.tlpShading.Controls.Add(this.lblShading, 1, 0);
             this.tlpShading.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tlpShading.Location = new System.Drawing.Point(0, 120);
             this.tlpShading.Margin = new System.Windows.Forms.Padding(0);
@@ -843,26 +522,20 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.lblShading.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblShading.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblShading.Font = new System.Drawing.Font("맑은 고딕", 11F, System.Drawing.FontStyle.Bold);
-            this.lblShading.Location = new System.Drawing.Point(0, 0);
+            this.lblShading.Location = new System.Drawing.Point(160, 0);
             this.lblShading.Margin = new System.Windows.Forms.Padding(0);
             this.lblShading.Name = "lblShading";
-            this.lblShading.Size = new System.Drawing.Size(160, 40);
+            this.lblShading.Size = new System.Drawing.Size(190, 40);
             this.lblShading.TabIndex = 145;
-            this.lblShading.Text = "Shading";
+            this.lblShading.Text = "Excute Shading";
             this.lblShading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnExcuteShading
+            // pnlLight
             // 
-            this.btnExcuteShading.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnExcuteShading.FlatAppearance.BorderSize = 2;
-            this.btnExcuteShading.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExcuteShading.Location = new System.Drawing.Point(160, 0);
-            this.btnExcuteShading.Margin = new System.Windows.Forms.Padding(0);
-            this.btnExcuteShading.Name = "btnExcuteShading";
-            this.btnExcuteShading.Size = new System.Drawing.Size(190, 40);
-            this.btnExcuteShading.TabIndex = 146;
-            this.btnExcuteShading.Text = "Excute";
-            this.btnExcuteShading.UseVisualStyleBackColor = true;
+            this.pnlLight.Location = new System.Drawing.Point(425, 30);
+            this.pnlLight.Name = "pnlLight";
+            this.pnlLight.Size = new System.Drawing.Size(350, 190);
+            this.pnlLight.TabIndex = 304;
             // 
             // tableLayoutPanel1
             // 
@@ -913,32 +586,6 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.StatusTimer.Interval = 300;
             this.StatusTimer.Tick += new System.EventHandler(this.StatusTimer_Tick);
             // 
-            // btnLightOn
-            // 
-            this.btnLightOn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLightOn.FlatAppearance.BorderSize = 2;
-            this.btnLightOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLightOn.Location = new System.Drawing.Point(0, 0);
-            this.btnLightOn.Margin = new System.Windows.Forms.Padding(0);
-            this.btnLightOn.Name = "btnLightOn";
-            this.btnLightOn.Size = new System.Drawing.Size(175, 40);
-            this.btnLightOn.TabIndex = 147;
-            this.btnLightOn.Text = "Light On";
-            this.btnLightOn.UseVisualStyleBackColor = true;
-            // 
-            // btnLightOff
-            // 
-            this.btnLightOff.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLightOff.FlatAppearance.BorderSize = 2;
-            this.btnLightOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLightOff.Location = new System.Drawing.Point(175, 0);
-            this.btnLightOff.Margin = new System.Windows.Forms.Padding(0);
-            this.btnLightOff.Name = "btnLightOff";
-            this.btnLightOff.Size = new System.Drawing.Size(175, 40);
-            this.btnLightOff.TabIndex = 148;
-            this.btnLightOff.Text = "Off";
-            this.btnLightOff.UseVisualStyleBackColor = true;
-            // 
             // OpticTeachingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -964,15 +611,6 @@ namespace Jastech.Battery.Winform.UI.Forms
             this.tlpUnit.ResumeLayout(false);
             this.tlpLoadImage.ResumeLayout(false);
             this.pnlTeach.ResumeLayout(false);
-            this.tlpLight.ResumeLayout(false);
-            this.tlpLightFunction.ResumeLayout(false);
-            this.tlpLightValueSelector.ResumeLayout(false);
-            this.pnlTrbDimmingLevelValue.ResumeLayout(false);
-            this.pnlTrbDimmingLevelValue.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trbLightLevelValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupdnLightLevel)).EndInit();
-            this.tlpLightChannelSelector.ResumeLayout(false);
-            this.tlpLightControllerSelector.ResumeLayout(false);
             this.tlpCameraParameter.ResumeLayout(false);
             this.pnlCameraParameter.ResumeLayout(false);
             this.tlpAnalogGain.ResumeLayout(false);
@@ -1009,24 +647,6 @@ namespace Jastech.Battery.Winform.UI.Forms
         private System.Windows.Forms.Panel pnlTeach;
         private System.Windows.Forms.Timer StatusTimer;
         private System.Windows.Forms.Panel pnlDisplay;
-        private System.Windows.Forms.TableLayoutPanel tlpLight;
-        private System.Windows.Forms.TableLayoutPanel tlpLightFunction;
-        private System.Windows.Forms.TableLayoutPanel tlpLightValueSelector;
-        private System.Windows.Forms.Panel pnlTrbDimmingLevelValue;
-        private System.Windows.Forms.TrackBar trbLightLevelValue;
-        private System.Windows.Forms.Label lblLightValue;
-        private System.Windows.Forms.NumericUpDown nupdnLightLevel;
-        private System.Windows.Forms.Label lblLight;
-        private System.Windows.Forms.TableLayoutPanel tlpLightChannelSelector;
-        private System.Windows.Forms.ComboBox cbxChannelNameList;
-        private System.Windows.Forms.Label lblNextChannel;
-        private System.Windows.Forms.Label lblPrevChannel;
-        private System.Windows.Forms.Label lblChannelValue;
-        private System.Windows.Forms.TableLayoutPanel tlpLightControllerSelector;
-        private System.Windows.Forms.Label lblNextControl;
-        private System.Windows.Forms.Label lblPrevControl;
-        private System.Windows.Forms.ComboBox cbxControlNameList;
-        private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.Panel pnlCameraParameter;
         private System.Windows.Forms.TableLayoutPanel tlpDigitalGain;
         private System.Windows.Forms.Label lblDigitalGainValue;
@@ -1041,8 +661,6 @@ namespace Jastech.Battery.Winform.UI.Forms
         private System.Windows.Forms.Label lblCamera;
         private System.Windows.Forms.TableLayoutPanel tlpShading;
         private System.Windows.Forms.Label lblShading;
-        private System.Windows.Forms.Button btnExcuteShading;
-        private System.Windows.Forms.Button btnLightOff;
-        private System.Windows.Forms.Button btnLightOn;
+        private System.Windows.Forms.Panel pnlLight;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Jastech.Battery.Structure;
+using Jastech.Battery.Winform.UI.Controls;
 using Jastech.Framework.Config;
 using Jastech.Framework.Device.Cameras;
 using Jastech.Framework.Device.Motions;
@@ -41,6 +42,8 @@ namespace Jastech.Battery.Winform.UI.Forms
         private DrawBoxControl DrawBoxControl { get; set; } = null;
 
         private DataGraphControl DataGraphControl { get; set; } = null;
+
+        private LightControl LightControl { get; set; } = null;
 
         public AxisHandler AxisHandler { get; set; } = null;
 
@@ -102,6 +105,10 @@ namespace Jastech.Battery.Winform.UI.Forms
             DataGraphControl = new DataGraphControl();
             DataGraphControl.Dock = DockStyle.Fill;
             pnlHistogram.Controls.Add(DataGraphControl);
+
+            LightControl = new LightControl();
+            LightControl.Dock = DockStyle.Fill;
+            pnlLight.Controls.Add(LightControl);
         }
 
         private void InitializeData()
