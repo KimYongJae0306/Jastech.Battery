@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Jastech.Battery.Structure.Data;
-using static Jastech.Framework.Structure.Defect.DefectDefine;   //테스트 후 삭제
-using Jastech.Framework.Winform.Controls;
 using Jastech.Framework.Winform.Helper;
 using System.Drawing.Drawing2D;
+using Jastech.Battery.Winform.UI.Controls;
+using Jastech.Framework.Winform.Controls;
+using static Jastech.Battery.Structure.Data.DefectDefine;      //테스트 후 삭제
 
 namespace ESI.UI.Pages
 {
@@ -30,7 +31,7 @@ namespace ESI.UI.Pages
 
         private PixelValueGraphControl _pixelValueGraphControl = null;
 
-        private readonly BindingList<ElectrodeDefectInfo> _defectInfos = new BindingList<ElectrodeDefectInfo>();
+        private readonly BindingList<DefectInfo> _defectInfos = new BindingList<DefectInfo>();
         #endregion
 
         #region 속성
@@ -146,7 +147,7 @@ namespace ESI.UI.Pages
                 {
                     if (rand.Next(40) == 0)
                     {
-                        var testInfo = new ElectrodeDefectInfo
+                        var testInfo = new DefectInfo
                         {
                             Index = _defectInfos.Count,
                             InspectionTime = DateTime.Now,
@@ -200,7 +201,7 @@ namespace ESI.UI.Pages
                         {
                             _defectInfos.Add(testInfo);
                             _defectInfoContainerControl.AddDefectInfo(testInfo);
-                            _defectMapControl.AddCoordinates(new ElectrodeDefectInfo[] { testInfo });
+                            _defectMapControl.AddCoordinates(new DefectInfo[] { testInfo });
                         }));
                     }
                     _defectMapControl.maximumY = yValue;
