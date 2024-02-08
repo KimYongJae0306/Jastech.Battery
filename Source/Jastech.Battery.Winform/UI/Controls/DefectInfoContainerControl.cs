@@ -1,4 +1,5 @@
 ﻿using Jastech.Battery.Structure.Data;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -61,6 +62,11 @@ namespace Jastech.Battery.Winform.UI.Controls
                 pnlContainer.HorizontalScroll.Value = pnlContainer.HorizontalScroll.Maximum;
 
             Invalidate();
+        }
+
+        public void AddDefectInfo(List<DefectInfo> defectInfos)
+        {
+            defectInfos.ForEach(defectInfo => AddDefectInfo(defectInfo));
         }
 
         public void Clear()

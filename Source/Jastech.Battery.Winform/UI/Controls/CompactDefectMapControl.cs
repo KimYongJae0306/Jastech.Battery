@@ -21,7 +21,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         public float maximumY { get; set; } = 50000; // TODO: Resolution 참고하여 Meter 단위로 환산, Model에서 가져올 것
 
-        public readonly List<DefectInfo> _defectInfos = new List<DefectInfo>();
+        public List<DefectInfo> _defectInfos = new List<DefectInfo>();
 
         public double PixelResolution = 20; // TODO : Config에서 가져올 것
         #endregion
@@ -51,8 +51,9 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         public void Clear()
         {
+            maximumY = 0;
             _defectInfos.Clear();
-            pnlMapArea.CreateGraphics().Clear(Color.FromArgb(52, 52, 52));
+            //pnlMapArea.CreateGraphics().Clear(Color.FromArgb(52, 52, 52));
             Invalidate();
         }
 
@@ -70,18 +71,19 @@ namespace Jastech.Battery.Winform.UI.Controls
             g.FillEllipse(brush, area);
         }
 
-        public void AddCoordinates(DefectInfo[] defectInfos)
+        public void AddCoordinate(DefectInfo defectInfo)
+        {
+            _defectInfos.Add(defectInfo);
+            var defectCoord = defectInfo.GetCoord();
+            var defectSize = defectInfo.GetSize();
+            if (defectCoord.Y + defectSize.Height > maximumY)
+                maximumY = defectCoord.Y + defectSize.Height;
+        }
+
+        public void AddCoordinate(List<DefectInfo> defectInfos)
         {
             pnlMapArea.SuspendLayout();
-
-            _defectInfos.AddRange(defectInfos);     //test code
-            foreach (DefectInfo defectInfo in defectInfos)
-            {
-                var defectCoord = defectInfo.GetCoord();
-                var defectSize = defectInfo.GetSize();
-                if (defectCoord.Y + defectSize.Height > maximumY)
-                    maximumY = defectCoord.Y + defectSize.Height;
-            }
+            defectInfos.ForEach(defectInfo => AddCoordinate(defectInfo));
             pnlMapArea.Invalidate();
         }
 

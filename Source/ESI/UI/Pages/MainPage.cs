@@ -14,6 +14,9 @@ using Jastech.Battery.Winform.UI.Controls;
 using Jastech.Framework.Winform.Controls;
 using static Jastech.Battery.Structure.Data.DefectDefine;      //테스트 후 삭제
 using System.IO;
+using System.Threading;
+using System.Globalization;
+using System.Runtime.Remoting.Channels;
 
 namespace ESI.UI.Pages
 {
@@ -32,7 +35,13 @@ namespace ESI.UI.Pages
 
         private DataGraphControl _dataGraphControl = null;
 
-        private readonly BindingList<DefectInfo> _defectInfos = new BindingList<DefectInfo>();
+        private readonly BindingList<DefectInfo> _defectInfos = new BindingList<DefectInfo>();      // UI 클래스말고 외부로 빼야함
+
+        private Queue<DefectInfo> _dfsQueue = new Queue<DefectInfo>();
+
+        private Task _defectHandlingTask = null;      // UI 클래스말고 외부로 빼야함
+
+        public CancellationTokenSource _cancellationDefectHandling = null;
         #endregion
 
         #region 속성
@@ -58,6 +67,7 @@ namespace ESI.UI.Pages
         {
             AddControls();
             ClearDatas();
+            InitializeTasks();
         }
 
         private void AddControls()
@@ -126,116 +136,153 @@ namespace ESI.UI.Pages
             _dataGraphControl.Clear();
         }
 
+        private void InitializeTasks()
+        {
+            _cancellationDefectHandling = new CancellationTokenSource();
+            _defectHandlingTask = new Task(new Action(async () =>
+            {
+                var checkQueueDelegate = new Action(CheckQueue);
+                while(_cancellationDefectHandling.IsCancellationRequested == false)
+                {
+                    BeginInvoke(checkQueueDelegate);
+                    await Task.Delay(40);
+                }
+            }), _cancellationDefectHandling.Token, TaskCreationOptions.LongRunning);
+
+            _defectHandlingTask.Start();
+        }
+
+        private void CheckQueue()
+        {
+            while (_dfsQueue.Count > 0)
+            {
+                var defectInfo = _dfsQueue.Dequeue();
+
+                _defectInfos.Add(defectInfo);
+                _defectInfoContainerControl.AddDefectInfo(defectInfo);
+                _defectMapControl.AddCoordinate(defectInfo);
+
+                if (defectInfo.CameraName == "Upper")
+                {
+                    btnUpperJudgement.Text = defectInfo.Judgement;
+                    btnUpperJudgement.BackColor = defectInfo.Judgement == "NG" ? Color.Red : Color.LimeGreen;
+                }
+                else
+                {
+                    btnLowerJudgement.Text = defectInfo.Judgement;
+                    btnLowerJudgement.BackColor = defectInfo.Judgement == "NG" ? Color.Red : Color.LimeGreen;
+                }
+            }
+        }
+
         private void Test_Click(object sender, EventArgs e)
         {
+            bool rainbowTest = false;
+            Bitmap[] rainbowBitmaps = null;
+
             string imgPath = string.Empty;
-
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.ReadOnlyChecked = true;
-            ofd.Filter = "BMP Files (*.bmp)|*.bmp; | "
-                + "JPG Files (*.jpg, *.jpeg)|*.jpg; *.jpeg; |"
-                + "모든 파일(*.*) | *.*;";
-            ofd.ShowDialog();
-            if (ofd.FileName != "")
-                imgPath = ofd.FileName;
-
-            if (imgPath == string.Empty)
-                return;
-
-            Bitmap testUpperBitmap = new Bitmap(imgPath);
-            Bitmap testLowerBitmap = (Bitmap)testUpperBitmap.Clone();
             Random rand = new Random();
+
+            Bitmap testUpperBitmap = null;
+            Bitmap testLowerBitmap = null;
+            if (rainbowTest == false)
+            {
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.ReadOnlyChecked = true;
+                ofd.Filter = "BMP Files (*.bmp)|*.bmp; | "
+                    + "JPG Files (*.jpg, *.jpeg)|*.jpg; *.jpeg; |"
+                    + "모든 파일(*.*) | *.*;";
+                ofd.ShowDialog();
+                if (ofd.FileName != "")
+                    imgPath = ofd.FileName;
+
+                if (imgPath == string.Empty)
+                    return;
+
+                testUpperBitmap = new Bitmap(imgPath);
+                testLowerBitmap = new Bitmap(imgPath);
+            }
+            else
+            {
+                rainbowBitmaps = new Bitmap[7] {
+                    new Bitmap(@"Y:\16kRed.bmp"), new Bitmap(@"Y:\16kOrange.bmp"), new Bitmap(@"Y:\16kYellow.bmp"),
+                    new Bitmap(@"Y:\16kGreen.bmp"), new Bitmap(@"Y:\16kBlue.bmp"), new Bitmap(@"Y:\16kNavy.bmp"), new Bitmap(@"Y:\16kPurple.bmp")
+                };
+            }
 
             ClearDatas();
 
             Task.Run(async () =>
             {
-                _upperDrawBoxControl.EnableInteractive(false);
-                _lowerDrawBoxControl.EnableInteractive(false);
-
-                for (int yValue = 0; yValue <= _defectMapControl.maximumMeter * 50000; yValue += 50000)
+                try
                 {
-                    if (rand.Next(40) == 0)
+                    BeginInvoke(new Action(() => _upperDrawBoxControl.EnableInteractive(false)));
+                    BeginInvoke(new Action(() => _lowerDrawBoxControl.EnableInteractive(false)));
+
+                    for (int yValue = 0; yValue <= _defectMapControl.maximumMeter * 50000; yValue += 50000)
                     {
-                        var testInfo = new DefectInfo
+                        if (rand.Next(40) == 0)
                         {
-                            Index = _defectInfos.Count,
-                            InspectionTime = DateTime.Now,
-                            Judgement = "NG",
-                            DefectLevel = rand.Next(1, 6),
-                            DefectType = (DefectTypes)rand.Next(1, 6),
-                            CameraName = rand.Next(2) == 0 ? "Upper" : "Lower",
-                            Lane = 1
-                        };
+                            var testInfo = new DefectInfo
+                            {
+                                Index = _defectInfos.Count,
+                                InspectionTime = DateTime.Now,
+                                Judgement = "NG",
+                                DefectLevel = rand.Next(1, 6),
+                                DefectType = (DefectTypes)rand.Next(1, 6),
+                                CameraName = rand.Next(2) == 0 ? "Upper" : "Lower",
+                                Lane = 1
+                            };
 
-                        #region 보기싫은 if문
-                        BeginInvoke(new Action(() =>
+                            testInfo.SetFeatureDataType(FeatureTypes.X, typeof(float));
+                            testInfo.SetFeatureDataType(FeatureTypes.Y, typeof(float));
+                            testInfo.SetFeatureDataType(FeatureTypes.Width, typeof(float));
+                            testInfo.SetFeatureDataType(FeatureTypes.Height, typeof(float));
+                            testInfo.SetFeatureDataType(FeatureTypes.LocalImagePath, typeof(string));
+
+                            testInfo.SetFeatureValue(FeatureTypes.X, rand.Next(16383));            // TODO: maximage width 받을 것
+                            testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
+                            testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
+                            testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
+
+                            if (File.Exists(@"Y:\TestImg.bmp"))
+                                testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, @"Y:\TestImg.bmp");
+                            else
+                                testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
+
+                            _dfsQueue.Enqueue(testInfo);
+                        }
+
+                        float testLeftMismatch = (rand.Next(1000, 1150) / 100f);
+                        float testCenterMismatch = (rand.Next(2300, 2550) / 100f);
+                        float testRightMismatch = (rand.Next(1200, 1300) / 100f);
+
+                        _dataGraphControl.AddData("Left", testLeftMismatch);
+                        _dataGraphControl.AddData("Center", testCenterMismatch);
+                        _dataGraphControl.AddData("Right", testRightMismatch, true);
+
+                        _defectMapControl.maximumY = yValue;
+
+                        if (rainbowTest == false)
                         {
-                            if (testInfo.CameraName == "Upper")
-                            {
-                                btnUpperJudgement.Text = "NG";
-                                btnUpperJudgement.BackColor = Color.Red;
-                            }
-                            else
-                            {
-                                btnUpperJudgement.Text = "OK";
-                                btnUpperJudgement.BackColor = Color.LimeGreen;
-                            }
-
-                            if (testInfo.CameraName == "Lower")
-                            {
-                                btnLowerJudgement.Text = "NG";
-                                btnLowerJudgement.BackColor = Color.Red;
-                            }
-                            else
-                            {
-                                btnLowerJudgement.Text = "OK";
-                                btnLowerJudgement.BackColor = Color.LimeGreen;
-                            }
-                        }));
-                        #endregion
-
-                        testInfo.SetFeatureDataType(FeatureTypes.X, typeof(float));
-                        testInfo.SetFeatureDataType(FeatureTypes.Y, typeof(float));
-                        testInfo.SetFeatureDataType(FeatureTypes.Width, typeof(float));
-                        testInfo.SetFeatureDataType(FeatureTypes.Height, typeof(float));
-                        testInfo.SetFeatureDataType(FeatureTypes.LocalImagePath, typeof(string));
-
-                        testInfo.SetFeatureValue(FeatureTypes.X, rand.Next(16383));            // TODO: maximage width 받을 것
-                        testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
-                        testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
-                        testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
-
-                        if (File.Exists(@"Y:\TestImg.bmp"))
-                            testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, @"Y:\TestImg.bmp");
+                            _upperDrawBoxControl.SetImage(testUpperBitmap, false);
+                            _lowerDrawBoxControl.SetImage(testLowerBitmap, false);
+                        }
                         else
-                            testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
-
-                        BeginInvoke(new Action(() =>
                         {
-                            _defectInfos.Add(testInfo);
-                            _defectInfoContainerControl.AddDefectInfo(testInfo);
-                            _defectMapControl.AddCoordinates(new DefectInfo[] { testInfo });
-                        }));
+                            _upperDrawBoxControl.SetImage(rainbowBitmaps[rand.Next(0, 7)], false);
+                            _lowerDrawBoxControl.SetImage(rainbowBitmaps[rand.Next(1, 8) - 1], false);
+                        }
+                        _upperDrawBoxControl.FitZoom();
+                        _lowerDrawBoxControl.FitZoom();
                     }
-
-                    float testLeftMismatch = (rand.Next(1000, 1150) / 100f);
-                    float testCenterMismatch = (rand.Next(2300, 2550) / 100f);
-                    float testRightMismatch = (rand.Next(1200, 1300) / 100f);
-
-                    _dataGraphControl.AddData("Left", testLeftMismatch);
-                    _dataGraphControl.AddData("Center", testCenterMismatch);
-                    _dataGraphControl.AddData("Right", testRightMismatch, true);
-
-                    _defectMapControl.maximumY = yValue;
-
-                    _upperDrawBoxControl.SetImage(testUpperBitmap, false);
-                    _lowerDrawBoxControl.SetImage(testLowerBitmap, false);
-                    _upperDrawBoxControl.FitZoom();
-                    _lowerDrawBoxControl.FitZoom();
+                    BeginInvoke(new Action(() => _upperDrawBoxControl.EnableInteractive(true)));
+                    BeginInvoke(new Action(() => _lowerDrawBoxControl.EnableInteractive(true)));
                 }
-                _upperDrawBoxControl.EnableInteractive(true);
-                _lowerDrawBoxControl.EnableInteractive(true);
+                catch (Exception ex)
+                {
+
+                }
             });
         }
 
