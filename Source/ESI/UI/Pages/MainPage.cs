@@ -177,7 +177,7 @@ namespace ESI.UI.Pages
 
         private void Test_Click(object sender, EventArgs e)
         {
-            bool rainbowTest = false;
+            bool rainbowTest = true;
             Bitmap[] rainbowBitmaps = null;
 
             string imgPath = string.Empty;
@@ -261,7 +261,7 @@ namespace ESI.UI.Pages
                         _dataGraphControl.AddData("Center", testCenterMismatch);
                         _dataGraphControl.AddData("Right", testRightMismatch, true);
 
-                        _defectMapControl.maximumY = yValue;
+                        _defectMapControl.MaximumY = yValue;
 
                         if (rainbowTest == false)
                         {
@@ -270,14 +270,14 @@ namespace ESI.UI.Pages
                         }
                         else
                         {
-                            _upperDrawBoxControl.SetImage(rainbowBitmaps[rand.Next(0, 7)], false);
-                            _lowerDrawBoxControl.SetImage(rainbowBitmaps[rand.Next(1, 8) - 1], false);
+                            //_upperDrawBoxControl.SetImage((Bitmap)rainbowBitmaps[rand.Next(0, 7)].Clone(), false);
+                            //_lowerDrawBoxControl.SetImage((Bitmap)rainbowBitmaps[6 - rand.Next(0, 7)].Clone(), false);
                         }
-                        _upperDrawBoxControl.FitZoom();
-                        _lowerDrawBoxControl.FitZoom();
+                        await Task.Delay(new TimeSpan(10000));
                     }
-                    BeginInvoke(new Action(() => _upperDrawBoxControl.EnableInteractive(true)));
-                    BeginInvoke(new Action(() => _lowerDrawBoxControl.EnableInteractive(true)));
+                    //BeginInvoke(new Action(() => _upperDrawBoxControl.EnableInteractive(true)));
+                    //BeginInvoke(new Action(() => _lowerDrawBoxControl.EnableInteractive(true)));
+
                 }
                 catch (Exception ex)
                 {

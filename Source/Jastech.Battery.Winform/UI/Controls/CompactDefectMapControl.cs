@@ -2,6 +2,7 @@
 using Jastech.Framework.Winform.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -19,7 +20,18 @@ namespace Jastech.Battery.Winform.UI.Controls
         #region 속성
         public int maximumMeter = 600;
 
-        public float maximumY { get; set; } = 50000; // TODO: Resolution 참고하여 Meter 단위로 환산, Model에서 가져올 것
+        private float _maximumY = 50000;
+        public float MaximumY {
+            get
+            {
+                return _maximumY;
+            }
+            set
+            {
+                _maximumY = value;
+                Invalidate();
+            }
+        } // TODO: Resolution 참고하여 Meter 단위로 환산, Model에서 가져올 것
 
         public List<DefectInfo> _defectInfos = new List<DefectInfo>();
 
@@ -51,7 +63,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         public void Clear()
         {
-            maximumY = 0;
+            MaximumY = 0;
             _defectInfos.Clear();
             //pnlMapArea.CreateGraphics().Clear(Color.FromArgb(52, 52, 52));
             Invalidate();
@@ -76,27 +88,26 @@ namespace Jastech.Battery.Winform.UI.Controls
             _defectInfos.Add(defectInfo);
             var defectCoord = defectInfo.GetCoord();
             var defectSize = defectInfo.GetSize();
-            if (defectCoord.Y + defectSize.Height > maximumY)
-                maximumY = defectCoord.Y + defectSize.Height;
+            if (defectCoord.Y + defectSize.Height > MaximumY)
+                MaximumY = defectCoord.Y + defectSize.Height;
         }
 
         public void AddCoordinate(List<DefectInfo> defectInfos)
         {
             pnlMapArea.SuspendLayout();
             defectInfos.ForEach(defectInfo => AddCoordinate(defectInfo));
-            pnlMapArea.Invalidate();
         }
 
         private PointF GetScaledLocation(PointF coordinates, float ImageMaxWidth /*추후 모델에서 가져올 것*/) => new PointF
         {
             X = Convert.ToSingle(DisplayArea.Left + coordinates.X * ((DisplayArea.Width - 9f) / ImageMaxWidth) + 1f),
-            Y = Convert.ToSingle(DisplayArea.Top + DisplayArea.Height - (coordinates.Y * DisplayArea.Height / maximumY)),
+            Y = Convert.ToSingle(DisplayArea.Top + DisplayArea.Height - (coordinates.Y * DisplayArea.Height / MaximumY)),
         };
 
         private Size GetScaledSize(Size size, float ImageMaxWidth /*추후 모델에서 가져올 것*/) => new Size
         {
             Width = Convert.ToInt32(size.Width * ((DisplayArea.Width - 9f) / ImageMaxWidth) + 1f),
-            Height = Convert.ToInt32(size.Height * (DisplayArea.Height / maximumY)),
+            Height = Convert.ToInt32(size.Height * (DisplayArea.Height / MaximumY)),
         };
         
         private void pnlMapArea_Paint(object sender, PaintEventArgs e)
@@ -114,7 +125,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             e.Graphics.DrawLine(sideLinePen, new Point((int)DisplayArea.Right, 5), new Point((int)DisplayArea.Right, Height));
 
             // Drawing Grid and Length
-            double maximumHeight = maximumY / 1000;;
+            double maximumHeight = MaximumY / 1000;;
             double gridMargin = maximumHeight / 10;
             Font stringFont = new Font("맑은 고딕", 9, FontStyle.Bold);
             var dashPen = new Pen(Color.FromArgb(208, 208, 208))
@@ -133,7 +144,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             foreach (var defectInfo in _defectInfos)
                 DrawDefectShape(e.Graphics, defectInfo);
 
-            pnlMapArea.ResumeLayout(true);
+            //pnlMapArea.ResumeLayout(true);
         }
         #endregion
     }
