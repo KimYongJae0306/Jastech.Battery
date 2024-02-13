@@ -270,13 +270,13 @@ namespace ESI.UI.Pages
                         }
                         else
                         {
-                            //_upperDrawBoxControl.SetImage((Bitmap)rainbowBitmaps[rand.Next(0, 7)].Clone(), false);
-                            //_lowerDrawBoxControl.SetImage((Bitmap)rainbowBitmaps[6 - rand.Next(0, 7)].Clone(), false);
+                            _upperDrawBoxControl.SetImage((Bitmap)rainbowBitmaps[rand.Next(0, 7)].Clone(), false);
+                            _lowerDrawBoxControl.SetImage((Bitmap)rainbowBitmaps[6 - rand.Next(0, 7)].Clone(), false);
                         }
-                        await Task.Delay(new TimeSpan(10000));
+                        await Task.Delay(new TimeSpan(100000));
                     }
-                    //BeginInvoke(new Action(() => _upperDrawBoxControl.EnableInteractive(true)));
-                    //BeginInvoke(new Action(() => _lowerDrawBoxControl.EnableInteractive(true)));
+                    BeginInvoke(new Action(() => _upperDrawBoxControl.EnableInteractive(true)));
+                    BeginInvoke(new Action(() => _lowerDrawBoxControl.EnableInteractive(true)));
 
                 }
                 catch (Exception ex)
