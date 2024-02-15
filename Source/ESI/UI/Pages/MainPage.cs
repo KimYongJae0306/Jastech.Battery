@@ -29,9 +29,9 @@ namespace ESI.UI.Pages
 
         private DefectInfoContainerControl _defectInfoContainerControl = null;
 
-        private GLDrawBoxControl _upperDrawBoxControl = null;
+        private DrawBoxControl _upperDrawBoxControl = null;
 
-        private GLDrawBoxControl _lowerDrawBoxControl = null;
+        private DrawBoxControl _lowerDrawBoxControl = null;
 
         private DoubleBufferedPanel _pnlDataArea = null;
 
@@ -76,8 +76,8 @@ namespace ESI.UI.Pages
 
         private void AddControls()
         {
-            _upperDrawBoxControl = new GLDrawBoxControl { Dock = DockStyle.Fill };
-            _lowerDrawBoxControl = new GLDrawBoxControl { Dock = DockStyle.Fill };
+            _upperDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
+            _lowerDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
             _defectMapControl = new CompactDefectMapControl { Dock = DockStyle.Fill };
             _pnlDataArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };
             _defectInfoContainerControl = new DefectInfoContainerControl { Dock = DockStyle.Fill };
@@ -124,15 +124,14 @@ namespace ESI.UI.Pages
             _dataGraphControl.AddLegend("Right", 2, Color.LimeGreen);
 
             _dgvDefectData.DataSource = _defectInfos;
-            _defectInfoContainerControl.isVertical = false;
+            _defectInfoContainerControl.IsVertical = true;
             _defectMapControl.SelectedDefectChanged += _defectInfoContainerControl.SelectedControlIndexChanged;
 
             pnlDefectMap.Controls.Add(_defectMapControl);
             pnlUpperImage.Controls.Add(_upperDrawBoxControl);
             pnlLowerImage.Controls.Add(_lowerDrawBoxControl);
-            tlpDataLayout.Controls.Add(_pnlDataArea, 0, 1);
-            tlpDataLayout.SetColumnSpan(_pnlDataArea, 7);
-            SelectDefectData_Click(null, null); 
+            pnlChartArea.Controls.Add(_dataGraphControl);
+            pnlDefectInfoArea.Controls.Add(_defectInfoContainerControl);
         }
 
         private void ClearDatas()
@@ -221,7 +220,7 @@ namespace ESI.UI.Pages
                     {
                         Stopwatch stopwatch = Stopwatch.StartNew();
 
-                        if (rand.Next(1) == 0)
+                        if (rand.Next(20) == 0)
                         {
                             var testInfo = new DefectInfo
                             {
@@ -279,7 +278,7 @@ namespace ESI.UI.Pages
                         ttimes.Add(setImage1TT);
                         ttimes.Add(setImage2TT);
 
-                        await Task.Delay(100 - (int)stopwatch.ElapsedMilliseconds);
+                        await Task.Delay(600 - (int)stopwatch.ElapsedMilliseconds);
                     }
                     //_upperDrawBoxControl.EnableBrush = true;
                     //_lowerDrawBoxControl.EnableBrush = true;
@@ -292,43 +291,6 @@ namespace ESI.UI.Pages
 
                 }
             });
-        }
-
-        private void ClearDataViewSelection()
-        {
-            foreach (Control control in tlpDataLayout.Controls)
-            {
-                if (control is Button button)
-                {
-                    button.ForeColor = Color.FromArgb(52, 52, 52);
-                    button.FlatAppearance.BorderSize = 0;
-                }
-            }
-            _pnlDataArea.Controls.Clear();
-        }
-
-        private void SelectDefectData_Click(object sender, EventArgs e)
-        {
-            ClearDataViewSelection();
-            _pnlDataArea.Controls.Add(_dgvDefectData);
-            btnDefectData.ForeColor = Color.White;
-            btnDefectData.FlatAppearance.BorderSize = 3;
-        }
-
-        private void SelectDefectImage_Click(object sender, EventArgs e)
-        {
-            ClearDataViewSelection();
-            _pnlDataArea.Controls.Add(_defectInfoContainerControl);
-            btnDefectImage.ForeColor = Color.White;
-            btnDefectImage.FlatAppearance.BorderSize = 3;
-        }
-
-        private void SelectMisMatch_Click(object sender, EventArgs e)
-        {
-            ClearDataViewSelection();
-            _pnlDataArea.Controls.Add(_dataGraphControl);
-            btnUpperLowerMismatch.ForeColor = Color.White;
-            btnUpperLowerMismatch.FlatAppearance.BorderSize = 3;
         }
 
         private void MainPage_SizeChanged(object sender, EventArgs e)

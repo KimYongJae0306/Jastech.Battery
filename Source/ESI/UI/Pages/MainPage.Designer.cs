@@ -93,10 +93,10 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItemValue = new System.Windows.Forms.Label();
             this.lblLowerSummaryItem6 = new System.Windows.Forms.Label();
             this.lblLowerSummaryItem6Value = new System.Windows.Forms.Label();
-            this.tlpDataLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.btnUpperLowerMismatch = new System.Windows.Forms.Button();
-            this.btnDefectImage = new System.Windows.Forms.Button();
-            this.btnDefectData = new System.Windows.Forms.Button();
+            this.pnlDefectInfoArea = new System.Windows.Forms.Panel();
+            this.pnlChartArea = new System.Windows.Forms.Panel();
+            this.tlpDefectInfos = new System.Windows.Forms.TableLayoutPanel();
+            this.lblDefectInfos = new System.Windows.Forms.Label();
             this.tlpMainPageLayout.SuspendLayout();
             this.tlpSideBarLayout.SuspendLayout();
             this.tlpCommonFunctionLayout.SuspendLayout();
@@ -111,7 +111,7 @@ namespace ESI.UI.Pages
             this.tlpUpperSummary.SuspendLayout();
             this.tlpLowerMismatch.SuspendLayout();
             this.tlpLowerSummary.SuspendLayout();
-            this.tlpDataLayout.SuspendLayout();
+            this.tlpDefectInfos.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMainPageLayout
@@ -127,6 +127,9 @@ namespace ESI.UI.Pages
             this.tlpMainPageLayout.Name = "tlpMainPageLayout";
             this.tlpMainPageLayout.RowCount = 1;
             this.tlpMainPageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMainPageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpMainPageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpMainPageLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpMainPageLayout.Size = new System.Drawing.Size(1700, 800);
             this.tlpMainPageLayout.TabIndex = 2;
             // 
@@ -257,14 +260,16 @@ namespace ESI.UI.Pages
             // 
             // tlpFunctionLayout
             // 
-            this.tlpFunctionLayout.ColumnCount = 3;
+            this.tlpFunctionLayout.ColumnCount = 4;
+            this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 310F));
             this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 450F));
-            this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpFunctionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpFunctionLayout.Controls.Add(this.tlpDefectMap, 0, 0);
-            this.tlpFunctionLayout.Controls.Add(this.tlpImages, 1, 0);
-            this.tlpFunctionLayout.Controls.Add(this.pnlSummary, 1, 1);
-            this.tlpFunctionLayout.Controls.Add(this.tlpDataLayout, 1, 2);
+            this.tlpFunctionLayout.Controls.Add(this.tlpImages, 0, 0);
+            this.tlpFunctionLayout.Controls.Add(this.pnlSummary, 0, 1);
+            this.tlpFunctionLayout.Controls.Add(this.pnlChartArea, 0, 2);
+            this.tlpFunctionLayout.Controls.Add(this.tlpDefectInfos, 2, 0);
+            this.tlpFunctionLayout.Controls.Add(this.tlpDefectMap, 3, 0);
             this.tlpFunctionLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpFunctionLayout.Location = new System.Drawing.Point(75, 0);
             this.tlpFunctionLayout.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
@@ -283,16 +288,16 @@ namespace ESI.UI.Pages
             this.tlpDefectMap.Controls.Add(this.lblDefectMap, 0, 0);
             this.tlpDefectMap.Controls.Add(this.pnlDefectMap, 0, 1);
             this.tlpDefectMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpDefectMap.Location = new System.Drawing.Point(0, 0);
+            this.tlpDefectMap.Location = new System.Drawing.Point(1174, 0);
             this.tlpDefectMap.Margin = new System.Windows.Forms.Padding(0);
             this.tlpDefectMap.Name = "tlpDefectMap";
-            this.tlpDefectMap.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.tlpDefectMap.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.tlpDefectMap.RowCount = 2;
             this.tlpFunctionLayout.SetRowSpan(this.tlpDefectMap, 3);
             this.tlpDefectMap.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tlpDefectMap.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpDefectMap.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpDefectMap.Size = new System.Drawing.Size(450, 800);
+            this.tlpDefectMap.Size = new System.Drawing.Size(451, 800);
             this.tlpDefectMap.TabIndex = 9;
             // 
             // lblDefectMap
@@ -304,10 +309,10 @@ namespace ESI.UI.Pages
             this.lblDefectMap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblDefectMap.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblDefectMap.ForeColor = System.Drawing.Color.White;
-            this.lblDefectMap.Location = new System.Drawing.Point(0, 0);
+            this.lblDefectMap.Location = new System.Drawing.Point(5, 0);
             this.lblDefectMap.Margin = new System.Windows.Forms.Padding(0);
             this.lblDefectMap.Name = "lblDefectMap";
-            this.lblDefectMap.Size = new System.Drawing.Size(445, 35);
+            this.lblDefectMap.Size = new System.Drawing.Size(446, 35);
             this.lblDefectMap.TabIndex = 8;
             this.lblDefectMap.Tag = "";
             this.lblDefectMap.Text = "DEFECT MAP";
@@ -317,10 +322,10 @@ namespace ESI.UI.Pages
             // 
             this.pnlDefectMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlDefectMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlDefectMap.Location = new System.Drawing.Point(0, 35);
+            this.pnlDefectMap.Location = new System.Drawing.Point(5, 35);
             this.pnlDefectMap.Margin = new System.Windows.Forms.Padding(0);
             this.pnlDefectMap.Name = "pnlDefectMap";
-            this.pnlDefectMap.Size = new System.Drawing.Size(445, 765);
+            this.pnlDefectMap.Size = new System.Drawing.Size(446, 765);
             this.pnlDefectMap.TabIndex = 7;
             // 
             // tlpImages
@@ -334,14 +339,14 @@ namespace ESI.UI.Pages
             this.tlpImages.Controls.Add(this.pnlUpperImage, 0, 1);
             this.tlpImages.Controls.Add(this.pnlLowerImage, 1, 1);
             this.tlpImages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpImages.Location = new System.Drawing.Point(450, 0);
+            this.tlpImages.Location = new System.Drawing.Point(0, 0);
             this.tlpImages.Margin = new System.Windows.Forms.Padding(0);
             this.tlpImages.Name = "tlpImages";
             this.tlpImages.RowCount = 1;
             this.tlpImages.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tlpImages.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpImages.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpImages.Size = new System.Drawing.Size(1175, 450);
+            this.tlpImages.Size = new System.Drawing.Size(864, 450);
             this.tlpImages.TabIndex = 0;
             // 
             // lblUpperCam
@@ -355,7 +360,7 @@ namespace ESI.UI.Pages
             this.lblUpperCam.Location = new System.Drawing.Point(0, 0);
             this.lblUpperCam.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperCam.Name = "lblUpperCam";
-            this.lblUpperCam.Size = new System.Drawing.Size(587, 35);
+            this.lblUpperCam.Size = new System.Drawing.Size(432, 35);
             this.lblUpperCam.TabIndex = 7;
             this.lblUpperCam.Tag = "";
             this.lblUpperCam.Text = "UPPER CAM";
@@ -369,10 +374,10 @@ namespace ESI.UI.Pages
             this.lblLowerCam.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerCam.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblLowerCam.ForeColor = System.Drawing.Color.White;
-            this.lblLowerCam.Location = new System.Drawing.Point(587, 0);
+            this.lblLowerCam.Location = new System.Drawing.Point(432, 0);
             this.lblLowerCam.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerCam.Name = "lblLowerCam";
-            this.lblLowerCam.Size = new System.Drawing.Size(588, 35);
+            this.lblLowerCam.Size = new System.Drawing.Size(432, 35);
             this.lblLowerCam.TabIndex = 8;
             this.lblLowerCam.Tag = "";
             this.lblLowerCam.Text = "LOWER CAM";
@@ -385,17 +390,17 @@ namespace ESI.UI.Pages
             this.pnlUpperImage.Location = new System.Drawing.Point(0, 35);
             this.pnlUpperImage.Margin = new System.Windows.Forms.Padding(0);
             this.pnlUpperImage.Name = "pnlUpperImage";
-            this.pnlUpperImage.Size = new System.Drawing.Size(587, 415);
+            this.pnlUpperImage.Size = new System.Drawing.Size(432, 415);
             this.pnlUpperImage.TabIndex = 5;
             // 
             // pnlLowerImage
             // 
             this.pnlLowerImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlLowerImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlLowerImage.Location = new System.Drawing.Point(587, 35);
+            this.pnlLowerImage.Location = new System.Drawing.Point(432, 35);
             this.pnlLowerImage.Margin = new System.Windows.Forms.Padding(0);
             this.pnlLowerImage.Name = "pnlLowerImage";
-            this.pnlLowerImage.Size = new System.Drawing.Size(588, 415);
+            this.pnlLowerImage.Size = new System.Drawing.Size(432, 415);
             this.pnlLowerImage.TabIndex = 9;
             // 
             // pnlSummary
@@ -404,10 +409,10 @@ namespace ESI.UI.Pages
             this.tlpFunctionLayout.SetColumnSpan(this.pnlSummary, 2);
             this.pnlSummary.Controls.Add(this.tlpSummaryLayout);
             this.pnlSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlSummary.Location = new System.Drawing.Point(450, 450);
+            this.pnlSummary.Location = new System.Drawing.Point(0, 450);
             this.pnlSummary.Margin = new System.Windows.Forms.Padding(0);
             this.pnlSummary.Name = "pnlSummary";
-            this.pnlSummary.Size = new System.Drawing.Size(1175, 80);
+            this.pnlSummary.Size = new System.Drawing.Size(864, 80);
             this.pnlSummary.TabIndex = 10;
             // 
             // tlpSummaryLayout
@@ -432,7 +437,7 @@ namespace ESI.UI.Pages
             this.tlpSummaryLayout.RowCount = 1;
             this.tlpSummaryLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpSummaryLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 78F));
-            this.tlpSummaryLayout.Size = new System.Drawing.Size(1173, 78);
+            this.tlpSummaryLayout.Size = new System.Drawing.Size(862, 78);
             this.tlpSummaryLayout.TabIndex = 8;
             // 
             // tlpUpperMismatch
@@ -454,7 +459,7 @@ namespace ESI.UI.Pages
             this.tlpUpperMismatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpUpperMismatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpUpperMismatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpUpperMismatch.Size = new System.Drawing.Size(194, 78);
+            this.tlpUpperMismatch.Size = new System.Drawing.Size(131, 78);
             this.tlpUpperMismatch.TabIndex = 14;
             // 
             // lblUpperLeftMismatch
@@ -466,7 +471,7 @@ namespace ESI.UI.Pages
             this.lblUpperLeftMismatch.Location = new System.Drawing.Point(0, 0);
             this.lblUpperLeftMismatch.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperLeftMismatch.Name = "lblUpperLeftMismatch";
-            this.lblUpperLeftMismatch.Size = new System.Drawing.Size(97, 26);
+            this.lblUpperLeftMismatch.Size = new System.Drawing.Size(65, 26);
             this.lblUpperLeftMismatch.TabIndex = 8;
             this.lblUpperLeftMismatch.Text = "Left :";
             this.lblUpperLeftMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -477,11 +482,11 @@ namespace ESI.UI.Pages
             this.lblUpperLeftMismatchValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperLeftMismatchValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperLeftMismatchValue.ForeColor = System.Drawing.Color.White;
-            this.lblUpperLeftMismatchValue.Location = new System.Drawing.Point(97, 0);
+            this.lblUpperLeftMismatchValue.Location = new System.Drawing.Point(65, 0);
             this.lblUpperLeftMismatchValue.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperLeftMismatchValue.Name = "lblUpperLeftMismatchValue";
             this.lblUpperLeftMismatchValue.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperLeftMismatchValue.Size = new System.Drawing.Size(97, 26);
+            this.lblUpperLeftMismatchValue.Size = new System.Drawing.Size(66, 26);
             this.lblUpperLeftMismatchValue.TabIndex = 9;
             this.lblUpperLeftMismatchValue.Text = "12.3mm";
             this.lblUpperLeftMismatchValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -495,7 +500,7 @@ namespace ESI.UI.Pages
             this.lblUpperCenterMismatch.Location = new System.Drawing.Point(0, 26);
             this.lblUpperCenterMismatch.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperCenterMismatch.Name = "lblUpperCenterMismatch";
-            this.lblUpperCenterMismatch.Size = new System.Drawing.Size(97, 26);
+            this.lblUpperCenterMismatch.Size = new System.Drawing.Size(65, 26);
             this.lblUpperCenterMismatch.TabIndex = 10;
             this.lblUpperCenterMismatch.Text = "Center :";
             this.lblUpperCenterMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -506,11 +511,11 @@ namespace ESI.UI.Pages
             this.lblUpperCenterMismatchValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperCenterMismatchValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperCenterMismatchValue.ForeColor = System.Drawing.Color.White;
-            this.lblUpperCenterMismatchValue.Location = new System.Drawing.Point(97, 26);
+            this.lblUpperCenterMismatchValue.Location = new System.Drawing.Point(65, 26);
             this.lblUpperCenterMismatchValue.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperCenterMismatchValue.Name = "lblUpperCenterMismatchValue";
             this.lblUpperCenterMismatchValue.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperCenterMismatchValue.Size = new System.Drawing.Size(97, 26);
+            this.lblUpperCenterMismatchValue.Size = new System.Drawing.Size(66, 26);
             this.lblUpperCenterMismatchValue.TabIndex = 13;
             this.lblUpperCenterMismatchValue.Text = "24.0mm";
             this.lblUpperCenterMismatchValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -524,7 +529,7 @@ namespace ESI.UI.Pages
             this.lblUpperRightMismatch.Location = new System.Drawing.Point(0, 52);
             this.lblUpperRightMismatch.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperRightMismatch.Name = "lblUpperRightMismatch";
-            this.lblUpperRightMismatch.Size = new System.Drawing.Size(97, 26);
+            this.lblUpperRightMismatch.Size = new System.Drawing.Size(65, 26);
             this.lblUpperRightMismatch.TabIndex = 11;
             this.lblUpperRightMismatch.Text = "Right :";
             this.lblUpperRightMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -535,11 +540,11 @@ namespace ESI.UI.Pages
             this.lblUpperRightMismatchValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperRightMismatchValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperRightMismatchValue.ForeColor = System.Drawing.Color.White;
-            this.lblUpperRightMismatchValue.Location = new System.Drawing.Point(97, 52);
+            this.lblUpperRightMismatchValue.Location = new System.Drawing.Point(65, 52);
             this.lblUpperRightMismatchValue.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperRightMismatchValue.Name = "lblUpperRightMismatchValue";
             this.lblUpperRightMismatchValue.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperRightMismatchValue.Size = new System.Drawing.Size(97, 26);
+            this.lblUpperRightMismatchValue.Size = new System.Drawing.Size(66, 26);
             this.lblUpperRightMismatchValue.TabIndex = 12;
             this.lblUpperRightMismatchValue.Text = "11.7mm";
             this.lblUpperRightMismatchValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -564,14 +569,14 @@ namespace ESI.UI.Pages
             this.tlpUpperSummary.Controls.Add(this.lblUpperSummaryItem6, 2, 2);
             this.tlpUpperSummary.Controls.Add(this.lblUpperSummaryItem6Value, 3, 2);
             this.tlpUpperSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpUpperSummary.Location = new System.Drawing.Point(194, 0);
+            this.tlpUpperSummary.Location = new System.Drawing.Point(131, 0);
             this.tlpUpperSummary.Margin = new System.Windows.Forms.Padding(0);
             this.tlpUpperSummary.Name = "tlpUpperSummary";
             this.tlpUpperSummary.RowCount = 3;
             this.tlpUpperSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpUpperSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpUpperSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpUpperSummary.Size = new System.Drawing.Size(291, 78);
+            this.tlpUpperSummary.Size = new System.Drawing.Size(197, 78);
             this.tlpUpperSummary.TabIndex = 15;
             // 
             // lblUpperSummaryItem1
@@ -583,7 +588,7 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem1.Location = new System.Drawing.Point(0, 0);
             this.lblUpperSummaryItem1.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem1.Name = "lblUpperSummaryItem1";
-            this.lblUpperSummaryItem1.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem1.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem1.TabIndex = 8;
             this.lblUpperSummaryItem1.Text = "PinHole :";
             this.lblUpperSummaryItem1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -594,11 +599,11 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem1Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem1Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem1Value.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem1Value.Location = new System.Drawing.Point(72, 0);
+            this.lblUpperSummaryItem1Value.Location = new System.Drawing.Point(49, 0);
             this.lblUpperSummaryItem1Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem1Value.Name = "lblUpperSummaryItem1Value";
             this.lblUpperSummaryItem1Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperSummaryItem1Value.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem1Value.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem1Value.TabIndex = 9;
             this.lblUpperSummaryItem1Value.Text = "5ea";
             this.lblUpperSummaryItem1Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -612,7 +617,7 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem2.Location = new System.Drawing.Point(0, 26);
             this.lblUpperSummaryItem2.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem2.Name = "lblUpperSummaryItem2";
-            this.lblUpperSummaryItem2.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem2.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem2.TabIndex = 10;
             this.lblUpperSummaryItem2.Text = "Dent :";
             this.lblUpperSummaryItem2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -623,11 +628,11 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem2Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem2Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem2Value.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem2Value.Location = new System.Drawing.Point(72, 26);
+            this.lblUpperSummaryItem2Value.Location = new System.Drawing.Point(49, 26);
             this.lblUpperSummaryItem2Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem2Value.Name = "lblUpperSummaryItem2Value";
             this.lblUpperSummaryItem2Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperSummaryItem2Value.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem2Value.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem2Value.TabIndex = 13;
             this.lblUpperSummaryItem2Value.Text = "1ea";
             this.lblUpperSummaryItem2Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -641,7 +646,7 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem3.Location = new System.Drawing.Point(0, 52);
             this.lblUpperSummaryItem3.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem3.Name = "lblUpperSummaryItem3";
-            this.lblUpperSummaryItem3.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem3.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem3.TabIndex = 11;
             this.lblUpperSummaryItem3.Text = "Crater :";
             this.lblUpperSummaryItem3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -652,11 +657,11 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem3Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem3Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem3Value.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem3Value.Location = new System.Drawing.Point(72, 52);
+            this.lblUpperSummaryItem3Value.Location = new System.Drawing.Point(49, 52);
             this.lblUpperSummaryItem3Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem3Value.Name = "lblUpperSummaryItem3Value";
             this.lblUpperSummaryItem3Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperSummaryItem3Value.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem3Value.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem3Value.TabIndex = 12;
             this.lblUpperSummaryItem3Value.Text = "0ea";
             this.lblUpperSummaryItem3Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -667,10 +672,10 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem4.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem4.Location = new System.Drawing.Point(144, 0);
+            this.lblUpperSummaryItem4.Location = new System.Drawing.Point(98, 0);
             this.lblUpperSummaryItem4.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem4.Name = "lblUpperSummaryItem4";
-            this.lblUpperSummaryItem4.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem4.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem4.TabIndex = 14;
             this.lblUpperSummaryItem4.Text = "Island :";
             this.lblUpperSummaryItem4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -681,11 +686,11 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem4Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem4Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem4Value.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem4Value.Location = new System.Drawing.Point(216, 0);
+            this.lblUpperSummaryItem4Value.Location = new System.Drawing.Point(147, 0);
             this.lblUpperSummaryItem4Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem4Value.Name = "lblUpperSummaryItem4Value";
             this.lblUpperSummaryItem4Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperSummaryItem4Value.Size = new System.Drawing.Size(75, 26);
+            this.lblUpperSummaryItem4Value.Size = new System.Drawing.Size(50, 26);
             this.lblUpperSummaryItem4Value.TabIndex = 17;
             this.lblUpperSummaryItem4Value.Text = "1ea";
             this.lblUpperSummaryItem4Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -696,10 +701,10 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem5.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem5.Location = new System.Drawing.Point(144, 26);
+            this.lblUpperSummaryItem5.Location = new System.Drawing.Point(98, 26);
             this.lblUpperSummaryItem5.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem5.Name = "lblUpperSummaryItem5";
-            this.lblUpperSummaryItem5.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem5.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem5.TabIndex = 15;
             this.lblUpperSummaryItem5.Text = "Drag :";
             this.lblUpperSummaryItem5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -710,11 +715,11 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem5Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem5Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem5Value.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem5Value.Location = new System.Drawing.Point(216, 26);
+            this.lblUpperSummaryItem5Value.Location = new System.Drawing.Point(147, 26);
             this.lblUpperSummaryItem5Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem5Value.Name = "lblUpperSummaryItem5Value";
             this.lblUpperSummaryItem5Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperSummaryItem5Value.Size = new System.Drawing.Size(75, 26);
+            this.lblUpperSummaryItem5Value.Size = new System.Drawing.Size(50, 26);
             this.lblUpperSummaryItem5Value.TabIndex = 18;
             this.lblUpperSummaryItem5Value.Text = "1ea";
             this.lblUpperSummaryItem5Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -725,10 +730,10 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem6.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem6.Location = new System.Drawing.Point(144, 52);
+            this.lblUpperSummaryItem6.Location = new System.Drawing.Point(98, 52);
             this.lblUpperSummaryItem6.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem6.Name = "lblUpperSummaryItem6";
-            this.lblUpperSummaryItem6.Size = new System.Drawing.Size(72, 26);
+            this.lblUpperSummaryItem6.Size = new System.Drawing.Size(49, 26);
             this.lblUpperSummaryItem6.TabIndex = 16;
             this.lblUpperSummaryItem6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -738,11 +743,11 @@ namespace ESI.UI.Pages
             this.lblUpperSummaryItem6Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUpperSummaryItem6Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUpperSummaryItem6Value.ForeColor = System.Drawing.Color.White;
-            this.lblUpperSummaryItem6Value.Location = new System.Drawing.Point(216, 52);
+            this.lblUpperSummaryItem6Value.Location = new System.Drawing.Point(147, 52);
             this.lblUpperSummaryItem6Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblUpperSummaryItem6Value.Name = "lblUpperSummaryItem6Value";
             this.lblUpperSummaryItem6Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblUpperSummaryItem6Value.Size = new System.Drawing.Size(75, 26);
+            this.lblUpperSummaryItem6Value.Size = new System.Drawing.Size(50, 26);
             this.lblUpperSummaryItem6Value.TabIndex = 19;
             this.lblUpperSummaryItem6Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -755,7 +760,7 @@ namespace ESI.UI.Pages
             this.btnUpperJudgement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpperJudgement.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnUpperJudgement.ForeColor = System.Drawing.Color.White;
-            this.btnUpperJudgement.Location = new System.Drawing.Point(485, 0);
+            this.btnUpperJudgement.Location = new System.Drawing.Point(328, 0);
             this.btnUpperJudgement.Margin = new System.Windows.Forms.Padding(0);
             this.btnUpperJudgement.Name = "btnUpperJudgement";
             this.btnUpperJudgement.Size = new System.Drawing.Size(100, 78);
@@ -772,10 +777,10 @@ namespace ESI.UI.Pages
             this.btnLowerJudgement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLowerJudgement.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnLowerJudgement.ForeColor = System.Drawing.Color.White;
-            this.btnLowerJudgement.Location = new System.Drawing.Point(1070, 0);
+            this.btnLowerJudgement.Location = new System.Drawing.Point(756, 0);
             this.btnLowerJudgement.Margin = new System.Windows.Forms.Padding(0);
             this.btnLowerJudgement.Name = "btnLowerJudgement";
-            this.btnLowerJudgement.Size = new System.Drawing.Size(103, 78);
+            this.btnLowerJudgement.Size = new System.Drawing.Size(106, 78);
             this.btnLowerJudgement.TabIndex = 9;
             this.btnLowerJudgement.Text = "OK";
             this.btnLowerJudgement.UseVisualStyleBackColor = false;
@@ -791,14 +796,14 @@ namespace ESI.UI.Pages
             this.tlpLowerMismatch.Controls.Add(this.lblLowerRightMismatchValue, 1, 2);
             this.tlpLowerMismatch.Controls.Add(this.lblLowerCenterMismatch, 0, 1);
             this.tlpLowerMismatch.Controls.Add(this.lblLowerCenterMismatchValue, 1, 1);
-            this.tlpLowerMismatch.Location = new System.Drawing.Point(585, 0);
+            this.tlpLowerMismatch.Location = new System.Drawing.Point(428, 0);
             this.tlpLowerMismatch.Margin = new System.Windows.Forms.Padding(0);
             this.tlpLowerMismatch.Name = "tlpLowerMismatch";
             this.tlpLowerMismatch.RowCount = 3;
             this.tlpLowerMismatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpLowerMismatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpLowerMismatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpLowerMismatch.Size = new System.Drawing.Size(194, 78);
+            this.tlpLowerMismatch.Size = new System.Drawing.Size(131, 78);
             this.tlpLowerMismatch.TabIndex = 12;
             // 
             // lblLowerLeftMismatch
@@ -810,7 +815,7 @@ namespace ESI.UI.Pages
             this.lblLowerLeftMismatch.Location = new System.Drawing.Point(0, 0);
             this.lblLowerLeftMismatch.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerLeftMismatch.Name = "lblLowerLeftMismatch";
-            this.lblLowerLeftMismatch.Size = new System.Drawing.Size(97, 26);
+            this.lblLowerLeftMismatch.Size = new System.Drawing.Size(65, 26);
             this.lblLowerLeftMismatch.TabIndex = 8;
             this.lblLowerLeftMismatch.Text = "Left :";
             this.lblLowerLeftMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -821,11 +826,11 @@ namespace ESI.UI.Pages
             this.lblLowerLeftMismatchValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerLeftMismatchValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerLeftMismatchValue.ForeColor = System.Drawing.Color.White;
-            this.lblLowerLeftMismatchValue.Location = new System.Drawing.Point(97, 0);
+            this.lblLowerLeftMismatchValue.Location = new System.Drawing.Point(65, 0);
             this.lblLowerLeftMismatchValue.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerLeftMismatchValue.Name = "lblLowerLeftMismatchValue";
             this.lblLowerLeftMismatchValue.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerLeftMismatchValue.Size = new System.Drawing.Size(97, 26);
+            this.lblLowerLeftMismatchValue.Size = new System.Drawing.Size(66, 26);
             this.lblLowerLeftMismatchValue.TabIndex = 9;
             this.lblLowerLeftMismatchValue.Text = "11.8mm";
             this.lblLowerLeftMismatchValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -839,7 +844,7 @@ namespace ESI.UI.Pages
             this.lblLowerRightMismatch.Location = new System.Drawing.Point(0, 52);
             this.lblLowerRightMismatch.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerRightMismatch.Name = "lblLowerRightMismatch";
-            this.lblLowerRightMismatch.Size = new System.Drawing.Size(97, 26);
+            this.lblLowerRightMismatch.Size = new System.Drawing.Size(65, 26);
             this.lblLowerRightMismatch.TabIndex = 11;
             this.lblLowerRightMismatch.Text = "Right :";
             this.lblLowerRightMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -850,11 +855,11 @@ namespace ESI.UI.Pages
             this.lblLowerRightMismatchValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerRightMismatchValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerRightMismatchValue.ForeColor = System.Drawing.Color.White;
-            this.lblLowerRightMismatchValue.Location = new System.Drawing.Point(97, 52);
+            this.lblLowerRightMismatchValue.Location = new System.Drawing.Point(65, 52);
             this.lblLowerRightMismatchValue.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerRightMismatchValue.Name = "lblLowerRightMismatchValue";
             this.lblLowerRightMismatchValue.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerRightMismatchValue.Size = new System.Drawing.Size(97, 26);
+            this.lblLowerRightMismatchValue.Size = new System.Drawing.Size(66, 26);
             this.lblLowerRightMismatchValue.TabIndex = 12;
             this.lblLowerRightMismatchValue.Text = "12.1mm";
             this.lblLowerRightMismatchValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -868,7 +873,7 @@ namespace ESI.UI.Pages
             this.lblLowerCenterMismatch.Location = new System.Drawing.Point(0, 26);
             this.lblLowerCenterMismatch.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerCenterMismatch.Name = "lblLowerCenterMismatch";
-            this.lblLowerCenterMismatch.Size = new System.Drawing.Size(97, 26);
+            this.lblLowerCenterMismatch.Size = new System.Drawing.Size(65, 26);
             this.lblLowerCenterMismatch.TabIndex = 10;
             this.lblLowerCenterMismatch.Text = "Center :";
             this.lblLowerCenterMismatch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -879,11 +884,11 @@ namespace ESI.UI.Pages
             this.lblLowerCenterMismatchValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerCenterMismatchValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerCenterMismatchValue.ForeColor = System.Drawing.Color.White;
-            this.lblLowerCenterMismatchValue.Location = new System.Drawing.Point(97, 26);
+            this.lblLowerCenterMismatchValue.Location = new System.Drawing.Point(65, 26);
             this.lblLowerCenterMismatchValue.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerCenterMismatchValue.Name = "lblLowerCenterMismatchValue";
             this.lblLowerCenterMismatchValue.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerCenterMismatchValue.Size = new System.Drawing.Size(97, 26);
+            this.lblLowerCenterMismatchValue.Size = new System.Drawing.Size(66, 26);
             this.lblLowerCenterMismatchValue.TabIndex = 13;
             this.lblLowerCenterMismatchValue.Text = "23.8mm";
             this.lblLowerCenterMismatchValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -908,14 +913,14 @@ namespace ESI.UI.Pages
             this.tlpLowerSummary.Controls.Add(this.lblLowerSummaryItem6, 2, 2);
             this.tlpLowerSummary.Controls.Add(this.lblLowerSummaryItem6Value, 3, 2);
             this.tlpLowerSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpLowerSummary.Location = new System.Drawing.Point(779, 0);
+            this.tlpLowerSummary.Location = new System.Drawing.Point(559, 0);
             this.tlpLowerSummary.Margin = new System.Windows.Forms.Padding(0);
             this.tlpLowerSummary.Name = "tlpLowerSummary";
             this.tlpLowerSummary.RowCount = 3;
             this.tlpLowerSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpLowerSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpLowerSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpLowerSummary.Size = new System.Drawing.Size(291, 78);
+            this.tlpLowerSummary.Size = new System.Drawing.Size(197, 78);
             this.tlpLowerSummary.TabIndex = 16;
             // 
             // lblLowerSummaryItem1
@@ -927,7 +932,7 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem1.Location = new System.Drawing.Point(0, 0);
             this.lblLowerSummaryItem1.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem1.Name = "lblLowerSummaryItem1";
-            this.lblLowerSummaryItem1.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem1.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem1.TabIndex = 8;
             this.lblLowerSummaryItem1.Text = "PinHole :";
             this.lblLowerSummaryItem1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -938,11 +943,11 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem1Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItem1Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItem1Value.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItem1Value.Location = new System.Drawing.Point(72, 0);
+            this.lblLowerSummaryItem1Value.Location = new System.Drawing.Point(49, 0);
             this.lblLowerSummaryItem1Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem1Value.Name = "lblLowerSummaryItem1Value";
             this.lblLowerSummaryItem1Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerSummaryItem1Value.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem1Value.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem1Value.TabIndex = 9;
             this.lblLowerSummaryItem1Value.Text = "5ea";
             this.lblLowerSummaryItem1Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -956,7 +961,7 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem2.Location = new System.Drawing.Point(0, 26);
             this.lblLowerSummaryItem2.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem2.Name = "lblLowerSummaryItem2";
-            this.lblLowerSummaryItem2.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem2.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem2.TabIndex = 10;
             this.lblLowerSummaryItem2.Text = "Dent :";
             this.lblLowerSummaryItem2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -967,11 +972,11 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem2Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItem2Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItem2Value.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItem2Value.Location = new System.Drawing.Point(72, 26);
+            this.lblLowerSummaryItem2Value.Location = new System.Drawing.Point(49, 26);
             this.lblLowerSummaryItem2Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem2Value.Name = "lblLowerSummaryItem2Value";
             this.lblLowerSummaryItem2Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerSummaryItem2Value.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem2Value.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem2Value.TabIndex = 13;
             this.lblLowerSummaryItem2Value.Text = "1ea";
             this.lblLowerSummaryItem2Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -985,7 +990,7 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem3.Location = new System.Drawing.Point(0, 52);
             this.lblLowerSummaryItem3.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem3.Name = "lblLowerSummaryItem3";
-            this.lblLowerSummaryItem3.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem3.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem3.TabIndex = 11;
             this.lblLowerSummaryItem3.Text = "Crater :";
             this.lblLowerSummaryItem3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -996,11 +1001,11 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem3Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItem3Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItem3Value.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItem3Value.Location = new System.Drawing.Point(72, 52);
+            this.lblLowerSummaryItem3Value.Location = new System.Drawing.Point(49, 52);
             this.lblLowerSummaryItem3Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem3Value.Name = "lblLowerSummaryItem3Value";
             this.lblLowerSummaryItem3Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerSummaryItem3Value.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem3Value.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem3Value.TabIndex = 12;
             this.lblLowerSummaryItem3Value.Text = "0ea";
             this.lblLowerSummaryItem3Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1011,10 +1016,10 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItem4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItem4.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItem4.Location = new System.Drawing.Point(144, 0);
+            this.lblLowerSummaryItem4.Location = new System.Drawing.Point(98, 0);
             this.lblLowerSummaryItem4.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem4.Name = "lblLowerSummaryItem4";
-            this.lblLowerSummaryItem4.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem4.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem4.TabIndex = 14;
             this.lblLowerSummaryItem4.Text = "Island :";
             this.lblLowerSummaryItem4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1025,11 +1030,11 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem4Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItem4Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItem4Value.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItem4Value.Location = new System.Drawing.Point(216, 0);
+            this.lblLowerSummaryItem4Value.Location = new System.Drawing.Point(147, 0);
             this.lblLowerSummaryItem4Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem4Value.Name = "lblLowerSummaryItem4Value";
             this.lblLowerSummaryItem4Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerSummaryItem4Value.Size = new System.Drawing.Size(75, 26);
+            this.lblLowerSummaryItem4Value.Size = new System.Drawing.Size(50, 26);
             this.lblLowerSummaryItem4Value.TabIndex = 17;
             this.lblLowerSummaryItem4Value.Text = "1ea";
             this.lblLowerSummaryItem4Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1040,10 +1045,10 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItem5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItem5.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItem5.Location = new System.Drawing.Point(144, 26);
+            this.lblLowerSummaryItem5.Location = new System.Drawing.Point(98, 26);
             this.lblLowerSummaryItem5.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem5.Name = "lblLowerSummaryItem5";
-            this.lblLowerSummaryItem5.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem5.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem5.TabIndex = 15;
             this.lblLowerSummaryItem5.Text = "Drag :";
             this.lblLowerSummaryItem5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1054,11 +1059,11 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItemValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItemValue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItemValue.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItemValue.Location = new System.Drawing.Point(216, 26);
+            this.lblLowerSummaryItemValue.Location = new System.Drawing.Point(147, 26);
             this.lblLowerSummaryItemValue.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItemValue.Name = "lblLowerSummaryItemValue";
             this.lblLowerSummaryItemValue.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerSummaryItemValue.Size = new System.Drawing.Size(75, 26);
+            this.lblLowerSummaryItemValue.Size = new System.Drawing.Size(50, 26);
             this.lblLowerSummaryItemValue.TabIndex = 18;
             this.lblLowerSummaryItemValue.Text = "1ea";
             this.lblLowerSummaryItemValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1069,10 +1074,10 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItem6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItem6.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItem6.Location = new System.Drawing.Point(144, 52);
+            this.lblLowerSummaryItem6.Location = new System.Drawing.Point(98, 52);
             this.lblLowerSummaryItem6.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem6.Name = "lblLowerSummaryItem6";
-            this.lblLowerSummaryItem6.Size = new System.Drawing.Size(72, 26);
+            this.lblLowerSummaryItem6.Size = new System.Drawing.Size(49, 26);
             this.lblLowerSummaryItem6.TabIndex = 16;
             this.lblLowerSummaryItem6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -1082,94 +1087,71 @@ namespace ESI.UI.Pages
             this.lblLowerSummaryItem6Value.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLowerSummaryItem6Value.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLowerSummaryItem6Value.ForeColor = System.Drawing.Color.White;
-            this.lblLowerSummaryItem6Value.Location = new System.Drawing.Point(216, 52);
+            this.lblLowerSummaryItem6Value.Location = new System.Drawing.Point(147, 52);
             this.lblLowerSummaryItem6Value.Margin = new System.Windows.Forms.Padding(0);
             this.lblLowerSummaryItem6Value.Name = "lblLowerSummaryItem6Value";
             this.lblLowerSummaryItem6Value.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
-            this.lblLowerSummaryItem6Value.Size = new System.Drawing.Size(75, 26);
+            this.lblLowerSummaryItem6Value.Size = new System.Drawing.Size(50, 26);
             this.lblLowerSummaryItem6Value.TabIndex = 19;
             this.lblLowerSummaryItem6Value.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tlpDataLayout
+            // pnlDefectInfoArea
             // 
-            this.tlpDataLayout.ColumnCount = 7;
-            this.tlpFunctionLayout.SetColumnSpan(this.tlpDataLayout, 2);
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tlpDataLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDataLayout.Controls.Add(this.btnUpperLowerMismatch, 2, 0);
-            this.tlpDataLayout.Controls.Add(this.btnDefectImage, 1, 0);
-            this.tlpDataLayout.Controls.Add(this.btnDefectData, 0, 0);
-            this.tlpDataLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpDataLayout.ForeColor = System.Drawing.Color.White;
-            this.tlpDataLayout.Location = new System.Drawing.Point(450, 545);
-            this.tlpDataLayout.Margin = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.tlpDataLayout.Name = "tlpDataLayout";
-            this.tlpDataLayout.RowCount = 2;
-            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpDataLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpDataLayout.Size = new System.Drawing.Size(1175, 255);
-            this.tlpDataLayout.TabIndex = 6;
+            this.pnlDefectInfoArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDefectInfoArea.Location = new System.Drawing.Point(5, 35);
+            this.pnlDefectInfoArea.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlDefectInfoArea.Name = "pnlDefectInfoArea";
+            this.tlpDefectInfos.SetRowSpan(this.pnlDefectInfoArea, 2);
+            this.pnlDefectInfoArea.Size = new System.Drawing.Size(305, 765);
+            this.pnlDefectInfoArea.TabIndex = 14;
             // 
-            // btnUpperLowerMismatch
+            // pnlChartArea
             // 
-            this.btnUpperLowerMismatch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.btnUpperLowerMismatch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnUpperLowerMismatch.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnUpperLowerMismatch.FlatAppearance.BorderSize = 0;
-            this.btnUpperLowerMismatch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpperLowerMismatch.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnUpperLowerMismatch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.btnUpperLowerMismatch.Location = new System.Drawing.Point(320, 0);
-            this.btnUpperLowerMismatch.Margin = new System.Windows.Forms.Padding(0);
-            this.btnUpperLowerMismatch.Name = "btnUpperLowerMismatch";
-            this.btnUpperLowerMismatch.Size = new System.Drawing.Size(160, 40);
-            this.btnUpperLowerMismatch.TabIndex = 13;
-            this.btnUpperLowerMismatch.Text = "U/L MISMATCH";
-            this.btnUpperLowerMismatch.UseVisualStyleBackColor = false;
-            this.btnUpperLowerMismatch.Click += new System.EventHandler(this.SelectMisMatch_Click);
+            this.pnlChartArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tlpFunctionLayout.SetColumnSpan(this.pnlChartArea, 2);
+            this.pnlChartArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlChartArea.Location = new System.Drawing.Point(0, 530);
+            this.pnlChartArea.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlChartArea.Name = "pnlChartArea";
+            this.pnlChartArea.Size = new System.Drawing.Size(864, 270);
+            this.pnlChartArea.TabIndex = 0;
             // 
-            // btnDefectImage
+            // tlpDefectInfos
             // 
-            this.btnDefectImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.btnDefectImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDefectImage.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnDefectImage.FlatAppearance.BorderSize = 0;
-            this.btnDefectImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDefectImage.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnDefectImage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.btnDefectImage.Location = new System.Drawing.Point(160, 0);
-            this.btnDefectImage.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDefectImage.Name = "btnDefectImage";
-            this.btnDefectImage.Size = new System.Drawing.Size(160, 40);
-            this.btnDefectImage.TabIndex = 12;
-            this.btnDefectImage.Text = "DEFECT IMAGE";
-            this.btnDefectImage.UseVisualStyleBackColor = false;
-            this.btnDefectImage.Click += new System.EventHandler(this.SelectDefectImage_Click);
+            this.tlpDefectInfos.ColumnCount = 1;
+            this.tlpDefectInfos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpDefectInfos.Controls.Add(this.pnlDefectInfoArea, 0, 0);
+            this.tlpDefectInfos.Controls.Add(this.lblDefectInfos, 0, 0);
+            this.tlpDefectInfos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpDefectInfos.Location = new System.Drawing.Point(864, 0);
+            this.tlpDefectInfos.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpDefectInfos.Name = "tlpDefectInfos";
+            this.tlpDefectInfos.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.tlpDefectInfos.RowCount = 1;
+            this.tlpFunctionLayout.SetRowSpan(this.tlpDefectInfos, 3);
+            this.tlpDefectInfos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tlpDefectInfos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpDefectInfos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpDefectInfos.Size = new System.Drawing.Size(310, 800);
+            this.tlpDefectInfos.TabIndex = 15;
             // 
-            // btnDefectData
+            // lblDefectInfos
             // 
-            this.btnDefectData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.btnDefectData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDefectData.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnDefectData.FlatAppearance.BorderSize = 3;
-            this.btnDefectData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDefectData.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnDefectData.ForeColor = System.Drawing.Color.White;
-            this.btnDefectData.Location = new System.Drawing.Point(0, 0);
-            this.btnDefectData.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDefectData.Name = "btnDefectData";
-            this.btnDefectData.Size = new System.Drawing.Size(160, 40);
-            this.btnDefectData.TabIndex = 11;
-            this.btnDefectData.Text = "DEFECT DATA";
-            this.btnDefectData.UseVisualStyleBackColor = false;
-            this.btnDefectData.Click += new System.EventHandler(this.SelectDefectData_Click);
+            this.lblDefectInfos.AutoSize = true;
+            this.lblDefectInfos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblDefectInfos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblDefectInfos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDefectInfos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblDefectInfos.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblDefectInfos.ForeColor = System.Drawing.Color.White;
+            this.lblDefectInfos.Location = new System.Drawing.Point(5, 0);
+            this.lblDefectInfos.Margin = new System.Windows.Forms.Padding(0);
+            this.lblDefectInfos.Name = "lblDefectInfos";
+            this.lblDefectInfos.Size = new System.Drawing.Size(305, 35);
+            this.lblDefectInfos.TabIndex = 8;
+            this.lblDefectInfos.Tag = "";
+            this.lblDefectInfos.Text = "DefectImages";
+            this.lblDefectInfos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainPage
             // 
@@ -1199,7 +1181,8 @@ namespace ESI.UI.Pages
             this.tlpUpperSummary.ResumeLayout(false);
             this.tlpLowerMismatch.ResumeLayout(false);
             this.tlpLowerSummary.ResumeLayout(false);
-            this.tlpDataLayout.ResumeLayout(false);
+            this.tlpDefectInfos.ResumeLayout(false);
+            this.tlpDefectInfos.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1217,7 +1200,6 @@ namespace ESI.UI.Pages
         private System.Windows.Forms.Label lblStartText;
         private System.Windows.Forms.TableLayoutPanel tlpFunctionLayout;
         private System.Windows.Forms.Button btnTest;
-        private System.Windows.Forms.TableLayoutPanel tlpDataLayout;
         private System.Windows.Forms.Panel pnlDefectMap;
         private System.Windows.Forms.TableLayoutPanel tlpImages;
         private System.Windows.Forms.Label lblLowerCam;
@@ -1227,9 +1209,6 @@ namespace ESI.UI.Pages
         private System.Windows.Forms.TableLayoutPanel tlpSummaryLayout;
         private System.Windows.Forms.Button btnUpperJudgement;
         private System.Windows.Forms.Button btnLowerJudgement;
-        private System.Windows.Forms.Button btnUpperLowerMismatch;
-        private System.Windows.Forms.Button btnDefectImage;
-        private System.Windows.Forms.Button btnDefectData;
         private System.Windows.Forms.Panel pnlUpperImage;
         private System.Windows.Forms.Panel pnlLowerImage;
         private System.Windows.Forms.TableLayoutPanel tlpLowerMismatch;
@@ -1273,5 +1252,9 @@ namespace ESI.UI.Pages
         private System.Windows.Forms.Label lblLowerSummaryItem6;
         private System.Windows.Forms.Label lblLowerSummaryItem6Value;
         private System.Windows.Forms.Panel pnlSummary;
+        private System.Windows.Forms.Panel pnlDefectInfoArea;
+        private System.Windows.Forms.Panel pnlChartArea;
+        private System.Windows.Forms.TableLayoutPanel tlpDefectInfos;
+        private System.Windows.Forms.Label lblDefectInfos;
     }
 }

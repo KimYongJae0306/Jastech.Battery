@@ -8,7 +8,7 @@ namespace Jastech.Battery.Winform.UI.Controls
     public partial class DefectInfoContainerControl : UserControl
     {
         #region 속성
-        public bool isVertical = true;
+        public bool IsVertical { get; set; } = true;
         #endregion
 
         #region 이벤트
@@ -34,7 +34,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
             Point controlLocation = new Point();
             Size controlSize = new Size();
-            if (isVertical)
+            if (IsVertical)
             {
                 int drawingCount = Width / defectInfoControl.Width;
                 if (drawingCount == 0) drawingCount = 1;
@@ -56,7 +56,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             defectInfoControl.Location = controlLocation;
             pnlContainer.Controls.Add(defectInfoControl);
 
-            if (isVertical)
+            if (IsVertical)
                 pnlContainer.VerticalScroll.Value = pnlContainer.VerticalScroll.Maximum;
             else
                 pnlContainer.HorizontalScroll.Value = pnlContainer.HorizontalScroll.Maximum;
