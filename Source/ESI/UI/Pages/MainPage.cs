@@ -17,6 +17,8 @@ using System.IO;
 using System.Threading;
 using System.Globalization;
 using System.Runtime.Remoting.Channels;
+using Emgu.CV;
+using System.Diagnostics;
 
 namespace ESI.UI.Pages
 {
@@ -27,9 +29,11 @@ namespace ESI.UI.Pages
 
         private DefectInfoContainerControl _defectInfoContainerControl = null;
 
-        private DrawBoxControl _upperDrawBoxControl = null;
+        private GLDrawBoxControl _upperDrawBoxControl = null;
 
-        private DrawBoxControl _lowerDrawBoxControl = null;
+        private GLDrawBoxControl _lowerDrawBoxControl = null;
+
+        private DoubleBufferedPanel _pnlDataArea = null;
 
         private DataGridView _dgvDefectData = null;
 
@@ -72,9 +76,10 @@ namespace ESI.UI.Pages
 
         private void AddControls()
         {
-            _upperDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
-            _lowerDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
+            _upperDrawBoxControl = new GLDrawBoxControl { Dock = DockStyle.Fill };
+            _lowerDrawBoxControl = new GLDrawBoxControl { Dock = DockStyle.Fill };
             _defectMapControl = new CompactDefectMapControl { Dock = DockStyle.Fill };
+            _pnlDataArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };
             _defectInfoContainerControl = new DefectInfoContainerControl { Dock = DockStyle.Fill };
             _dataGraphControl = new DataGraphControl {  Dock = DockStyle.Fill };
             _dgvDefectData = new DataGridView
@@ -125,6 +130,8 @@ namespace ESI.UI.Pages
             pnlDefectMap.Controls.Add(_defectMapControl);
             pnlUpperImage.Controls.Add(_upperDrawBoxControl);
             pnlLowerImage.Controls.Add(_lowerDrawBoxControl);
+            tlpDataLayout.Controls.Add(_pnlDataArea, 0, 1);
+            tlpDataLayout.SetColumnSpan(_pnlDataArea, 7);
             SelectDefectData_Click(null, null); 
         }
 
@@ -162,6 +169,9 @@ namespace ESI.UI.Pages
                 _defectInfoContainerControl.AddDefectInfo(defectInfo);
                 _defectMapControl.AddCoordinate(defectInfo);
 
+                _defectInfoContainerControl.AddDefectInfo(defectInfo);
+                _defectMapControl.AddCoordinate(defectInfo);
+
                 if (defectInfo.CameraName == "Upper")
                 {
                     btnUpperJudgement.Text = defectInfo.Judgement;
@@ -177,38 +187,26 @@ namespace ESI.UI.Pages
 
         private void Test_Click(object sender, EventArgs e)
         {
-            bool rainbowTest = true;
-            Bitmap[] rainbowBitmaps = null;
-
             string imgPath = string.Empty;
             Random rand = new Random();
 
             Bitmap testUpperBitmap = null;
             Bitmap testLowerBitmap = null;
-            if (rainbowTest == false)
-            {
-                OpenFileDialog ofd = new OpenFileDialog();
-                ofd.ReadOnlyChecked = true;
-                ofd.Filter = "BMP Files (*.bmp)|*.bmp; | "
-                    + "JPG Files (*.jpg, *.jpeg)|*.jpg; *.jpeg; |"
-                    + "모든 파일(*.*) | *.*;";
-                ofd.ShowDialog();
-                if (ofd.FileName != "")
-                    imgPath = ofd.FileName;
 
-                if (imgPath == string.Empty)
-                    return;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.ReadOnlyChecked = true;
+            ofd.Filter = "BMP Files (*.bmp)|*.bmp; | "
+                + "JPG Files (*.jpg, *.jpeg)|*.jpg; *.jpeg; |"
+                + "모든 파일(*.*) | *.*;";
+            ofd.ShowDialog();
+            if (ofd.FileName != "")
+                imgPath = ofd.FileName;
 
-                testUpperBitmap = new Bitmap(imgPath);
-                testLowerBitmap = new Bitmap(imgPath);
-            }
-            else
-            {
-                rainbowBitmaps = new Bitmap[7] {
-                    new Bitmap(@"Y:\16kRed.bmp"), new Bitmap(@"Y:\16kOrange.bmp"), new Bitmap(@"Y:\16kYellow.bmp"),
-                    new Bitmap(@"Y:\16kGreen.bmp"), new Bitmap(@"Y:\16kBlue.bmp"), new Bitmap(@"Y:\16kNavy.bmp"), new Bitmap(@"Y:\16kPurple.bmp")
-                };
-            }
+            if (imgPath == string.Empty)
+                return;
+
+            testUpperBitmap = new Bitmap(imgPath);
+            testLowerBitmap = new Bitmap(imgPath);
 
             ClearDatas();
 
@@ -216,12 +214,14 @@ namespace ESI.UI.Pages
             {
                 try
                 {
-                    BeginInvoke(new Action(() => _upperDrawBoxControl.EnableInteractive(false)));
-                    BeginInvoke(new Action(() => _lowerDrawBoxControl.EnableInteractive(false)));
-
+                    List<long> ttimes = new List<long>();
+                    //_upperDrawBoxControl.EnableBrush = false;
+                    //_lowerDrawBoxControl.EnableBrush = false;
                     for (int yValue = 0; yValue <= _defectMapControl.maximumMeter * 50000; yValue += 50000)
                     {
-                        if (rand.Next(40) == 0)
+                        Stopwatch stopwatch = Stopwatch.StartNew();
+
+                        if (rand.Next(1) == 0)
                         {
                             var testInfo = new DefectInfo
                             {
@@ -263,21 +263,32 @@ namespace ESI.UI.Pages
 
                         _defectMapControl.MaximumY = yValue;
 
-                        if (rainbowTest == false)
-                        {
-                            _upperDrawBoxControl.SetImage(testUpperBitmap, false);
-                            _lowerDrawBoxControl.SetImage(testLowerBitmap, false);
-                        }
-                        else
-                        {
-                            _upperDrawBoxControl.SetImage((Bitmap)rainbowBitmaps[rand.Next(0, 7)].Clone(), false);
-                            _lowerDrawBoxControl.SetImage((Bitmap)rainbowBitmaps[6 - rand.Next(0, 7)].Clone(), false);
-                        }
-                        await Task.Delay(new TimeSpan(100000));
-                    }
-                    BeginInvoke(new Action(() => _upperDrawBoxControl.EnableInteractive(true)));
-                    BeginInvoke(new Action(() => _lowerDrawBoxControl.EnableInteractive(true)));
+                        var startTime = stopwatch.ElapsedMilliseconds;
 
+                        _upperDrawBoxControl.SetImage(testUpperBitmap, false);
+                        var setImage1TT = stopwatch.ElapsedMilliseconds - startTime;
+
+                        _lowerDrawBoxControl.SetImage(testLowerBitmap, false);
+                        var setImage2TT = stopwatch.ElapsedMilliseconds - setImage1TT;
+
+                        //_upperDrawBoxControl.FitZoom();
+                        //_lowerDrawBoxControl.FitZoom();
+
+                        stopwatch.Stop();
+
+                        ttimes.Add(setImage1TT);
+                        ttimes.Add(setImage2TT);
+
+                        //if (stopwatch.ElapsedMilliseconds > 500)
+                        //   MessageBox.Show($"화면 갱신 시간 초과 {stopwatch.ElapsedMilliseconds}ms");
+                        //else
+                        await Task.Delay(100 - (int)stopwatch.ElapsedMilliseconds);
+                    }
+                    //_upperDrawBoxControl.EnableBrush = true;
+                    //_lowerDrawBoxControl.EnableBrush = true;
+
+
+                    MessageBox.Show($"SetImage 평균 소요시간 {ttimes.Average()}ms, 최대 소요시간 {ttimes.Max()}, 최소 소요시간 {ttimes.Min()}");
                 }
                 catch (Exception ex)
                 {
@@ -296,41 +307,38 @@ namespace ESI.UI.Pages
                     button.FlatAppearance.BorderSize = 0;
                 }
             }
-            pnlDataArea.Controls.Clear();
+            _pnlDataArea.Controls.Clear();
         }
 
         private void SelectDefectData_Click(object sender, EventArgs e)
         {
             ClearDataViewSelection();
-            pnlDataArea.Controls.Add(_dgvDefectData);
+            _pnlDataArea.Controls.Add(_dgvDefectData);
             btnDefectData.ForeColor = Color.White;
             btnDefectData.FlatAppearance.BorderSize = 3;
-            //lblHighlightDefectData.BackColor = Color.Tomato;
         }
 
         private void SelectDefectImage_Click(object sender, EventArgs e)
         {
             ClearDataViewSelection();
-            pnlDataArea.Controls.Add(_defectInfoContainerControl);
+            _pnlDataArea.Controls.Add(_defectInfoContainerControl);
             btnDefectImage.ForeColor = Color.White;
             btnDefectImage.FlatAppearance.BorderSize = 3;
-            //lblHighlightDefectImage.BackColor = Color.Tomato;
         }
 
         private void SelectMisMatch_Click(object sender, EventArgs e)
         {
             ClearDataViewSelection();
-            pnlDataArea.Controls.Add(_dataGraphControl);
+            _pnlDataArea.Controls.Add(_dataGraphControl);
             btnUpperLowerMismatch.ForeColor = Color.White;
             btnUpperLowerMismatch.FlatAppearance.BorderSize = 3;
-            //lblHighlightMismatch.BackColor = Color.Tomato;
         }
 
         private void MainPage_SizeChanged(object sender, EventArgs e)
         {
             _upperDrawBoxControl.Width = pnlUpperImage.Width / 2;
             _lowerDrawBoxControl.Width = pnlLowerImage.Width / 2;
-            _defectInfoContainerControl.Size = pnlDataArea.Size;
+            _defectInfoContainerControl.Size = _pnlDataArea.Size;
             _defectMapControl.Invalidate();
         }
     }

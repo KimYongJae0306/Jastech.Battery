@@ -90,6 +90,8 @@ namespace Jastech.Battery.Winform.UI.Controls
             var defectSize = defectInfo.GetSize();
             if (defectCoord.Y + defectSize.Height > MaximumY)
                 MaximumY = defectCoord.Y + defectSize.Height;
+
+            Refresh();
         }
 
         public void AddCoordinate(List<DefectInfo> defectInfos)

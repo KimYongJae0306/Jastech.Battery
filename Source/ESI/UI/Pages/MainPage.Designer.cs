@@ -97,7 +97,6 @@ namespace ESI.UI.Pages
             this.btnUpperLowerMismatch = new System.Windows.Forms.Button();
             this.btnDefectImage = new System.Windows.Forms.Button();
             this.btnDefectData = new System.Windows.Forms.Button();
-            this.pnlDataArea = new System.Windows.Forms.Panel();
             this.tlpMainPageLayout.SuspendLayout();
             this.tlpSideBarLayout.SuspendLayout();
             this.tlpCommonFunctionLayout.SuspendLayout();
@@ -1105,7 +1104,6 @@ namespace ESI.UI.Pages
             this.tlpDataLayout.Controls.Add(this.btnUpperLowerMismatch, 2, 0);
             this.tlpDataLayout.Controls.Add(this.btnDefectImage, 1, 0);
             this.tlpDataLayout.Controls.Add(this.btnDefectData, 0, 0);
-            this.tlpDataLayout.Controls.Add(this.pnlDataArea, 0, 1);
             this.tlpDataLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpDataLayout.ForeColor = System.Drawing.Color.White;
             this.tlpDataLayout.Location = new System.Drawing.Point(450, 545);
@@ -1173,17 +1171,6 @@ namespace ESI.UI.Pages
             this.btnDefectData.UseVisualStyleBackColor = false;
             this.btnDefectData.Click += new System.EventHandler(this.SelectDefectData_Click);
             // 
-            // pnlDataArea
-            // 
-            this.pnlDataArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tlpDataLayout.SetColumnSpan(this.pnlDataArea, 7);
-            this.pnlDataArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlDataArea.Location = new System.Drawing.Point(0, 40);
-            this.pnlDataArea.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlDataArea.Name = "pnlDataArea";
-            this.pnlDataArea.Size = new System.Drawing.Size(1175, 215);
-            this.pnlDataArea.TabIndex = 6;
-            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1231,7 +1218,6 @@ namespace ESI.UI.Pages
         private System.Windows.Forms.TableLayoutPanel tlpFunctionLayout;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.TableLayoutPanel tlpDataLayout;
-        private System.Windows.Forms.Panel pnlDataArea;
         private System.Windows.Forms.Panel pnlDefectMap;
         private System.Windows.Forms.TableLayoutPanel tlpImages;
         private System.Windows.Forms.Label lblLowerCam;

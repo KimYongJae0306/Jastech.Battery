@@ -61,7 +61,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             else
                 pnlContainer.HorizontalScroll.Value = pnlContainer.HorizontalScroll.Maximum;
 
-            Invalidate();
+            Refresh();
         }
 
         public void AddDefectInfo(List<DefectInfo> defectInfos)
