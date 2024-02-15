@@ -279,9 +279,6 @@ namespace ESI.UI.Pages
                         ttimes.Add(setImage1TT);
                         ttimes.Add(setImage2TT);
 
-                        //if (stopwatch.ElapsedMilliseconds > 500)
-                        //   MessageBox.Show($"화면 갱신 시간 초과 {stopwatch.ElapsedMilliseconds}ms");
-                        //else
                         await Task.Delay(100 - (int)stopwatch.ElapsedMilliseconds);
                     }
                     //_upperDrawBoxControl.EnableBrush = true;

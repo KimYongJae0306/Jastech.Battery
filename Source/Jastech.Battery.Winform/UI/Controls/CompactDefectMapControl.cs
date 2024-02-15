@@ -65,8 +65,7 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             MaximumY = 0;
             _defectInfos.Clear();
-            //pnlMapArea.CreateGraphics().Clear(Color.FromArgb(52, 52, 52));
-            Invalidate();
+            pnlMapArea.Invalidate();
         }
 
         private RectangleF GetDisplayArea() => new RectangleF(new PointF(pnlMapArea.Left + 70, pnlMapArea.Top + 20), new SizeF(pnlMapArea.DisplayRectangle.Width - 90, pnlMapArea.DisplayRectangle.Height - 60));
@@ -143,10 +142,10 @@ namespace Jastech.Battery.Winform.UI.Controls
                 e.Graphics.DrawString($"{((maximumHeight - (count * gridMargin)) * PixelResolution) / 1000:N2}m", stringFont, Brushes.White, new PointF(5, drawingHeight - Font.Size / 2));
             }
 
+            pnlMapArea.SuspendLayout();
             foreach (var defectInfo in _defectInfos)
                 DrawDefectShape(e.Graphics, defectInfo);
-
-            //pnlMapArea.ResumeLayout(true);
+            pnlMapArea.ResumeLayout(true);
         }
         #endregion
     }
