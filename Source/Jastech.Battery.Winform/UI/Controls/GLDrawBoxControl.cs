@@ -1,4 +1,5 @@
-﻿using Jastech.Framework.Winform.Data;
+﻿using Jastech.Framework.Winform.Controls;
+using Jastech.Framework.Winform.Data;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -20,6 +21,11 @@ namespace Jastech.Battery.Winform.UI.Controls
 {
     public partial class GLDrawBoxControl : UserControl
     {
+
+        private readonly Color _selectedColor = Color.FromArgb(104, 104, 104);
+
+        private readonly Color _nonSelectedColor = Color.FromArgb(52, 52, 52);
+        public DisplayMode DisplayMode { get; set; } = DisplayMode.None;
         public object _lock = new object();
 
         private double ZoomScale { get; set; } = 1.0;
@@ -185,5 +191,93 @@ namespace Jastech.Battery.Winform.UI.Controls
         public void DisableFunctionButtons() { }
         public void EnableInteractive(bool temp) { }
         public void FitZoom() { }
+
+        private void ctxDisplayMode_Opening(object sender, CancelEventArgs e)
+        {
+            MenuStripSelectedNone();
+            if (DisplayMode == DisplayMode.None)
+            {
+                menuPointerMode.Checked = true;
+            }
+            else if (DisplayMode == DisplayMode.Panning)
+            {
+                menuPanningMode.Checked = true;
+            }
+            else if (DisplayMode == DisplayMode.Drawing)
+            {
+                menuROIMode.Checked = true;
+            }
+        }
+
+        private void MenuStripSelectedNone()
+        {
+            menuPointerMode.Checked = false;
+            menuPanningMode.Checked = false;
+            menuROIMode.Checked = false;
+        }
+
+        private void menuPointerMode_Click(object sender, EventArgs e)
+        {
+            MenuStripSelectedNone();
+            DisplayMode = DisplayMode.None;
+            this.Cursor = Cursors.Default;
+            UpdateDisplayModeUI(DisplayMode);
+        }
+
+        private void menuPanningMode_Click(object sender, EventArgs e)
+        {
+            MenuStripSelectedNone();
+            DisplayMode = DisplayMode.Panning;
+            this.Cursor = Cursors.Hand;
+            UpdateDisplayModeUI(DisplayMode);
+        }
+
+        private void menuROIMode_Click(object sender, EventArgs e)
+        {
+            MenuStripSelectedNone();
+            DisplayMode = DisplayMode.Drawing;
+            this.Cursor = Cursors.Default;
+            UpdateDisplayModeUI(DisplayMode);
+        }
+
+        private void UpdateDisplayModeUI(DisplayMode mode)
+        {
+            btnDrawNone.BackColor = _nonSelectedColor;
+            btnPanning.BackColor = _nonSelectedColor;
+            btnDrawLine.BackColor = _nonSelectedColor;
+
+            if (mode == DisplayMode.None)
+            {
+                btnDrawNone.BackColor = _selectedColor;
+                this.Cursor = Cursors.Default;
+            }
+            else if (mode == DisplayMode.Panning)
+            {
+                btnPanning.BackColor = _selectedColor;
+                this.Cursor = Cursors.Hand;
+            }
+            else if (mode == DisplayMode.Drawing)
+            {
+                btnDrawLine.BackColor = _selectedColor;
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void menuFitZoom_Click(object sender, EventArgs e)
+        {
+            FitZoom();
+        }
+        private void menuSaveImage_Click(object sender, EventArgs e)
+        {
+            if (OrgImage == null)
+                return;
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "BMP File(*.bmp)|*.bmp;";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                OrgImage.Save(dialog.FileName);
+            }
+        }
     }
 }

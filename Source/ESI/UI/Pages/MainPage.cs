@@ -29,17 +29,15 @@ namespace ESI.UI.Pages
 
         private DefectInfoContainerControl _defectInfoContainerControl = null;
 
-        private DrawBoxControl _upperDrawBoxControl = null;
+        private GLDrawBoxControl _upperDrawBoxControl = null;
 
-        private DrawBoxControl _lowerDrawBoxControl = null;
+        private GLDrawBoxControl _lowerDrawBoxControl = null;
 
         private DoubleBufferedPanel _pnlDataArea = null;
 
-        private DataGridView _dgvDefectData = null;
+        private DataGraphControl _missmatchDataGraphControl1 = null;
 
-        private DataGraphControl _dataGraphControl = null;
-
-        private readonly BindingList<DefectInfo> _defectInfos = new BindingList<DefectInfo>();      // UI 클래스말고 외부로 빼야함
+        private DataGraphControl _missmatchDataGraphControl2 = null;
 
         private Queue<DefectInfo> _dfsQueue = new Queue<DefectInfo>();
 
@@ -69,6 +67,7 @@ namespace ESI.UI.Pages
 
         private void MainPage_Load(object sender, EventArgs e)
         {
+            InitializeControls();
             AddControls();
             ClearDatas();
             InitializeTasks();
@@ -76,70 +75,53 @@ namespace ESI.UI.Pages
 
         private void AddControls()
         {
-            _upperDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
-            _lowerDrawBoxControl = new DrawBoxControl { Dock = DockStyle.Fill };
-            _defectMapControl = new CompactDefectMapControl { Dock = DockStyle.Fill };
-            _pnlDataArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };
-            _defectInfoContainerControl = new DefectInfoContainerControl { Dock = DockStyle.Fill };
-            _dataGraphControl = new DataGraphControl {  Dock = DockStyle.Fill };
-            _dgvDefectData = new DataGridView
-            {
-                AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false,
-                AllowUserToOrderColumns = true,
-                AllowUserToResizeRows = false,
-                EnableHeadersVisualStyles = false,
-                RowHeadersVisible = false,
-                Dock = DockStyle.Fill,
-                GridColor = Color.FromArgb(52, 52, 52),
-                BackgroundColor = Color.FromArgb(52, 52, 52),
-                EditMode = DataGridViewEditMode.EditProgrammatically,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
-                ColumnHeadersHeight = 25,
-                ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single,
-                ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
-                {
-                    Font = new Font("맑은고딕", 13, FontStyle.Bold),
-                    ForeColor = Color.White,
-                    BackColor = Color.FromArgb(26, 26, 26),
-                    SelectionBackColor = Color.FromArgb(26, 26, 26),
-                },
-                DefaultCellStyle = new DataGridViewCellStyle
-                {
-                    BackColor = SystemColors.Window,
-                    ForeColor = Color.Black,
-                    SelectionForeColor = Color.White,
-                    SelectionBackColor = Color.MediumPurple,
-                }
-            };
-
-            _upperDrawBoxControl.DisableFunctionButtons();
-            _lowerDrawBoxControl.DisableFunctionButtons();
-
-            _dataGraphControl.Initialize();
-            _dataGraphControl.SetCaption("m", "mm");
-            _dataGraphControl.AddLegend("Left", 0, Color.LightSalmon);
-            _dataGraphControl.AddLegend("Center", 1, Color.DodgerBlue);
-            _dataGraphControl.AddLegend("Right", 2, Color.LimeGreen);
-
-            _dgvDefectData.DataSource = _defectInfos;
-            _defectInfoContainerControl.IsVertical = true;
-            _defectMapControl.SelectedDefectChanged += _defectInfoContainerControl.SelectedControlIndexChanged;
-
             pnlDefectMap.Controls.Add(_defectMapControl);
             pnlUpperImage.Controls.Add(_upperDrawBoxControl);
             pnlLowerImage.Controls.Add(_lowerDrawBoxControl);
-            pnlChartArea.Controls.Add(_dataGraphControl);
             pnlDefectInfoArea.Controls.Add(_defectInfoContainerControl);
+            pnlMismatchChart1.Controls.Add(_missmatchDataGraphControl1);
+            pnlMismatchChart2.Controls.Add(_missmatchDataGraphControl2);
+        }
+
+        private void InitializeControls()
+        {
+            // Object Creation
+            _upperDrawBoxControl = new GLDrawBoxControl { Dock = DockStyle.Fill };
+            _lowerDrawBoxControl = new GLDrawBoxControl { Dock = DockStyle.Fill };
+            _defectMapControl = new CompactDefectMapControl { Dock = DockStyle.Fill };
+            _pnlDataArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };
+            _defectInfoContainerControl = new DefectInfoContainerControl { Dock = DockStyle.Fill };
+            _missmatchDataGraphControl1 = new DataGraphControl { Dock = DockStyle.Fill };
+            _missmatchDataGraphControl2 = new DataGraphControl { Dock = DockStyle.Fill };
+
+            // DrawBox Initialization
+            _upperDrawBoxControl.DisableFunctionButtons();
+            _lowerDrawBoxControl.DisableFunctionButtons();
+
+            // Chart Initialization
+            _missmatchDataGraphControl1.Initialize();
+            _missmatchDataGraphControl1.SetCaption(captionAxisX: "m", captionAxisY: "mm");
+            _missmatchDataGraphControl1.AddLegend("Left_Upper", index: 0, Color.LightSalmon);
+            _missmatchDataGraphControl1.AddLegend("Right_Upper", index: 1, Color.LimeGreen);
+            _missmatchDataGraphControl1.AddLegend("Left_Lower", index: 2, Color.LightCoral);
+            _missmatchDataGraphControl1.AddLegend("Right_Lower", index: 3, Color.LightSeaGreen);
+
+            _missmatchDataGraphControl2.Initialize();
+            _missmatchDataGraphControl2.SetCaption(captionAxisX: "m", captionAxisY: "mm");
+            _missmatchDataGraphControl2.AddLegend("Center_Upper", index: 0, Color.LightSalmon);
+            _missmatchDataGraphControl2.AddLegend("Center_Lower", index: 1, Color.DodgerBlue);
+
+            // Miscellaneous Initialzation
+            _defectInfoContainerControl.IsVertical = true;
+            _defectMapControl.SelectedDefectChanged += _defectInfoContainerControl.SelectedControlIndexChanged;
         }
 
         private void ClearDatas()
         {
-            _defectInfos.Clear();
             _defectMapControl.Clear();
             _defectInfoContainerControl.Clear();
-            _dataGraphControl.Clear();
+            _missmatchDataGraphControl1.Clear();
+            _missmatchDataGraphControl2.Clear();
         }
 
         private void InitializeTasks()
@@ -164,10 +146,6 @@ namespace ESI.UI.Pages
             {
                 var defectInfo = _dfsQueue.Dequeue();
 
-                _defectInfos.Add(defectInfo);
-                _defectInfoContainerControl.AddDefectInfo(defectInfo);
-                _defectMapControl.AddCoordinate(defectInfo);
-
                 _defectInfoContainerControl.AddDefectInfo(defectInfo);
                 _defectMapControl.AddCoordinate(defectInfo);
 
@@ -181,31 +159,50 @@ namespace ESI.UI.Pages
                     btnLowerJudgement.Text = defectInfo.Judgement;
                     btnLowerJudgement.BackColor = defectInfo.Judgement == "NG" ? Color.Red : Color.LimeGreen;
                 }
+                Thread.Sleep(50);
             }
         }
 
         private void Test_Click(object sender, EventArgs e)
         {
+            bool isMultipleImages = false;
+
             string imgPath = string.Empty;
             Random rand = new Random();
 
             Bitmap testUpperBitmap = null;
             Bitmap testLowerBitmap = null;
 
+            List<Bitmap> testUpperBitmaps = new List<Bitmap>();
+            List<Bitmap> testLowerBitmaps = new List<Bitmap>();
+
             OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
             ofd.ReadOnlyChecked = true;
             ofd.Filter = "BMP Files (*.bmp)|*.bmp; | "
                 + "JPG Files (*.jpg, *.jpeg)|*.jpg; *.jpeg; |"
                 + "모든 파일(*.*) | *.*;";
             ofd.ShowDialog();
-            if (ofd.FileName != "")
+            if(ofd.FileNames.Length > 1)
+            {
+                isMultipleImages = true;
+                foreach (var name in ofd.FileNames)
+                {
+                    imgPath = name;
+                    testUpperBitmaps.Add(new Bitmap(name));
+                    testLowerBitmaps.Add(new Bitmap(name));
+                }
+            }
+            else
+            {
+                if (ofd.FileName == "")
+                    return;
+
                 imgPath = ofd.FileName;
+                testUpperBitmap = new Bitmap(imgPath);
+                testLowerBitmap = new Bitmap(imgPath);
+            }
 
-            if (imgPath == string.Empty)
-                return;
-
-            testUpperBitmap = new Bitmap(imgPath);
-            testLowerBitmap = new Bitmap(imgPath);
 
             ClearDatas();
 
@@ -213,8 +210,7 @@ namespace ESI.UI.Pages
             {
                 try
                 {
-                    List<long> ttimes = new List<long>();
-                    //_upperDrawBoxControl.EnableBrush = false;
+                    //_upperDrawBoxControl.EnableBrush = false;  //일반 DrawBox일 때
                     //_lowerDrawBoxControl.EnableBrush = false;
                     for (int yValue = 0; yValue <= _defectMapControl.maximumMeter * 50000; yValue += 50000)
                     {
@@ -224,7 +220,7 @@ namespace ESI.UI.Pages
                         {
                             var testInfo = new DefectInfo
                             {
-                                Index = _defectInfos.Count,
+                                Index = yValue/50000,
                                 InspectionTime = DateTime.Now,
                                 Judgement = "NG",
                                 DefectLevel = rand.Next(1, 6),
@@ -252,39 +248,45 @@ namespace ESI.UI.Pages
                             _dfsQueue.Enqueue(testInfo);
                         }
 
-                        float testLeftMismatch = (rand.Next(1000, 1150) / 100f);
-                        float testCenterMismatch = (rand.Next(2300, 2550) / 100f);
-                        float testRightMismatch = (rand.Next(1200, 1300) / 100f);
+                        float testLeftUpperMismatch = (rand.Next(1700, 1800) / 100f);
+                        float testRightUpperMismatch = (rand.Next(1200, 1300) / 100f);
+                        float testLeftLowerMismatch = (rand.Next(1800, 1950) / 100f);
+                        float testRightLowerMismatch = (rand.Next(1111, 1222) / 100f);
 
-                        _dataGraphControl.AddData("Left", testLeftMismatch);
-                        _dataGraphControl.AddData("Center", testCenterMismatch);
-                        _dataGraphControl.AddData("Right", testRightMismatch, true);
+                        float testCenterLowerMismatch = (rand.Next(1900, 2150) / 100f);
+                        float testCenterUpperMismatch = (rand.Next(2300, 2550) / 100f);
+
+                        _missmatchDataGraphControl1.AddData(0, testLeftUpperMismatch);
+                        _missmatchDataGraphControl1.AddData(1, testRightUpperMismatch);
+                        _missmatchDataGraphControl1.AddData(2, testLeftLowerMismatch);
+                        _missmatchDataGraphControl1.AddData(3, testRightLowerMismatch, true);
+                        
+                        _missmatchDataGraphControl2.AddData(0, testCenterLowerMismatch);
+                        _missmatchDataGraphControl2.AddData(1, testCenterUpperMismatch, true);
 
                         _defectMapControl.MaximumY = yValue;
 
                         var startTime = stopwatch.ElapsedMilliseconds;
 
-                        _upperDrawBoxControl.SetImage(testUpperBitmap, false);
-                        var setImage1TT = stopwatch.ElapsedMilliseconds - startTime;
-
-                        _lowerDrawBoxControl.SetImage(testLowerBitmap, false);
-                        var setImage2TT = stopwatch.ElapsedMilliseconds - setImage1TT;
-
-                        //_upperDrawBoxControl.FitZoom();
-                        //_lowerDrawBoxControl.FitZoom();
+                        if (isMultipleImages)
+                        {
+                            _upperDrawBoxControl.SetImage(testUpperBitmaps[(yValue / 50000) % testUpperBitmaps.Count], false);
+                            _lowerDrawBoxControl.SetImage(testLowerBitmaps[(yValue / 50000) % testLowerBitmaps.Count], false);
+                        }
+                        else
+                        {
+                            _upperDrawBoxControl.SetImage(testUpperBitmap, false);
+                            _lowerDrawBoxControl.SetImage(testLowerBitmap, false);
+                        }
+                        _upperDrawBoxControl.FitZoom();
+                        _lowerDrawBoxControl.FitZoom();
 
                         stopwatch.Stop();
 
-                        ttimes.Add(setImage1TT);
-                        ttimes.Add(setImage2TT);
-
-                        await Task.Delay(600 - (int)stopwatch.ElapsedMilliseconds);
+                        await Task.Delay(50);
                     }
-                    //_upperDrawBoxControl.EnableBrush = true;
+                    //_upperDrawBoxControl.EnableBrush = true;  //일반 DrawBox일 때
                     //_lowerDrawBoxControl.EnableBrush = true;
-
-
-                    MessageBox.Show($"SetImage 평균 소요시간 {ttimes.Average()}ms, 최대 소요시간 {ttimes.Max()}, 최소 소요시간 {ttimes.Min()}");
                 }
                 catch (Exception ex)
                 {

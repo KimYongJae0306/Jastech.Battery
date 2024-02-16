@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlText = new System.Windows.Forms.Panel();
@@ -42,11 +43,18 @@
             this.btnDrawLine = new System.Windows.Forms.Button();
             this.btnDrawNone = new System.Windows.Forms.Button();
             this.btnPanning = new System.Windows.Forms.Button();
+            this.ctxDisplayMode = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuPointerMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPanningMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuROIMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFitZoom = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSaveImage = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlText.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.ctxDisplayMode.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel3
@@ -252,6 +260,53 @@
             this.btnPanning.TabStop = false;
             this.btnPanning.UseVisualStyleBackColor = false;
             // 
+            // ctxDisplayMode
+            // 
+            this.ctxDisplayMode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuPointerMode,
+            this.menuPanningMode,
+            this.menuROIMode,
+            this.menuFitZoom,
+            this.menuSaveImage});
+            this.ctxDisplayMode.Name = "contextMenuStrip";
+            this.ctxDisplayMode.Size = new System.Drawing.Size(137, 114);
+            this.ctxDisplayMode.Opening += new System.ComponentModel.CancelEventHandler(this.ctxDisplayMode_Opening);
+            // 
+            // menuPointerMode
+            // 
+            this.menuPointerMode.Name = "menuPointerMode";
+            this.menuPointerMode.Size = new System.Drawing.Size(180, 22);
+            this.menuPointerMode.Text = "Pointer";
+            this.menuPointerMode.Click += new System.EventHandler(this.menuPointerMode_Click);
+            // 
+            // menuPanningMode
+            // 
+            this.menuPanningMode.Name = "menuPanningMode";
+            this.menuPanningMode.Size = new System.Drawing.Size(180, 22);
+            this.menuPanningMode.Text = "Panning";
+            this.menuPanningMode.Click += new System.EventHandler(this.menuPanningMode_Click);
+            // 
+            // menuROIMode
+            // 
+            this.menuROIMode.Name = "menuROIMode";
+            this.menuROIMode.Size = new System.Drawing.Size(180, 22);
+            this.menuROIMode.Text = "ROI";
+            this.menuROIMode.Click += new System.EventHandler(this.menuROIMode_Click);
+            // 
+            // menuFitZoom
+            // 
+            this.menuFitZoom.Name = "menuFitZoom";
+            this.menuFitZoom.Size = new System.Drawing.Size(180, 22);
+            this.menuFitZoom.Text = "FitZoom";
+            this.menuFitZoom.Click += new System.EventHandler(this.menuFitZoom_Click);
+            // 
+            // menuSaveImage
+            // 
+            this.menuSaveImage.Name = "menuSaveImage";
+            this.menuSaveImage.Size = new System.Drawing.Size(136, 22);
+            this.menuSaveImage.Text = "Save Image";
+            this.menuSaveImage.Click += new System.EventHandler(this.menuSaveImage_Click);
+            // 
             // GLDrawBoxControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -266,6 +321,7 @@
             this.pnlText.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
+            this.ctxDisplayMode.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -286,5 +342,11 @@
         private System.Windows.Forms.Button btnDrawLine;
         private System.Windows.Forms.Button btnDrawNone;
         private System.Windows.Forms.Button btnPanning;
+        private System.Windows.Forms.ContextMenuStrip ctxDisplayMode;
+        private System.Windows.Forms.ToolStripMenuItem menuPointerMode;
+        private System.Windows.Forms.ToolStripMenuItem menuPanningMode;
+        private System.Windows.Forms.ToolStripMenuItem menuROIMode;
+        private System.Windows.Forms.ToolStripMenuItem menuFitZoom;
+        private System.Windows.Forms.ToolStripMenuItem menuSaveImage;
     }
 }
