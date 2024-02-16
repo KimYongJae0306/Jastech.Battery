@@ -28,7 +28,7 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 메서드
-        public void SetDefectInfo(DefectInfo defectInfo)
+        public void SetDefectInfo(DefectInfo defectInfo)    // TODO : Null, 기타 예외처리 필요
         {
             DefectInfo = defectInfo;
             lblCamDirection.Text = $"{DefectInfo.CameraName}Cam";

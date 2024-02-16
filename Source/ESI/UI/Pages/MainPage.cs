@@ -25,7 +25,7 @@ namespace ESI.UI.Pages
     public partial class MainPage : UserControl
     {
         #region 필드
-        private CompactDefectMapControl _defectMapControl = null;
+        private CompactDefectMapControl _defectMapControl = null;   // TODO : Control은 Property로
 
         private DefectInfoContainerControl _defectInfoContainerControl = null;
 
@@ -41,7 +41,7 @@ namespace ESI.UI.Pages
 
         private Queue<DefectInfo> _dfsQueue = new Queue<DefectInfo>();
 
-        private Task _defectHandlingTask = null;      // UI 클래스말고 외부로 빼야함
+        private Task _defectHandlingTask = null;      // TODO : UI 클래스말고 외부로 빼야함
 
         public CancellationTokenSource _cancellationDefectHandling = null;
         #endregion

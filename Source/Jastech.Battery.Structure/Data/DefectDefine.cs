@@ -7,7 +7,7 @@ namespace Jastech.Battery.Structure.Data
     public static class DefectDefine
     {
         #region 필드
-        public static Dictionary<DefectTypes, Color> Colors = new Dictionary<DefectTypes, Color>
+        public static Dictionary<DefectTypes, Color> Colors = new Dictionary<DefectTypes, Color>    // TODO : Json File I/O 확인 (Load, Save)
         {
             { DefectTypes.Undefined, Color.Red },
             // 표면 형상계 (극판)
@@ -21,7 +21,7 @@ namespace Jastech.Battery.Structure.Data
         #endregion
 
         #region 열거자
-        public enum FeatureTypes
+        public enum FeatureTypes        // TODO : DefectInfo Feature Dictionary와 함께 정리
         {
             X,                      // X좌표
             Y,                      // Y좌표
@@ -56,45 +56,6 @@ namespace Jastech.Battery.Structure.Data
             Island,
             Drag,
             Mismatch,
-
-            //// 흑,백계 (Pixel)
-            //DarkLine,           // 흑선
-            //DarkPoint,          // 흑점
-            //BrightLine,         // 백선
-            //BrightPoint,        // 백점
-            //DimLine,            // 점멸선
-            //Crack,              // 균열
-
-            //// 이물계
-            //Dust,               // 먼지
-            //Labeling,           // 라벨링
-            //Fingerprint,        // 지문
-            //Tape,               // 테이프
-
-            //// 색감계
-            //WhiteStain,         // 백얼룩
-            //WhiteSpot,          // 백점
-            //DarkStain,         // 백얼룩
-            //DarkSpot,           // 흑점
-            //RedLine,            // 적선
-            //RedSpot,            // 적점
-            //GreenLine,          // 녹선
-            //GreenSpot,          // 녹점
-            //BlueLine,           // 청선
-            //BlueSpot,           // 청점
-            //Bruise,             // 멍
-            //ColorDifference,    // 색감차
-
-            //// 표면 형상계
-            //Scratch,            // 긁힘
-            //Infiltration,       // 침투 (습기 등)
-            //Blister,            // 물집
-            //Bubble,             // 기포
-            //Coating,            // 코팅 이상
-            //Tear,               // 찢김
-            //Pattern,            // 무늬
-            //Press,              // 압착 이상
-            //Wrinkle,            // 주름
         }
         #endregion
 

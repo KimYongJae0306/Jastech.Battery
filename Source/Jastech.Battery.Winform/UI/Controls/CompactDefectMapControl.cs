@@ -13,14 +13,16 @@ namespace Jastech.Battery.Winform.UI.Controls
     public partial class CompactDefectMapControl : UserControl
     {
         #region 필드
-        private RectangleF DisplayArea;
-        private DoubleBufferedPanel pnlMapArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };
+        private RectangleF DisplayArea; // TODO : _소문자
+
+        private float _maximumY = 50000;
         #endregion
 
         #region 속성
+        private DoubleBufferedPanel pnlMapArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };     // TODO : Load 이벤트로 빼기, 대문자로
+
         public int maximumMeter = 600;
 
-        private float _maximumY = 50000;
         public float MaximumY {
             get
             {
@@ -68,11 +70,14 @@ namespace Jastech.Battery.Winform.UI.Controls
             pnlMapArea.Invalidate();
         }
 
-        private RectangleF GetDisplayArea() => new RectangleF(new PointF(pnlMapArea.Left + 70, pnlMapArea.Top + 20), new SizeF(pnlMapArea.DisplayRectangle.Width - 90, pnlMapArea.DisplayRectangle.Height - 60));
+        private RectangleF GetDisplayArea()
+        {
+            return new RectangleF(new PointF(pnlMapArea.Left + 70, pnlMapArea.Top + 20), new SizeF(pnlMapArea.DisplayRectangle.Width - 90, pnlMapArea.DisplayRectangle.Height - 60));
+        }
 
         private void DrawDefectShape(Graphics g, DefectInfo defectInfo)
         {
-            var coord = GetScaledLocation(defectInfo.GetCoord(), 16383);
+            var coord = GetScaledLocation(defectInfo.GetCoord(), ImageMaxWidth: 16383);
 
             var color = Colors[defectInfo.DefectType];
             var brush = new SolidBrush(color);
@@ -89,32 +94,28 @@ namespace Jastech.Battery.Winform.UI.Controls
             var defectSize = defectInfo.GetSize();
             if (defectCoord.Y + defectSize.Height > MaximumY)
                 MaximumY = defectCoord.Y + defectSize.Height;
-
-            Refresh();
         }
 
         public void AddCoordinate(List<DefectInfo> defectInfos)
         {
-            pnlMapArea.SuspendLayout();
             defectInfos.ForEach(defectInfo => AddCoordinate(defectInfo));
         }
 
-        private PointF GetScaledLocation(PointF coordinates, float ImageMaxWidth /*추후 모델에서 가져올 것*/) => new PointF
+        private PointF GetScaledLocation(PointF coordinates, float ImageMaxWidth /*추후 모델에서 가져올 것*/)
         {
-            X = Convert.ToSingle(DisplayArea.Left + coordinates.X * ((DisplayArea.Width - 9f) / ImageMaxWidth) + 1f),
-            Y = Convert.ToSingle(DisplayArea.Top + DisplayArea.Height - (coordinates.Y * DisplayArea.Height / MaximumY)),
-        };
+            return new PointF
+            {
+                X = Convert.ToSingle(DisplayArea.Left + coordinates.X * ((DisplayArea.Width - 9f) / ImageMaxWidth) + 1f),
+                Y = Convert.ToSingle(DisplayArea.Top + DisplayArea.Height - (coordinates.Y * DisplayArea.Height / MaximumY)),
+            };
+        }
 
-        private Size GetScaledSize(Size size, float ImageMaxWidth /*추후 모델에서 가져올 것*/) => new Size
-        {
-            Width = Convert.ToInt32(size.Width * ((DisplayArea.Width - 9f) / ImageMaxWidth) + 1f),
-            Height = Convert.ToInt32(size.Height * (DisplayArea.Height / MaximumY)),
-        };
-        
         private void pnlMapArea_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.TranslateTransform(pnlMapArea.AutoScrollPosition.X, pnlMapArea.AutoScrollPosition.Y);
             DisplayArea = GetDisplayArea();
+
+            // TODO : 주석 남기지 말고 Block 단위 메서드 추출
 
             // Draw Side Lines
             Pen sideLinePen = new Pen(Color.FromArgb(208,208,208))
@@ -126,7 +127,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             e.Graphics.DrawLine(sideLinePen, new Point((int)DisplayArea.Right, 5), new Point((int)DisplayArea.Right, Height));
 
             // Drawing Grid and Length
-            double maximumHeight = MaximumY / 1000;;
+            double maximumHeight = MaximumY / 1000;
             double gridMargin = maximumHeight / 10;
             Font stringFont = new Font("맑은 고딕", 9, FontStyle.Bold);
             var dashPen = new Pen(Color.FromArgb(208, 208, 208))

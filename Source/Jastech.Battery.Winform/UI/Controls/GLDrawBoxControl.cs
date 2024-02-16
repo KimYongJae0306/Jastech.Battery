@@ -57,7 +57,6 @@ namespace Jastech.Battery.Winform.UI.Controls
             pnlDisplay.Controls.Add(glDisplay);
 
             GL.ClearColor(Color.Red);
-            SetImage(new Bitmap(@"Y:\TestImg.bmp")); 
         }
 
         private void glDisplay_MouseWheel(object sender, MouseEventArgs e)
@@ -195,25 +194,25 @@ namespace Jastech.Battery.Winform.UI.Controls
         private void ctxDisplayMode_Opening(object sender, CancelEventArgs e)
         {
             MenuStripSelectedNone();
-            if (DisplayMode == DisplayMode.None)
-            {
-                menuPointerMode.Checked = true;
-            }
-            else if (DisplayMode == DisplayMode.Panning)
-            {
-                menuPanningMode.Checked = true;
-            }
-            else if (DisplayMode == DisplayMode.Drawing)
-            {
-                menuROIMode.Checked = true;
-            }
+            //if (DisplayMode == DisplayMode.None)
+            //{
+            //    menuPointerMode.Checked = true;
+            //}
+            //else if (DisplayMode == DisplayMode.Panning)
+            //{
+            //    menuPanningMode.Checked = true;
+            //}
+            //else if (DisplayMode == DisplayMode.Drawing)
+            //{
+            //    menuROIMode.Checked = true;
+            //}
         }
 
         private void MenuStripSelectedNone()
         {
-            menuPointerMode.Checked = false;
-            menuPanningMode.Checked = false;
-            menuROIMode.Checked = false;
+            //menuPointerMode.Checked = false;
+            //menuPanningMode.Checked = false;
+            //menuROIMode.Checked = false;
         }
 
         private void menuPointerMode_Click(object sender, EventArgs e)

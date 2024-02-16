@@ -38,7 +38,7 @@ namespace ESI
 
                 Logger.Initialize(ConfigSet.Instance().Path.Log);
 
-                MilHelper.InitApplication();
+                //MilHelper.InitApplication();
                 CameraMil.BufferPoolCount = 400;
                 //SystemHelper.StartChecker(@"D:\ATT_Memory_Test.txt");
                 //AppsConfig.Instance().UnitCount = 1;
