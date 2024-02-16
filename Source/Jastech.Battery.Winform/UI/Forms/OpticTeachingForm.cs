@@ -41,7 +41,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private DrawBoxControl DrawBoxControl { get; set; } = null;
 
-        private DataGraphControl DataGraphControl { get; set; } = null;
+        private PixelValueGraphControl PixelViewControl { get; set; } = null;
 
         private LightControl LightControl { get; set; } = null;
 
@@ -102,9 +102,9 @@ namespace Jastech.Battery.Winform.UI.Forms
             DrawBoxControl.Dock = DockStyle.Fill;
             pnlDrawBox.Controls.Add(DrawBoxControl);
 
-            DataGraphControl = new DataGraphControl();
-            DataGraphControl.Dock = DockStyle.Fill;
-            pnlHistogram.Controls.Add(DataGraphControl);
+            PixelViewControl = new PixelValueGraphControl();
+            PixelViewControl.Dock = DockStyle.Fill;
+            pnlHistogram.Controls.Add(PixelViewControl);
 
             LightControl = new LightControl();
             LightControl.Dock = DockStyle.Fill;

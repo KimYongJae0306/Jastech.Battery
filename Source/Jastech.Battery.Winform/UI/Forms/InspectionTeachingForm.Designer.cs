@@ -33,6 +33,7 @@
             this.tlpTeachingItems = new System.Windows.Forms.TableLayoutPanel();
             this.btnDistance = new System.Windows.Forms.Button();
             this.btnCoating = new System.Windows.Forms.Button();
+            this.btnNonCoating = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.pnlTeachingPage = new System.Windows.Forms.Panel();
@@ -51,7 +52,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tlpTeachingPage = new System.Windows.Forms.TableLayoutPanel();
-            this.btnNonCoating = new System.Windows.Forms.Button();
             this.pnlTeachingItems.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tlpTeachingItems.SuspendLayout();
@@ -145,6 +145,21 @@
             this.btnCoating.UseVisualStyleBackColor = false;
             this.btnCoating.Click += new System.EventHandler(this.btnCoating_Click);
             // 
+            // btnNonCoating
+            // 
+            this.btnNonCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnNonCoating.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
+            this.btnNonCoating.ForeColor = System.Drawing.Color.White;
+            this.btnNonCoating.Location = new System.Drawing.Point(2, 202);
+            this.btnNonCoating.Margin = new System.Windows.Forms.Padding(2);
+            this.btnNonCoating.Name = "btnNonCoating";
+            this.btnNonCoating.Size = new System.Drawing.Size(140, 96);
+            this.btnNonCoating.TabIndex = 21;
+            this.btnNonCoating.Text = "Non\r\nCoating";
+            this.btnNonCoating.UseVisualStyleBackColor = false;
+            this.btnNonCoating.Click += new System.EventHandler(this.btnNonCoating_Click);
+            // 
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
@@ -221,7 +236,7 @@
             // tlpCommon
             // 
             this.tlpCommon.ColumnCount = 1;
-            this.tlpCommon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCommon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpCommon.Controls.Add(this.tlpUnit, 0, 0);
             this.tlpCommon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpCommon.Location = new System.Drawing.Point(0, 0);
@@ -398,21 +413,6 @@
             this.tlpTeachingPage.Size = new System.Drawing.Size(1900, 911);
             this.tlpTeachingPage.TabIndex = 2;
             // 
-            // btnNonCoating
-            // 
-            this.btnNonCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.btnNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnNonCoating.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
-            this.btnNonCoating.ForeColor = System.Drawing.Color.White;
-            this.btnNonCoating.Location = new System.Drawing.Point(2, 202);
-            this.btnNonCoating.Margin = new System.Windows.Forms.Padding(2);
-            this.btnNonCoating.Name = "btnNonCoating";
-            this.btnNonCoating.Size = new System.Drawing.Size(140, 96);
-            this.btnNonCoating.TabIndex = 21;
-            this.btnNonCoating.Text = "Non\r\nCoating";
-            this.btnNonCoating.UseVisualStyleBackColor = false;
-            this.btnNonCoating.Click += new System.EventHandler(this.btnNonCoating_Click);
-            // 
             // InspectionTeachingForm
             // 
             this.AllowDrop = true;
@@ -421,11 +421,13 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.ClientSize = new System.Drawing.Size(1900, 911);
             this.Controls.Add(this.tlpTeachingPage);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "InspectionTeachingForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "InspectionTeachingForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.InspectionTeachingForm_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.InspectionTeachingForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.InspectionTeachingForm_DragEnter);
