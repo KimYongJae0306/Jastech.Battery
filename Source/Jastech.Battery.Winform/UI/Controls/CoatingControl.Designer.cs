@@ -32,7 +32,6 @@
             this.pnlTeachingParameter = new System.Windows.Forms.Panel();
             this.tlpDataDefectSpecification = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label33 = new System.Windows.Forms.Label();
@@ -139,6 +138,7 @@
             this.pnlTitleDefectSpecification = new System.Windows.Forms.Panel();
             this.pnlDefectSpecificationDecoBar = new System.Windows.Forms.Panel();
             this.lblTitleDefectSpecification = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlTeachingParameter.SuspendLayout();
             this.tlpDataDefectSpecification.SuspendLayout();
@@ -199,7 +199,6 @@
             this.tlpDataDefectSpecification.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tlpDataDefectSpecification.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpDataDefectSpecification.Controls.Add(this.label3, 0, 4);
-            this.tlpDataDefectSpecification.Controls.Add(this.label1, 0, 0);
             this.tlpDataDefectSpecification.Controls.Add(this.label16, 0, 8);
             this.tlpDataDefectSpecification.Controls.Add(this.checkBox2, 1, 5);
             this.tlpDataDefectSpecification.Controls.Add(this.label33, 0, 11);
@@ -222,6 +221,7 @@
             this.tlpDataDefectSpecification.Controls.Add(this.tableLayoutPanel12, 0, 20);
             this.tlpDataDefectSpecification.Controls.Add(this.checkBox7, 1, 23);
             this.tlpDataDefectSpecification.Controls.Add(this.tableLayoutPanel13, 0, 23);
+            this.tlpDataDefectSpecification.Controls.Add(this.checkBox1, 0, 0);
             this.tlpDataDefectSpecification.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpDataDefectSpecification.Location = new System.Drawing.Point(0, 0);
             this.tlpDataDefectSpecification.Margin = new System.Windows.Forms.Padding(0);
@@ -270,20 +270,6 @@
             this.label3.TabIndex = 55;
             this.label3.Text = "Line (Dark)";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label1
-            // 
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(430, 40);
-            this.label1.TabIndex = 53;
-            this.label1.Text = "Line";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label16
             // 
@@ -1930,6 +1916,18 @@
             this.lblTitleDefectSpecification.Text = "Center Defect Specification";
             this.lblTitleDefectSpecification.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkBox1.Location = new System.Drawing.Point(3, 3);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Padding = new System.Windows.Forms.Padding(200, 0, 0, 0);
+            this.checkBox1.Size = new System.Drawing.Size(424, 34);
+            this.checkBox1.TabIndex = 60;
+            this.checkBox1.Text = "Line";
+            this.checkBox1.UseVisualStyleBackColor = false;
+            // 
             // CoatingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1976,7 +1974,6 @@
         private System.Windows.Forms.Label lblParameter;
         private System.Windows.Forms.Panel pnlTeachingParameter;
         private System.Windows.Forms.TableLayoutPanel tlpDataDefectSpecification;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tlpBrightnessLayout;
         private System.Windows.Forms.Panel pnlTitleROIMarginContainer;
         private System.Windows.Forms.Panel pnlROIMarginDecorativeBar;
@@ -2083,5 +2080,6 @@
         private System.Windows.Forms.Panel pnlTitleDefectSpecification;
         private System.Windows.Forms.Panel pnlDefectSpecificationDecoBar;
         private System.Windows.Forms.Label lblTitleDefectSpecification;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

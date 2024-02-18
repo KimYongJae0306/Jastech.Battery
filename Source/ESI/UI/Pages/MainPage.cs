@@ -110,6 +110,7 @@ namespace ESI.UI.Pages
             _missmatchDataGraphControl2.SetCaption(captionAxisX: "m", captionAxisY: "mm");
             _missmatchDataGraphControl2.AddLegend("Center_Upper", index: 0, Color.LightSalmon);
             _missmatchDataGraphControl2.AddLegend("Center_Lower", index: 1, Color.DodgerBlue);
+            _missmatchDataGraphControl2.AddLegend("Center_Missmatch", index: 1, Color.FloralWhite);
 
             // Miscellaneous Initialzation
             _defectInfoContainerControl.IsVertical = true;
@@ -255,6 +256,7 @@ namespace ESI.UI.Pages
 
                         float testCenterLowerMismatch = (rand.Next(1900, 2150) / 100f);
                         float testCenterUpperMismatch = (rand.Next(2300, 2550) / 100f);
+                        float testCenterMismatch = Math.Abs(testCenterUpperMismatch - testCenterLowerMismatch);
 
                         _missmatchDataGraphControl1.AddData(0, testLeftUpperMismatch);
                         _missmatchDataGraphControl1.AddData(1, testRightUpperMismatch);
@@ -263,6 +265,7 @@ namespace ESI.UI.Pages
                         
                         _missmatchDataGraphControl2.AddData(0, testCenterLowerMismatch);
                         _missmatchDataGraphControl2.AddData(1, testCenterUpperMismatch, true);
+                        _missmatchDataGraphControl2.AddData(1, testCenterMismatch, true);
 
                         _defectMapControl.MaximumY = yValue;
 
