@@ -17,7 +17,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private float _maximumY = 50000;
 
-        private int _selectedDefectIndex = 0;
+        private int _selectedDefectIndex = -1;
         #endregion
 
         #region 속성

@@ -38,10 +38,11 @@ namespace Jastech.Battery.Winform.UI.Controls
                 return;
             }
             DefectInfo = defectInfo;
-            lblCamDirection.Text = $"{DefectInfo.CameraName}Cam";
+            lblCamDirection.Text = $"{DefectInfo.CameraName}";
             lblDefectType.Text = $"{DefectInfo.DefectType}";
             lblDefectType.ForeColor = Colors[DefectInfo.DefectType];
-            lblDefectInfo.Text = $"{DefectInfo.GetCoord()}\r\n{DefectInfo.GetSize()}";
+            var defectSize = DefectInfo.GetSize();
+            lblDefectInfo.Text = $"W:{defectSize.Width}mm, H:{defectSize.Height}mm";
 
             string imagePath = DefectInfo.GetFeatureValue(FeatureTypes.LocalImagePath);
             if (imagePath != null)

@@ -128,7 +128,7 @@
             this.tlpLaneSelectionLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpLaneSelectionLayout.Controls.Add(this.pnlTitleLaneSelection, 0, 0);
             this.tlpLaneSelectionLayout.Controls.Add(this.tableLayoutPanel3, 0, 1);
-            this.tlpLaneSelectionLayout.Location = new System.Drawing.Point(20, 20);
+            this.tlpLaneSelectionLayout.Location = new System.Drawing.Point(5, 0);
             this.tlpLaneSelectionLayout.Margin = new System.Windows.Forms.Padding(20, 20, 0, 0);
             this.tlpLaneSelectionLayout.Name = "tlpLaneSelectionLayout";
             this.tlpLaneSelectionLayout.RowCount = 3;
@@ -255,7 +255,7 @@
             this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel10, 1, 3);
             this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel11, 1, 4);
             this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel12, 1, 5);
-            this.tlpSpecificationLayout.Location = new System.Drawing.Point(445, 130);
+            this.tlpSpecificationLayout.Location = new System.Drawing.Point(415, 100);
             this.tlpSpecificationLayout.Margin = new System.Windows.Forms.Padding(20, 20, 0, 0);
             this.tlpSpecificationLayout.Name = "tlpSpecificationLayout";
             this.tlpSpecificationLayout.RowCount = 7;
@@ -565,7 +565,7 @@
             this.tlpThresholdLayout.Controls.Add(this.tlpGrayLevelNonCoating, 1, 4);
             this.tlpThresholdLayout.Controls.Add(this.tlpGrayLevelBorder, 1, 5);
             this.tlpThresholdLayout.Controls.Add(this.label6, 0, 2);
-            this.tlpThresholdLayout.Location = new System.Drawing.Point(20, 130);
+            this.tlpThresholdLayout.Location = new System.Drawing.Point(5, 100);
             this.tlpThresholdLayout.Margin = new System.Windows.Forms.Padding(20, 20, 0, 0);
             this.tlpThresholdLayout.Name = "tlpThresholdLayout";
             this.tlpThresholdLayout.RowCount = 7;
@@ -986,7 +986,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(150, 38);
             this.label13.TabIndex = 0;
-            this.label13.Text = "Position";
+            this.label13.Text = "Category";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label21
