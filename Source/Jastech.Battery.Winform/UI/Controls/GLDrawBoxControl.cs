@@ -187,7 +187,17 @@ namespace Jastech.Battery.Winform.UI.Controls
             glDisplay.Invalidate();
         }
 
-        public void DisableFunctionButtons() { }
+        public void DisableFunctionButtons()
+        {
+            tableLayoutPanel3.Controls.Remove(tableLayoutPanel4);
+            tableLayoutPanel3.ColumnStyles.RemoveAt(0);
+            tableLayoutPanel3.ColumnCount--;
+
+            tableLayoutPanel1.Controls.Remove(pnlText);
+            tableLayoutPanel1.RowStyles.RemoveAt(1);
+            tableLayoutPanel1.RowCount--;
+        }
+
         public void EnableInteractive(bool temp) { }
         public void FitZoom() { }
 

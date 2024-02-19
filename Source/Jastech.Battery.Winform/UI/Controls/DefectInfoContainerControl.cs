@@ -1,4 +1,5 @@
 ﻿using Jastech.Battery.Structure.Data;
+using Jastech.Framework.Util.Helper;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -27,11 +28,21 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 메서드
-        public void AddDefectInfo(DefectInfo defectInfo)    // 에외처리 추가
+        private void DefectInfoContainerControl_Load(object sender, System.EventArgs e)
         {
+        }
+
+        public void AddDefectInfo(DefectInfo defectInfo)
+        {
+            if (defectInfo == null)
+            {
+                Logger.Write(LogType.Error, "DefectInfo object cant not be null");
+                return;
+            }
             DefectInfoControl defectInfoControl = new DefectInfoControl();
             defectInfoControl.SetDefectInfo(defectInfo);
 
+            const int scrollBarSize = 20;
             Point controlLocation = new Point();
             Size controlSize = new Size();
             if (IsVertical)
@@ -39,7 +50,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 int drawingCount = Width / defectInfoControl.Width;
                 if (drawingCount == 0)
                     drawingCount = 1;
-                controlSize.Width = pnlContainer.Width / drawingCount - 20; // Magic Number 제거 (스크롤 사이즈를 받아와 20)
+                controlSize.Width =(pnlContainer.Width - scrollBarSize) / drawingCount;
                 controlSize.Height = defectInfoControl.Height;
                 controlLocation.X = (pnlContainer.Controls.Count % drawingCount) * controlSize.Width;
                 controlLocation.Y = (pnlContainer.Controls.Count / drawingCount) * controlSize.Height + pnlContainer.AutoScrollPosition.Y;
@@ -50,7 +61,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 if (drawingCount == 0)
                     drawingCount = 1;
                 controlSize.Width = defectInfoControl.Width;
-                controlSize.Height = pnlContainer.Height / drawingCount - 20;
+                controlSize.Height = (pnlContainer.Height - scrollBarSize) / drawingCount;
                 controlLocation.X = (pnlContainer.Controls.Count / drawingCount) * (defectInfoControl.Width / drawingCount) + pnlContainer.AutoScrollPosition.X;
                 controlLocation.Y = (pnlContainer.Controls.Count % drawingCount) * (defectInfoControl.Height / drawingCount);
             }
@@ -62,8 +73,6 @@ namespace Jastech.Battery.Winform.UI.Controls
                 pnlContainer.VerticalScroll.Value = pnlContainer.VerticalScroll.Maximum;
             else
                 pnlContainer.HorizontalScroll.Value = pnlContainer.HorizontalScroll.Maximum;
-
-            pnlContainer.Invalidate(true);  // TODO : 호출 횟수 줄이기 갱신 따로 하도록 함수 추가
         }
 
         public void AddDefectInfo(List<DefectInfo> defectInfos)

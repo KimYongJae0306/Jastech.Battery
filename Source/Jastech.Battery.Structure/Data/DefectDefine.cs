@@ -11,8 +11,8 @@ namespace Jastech.Battery.Structure.Data
         {
             { DefectTypes.Undefined, Color.Red },
             // 표면 형상계 (극판)
-            { DefectTypes.PinHole, Color.DodgerBlue},
-            { DefectTypes.Crater, Color.DodgerBlue},
+            { DefectTypes.Pinhole, Color.DodgerBlue},
+            { DefectTypes.Crater, Color.LightCoral},
             { DefectTypes.Dent, Color.White},
             { DefectTypes.Island, Color.Orange},
             { DefectTypes.Drag, Color.Lime},
@@ -50,7 +50,7 @@ namespace Jastech.Battery.Structure.Data
         public enum DefectTypes
         {
             Undefined,
-            PinHole,
+            Pinhole,
             Crater,
             Dent,
             Island,

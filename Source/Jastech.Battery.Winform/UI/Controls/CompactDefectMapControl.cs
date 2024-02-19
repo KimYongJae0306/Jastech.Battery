@@ -16,6 +16,8 @@ namespace Jastech.Battery.Winform.UI.Controls
         private RectangleF DisplayArea; // TODO : _소문자
 
         private float _maximumY = 50000;
+
+        private int _selectedDefectIndex = 0;
         #endregion
 
         #region 속성
@@ -59,6 +61,7 @@ namespace Jastech.Battery.Winform.UI.Controls
         private void CompactDefectMapControl_Load(object sender, EventArgs e)
         {
             DisplayArea = GetDisplayArea();
+            SelectedDefectChanged += ChangeSelectedDefect;
             pnlMapArea.Paint += pnlMapArea_Paint;
             Controls.Add(pnlMapArea);
         }
@@ -83,7 +86,8 @@ namespace Jastech.Battery.Winform.UI.Controls
             var brush = new SolidBrush(color);
             var area = new RectangleF(coord.X, coord.Y - 3.5f, 7, 7);
 
-            g.DrawString($"{defectInfo.DefectType}", Font, new SolidBrush(Color.Crimson), new PointF(coord.X + 4.5f, coord.Y + 4.5f));
+            if (defectInfo.Index == _selectedDefectIndex)
+                g.DrawString($"{defectInfo.DefectType}", Font, new SolidBrush(Color.Crimson), new PointF(coord.X + 4.5f, coord.Y + 4.5f));
             g.FillEllipse(brush, area);
         }
 
@@ -147,6 +151,11 @@ namespace Jastech.Battery.Winform.UI.Controls
             foreach (var defectInfo in _defectInfos)
                 DrawDefectShape(e.Graphics, defectInfo);
             pnlMapArea.ResumeLayout(true);
+        }
+
+        private void ChangeSelectedDefect(int index)
+        { 
+            _selectedDefectIndex = index;
         }
         #endregion
     }

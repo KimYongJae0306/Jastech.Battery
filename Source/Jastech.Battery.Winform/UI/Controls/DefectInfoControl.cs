@@ -1,5 +1,7 @@
 ﻿using Jastech.Battery.Structure.Data;
+using Jastech.Framework.Util.Helper;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using static Jastech.Battery.Structure.Data.DefectDefine;
@@ -28,8 +30,13 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 메서드
-        public void SetDefectInfo(DefectInfo defectInfo)    // TODO : Null, 기타 예외처리 필요
+        public void SetDefectInfo(DefectInfo defectInfo)
         {
+            if(defectInfo == null)
+            {
+                Logger.Write(LogType.Error, "DefectInfo object cant not be null");
+                return;
+            }
             DefectInfo = defectInfo;
             lblCamDirection.Text = $"{DefectInfo.CameraName}Cam";
             lblDefectType.Text = $"{DefectInfo.DefectType}";
