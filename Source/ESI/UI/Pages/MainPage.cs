@@ -312,7 +312,7 @@ namespace ESI.UI.Pages
                         UpperDrawBoxControl.FitZoom();
                         LowerDrawBoxControl.FitZoom();
 
-                        //await Task.Delay(50);
+                        await Task.Delay(50);
                     }
                 }
                 catch (Exception ex)
