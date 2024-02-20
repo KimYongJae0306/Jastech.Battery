@@ -24,8 +24,6 @@ namespace Jastech.Battery.Winform.UI.Controls
         #region 속성
         private PointF PanningStartPoint = new PointF();
 
-        private Point MouseLocation = new Point();
-
         public DisplayMode DisplayMode { get; set; } = DisplayMode.None;
 
         private float ZoomScale { get; set; } = 1.0f;
@@ -34,7 +32,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private float OffsetY { get; set; } = 0f;
 
-        GLControl glDisplay { get; set; } = null;
+        GLControl DisplayControl { get; set; } = null;
 
         public Bitmap OrgImage { get; set; } = null;
 
@@ -54,61 +52,16 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private void GLDrawBoxControl_Load(object sender, EventArgs e)
         {
-            glDisplay = new GLControl();
-            glDisplay.Dock = DockStyle.Fill;
-            glDisplay.Paint += glDisplay_Paint;
-            glDisplay.MouseWheel += glDisplay_MouseWheel;
-            glDisplay.MouseMove += glDisplay_MouseMove;
-            glDisplay.MouseDown += glDisplay_MouseDown;
-            glDisplay.DoubleClick += glDisplay_DoubleClick;
-            pnlDisplay.Controls.Add(glDisplay);
+            DisplayControl = new GLControl();
+            DisplayControl.Dock = DockStyle.Fill;
+            DisplayControl.Paint += glDisplay_Paint;
+            DisplayControl.MouseWheel += glDisplay_MouseWheel;
+            DisplayControl.MouseMove += glDisplay_MouseMove;
+            DisplayControl.MouseDown += glDisplay_MouseDown;
+            pnlDisplay.Controls.Add(DisplayControl);
 
             GL.ClearColor(Color.FromArgb(26,26,26));
             SetImage(new Bitmap(1, 1));
-        }
-
-        private void glDisplay_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left)
-                return;
-
-            float imageX = e.X / ZoomScale - OffsetX;
-            float imageY = e.Y / ZoomScale - OffsetY;
-            PanningStartPoint = new PointF(imageX, imageY);
-        }
-
-        private void glDisplay_MouseMove(object sender, MouseEventArgs e)
-        {
-            MouseLocation = e.Location;
-            if (e.Button == MouseButtons.Left)
-            {
-                if (DisplayMode == DisplayMode.Panning)
-                {
-                    OffsetX = e.X / ZoomScale - PanningStartPoint.X;
-                    OffsetY = e.Y / ZoomScale - PanningStartPoint.Y;
-                }
-                glDisplay.Invalidate();
-            }
-        }
-
-        private void glDisplay_DoubleClick(object sender, EventArgs e)
-        {
-            FitZoom();
-        }
-
-        private void glDisplay_MouseWheel(object sender, MouseEventArgs e)
-        {
-            float imageX = e.X / ZoomScale - OffsetX;
-            float imageY = e.Y / ZoomScale - OffsetY;
-
-            var zoomAmount = e.Delta * (float)Math.Sqrt(Math.Abs(e.Delta)) / 10000;
-            if (ZoomScale + zoomAmount > 0)
-                ZoomScale += zoomAmount;
-
-            OffsetX = e.X / ZoomScale - imageX;
-            OffsetY = e.Y / ZoomScale - imageY;
-
-            glDisplay.Invalidate();
         }
 
         private void glDisplay_Paint(object sender, PaintEventArgs e)
@@ -118,19 +71,19 @@ namespace Jastech.Battery.Winform.UI.Controls
                 if (OrgImage == null)
                     return;
 
-                glDisplay.MakeCurrent();
+                DisplayControl.MakeCurrent();
                 UpdateViewPort();
                 GetTexture(out int textureID);
                 SetTranslatedModelView();
                 SetOrthographicalProjection();
                 DrawTexture(textureID);;
-                glDisplay.SwapBuffers();
+                DisplayControl.SwapBuffers();
             }
         }
 
         private void UpdateViewPort()
         {
-            RectangleF viewRect = new RectangleF(0, 0, glDisplay.Width, glDisplay.Height);
+            RectangleF viewRect = new RectangleF(0, 0, DisplayControl.Width, DisplayControl.Height);
             GL.Viewport(Rectangle.Round(viewRect));
         }
 
@@ -173,10 +126,10 @@ namespace Jastech.Battery.Winform.UI.Controls
             GL.BindTexture(TextureTarget.Texture2D, textureID);
             GL.Begin(PrimitiveType.Quads);
 
-            PlaceVertex(new Point(0, 0), new Point(0, -glDisplay.Height));
-            PlaceVertex(new Point(0, 1), new Point(0, 0));
-            PlaceVertex(new Point(1, 1), new Point(glDisplay.Width, 0));
-            PlaceVertex(new Point(1, 0), new Point(glDisplay.Width, -glDisplay.Height));
+            PlaceVertex(new Point(0, 0), new Point(0, 0));
+            PlaceVertex(new Point(1, 0), new Point(DisplayControl.Width, 0));
+            PlaceVertex(new Point(1, 1), new Point(DisplayControl.Width, DisplayControl.Height));
+            PlaceVertex(new Point(0, 1), new Point(0, DisplayControl.Height));
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
@@ -196,9 +149,9 @@ namespace Jastech.Battery.Winform.UI.Controls
             GL.LoadIdentity();
             GL.Ortho(
                 left: 0,
-                right: glDisplay.Width,
-                bottom: 0,
-                top: glDisplay.Height,
+                right: DisplayControl.Width,
+                bottom: DisplayControl.Height,
+                top: 0,
                 zNear: -1,
                 zFar: 1);
         }
@@ -207,8 +160,8 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-            Matrix4 scale = Matrix4.CreateScale(ZoomScale, -ZoomScale, 0);
-            Matrix4 translationOffset = Matrix4.CreateTranslation(OffsetX * ZoomScale, -OffsetY * ZoomScale, 0);
+            Matrix4 scale = Matrix4.CreateScale(ZoomScale, ZoomScale, 0);
+            Matrix4 translationOffset = Matrix4.CreateTranslation(OffsetX * ZoomScale, OffsetY * ZoomScale, 0);
 
             Matrix4 modelViewMatrix = scale * translationOffset;
             GL.LoadMatrix(ref modelViewMatrix);
@@ -235,7 +188,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 ImageHeight = bmp.Height;
             }
 
-            glDisplay.Invalidate();
+            DisplayControl.Invalidate();
         }
 
         public void DisableFunctionButtons()
@@ -254,7 +207,45 @@ namespace Jastech.Battery.Winform.UI.Controls
             ZoomScale = 1f;
             OffsetX = 0f;
             OffsetY = 0f;
-            glDisplay.Invalidate();
+            DisplayControl.Invalidate();
+        }
+
+        private void glDisplay_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            float imageX = e.X / ZoomScale - OffsetX;
+            float imageY = e.Y / ZoomScale - OffsetY;
+            PanningStartPoint = new PointF(imageX, imageY);
+        }
+
+        private void glDisplay_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (DisplayMode == DisplayMode.Panning)
+                {
+                    OffsetX = e.X / ZoomScale - PanningStartPoint.X;
+                    OffsetY = e.Y / ZoomScale - PanningStartPoint.Y;
+                }
+                DisplayControl.Invalidate();
+            }
+        }
+
+        private void glDisplay_MouseWheel(object sender, MouseEventArgs e)
+        {
+            float imageX = e.X / ZoomScale - OffsetX;
+            float imageY = e.Y / ZoomScale - OffsetY;
+
+            var zoomAmount = e.Delta * (float)Math.Sqrt(Math.Abs(e.Delta)) / 10000;
+            if (ZoomScale + zoomAmount > 0)
+                ZoomScale += zoomAmount;
+
+            OffsetX = e.X / ZoomScale - imageX;
+            OffsetY = e.Y / ZoomScale - imageY;
+
+            DisplayControl.Invalidate();
         }
 
         private void ctxDisplayMode_Opening(object sender, CancelEventArgs e)
@@ -326,6 +317,7 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             FitZoom();
         }
+
         private void menuSaveImage_Click(object sender, EventArgs e)
         {
             if (OrgImage == null)
