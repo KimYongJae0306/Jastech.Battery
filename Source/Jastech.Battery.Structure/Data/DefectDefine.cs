@@ -21,6 +21,16 @@ namespace Jastech.Battery.Structure.Data
         #endregion
 
         #region 열거자
+        [Flags]
+        public enum DefectJudge
+        {
+            None = 0,
+            Good = 1 << 1,
+            NG = 1 << 2,
+            Acceptable = 1 << 3,
+            Passed = 1 << 4,
+        }
+
         public enum FeatureTypes        // TODO : DefectInfo Feature Dictionary와 함께 정리
         {
             X,                      // X좌표
@@ -47,6 +57,7 @@ namespace Jastech.Battery.Structure.Data
 
             LocalImagePath,
         }
+
         public enum DefectTypes
         {
             Undefined,

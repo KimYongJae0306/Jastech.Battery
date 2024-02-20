@@ -1,5 +1,6 @@
 ﻿using Jastech.Battery.Structure.Data;
 using Jastech.Framework.Util.Helper;
+using Jastech.Framework.Winform.Helper;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ namespace Jastech.Battery.Winform.UI.Controls
     public partial class DefectInfoContainerControl : UserControl
     {
         #region 속성
-        public bool IsVertical { get; set; } = true;        // TODO : 컨트롤 사이즈에 따라서 자동으로 설정되게 확인
+        public bool IsVertical { get; set; } = true;
         #endregion
 
         #region 이벤트
@@ -82,9 +83,17 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         public void Clear()
         {
+            foreach (Control control in pnlContainer.Controls)
+            {
+                if (control is DefectInfoControl defectInfoControl)
+                {
+                    ControlHelper.DisposeDisplay(defectInfoControl);
+                    ControlHelper.DisposeChildControls(defectInfoControl);
+                }
+            }
             pnlContainer.Controls.Clear();
             pnlContainer.VerticalScroll.Value = 0;
-            // TODO : 초기화 할거 더 확인
+            pnlContainer.HorizontalScroll.Value = 0;
         }
 
         public void SelectedControlIndexChanged(int index)

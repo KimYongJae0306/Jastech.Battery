@@ -13,18 +13,21 @@ namespace Jastech.Battery.Winform.UI.Controls
     public partial class CompactDefectMapControl : UserControl
     {
         #region 필드
-        private RectangleF DisplayArea; // TODO : _소문자
+        private RectangleF _displayArea;
+
+        public double _pixelResolution = 20; // TODO : Config에서 가져올 것
 
         private float _maximumY = 50000;
 
         private int _selectedDefectIndex = -1;
+
+        public List<DefectInfo> _defectInfos = new List<DefectInfo>();
         #endregion
 
         #region 속성
-        private DoubleBufferedPanel pnlMapArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };     // TODO : Load 이벤트로 빼기, 대문자로
+        private DoubleBufferedPanel dpnlMapArea { get; set; } = null;
 
         public int maximumMeter = 600;
-
         public float MaximumY {
             get
             {
@@ -36,10 +39,6 @@ namespace Jastech.Battery.Winform.UI.Controls
                 Invalidate();
             }
         } // TODO: Resolution 참고하여 Meter 단위로 환산, Model에서 가져올 것
-
-        public List<DefectInfo> _defectInfos = new List<DefectInfo>();
-
-        public double PixelResolution = 20; // TODO : Config에서 가져올 것
         #endregion
 
         #region 이벤트
@@ -60,22 +59,24 @@ namespace Jastech.Battery.Winform.UI.Controls
         #region 메서드
         private void CompactDefectMapControl_Load(object sender, EventArgs e)
         {
-            DisplayArea = GetDisplayArea();
+            dpnlMapArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };
+
+            _displayArea = GetDisplayArea();
             SelectedDefectChanged += ChangeSelectedDefect;
-            pnlMapArea.Paint += pnlMapArea_Paint;
-            Controls.Add(pnlMapArea);
+            dpnlMapArea.Paint += pnlMapArea_Paint;
+            Controls.Add(dpnlMapArea);
         }
 
         public void Clear()
         {
             MaximumY = 0;
             _defectInfos.Clear();
-            pnlMapArea.Invalidate();
+            dpnlMapArea.Invalidate();
         }
 
         private RectangleF GetDisplayArea()
         {
-            return new RectangleF(new PointF(pnlMapArea.Left + 70, pnlMapArea.Top + 20), new SizeF(pnlMapArea.DisplayRectangle.Width - 90, pnlMapArea.DisplayRectangle.Height - 60));
+            return new RectangleF(new PointF(dpnlMapArea.Left + 70, dpnlMapArea.Top + 20), new SizeF(dpnlMapArea.DisplayRectangle.Width - 90, dpnlMapArea.DisplayRectangle.Height - 60));
         }
 
         private void DrawDefectShape(Graphics g, DefectInfo defectInfo)
@@ -109,28 +110,27 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             return new PointF
             {
-                X = Convert.ToSingle(DisplayArea.Left + coordinates.X * ((DisplayArea.Width - 9f) / ImageMaxWidth) + 1f),
-                Y = Convert.ToSingle(DisplayArea.Top + DisplayArea.Height - (coordinates.Y * DisplayArea.Height / MaximumY)),
+                X = Convert.ToSingle(_displayArea.Left + coordinates.X * ((_displayArea.Width - 9f) / ImageMaxWidth) + 1f),
+                Y = Convert.ToSingle(_displayArea.Top + _displayArea.Height - (coordinates.Y * _displayArea.Height / MaximumY)),
             };
         }
 
         private void pnlMapArea_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.TranslateTransform(pnlMapArea.AutoScrollPosition.X, pnlMapArea.AutoScrollPosition.Y);
-            DisplayArea = GetDisplayArea();
+            dpnlMapArea.SuspendLayout();
+            var graphics = e.Graphics;
+            graphics.TranslateTransform(dpnlMapArea.AutoScrollPosition.X, dpnlMapArea.AutoScrollPosition.Y);
 
-            // TODO : 주석 남기지 말고 Block 단위 메서드 추출
+            _displayArea = GetDisplayArea();
+            DrawSideLines(graphics);
+            DrawGridAndLength(graphics);
+            foreach (var defectInfo in _defectInfos)
+                DrawDefectShape(graphics, defectInfo);
+            dpnlMapArea.ResumeLayout(true);
+        }
 
-            // Draw Side Lines
-            Pen sideLinePen = new Pen(Color.FromArgb(208,208,208))
-            {
-                Width = 5,
-                StartCap = LineCap.ArrowAnchor
-            };
-            e.Graphics.DrawLine(sideLinePen, new Point((int)DisplayArea.Left, 5), new Point((int)DisplayArea.Left, Height));
-            e.Graphics.DrawLine(sideLinePen, new Point((int)DisplayArea.Right, 5), new Point((int)DisplayArea.Right, Height));
-
-            // Drawing Grid and Length
+        private void DrawGridAndLength(Graphics g)
+        {
             double maximumHeight = MaximumY / 1000;
             double gridMargin = maximumHeight / 10;
             Font stringFont = new Font("맑은 고딕", 9, FontStyle.Bold);
@@ -141,16 +141,22 @@ namespace Jastech.Battery.Winform.UI.Controls
             };
             for (int count = 0; count <= 10; count++)
             {
-                int drawingHeight = (int)(count * (DisplayArea.Height / 10)) + (int)DisplayArea.Top;
-                
-                e.Graphics.DrawLine(dashPen, new Point((int)DisplayArea.Left, drawingHeight), new Point((int)DisplayArea.Left + (int)DisplayArea.Width, drawingHeight));
-                e.Graphics.DrawString($"{((maximumHeight - (count * gridMargin)) * PixelResolution) / 1000:N2}m", stringFont, Brushes.White, new PointF(5, drawingHeight - Font.Size / 2));
-            }
+                int drawingHeight = (int)(count * (_displayArea.Height / 10)) + (int)_displayArea.Top;
 
-            pnlMapArea.SuspendLayout();
-            foreach (var defectInfo in _defectInfos)
-                DrawDefectShape(e.Graphics, defectInfo);
-            pnlMapArea.ResumeLayout(true);
+                g.DrawLine(dashPen, new Point((int)_displayArea.Left, drawingHeight), new Point((int)_displayArea.Left + (int)_displayArea.Width, drawingHeight));
+                g.DrawString($"{((maximumHeight - (count * gridMargin)) * _pixelResolution) / 1000:N2}m", stringFont, Brushes.White, new PointF(5, drawingHeight - Font.Size / 2));
+            }
+        }
+
+        private void DrawSideLines(Graphics g)
+        {
+            Pen sideLinePen = new Pen(Color.FromArgb(208, 208, 208))
+            {
+                Width = 5,
+                StartCap = LineCap.ArrowAnchor
+            };
+            g.DrawLine(sideLinePen, new Point((int)_displayArea.Left, 5), new Point((int)_displayArea.Left, Height));
+            g.DrawLine(sideLinePen, new Point((int)_displayArea.Right, 5), new Point((int)_displayArea.Right, Height));
         }
 
         private void ChangeSelectedDefect(int index)

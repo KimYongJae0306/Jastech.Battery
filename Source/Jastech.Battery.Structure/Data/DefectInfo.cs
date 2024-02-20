@@ -30,7 +30,7 @@ namespace Jastech.Battery.Structure.Data
 
         public int DefectLevel { get; set; }
 
-        public string Judgement { get; set; }       // TODO : String -> Enum OK,NG(진성, 가성)
+        public DefectJudge Judgement { get; set; }
         #endregion
 
         #region 이벤트
