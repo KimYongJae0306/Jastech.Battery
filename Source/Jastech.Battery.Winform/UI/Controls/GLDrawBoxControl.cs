@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace Jastech.Battery.Winform.UI.Controls
@@ -54,7 +55,6 @@ namespace Jastech.Battery.Winform.UI.Controls
         private void GLDrawBoxControl_Load(object sender, EventArgs e)
         {
             glDisplay = new GLControl();
-            glDisplay.BackColor = Color.FromArgb(52, 52, 52);
             glDisplay.Dock = DockStyle.Fill;
             glDisplay.Paint += glDisplay_Paint;
             glDisplay.MouseWheel += glDisplay_MouseWheel;
@@ -64,6 +64,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             pnlDisplay.Controls.Add(glDisplay);
 
             GL.ClearColor(Color.FromArgb(26,26,26));
+            SetImage(new Bitmap(1, 1));
         }
 
         private void glDisplay_MouseDown(object sender, MouseEventArgs e)
@@ -71,10 +72,9 @@ namespace Jastech.Battery.Winform.UI.Controls
             if (e.Button != MouseButtons.Left)
                 return;
 
-            double calcX = (e.X) - OffsetX;
-            double calcY = (e.Y) - OffsetY;
-            PointF calcPoint = new PointF((float)calcX, (float)calcY);
-            PanningStartPoint = calcPoint;
+            float imageX = e.X / ZoomScale - OffsetX;
+            float imageY = e.Y / ZoomScale - OffsetY;
+            PanningStartPoint = new PointF(imageX, imageY);
         }
 
         private void glDisplay_MouseMove(object sender, MouseEventArgs e)
@@ -84,8 +84,8 @@ namespace Jastech.Battery.Winform.UI.Controls
             {
                 if (DisplayMode == DisplayMode.Panning)
                 {
-                    OffsetX = e.X - PanningStartPoint.X;
-                    OffsetY = e.Y - PanningStartPoint.Y;
+                    OffsetX = e.X / ZoomScale - PanningStartPoint.X;
+                    OffsetY = e.Y / ZoomScale - PanningStartPoint.Y;
                 }
                 glDisplay.Invalidate();
             }
@@ -98,13 +98,15 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private void glDisplay_MouseWheel(object sender, MouseEventArgs e)
         {
+            float imageX = e.X / ZoomScale - OffsetX;
+            float imageY = e.Y / ZoomScale - OffsetY;
+
             var zoomAmount = e.Delta * (float)Math.Sqrt(Math.Abs(e.Delta)) / 10000;
             if (ZoomScale + zoomAmount > 0)
                 ZoomScale += zoomAmount;
 
-            //PointF glControlCenter = new PointF(0,0);
-            //OffsetX = e.X - glControlCenter.X * ZoomScale;
-            //OffsetY = e.Y - glControlCenter.Y * ZoomScale;
+            OffsetX = e.X / ZoomScale - imageX;
+            OffsetY = e.Y / ZoomScale - imageY;
 
             glDisplay.Invalidate();
         }
@@ -121,7 +123,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 GetTexture(out int textureID);
                 SetTranslatedModelView();
                 SetOrthographicalProjection();
-                DrawTexture(textureID);
+                DrawTexture(textureID);;
                 glDisplay.SwapBuffers();
             }
         }
@@ -171,10 +173,10 @@ namespace Jastech.Battery.Winform.UI.Controls
             GL.BindTexture(TextureTarget.Texture2D, textureID);
             GL.Begin(PrimitiveType.Quads);
 
-            PlaceVertex(new Point(0, 0), new Point(0, 0));
-            PlaceVertex(new Point(1, 0), new Point(glDisplay.Width, 0));
-            PlaceVertex(new Point(1, 1), new Point(glDisplay.Width, glDisplay.Height));
-            PlaceVertex(new Point(0, 1), new Point(0, glDisplay.Height));
+            PlaceVertex(new Point(0, 0), new Point(0, -glDisplay.Height));
+            PlaceVertex(new Point(0, 1), new Point(0, 0));
+            PlaceVertex(new Point(1, 1), new Point(glDisplay.Width, 0));
+            PlaceVertex(new Point(1, 0), new Point(glDisplay.Width, -glDisplay.Height));
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
@@ -205,12 +207,10 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-            Matrix4 translationCenter = Matrix4.CreateTranslation(MouseLocation.X, -MouseLocation.Y , 0);
-            Matrix4 scale = Matrix4.CreateScale(ZoomScale, ZoomScale, 0);
-            Matrix4 translationOriginal = Matrix4.CreateTranslation(-MouseLocation.X, MouseLocation.Y, 0);
-            Matrix4 translationToOffset = Matrix4.CreateTranslation(0, 0, 0);
+            Matrix4 scale = Matrix4.CreateScale(ZoomScale, -ZoomScale, 0);
+            Matrix4 translationOffset = Matrix4.CreateTranslation(OffsetX * ZoomScale, -OffsetY * ZoomScale, 0);
 
-            Matrix4 modelViewMatrix = translationCenter * scale * translationOriginal * translationToOffset;
+            Matrix4 modelViewMatrix = scale * translationOffset;
             GL.LoadMatrix(ref modelViewMatrix);
         }
 
