@@ -13,11 +13,27 @@ namespace Jastech.Battery.Winform.UI.Controls
 {
     public partial class DistanceControl : UserControl
     {
+
+        #region 필드
+        #endregion
+
+        #region 속성
+        #endregion
+
+        #region 이벤트
+        #endregion
+
+        #region 델리게이트
+        #endregion
+
+        #region 생성자
         public DistanceControl()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region 메서드
         private void DrawComboboxCenterAlign(object sender, DrawItemEventArgs e)
         {
             try
@@ -51,5 +67,6 @@ namespace Jastech.Battery.Winform.UI.Controls
                 throw;
             }
         }
+        #endregion
     }
 }

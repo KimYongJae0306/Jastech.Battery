@@ -13,11 +13,27 @@ namespace Jastech.Battery.Winform.UI.Controls
 {
     public partial class CoatingControl : UserControl
     {
+
+        #region 필드
+        #endregion
+
+        #region 속성
+        #endregion
+
+        #region 이벤트
+        #endregion
+
+        #region 델리게이트
+        #endregion
+
+        #region 생성자
         public CoatingControl()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region 메서드
         private void DrawComboboxCenterAlign(object sender, DrawItemEventArgs e)
         {
             try
@@ -54,13 +70,14 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private void ItemUsageCheckedChanged(object sender, EventArgs e)
         {
-            if(sender is CheckBox checkBox)
+            if (sender is CheckBox checkBox)
             {
-                if(checkBox.Checked)
+                if (checkBox.Checked)
                     checkBox.Text = "Use";
                 else
                     checkBox.Text = "Unuse";
             }
         }
+        #endregion
     }
 }

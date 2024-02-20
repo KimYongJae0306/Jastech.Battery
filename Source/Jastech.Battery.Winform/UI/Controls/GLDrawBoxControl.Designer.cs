@@ -275,28 +275,28 @@
             // menuPointerMode
             // 
             this.menuPointerMode.Name = "menuPointerMode";
-            this.menuPointerMode.Size = new System.Drawing.Size(180, 22);
+            this.menuPointerMode.Size = new System.Drawing.Size(136, 22);
             this.menuPointerMode.Text = "Pointer";
             this.menuPointerMode.Click += new System.EventHandler(this.menuPointerMode_Click);
             // 
             // menuPanningMode
             // 
             this.menuPanningMode.Name = "menuPanningMode";
-            this.menuPanningMode.Size = new System.Drawing.Size(180, 22);
+            this.menuPanningMode.Size = new System.Drawing.Size(136, 22);
             this.menuPanningMode.Text = "Panning";
             this.menuPanningMode.Click += new System.EventHandler(this.menuPanningMode_Click);
             // 
             // menuROIMode
             // 
             this.menuROIMode.Name = "menuROIMode";
-            this.menuROIMode.Size = new System.Drawing.Size(180, 22);
+            this.menuROIMode.Size = new System.Drawing.Size(136, 22);
             this.menuROIMode.Text = "ROI";
             this.menuROIMode.Click += new System.EventHandler(this.menuROIMode_Click);
             // 
             // menuFitZoom
             // 
             this.menuFitZoom.Name = "menuFitZoom";
-            this.menuFitZoom.Size = new System.Drawing.Size(180, 22);
+            this.menuFitZoom.Size = new System.Drawing.Size(136, 22);
             this.menuFitZoom.Text = "FitZoom";
             this.menuFitZoom.Click += new System.EventHandler(this.menuFitZoom_Click);
             // 
@@ -312,6 +312,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.ContextMenuStrip = this.ctxDisplayMode;
             this.Controls.Add(this.tableLayoutPanel3);
             this.Name = "GLDrawBoxControl";
             this.Size = new System.Drawing.Size(407, 433);

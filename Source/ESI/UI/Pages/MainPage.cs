@@ -245,7 +245,7 @@ namespace ESI.UI.Pages
             {
                 try
                 {
-                    for (int yValue = 0; yValue <= DefectMapControl.maximumMeter * 50000; yValue += 50000)
+                    for (int yValue = 0; yValue < DefectMapControl.maximumMeter * 50000; yValue += 50000)
                     {
                         if (rand.Next(20) == 0)
                         {
@@ -297,7 +297,7 @@ namespace ESI.UI.Pages
                         CenterMismatchGraphControl.AddData(1, testCenterUpperMismatch, true);
                         CenterMismatchGraphControl.AddData(2, testCenterMismatch, true);
 
-                        DefectMapControl.MaximumY = yValue;
+                        DefectMapControl.MaximumY = yValue + 50000;
 
                         if (isMultipleImages)
                         {
@@ -312,7 +312,7 @@ namespace ESI.UI.Pages
                         UpperDrawBoxControl.FitZoom();
                         LowerDrawBoxControl.FitZoom();
 
-                        await Task.Delay(10);
+                        //await Task.Delay(50);
                     }
                 }
                 catch (Exception ex)

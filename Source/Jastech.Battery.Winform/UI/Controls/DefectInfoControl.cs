@@ -41,8 +41,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             lblCamDirection.Text = $"{DefectInfo.CameraName}";
             lblDefectType.Text = $"{DefectInfo.DefectType}";
             lblDefectType.ForeColor = Colors[DefectInfo.DefectType];
-            var defectSize = DefectInfo.GetSize();
-            lblDefectInfo.Text = $"W:{defectSize.Width}mm, H:{defectSize.Height}mm";
+            lblDefectInfo.Text = $"W:{DefectInfo.Size.Width}mm, H:{DefectInfo.Size.Height}mm";
 
             string imagePath = DefectInfo.GetFeatureValue(FeatureTypes.LocalImagePath);
             if (imagePath != null)

@@ -81,7 +81,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private void DrawDefectShape(Graphics g, DefectInfo defectInfo)
         {
-            var coord = GetScaledLocation(defectInfo.GetCoord(), ImageMaxWidth: 16383);
+            var coord = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16383);
 
             var color = Colors[defectInfo.DefectType];
             var brush = new SolidBrush(color);
@@ -95,10 +95,8 @@ namespace Jastech.Battery.Winform.UI.Controls
         public void AddCoordinate(DefectInfo defectInfo)
         {
             _defectInfos.Add(defectInfo);
-            var defectCoord = defectInfo.GetCoord();
-            var defectSize = defectInfo.GetSize();
-            if (defectCoord.Y + defectSize.Height > MaximumY)
-                MaximumY = defectCoord.Y + defectSize.Height;
+            if (defectInfo.Coord.Y + defectInfo.Size.Height > MaximumY)
+                MaximumY = defectInfo.Coord.Y + defectInfo.Size.Height;
         }
 
         public void AddCoordinate(List<DefectInfo> defectInfos)
