@@ -36,12 +36,12 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.cbxLaneSelection = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tlpSpecificationLayout = new System.Windows.Forms.TableLayoutPanel();
             this.label11 = new System.Windows.Forms.Label();
             this.pnlTitleSpecificationContainer = new System.Windows.Forms.Panel();
             this.pnlSpecificationDecorativeBar = new System.Windows.Forms.Panel();
             this.lblTitleSpecification = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -59,32 +59,32 @@
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.tlpThresholdLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.label6 = new System.Windows.Forms.Label();
             this.pnlTitleThresholdContainer = new System.Windows.Forms.Panel();
             this.pnlThresholdDecorativeBar = new System.Windows.Forms.Panel();
             this.lblTitleThreshold = new System.Windows.Forms.Label();
-            this.tlpGrayLevelFoil = new System.Windows.Forms.TableLayoutPanel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.tlpGrayLevelCoating = new System.Windows.Forms.TableLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.tlpGrayLevelNonCoating = new System.Windows.Forms.TableLayoutPanel();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.tlpGrayLevelBorder = new System.Windows.Forms.TableLayoutPanel();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblParameter = new System.Windows.Forms.Label();
             this.tlpSubTitleGrayLevel = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.tlpGrayLevelFoil = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.tlpGrayLevelCoating = new System.Windows.Forms.TableLayoutPanel();
             this.label10 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.tlpGrayLevelNonCoating = new System.Windows.Forms.TableLayoutPanel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.tlpGrayLevelBorder = new System.Windows.Forms.TableLayoutPanel();
             this.label17 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblParameter = new System.Windows.Forms.Label();
             this.pnlTeachingParameter.SuspendLayout();
             this.tlpLaneSelectionLayout.SuspendLayout();
             this.pnlTitleLaneSelection.SuspendLayout();
@@ -97,12 +97,12 @@
             this.tableLayoutPanel12.SuspendLayout();
             this.tlpThresholdLayout.SuspendLayout();
             this.pnlTitleThresholdContainer.SuspendLayout();
+            this.tlpSubTitleGrayLevel.SuspendLayout();
             this.tlpGrayLevelFoil.SuspendLayout();
             this.tlpGrayLevelCoating.SuspendLayout();
             this.tlpGrayLevelNonCoating.SuspendLayout();
             this.tlpGrayLevelBorder.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tlpSubTitleGrayLevel.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlTeachingParameter
@@ -182,8 +182,8 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(400, 38);
             this.tableLayoutPanel3.TabIndex = 59;
             // 
@@ -221,20 +221,6 @@
             this.cbxLaneSelection.Size = new System.Drawing.Size(190, 28);
             this.cbxLaneSelection.TabIndex = 305;
             this.cbxLaneSelection.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DrawComboboxCenterAlign);
-            // 
-            // label3
-            // 
-            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label3.Location = new System.Drawing.Point(80, 165);
-            this.label3.Margin = new System.Windows.Forms.Padding(0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(320, 40);
-            this.label3.TabIndex = 55;
-            this.label3.Text = "Coating";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tlpSpecificationLayout
             // 
@@ -312,6 +298,20 @@
             this.lblTitleSpecification.TabIndex = 51;
             this.lblTitleSpecification.Text = "Specification";
             this.lblTitleSpecification.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label3.Location = new System.Drawing.Point(80, 165);
+            this.label3.Margin = new System.Windows.Forms.Padding(0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(320, 40);
+            this.label3.TabIndex = 55;
+            this.label3.Text = "Coating";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel9
             // 
@@ -572,21 +572,6 @@
             this.tlpThresholdLayout.Size = new System.Drawing.Size(406, 250);
             this.tlpThresholdLayout.TabIndex = 0;
             // 
-            // label6
-            // 
-            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label6.Location = new System.Drawing.Point(0, 82);
-            this.label6.Margin = new System.Windows.Forms.Padding(0, 2, 2, 0);
-            this.label6.Name = "label6";
-            this.tlpThresholdLayout.SetRowSpan(this.label6, 4);
-            this.label6.Size = new System.Drawing.Size(78, 158);
-            this.label6.TabIndex = 54;
-            this.label6.Text = "Gray\r\nLevel";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // pnlTitleThresholdContainer
             // 
             this.pnlTitleThresholdContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
@@ -621,219 +606,6 @@
             this.lblTitleThreshold.TabIndex = 51;
             this.lblTitleThreshold.Text = "Threshold";
             this.lblTitleThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tlpGrayLevelFoil
-            // 
-            this.tlpGrayLevelFoil.ColumnCount = 3;
-            this.tlpGrayLevelFoil.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpGrayLevelFoil.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpGrayLevelFoil.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpGrayLevelFoil.Controls.Add(this.label8, 0, 0);
-            this.tlpGrayLevelFoil.Controls.Add(this.label12, 0, 0);
-            this.tlpGrayLevelFoil.Controls.Add(this.label15, 1, 0);
-            this.tlpGrayLevelFoil.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpGrayLevelFoil.Location = new System.Drawing.Point(80, 82);
-            this.tlpGrayLevelFoil.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlpGrayLevelFoil.Name = "tlpGrayLevelFoil";
-            this.tlpGrayLevelFoil.RowCount = 1;
-            this.tlpGrayLevelFoil.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpGrayLevelFoil.Size = new System.Drawing.Size(320, 38);
-            this.tlpGrayLevelFoil.TabIndex = 59;
-            // 
-            // label12
-            // 
-            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label12.Location = new System.Drawing.Point(0, 0);
-            this.label12.Margin = new System.Windows.Forms.Padding(0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(160, 38);
-            this.label12.TabIndex = 57;
-            this.label12.Text = "Foil";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label15.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label15.Location = new System.Drawing.Point(240, 0);
-            this.label15.Margin = new System.Windows.Forms.Padding(0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(80, 38);
-            this.label15.TabIndex = 57;
-            this.label15.Text = "149";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tlpGrayLevelCoating
-            // 
-            this.tlpGrayLevelCoating.ColumnCount = 3;
-            this.tlpGrayLevelCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpGrayLevelCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpGrayLevelCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpGrayLevelCoating.Controls.Add(this.label10, 0, 0);
-            this.tlpGrayLevelCoating.Controls.Add(this.label2, 0, 0);
-            this.tlpGrayLevelCoating.Controls.Add(this.label19, 1, 0);
-            this.tlpGrayLevelCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpGrayLevelCoating.Location = new System.Drawing.Point(80, 122);
-            this.tlpGrayLevelCoating.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlpGrayLevelCoating.Name = "tlpGrayLevelCoating";
-            this.tlpGrayLevelCoating.RowCount = 1;
-            this.tlpGrayLevelCoating.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpGrayLevelCoating.Size = new System.Drawing.Size(320, 38);
-            this.tlpGrayLevelCoating.TabIndex = 59;
-            // 
-            // label2
-            // 
-            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(160, 38);
-            this.label2.TabIndex = 57;
-            this.label2.Text = "Coating";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label19
-            // 
-            this.label19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.label19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label19.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label19.Location = new System.Drawing.Point(240, 0);
-            this.label19.Margin = new System.Windows.Forms.Padding(0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(80, 38);
-            this.label19.TabIndex = 57;
-            this.label19.Text = "150";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tlpGrayLevelNonCoating
-            // 
-            this.tlpGrayLevelNonCoating.ColumnCount = 3;
-            this.tlpGrayLevelNonCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpGrayLevelNonCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpGrayLevelNonCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpGrayLevelNonCoating.Controls.Add(this.label9, 0, 0);
-            this.tlpGrayLevelNonCoating.Controls.Add(this.label22, 0, 0);
-            this.tlpGrayLevelNonCoating.Controls.Add(this.label27, 1, 0);
-            this.tlpGrayLevelNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpGrayLevelNonCoating.Location = new System.Drawing.Point(80, 162);
-            this.tlpGrayLevelNonCoating.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlpGrayLevelNonCoating.Name = "tlpGrayLevelNonCoating";
-            this.tlpGrayLevelNonCoating.RowCount = 1;
-            this.tlpGrayLevelNonCoating.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpGrayLevelNonCoating.Size = new System.Drawing.Size(320, 38);
-            this.tlpGrayLevelNonCoating.TabIndex = 59;
-            // 
-            // label22
-            // 
-            this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label22.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label22.Location = new System.Drawing.Point(0, 0);
-            this.label22.Margin = new System.Windows.Forms.Padding(0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(160, 38);
-            this.label22.TabIndex = 57;
-            this.label22.Text = "Non-Coating";
-            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label27
-            // 
-            this.label27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.label27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label27.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label27.Location = new System.Drawing.Point(240, 0);
-            this.label27.Margin = new System.Windows.Forms.Padding(0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(80, 38);
-            this.label27.TabIndex = 57;
-            this.label27.Text = "180";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tlpGrayLevelBorder
-            // 
-            this.tlpGrayLevelBorder.ColumnCount = 3;
-            this.tlpGrayLevelBorder.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpGrayLevelBorder.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpGrayLevelBorder.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpGrayLevelBorder.Controls.Add(this.label17, 0, 0);
-            this.tlpGrayLevelBorder.Controls.Add(this.label29, 0, 0);
-            this.tlpGrayLevelBorder.Controls.Add(this.label30, 1, 0);
-            this.tlpGrayLevelBorder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpGrayLevelBorder.Location = new System.Drawing.Point(80, 202);
-            this.tlpGrayLevelBorder.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.tlpGrayLevelBorder.Name = "tlpGrayLevelBorder";
-            this.tlpGrayLevelBorder.RowCount = 1;
-            this.tlpGrayLevelBorder.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpGrayLevelBorder.Size = new System.Drawing.Size(320, 38);
-            this.tlpGrayLevelBorder.TabIndex = 59;
-            // 
-            // label29
-            // 
-            this.label29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.label29.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label29.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label29.Location = new System.Drawing.Point(0, 0);
-            this.label29.Margin = new System.Windows.Forms.Padding(0);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(160, 38);
-            this.label29.TabIndex = 57;
-            this.label29.Text = "Border";
-            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label30
-            // 
-            this.label30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.label30.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label30.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label30.Location = new System.Drawing.Point(240, 0);
-            this.label30.Margin = new System.Windows.Forms.Padding(0);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(80, 38);
-            this.label30.TabIndex = 57;
-            this.label30.Text = "40";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.lblParameter, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.pnlTeachingParameter, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(900, 600);
-            this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // lblParameter
-            // 
-            this.lblParameter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.lblParameter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblParameter.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblParameter.Location = new System.Drawing.Point(0, 0);
-            this.lblParameter.Margin = new System.Windows.Forms.Padding(0);
-            this.lblParameter.Name = "lblParameter";
-            this.lblParameter.Size = new System.Drawing.Size(900, 40);
-            this.lblParameter.TabIndex = 1;
-            this.lblParameter.Text = "Parameter";
-            this.lblParameter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tlpSubTitleGrayLevel
             // 
@@ -895,6 +667,24 @@
             this.label5.Text = "Lower";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // tlpGrayLevelFoil
+            // 
+            this.tlpGrayLevelFoil.ColumnCount = 3;
+            this.tlpGrayLevelFoil.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpGrayLevelFoil.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpGrayLevelFoil.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpGrayLevelFoil.Controls.Add(this.label8, 0, 0);
+            this.tlpGrayLevelFoil.Controls.Add(this.label12, 0, 0);
+            this.tlpGrayLevelFoil.Controls.Add(this.label15, 1, 0);
+            this.tlpGrayLevelFoil.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpGrayLevelFoil.Location = new System.Drawing.Point(80, 82);
+            this.tlpGrayLevelFoil.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlpGrayLevelFoil.Name = "tlpGrayLevelFoil";
+            this.tlpGrayLevelFoil.RowCount = 1;
+            this.tlpGrayLevelFoil.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpGrayLevelFoil.Size = new System.Drawing.Size(320, 38);
+            this.tlpGrayLevelFoil.TabIndex = 59;
+            // 
             // label8
             // 
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
@@ -909,19 +699,51 @@
             this.label8.Text = "150";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label9
+            // label12
             // 
-            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label9.Location = new System.Drawing.Point(160, 0);
-            this.label9.Margin = new System.Windows.Forms.Padding(0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(80, 38);
-            this.label9.TabIndex = 58;
-            this.label9.Text = "180";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label12.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label12.Location = new System.Drawing.Point(0, 0);
+            this.label12.Margin = new System.Windows.Forms.Padding(0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(160, 38);
+            this.label12.TabIndex = 57;
+            this.label12.Text = "Foil";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label15
+            // 
+            this.label15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label15.Location = new System.Drawing.Point(240, 0);
+            this.label15.Margin = new System.Windows.Forms.Padding(0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(80, 38);
+            this.label15.TabIndex = 57;
+            this.label15.Text = "149";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tlpGrayLevelCoating
+            // 
+            this.tlpGrayLevelCoating.ColumnCount = 3;
+            this.tlpGrayLevelCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpGrayLevelCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpGrayLevelCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpGrayLevelCoating.Controls.Add(this.label10, 0, 0);
+            this.tlpGrayLevelCoating.Controls.Add(this.label2, 0, 0);
+            this.tlpGrayLevelCoating.Controls.Add(this.label19, 1, 0);
+            this.tlpGrayLevelCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpGrayLevelCoating.Location = new System.Drawing.Point(80, 122);
+            this.tlpGrayLevelCoating.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlpGrayLevelCoating.Name = "tlpGrayLevelCoating";
+            this.tlpGrayLevelCoating.RowCount = 1;
+            this.tlpGrayLevelCoating.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpGrayLevelCoating.Size = new System.Drawing.Size(320, 38);
+            this.tlpGrayLevelCoating.TabIndex = 59;
             // 
             // label10
             // 
@@ -937,6 +759,112 @@
             this.label10.Text = "150";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(160, 38);
+            this.label2.TabIndex = 57;
+            this.label2.Text = "Coating";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label19
+            // 
+            this.label19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.label19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label19.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label19.Location = new System.Drawing.Point(240, 0);
+            this.label19.Margin = new System.Windows.Forms.Padding(0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(80, 38);
+            this.label19.TabIndex = 57;
+            this.label19.Text = "150";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tlpGrayLevelNonCoating
+            // 
+            this.tlpGrayLevelNonCoating.ColumnCount = 3;
+            this.tlpGrayLevelNonCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpGrayLevelNonCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpGrayLevelNonCoating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpGrayLevelNonCoating.Controls.Add(this.label9, 0, 0);
+            this.tlpGrayLevelNonCoating.Controls.Add(this.label22, 0, 0);
+            this.tlpGrayLevelNonCoating.Controls.Add(this.label27, 1, 0);
+            this.tlpGrayLevelNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpGrayLevelNonCoating.Location = new System.Drawing.Point(80, 162);
+            this.tlpGrayLevelNonCoating.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlpGrayLevelNonCoating.Name = "tlpGrayLevelNonCoating";
+            this.tlpGrayLevelNonCoating.RowCount = 1;
+            this.tlpGrayLevelNonCoating.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpGrayLevelNonCoating.Size = new System.Drawing.Size(320, 38);
+            this.tlpGrayLevelNonCoating.TabIndex = 59;
+            // 
+            // label9
+            // 
+            this.label9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label9.Location = new System.Drawing.Point(160, 0);
+            this.label9.Margin = new System.Windows.Forms.Padding(0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(80, 38);
+            this.label9.TabIndex = 58;
+            this.label9.Text = "180";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label22
+            // 
+            this.label22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label22.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label22.Location = new System.Drawing.Point(0, 0);
+            this.label22.Margin = new System.Windows.Forms.Padding(0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(160, 38);
+            this.label22.TabIndex = 57;
+            this.label22.Text = "Non-Coating";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label27
+            // 
+            this.label27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.label27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label27.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label27.Location = new System.Drawing.Point(240, 0);
+            this.label27.Margin = new System.Windows.Forms.Padding(0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(80, 38);
+            this.label27.TabIndex = 57;
+            this.label27.Text = "180";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tlpGrayLevelBorder
+            // 
+            this.tlpGrayLevelBorder.ColumnCount = 3;
+            this.tlpGrayLevelBorder.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpGrayLevelBorder.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpGrayLevelBorder.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpGrayLevelBorder.Controls.Add(this.label17, 0, 0);
+            this.tlpGrayLevelBorder.Controls.Add(this.label29, 0, 0);
+            this.tlpGrayLevelBorder.Controls.Add(this.label30, 1, 0);
+            this.tlpGrayLevelBorder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpGrayLevelBorder.Location = new System.Drawing.Point(80, 202);
+            this.tlpGrayLevelBorder.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tlpGrayLevelBorder.Name = "tlpGrayLevelBorder";
+            this.tlpGrayLevelBorder.RowCount = 1;
+            this.tlpGrayLevelBorder.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpGrayLevelBorder.Size = new System.Drawing.Size(320, 38);
+            this.tlpGrayLevelBorder.TabIndex = 59;
+            // 
             // label17
             // 
             this.label17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
@@ -950,6 +878,78 @@
             this.label17.TabIndex = 58;
             this.label17.Text = "40";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label29
+            // 
+            this.label29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.label29.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label29.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label29.Location = new System.Drawing.Point(0, 0);
+            this.label29.Margin = new System.Windows.Forms.Padding(0);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(160, 38);
+            this.label29.TabIndex = 57;
+            this.label29.Text = "Border";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label30
+            // 
+            this.label30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.label30.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label30.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label30.Location = new System.Drawing.Point(240, 0);
+            this.label30.Margin = new System.Windows.Forms.Padding(0);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(80, 38);
+            this.label30.TabIndex = 57;
+            this.label30.Text = "40";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label6.Location = new System.Drawing.Point(0, 82);
+            this.label6.Margin = new System.Windows.Forms.Padding(0, 2, 2, 0);
+            this.label6.Name = "label6";
+            this.tlpThresholdLayout.SetRowSpan(this.label6, 4);
+            this.label6.Size = new System.Drawing.Size(78, 158);
+            this.label6.TabIndex = 54;
+            this.label6.Text = "Gray\r\nLevel";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.lblParameter, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pnlTeachingParameter, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(900, 600);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // lblParameter
+            // 
+            this.lblParameter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblParameter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblParameter.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblParameter.Location = new System.Drawing.Point(0, 0);
+            this.lblParameter.Margin = new System.Windows.Forms.Padding(0);
+            this.lblParameter.Name = "lblParameter";
+            this.lblParameter.Size = new System.Drawing.Size(900, 40);
+            this.lblParameter.TabIndex = 1;
+            this.lblParameter.Text = "Parameter";
+            this.lblParameter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // DistanceControl
             // 
@@ -974,13 +974,13 @@
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tlpThresholdLayout.ResumeLayout(false);
             this.pnlTitleThresholdContainer.ResumeLayout(false);
+            this.tlpSubTitleGrayLevel.ResumeLayout(false);
+            this.tlpSubTitleGrayLevel.PerformLayout();
             this.tlpGrayLevelFoil.ResumeLayout(false);
             this.tlpGrayLevelCoating.ResumeLayout(false);
             this.tlpGrayLevelNonCoating.ResumeLayout(false);
             this.tlpGrayLevelBorder.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tlpSubTitleGrayLevel.ResumeLayout(false);
-            this.tlpSubTitleGrayLevel.PerformLayout();
             this.ResumeLayout(false);
 
         }
