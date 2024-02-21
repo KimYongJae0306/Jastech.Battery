@@ -47,7 +47,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         public void SetBorderColor()
         {
-            pnlDefectInfoControl.BackColor = Color.White;
+            pnlDefectInfoControl.BackColor = Color.FromArgb(208,52,52);
         }
 
         public void ResetBorderColor()

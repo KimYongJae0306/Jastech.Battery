@@ -134,6 +134,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
             dpnlMapArea.SuspendLayout();
             e.Graphics.TranslateTransform(dpnlMapArea.AutoScrollPosition.X, dpnlMapArea.AutoScrollPosition.Y);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             DrawSideLines(e.Graphics);
             DrawGridAndLength(e.Graphics);
