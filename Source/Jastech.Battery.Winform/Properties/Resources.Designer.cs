@@ -203,6 +203,26 @@ namespace Jastech.Battery.Winform.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap Fit_White {
+            get {
+                object obj = ResourceManager.GetObject("Fit_White", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Line_arrow_White {
+            get {
+                object obj = ResourceManager.GetObject("Line_arrow_White", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap New_White {
             get {
                 object obj = ResourceManager.GetObject("New_White", resourceCulture);
@@ -226,6 +246,26 @@ namespace Jastech.Battery.Winform.Properties {
         internal static System.Drawing.Bitmap Next_White {
             get {
                 object obj = ResourceManager.GetObject("Next_White", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Panning_White {
+            get {
+                object obj = ResourceManager.GetObject("Panning_White", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pointer_White {
+            get {
+                object obj = ResourceManager.GetObject("Pointer_White", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

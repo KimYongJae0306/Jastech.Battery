@@ -215,7 +215,6 @@
       <Version>3.3.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -263,6 +262,18 @@
     <EmbeddedResource Include="UI\Forms\PlcStatusForm.resx">
       <DependentUpon>PlcStatusForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fit_White.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Line_arrow_White.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Panning_White.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pointer_White.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
