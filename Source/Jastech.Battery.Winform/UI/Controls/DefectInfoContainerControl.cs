@@ -29,9 +29,6 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 메서드
-        private void DefectInfoContainerControl_Load(object sender, System.EventArgs e)
-        {
-        }
 
         public void AddDefectInfo(DefectInfo defectInfo)
         {
@@ -105,7 +102,10 @@ namespace Jastech.Battery.Winform.UI.Controls
                 if (control is DefectInfoControl defectInfoControl)
                 {
                     if (index == defectInfoControl.GetDefectIndex())
+                    { 
                         defectInfoControl.SetBorderColor();
+                        defectInfoControl.Focus();
+                    }
                     else
                         defectInfoControl.ResetBorderColor();
                 }

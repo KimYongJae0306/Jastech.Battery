@@ -49,22 +49,20 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 메서드
-
         private void GLDrawBoxControl_Load(object sender, EventArgs e)
         {
-            DisplayControl = new GLControl();
-            DisplayControl.Dock = DockStyle.Fill;
-            DisplayControl.Paint += glDisplay_Paint;
-            DisplayControl.MouseWheel += glDisplay_MouseWheel;
-            DisplayControl.MouseMove += glDisplay_MouseMove;
-            DisplayControl.MouseDown += glDisplay_MouseDown;
+            DisplayControl = new GLControl { Dock = DockStyle.Fill };
+            DisplayControl.Paint += DisplayControl_Paint;
+            DisplayControl.MouseWheel += DisplayControl_MouseWheel;
+            DisplayControl.MouseDown += DisplayControl_MouseDown;
+            DisplayControl.MouseMove += DisplayControl_MouseMove;
             pnlDisplay.Controls.Add(DisplayControl);
 
-            GL.ClearColor(Color.FromArgb(26,26,26));
+            GL.ClearColor(Color.FromArgb(26, 26, 26));
             SetImage(new Bitmap(1, 1));
         }
 
-        private void glDisplay_Paint(object sender, PaintEventArgs e)
+        private void DisplayControl_Paint(object sender, PaintEventArgs e)
         {
             lock (_lock)
             {
@@ -73,9 +71,9 @@ namespace Jastech.Battery.Winform.UI.Controls
 
                 DisplayControl.MakeCurrent();
                 UpdateViewPort();
-                GetTexture(out int textureID);
                 SetTranslatedModelView();
                 SetOrthographicalProjection();
+                GetTexture(out int textureID);
                 DrawTexture(textureID);;
                 DisplayControl.SwapBuffers();
             }
@@ -85,6 +83,30 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             RectangleF viewRect = new RectangleF(0, 0, DisplayControl.Width, DisplayControl.Height);
             GL.Viewport(Rectangle.Round(viewRect));
+        }
+
+        private void SetOrthographicalProjection()
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(
+                left: 0,
+                right: DisplayControl.Width,
+                bottom: DisplayControl.Height,
+                top: 0,
+                zNear: -1,
+                zFar: 1);
+        }
+
+        private void SetTranslatedModelView()
+        {
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            Matrix4 scale = Matrix4.CreateScale(ZoomScale, ZoomScale, 0);
+            Matrix4 translationOffset = Matrix4.CreateTranslation(OffsetX * ZoomScale, OffsetY * ZoomScale, 0);
+
+            Matrix4 modelViewMatrix = scale * translationOffset;
+            GL.LoadMatrix(ref modelViewMatrix);
         }
 
         private void GetTexture(out int textureID)
@@ -118,36 +140,12 @@ namespace Jastech.Battery.Winform.UI.Controls
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
         }
 
-        private void SetOrthographicalProjection()
-        {
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(
-                left: 0,
-                right: DisplayControl.Width,
-                bottom: DisplayControl.Height,
-                top: 0,
-                zNear: -1,
-                zFar: 1);
-        }
-
-        private void SetTranslatedModelView()
-        {
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Matrix4 scale = Matrix4.CreateScale(ZoomScale, ZoomScale, 0);
-            Matrix4 translationOffset = Matrix4.CreateTranslation(OffsetX * ZoomScale, OffsetY * ZoomScale, 0);
-
-            Matrix4 modelViewMatrix = scale * translationOffset;
-            GL.LoadMatrix(ref modelViewMatrix);
-        }
-
         private void DrawTexture(int textureID)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, textureID);
+            GL.Enable(EnableCap.Texture2D);
             GL.Begin(PrimitiveType.Quads);
 
             PlaceVertex(new Point(0, 0), new Point(0, 0));
@@ -157,7 +155,6 @@ namespace Jastech.Battery.Winform.UI.Controls
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
-
             GL.DeleteTexture(textureID);
         }
 
@@ -193,13 +190,13 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         public void DisableFunctionButtons()
         {
-            tableLayoutPanel3.Controls.Remove(tableLayoutPanel4);
-            tableLayoutPanel3.ColumnStyles.RemoveAt(0);
-            tableLayoutPanel3.ColumnCount--;
+            tlpMainLayout.Controls.Remove(tlpFunctionButtonsLayout);
+            tlpMainLayout.ColumnStyles.RemoveAt(0);
+            tlpMainLayout.ColumnCount--;
 
-            tableLayoutPanel1.Controls.Remove(pnlText);
-            tableLayoutPanel1.RowStyles.RemoveAt(1);
-            tableLayoutPanel1.RowCount--;
+            tlpDisplayAreaLayout.Controls.Remove(pnlGrayText);
+            tlpDisplayAreaLayout.RowStyles.RemoveAt(1);
+            tlpDisplayAreaLayout.RowCount--;
         }
 
         public void FitZoom()
@@ -210,7 +207,24 @@ namespace Jastech.Battery.Winform.UI.Controls
             DisplayControl.Invalidate();
         }
 
-        private void glDisplay_MouseDown(object sender, MouseEventArgs e)
+        private void DisplayControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            var zoomAmount = e.Delta * (float)Math.Sqrt(Math.Abs(e.Delta)) / 10000;
+            ZoomScale += zoomAmount;
+
+            const float minimumScale = 0.2f;
+            if (ZoomScale < minimumScale)
+                ZoomScale = minimumScale;
+
+            float imageX = e.X / ZoomScale - OffsetX;
+            float imageY = e.Y / ZoomScale - OffsetY;
+            OffsetX = e.X / ZoomScale - imageX;
+            OffsetY = e.Y / ZoomScale - imageY;
+
+            DisplayControl.Invalidate();
+        }
+
+        private void DisplayControl_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
                 return;
@@ -220,7 +234,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             PanningStartPoint = new PointF(imageX, imageY);
         }
 
-        private void glDisplay_MouseMove(object sender, MouseEventArgs e)
+        private void DisplayControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -231,24 +245,6 @@ namespace Jastech.Battery.Winform.UI.Controls
                 }
                 DisplayControl.Invalidate();
             }
-        }
-
-        private void glDisplay_MouseWheel(object sender, MouseEventArgs e)
-        {
-            float imageX = e.X / ZoomScale - OffsetX;
-            float imageY = e.Y / ZoomScale - OffsetY;
-
-            var zoomAmount = e.Delta * (float)Math.Sqrt(Math.Abs(e.Delta)) / 10000;
-            const float minimumScale = 0.2f;
-
-            ZoomScale += zoomAmount;
-            if (ZoomScale < minimumScale)
-                ZoomScale = minimumScale;
-
-            OffsetX = e.X / ZoomScale - imageX;
-            OffsetY = e.Y / ZoomScale - imageY;
-
-            DisplayControl.Invalidate();
         }
 
         private void ctxDisplayMode_Opening(object sender, CancelEventArgs e)

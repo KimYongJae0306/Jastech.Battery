@@ -16,19 +16,20 @@ namespace Jastech.Battery.Winform.UI.Controls
         #region 필드
         private RectangleF _displayArea;
 
-        public double _pixelResolution = 20; // TODO : Config에서 가져올 것
+        private float _pixelResolution = 20; // TODO : MaterialInfo에서 가져올 것
 
         private float _maximumY = 50000;
 
         private int _selectedDefectIndex = -1;
 
-        public List<DefectInfo> _defectInfos = new List<DefectInfo>();
+        private List<DefectInfo> _defectInfos = new List<DefectInfo>();
         #endregion
 
         #region 속성
         private DoubleBufferedPanel dpnlMapArea { get; set; } = null;
 
-        public int maximumMeter = 600;
+        public int MaximumMeter { get; set; } = 600; // TODO: MaterialInfo에 넣기
+
         public float MaximumY {
             get
             {
@@ -39,7 +40,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 _maximumY = value;
                 Invalidate();
             }
-        } // TODO: Resolution 참고하여 Meter 단위로 환산, Model에서 가져올 것
+        } // TODO: MaterialInfo 참고하여 Meter 단위로 환산, Model에서 가져올 것
         #endregion
 
         #region 이벤트
@@ -71,7 +72,8 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         public void Clear()
         {
-            MaximumY = 0;
+            _maximumY = 0;
+            _selectedDefectIndex = -1;
             _defectInfos.Clear();
             dpnlMapArea.Invalidate();
         }
@@ -87,21 +89,21 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private void DrawDefectShape(Graphics g, DefectInfo defectInfo)
         {
-            var coord = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16384);
-
-            var color = Colors[defectInfo.DefectType];
-            var brush = new SolidBrush(color);
-            float shapeSize = 7;
-            var shapeArea = new RectangleF(coord.X, coord.Y - shapeSize / 2, shapeSize, shapeSize);
+            var scaledDefectLocation = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16384);
+            var brush = new SolidBrush(Colors[defectInfo.DefectType]);
+            var shapeSize = 7f;
+            var shapeArea = new RectangleF(scaledDefectLocation.X, scaledDefectLocation.Y - shapeSize / 2, shapeSize, shapeSize);
             g.FillEllipse(brush, shapeArea);
 
             if (defectInfo.Index == _selectedDefectIndex)
             {
-                Pen dashPen = new Pen(Color.White, 1) { DashStyle = DashStyle.DashDotDot };
-                float ellipseSize = 13;
-                float ellipseMargin = (ellipseSize - shapeArea.Width) / 2f;
+                var ellipseSize = 13f;
+                var ellipseMargin = (ellipseSize - shapeArea.Width) / 2f ;
+                Pen dashPen = new Pen(Color.White, 1) { DashStyle = DashStyle.Dash, DashOffset = ellipseMargin };
                 g.DrawEllipse(dashPen, shapeArea.X - ellipseMargin, shapeArea.Y - ellipseMargin, ellipseSize, ellipseSize);
-                g.DrawString($"{defectInfo.DefectType}", Font, new SolidBrush(Colors[defectInfo.DefectType]), new PointF(coord.X + ellipseSize / 2, coord.Y + ellipseSize / 2));
+
+                var stringLocation = new PointF(scaledDefectLocation.X + ellipseSize / 2, scaledDefectLocation.Y + ellipseSize / 2);
+                g.DrawString($"{defectInfo.DefectType}", base.Font, brush, stringLocation);
             }
         }
 
@@ -128,15 +130,15 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private void dpnlMapArea_Paint(object sender, PaintEventArgs e)
         {
-            dpnlMapArea.SuspendLayout();
-            var graphics = e.Graphics;
-            graphics.TranslateTransform(dpnlMapArea.AutoScrollPosition.X, dpnlMapArea.AutoScrollPosition.Y);
-
             _displayArea = GetDisplayArea();
-            DrawSideLines(graphics);
-            DrawGridAndLength(graphics);
+
+            dpnlMapArea.SuspendLayout();
+            e.Graphics.TranslateTransform(dpnlMapArea.AutoScrollPosition.X, dpnlMapArea.AutoScrollPosition.Y);
+
+            DrawSideLines(e.Graphics);
+            DrawGridAndLength(e.Graphics);
             foreach (var defectInfo in _defectInfos)
-                DrawDefectShape(graphics, defectInfo);
+                DrawDefectShape(e.Graphics, defectInfo);
             dpnlMapArea.ResumeLayout(true);
         }
 
@@ -145,8 +147,9 @@ namespace Jastech.Battery.Winform.UI.Controls
             foreach (var defectInfo in _defectInfos)
             {
                 var coord = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16384);
-                var shaprearea = new RectangleF(coord.X, coord.Y - 3.5f, 7, 7);
-                if (shaprearea.Contains(e.Location))
+                float shapeSize = 7;
+                var shapeArea = new RectangleF(coord.X, coord.Y - shapeSize / 2, shapeSize, shapeSize);
+                if (shapeArea.Contains(e.Location))
                 {
                     SelectedDefectChanged?.Invoke(defectInfo.Index);
                     dpnlMapArea.Invalidate();
@@ -157,20 +160,25 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private void DrawGridAndLength(Graphics g)
         {
-            double maximumHeight = MaximumY / 1000;
-            double gridMargin = maximumHeight / 10;
-            Font stringFont = new Font("맑은 고딕", 9, FontStyle.Bold);
+            int gridCount = 10;
+            float maximumHeight = MaximumY / 1000;
+            float gridMargin = maximumHeight / gridCount;
             var dashPen = new Pen(Color.FromArgb(208, 208, 208))
             {
                 DashStyle = DashStyle.Dash,
                 Width = 0.3f
             };
-            for (int count = 0; count <= 10; count++)
+            for (int count = 0; count <= gridCount; count++)
             {
-                int drawingHeight = (int)(count * (_displayArea.Height / 10)) + (int)_displayArea.Top;
+                int drawingHeight = (int)(count * (_displayArea.Height / gridCount)) + (int)_displayArea.Top;
 
-                g.DrawLine(dashPen, new Point((int)_displayArea.Left, drawingHeight), new Point((int)_displayArea.Left + (int)_displayArea.Width, drawingHeight));
-                g.DrawString($"{((maximumHeight - (count * gridMargin)) * _pixelResolution) / 1000:N2}m", stringFont, Brushes.White, new PointF(5, drawingHeight - Font.Size / 2));
+                var lineStartLocation = new Point((int)_displayArea.Left, drawingHeight);
+                var lineEndLocation = new Point((int)_displayArea.Left + (int)_displayArea.Width, drawingHeight);
+                g.DrawLine(dashPen, lineStartLocation, lineEndLocation);
+
+                var stringLocation = new PointF(5, drawingHeight - Font.Size / 2);
+                var currentHeight = (maximumHeight - (count * gridMargin)) * _pixelResolution;
+                g.DrawString($"{currentHeight / 1000:N2}m", base.Font, Brushes.White, stringLocation);
             }
         }
 
@@ -181,8 +189,15 @@ namespace Jastech.Battery.Winform.UI.Controls
                 Width = 5,
                 StartCap = LineCap.ArrowAnchor
             };
-            g.DrawLine(sideLinePen, new Point((int)_displayArea.Left, 5), new Point((int)_displayArea.Left, Height));
-            g.DrawLine(sideLinePen, new Point((int)_displayArea.Right, 5), new Point((int)_displayArea.Right, Height));
+
+            var horizontalOffset = 5;
+            var leftLineStartLocation = new Point((int)_displayArea.Left, horizontalOffset);
+            var rightLineStartLocation = new Point((int)_displayArea.Right, horizontalOffset);
+            var leftLineEndLocation = new Point((int)_displayArea.Left, Height);
+            var rightLineEndLocation = new Point((int)_displayArea.Right, Height);
+
+            g.DrawLine(sideLinePen, leftLineStartLocation, leftLineEndLocation);
+            g.DrawLine(sideLinePen, rightLineStartLocation, rightLineEndLocation);
         }
 
         public void ChangeSelectedDefect(int index)

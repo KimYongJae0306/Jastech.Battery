@@ -246,7 +246,7 @@ namespace ESI.UI.Pages
             {
                 try
                 {
-                    for (int yValue = 0; yValue < DefectMapControl.maximumMeter * 50000; yValue += 50000)
+                    for (int yValue = 0; yValue < DefectMapControl.MaximumMeter * 50000; yValue += 50000)
                     {
                         if (rand.Next(20) == 0)
                         {
