@@ -24,6 +24,7 @@ namespace Jastech.Battery.Winform.UI.Forms
         private Color _selectedColor;
 
         private Color _nonSelectedColor;
+
         private Mat _orgMat { get; set; } = null;
         #endregion
 
@@ -132,13 +133,13 @@ namespace Jastech.Battery.Winform.UI.Forms
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 //_orgMat?.Dispose();
-                //_orgMat = null;
+                //OrgMat = null;
 
-                //_orgMat = new Mat(dlg.FileName, ImreadModes.Grayscale);
+                //OrgMat = new Mat(dlg.FileName, ImreadModes.Grayscale);
 
-                //if (_orgMat != null)
+                //if (OrgMat != null)
                 //{
-                //    var bmp = _orgMat.ToBitmap();
+                //    var bmp = OrgMat.ToBitmap();
                 //    DrawBoxControl.SetImage(bmp);
                 //    DrawBoxControl.FitZoom();
                 //}
