@@ -42,6 +42,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             }
             DefectInfoControl defectInfoControl = new DefectInfoControl();
             defectInfoControl.SetDefectInfo(defectInfo);
+            defectInfoControl.SelectedDefectIndexChanged += SelectedControlIndexChanged;
 
             const int scrollBarSize = 20;
             Point controlLocation = new Point();
@@ -99,6 +100,16 @@ namespace Jastech.Battery.Winform.UI.Controls
         public void SelectedControlIndexChanged(int index)
         {
             SelectedDefectChanged?.Invoke(index);
+            foreach (Control control in pnlContainer.Controls)
+            {
+                if (control is DefectInfoControl defectInfoControl)
+                {
+                    if (index == defectInfoControl.GetDefectIndex())
+                        defectInfoControl.SetBorderColor();
+                    else
+                        defectInfoControl.ResetBorderColor();
+                }
+            }
         }
         #endregion
     }

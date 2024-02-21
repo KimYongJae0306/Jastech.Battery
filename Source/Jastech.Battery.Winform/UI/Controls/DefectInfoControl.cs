@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using static Jastech.Battery.Structure.Data.DefectDefine;
+using static Jastech.Battery.Winform.UI.Controls.DefectInfoContainerControl;
 
 namespace Jastech.Battery.Winform.UI.Controls
 {
@@ -15,11 +16,7 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 이벤트
-        public event ControlClickedHandler ControlClicked;
-        #endregion
-
-        #region 델리게이트
-        public delegate void ControlClickedHandler(int index);
+        public event SelectedIndexChangedHandler SelectedDefectIndexChanged;
         #endregion
 
         #region 생성자
@@ -48,9 +45,27 @@ namespace Jastech.Battery.Winform.UI.Controls
                 pbxCropImage.Image = new Bitmap(imagePath);
         }
 
+        public void SetBorderColor()
+        {
+            pnlDefectInfoControl.BackColor = Color.White;
+        }
+
+        public void ResetBorderColor()
+        {
+            pnlDefectInfoControl.BackColor = Color.Transparent;
+        }
+
         private void ClickControlEvent(object sender, EventArgs e)
         {
-            ControlClicked?.Invoke(DefectInfo.Index);
+            SelectedDefectIndexChanged?.Invoke(DefectInfo.Index);
+        }
+
+        public int GetDefectIndex()
+        {
+            if (DefectInfo == null)
+                return -1;
+            else
+                return DefectInfo.Index;
         }
         #endregion
     }

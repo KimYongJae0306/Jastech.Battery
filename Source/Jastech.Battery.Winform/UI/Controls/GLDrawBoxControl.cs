@@ -239,8 +239,11 @@ namespace Jastech.Battery.Winform.UI.Controls
             float imageY = e.Y / ZoomScale - OffsetY;
 
             var zoomAmount = e.Delta * (float)Math.Sqrt(Math.Abs(e.Delta)) / 10000;
-            if (ZoomScale + zoomAmount > 0)
-                ZoomScale += zoomAmount;
+            const float minimumScale = 0.2f;
+
+            ZoomScale += zoomAmount;
+            if (ZoomScale < minimumScale)
+                ZoomScale = minimumScale;
 
             OffsetX = e.X / ZoomScale - imageX;
             OffsetY = e.Y / ZoomScale - imageY;

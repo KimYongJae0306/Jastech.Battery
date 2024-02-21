@@ -1,5 +1,6 @@
 ﻿using Jastech.Battery.Structure.Data;
 using Jastech.Framework.Winform.Controls;
+using OpenTK.Graphics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,7 +64,8 @@ namespace Jastech.Battery.Winform.UI.Controls
 
             _displayArea = GetDisplayArea();
             SelectedDefectChanged += ChangeSelectedDefect;
-            dpnlMapArea.Paint += pnlMapArea_Paint;
+            dpnlMapArea.Paint += dpnlMapArea_Paint;
+            dpnlMapArea.MouseClick += dpnlMapArea_MouseClick;
             Controls.Add(dpnlMapArea);
         }
 
@@ -76,20 +78,31 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private RectangleF GetDisplayArea()
         {
-            return new RectangleF(new PointF(dpnlMapArea.Left + 70, dpnlMapArea.Top + 20), new SizeF(dpnlMapArea.DisplayRectangle.Width - 90, dpnlMapArea.DisplayRectangle.Height - 60));
+            (int left, int top, int right, int bottom) margin = (70, 20, 90, 60);
+            var location = new PointF(dpnlMapArea.Left + margin.left, dpnlMapArea.Top + margin.top);
+            var size = new SizeF(dpnlMapArea.DisplayRectangle.Width - margin.right, dpnlMapArea.DisplayRectangle.Height - margin.bottom);
+
+            return new RectangleF(location, size);
         }
 
         private void DrawDefectShape(Graphics g, DefectInfo defectInfo)
         {
-            var coord = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16383);
+            var coord = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16384);
 
             var color = Colors[defectInfo.DefectType];
             var brush = new SolidBrush(color);
-            var area = new RectangleF(coord.X, coord.Y - 3.5f, 7, 7);
+            float shapeSize = 7;
+            var shapeArea = new RectangleF(coord.X, coord.Y - shapeSize / 2, shapeSize, shapeSize);
+            g.FillEllipse(brush, shapeArea);
 
             if (defectInfo.Index == _selectedDefectIndex)
-                g.DrawString($"{defectInfo.DefectType}", Font, new SolidBrush(Color.Crimson), new PointF(coord.X + 4.5f, coord.Y + 4.5f));
-            g.FillEllipse(brush, area);
+            {
+                Pen dashPen = new Pen(Color.White, 1) { DashStyle = DashStyle.DashDotDot };
+                float ellipseSize = 13;
+                float ellipseMargin = (ellipseSize - shapeArea.Width) / 2f;
+                g.DrawEllipse(dashPen, shapeArea.X - ellipseMargin, shapeArea.Y - ellipseMargin, ellipseSize, ellipseSize);
+                g.DrawString($"{defectInfo.DefectType}", Font, new SolidBrush(Colors[defectInfo.DefectType]), new PointF(coord.X + ellipseSize / 2, coord.Y + ellipseSize / 2));
+            }
         }
 
         public void AddCoordinate(DefectInfo defectInfo)
@@ -113,7 +126,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             };
         }
 
-        private void pnlMapArea_Paint(object sender, PaintEventArgs e)
+        private void dpnlMapArea_Paint(object sender, PaintEventArgs e)
         {
             dpnlMapArea.SuspendLayout();
             var graphics = e.Graphics;
@@ -125,6 +138,21 @@ namespace Jastech.Battery.Winform.UI.Controls
             foreach (var defectInfo in _defectInfos)
                 DrawDefectShape(graphics, defectInfo);
             dpnlMapArea.ResumeLayout(true);
+        }
+
+        private void dpnlMapArea_MouseClick(object sender, MouseEventArgs e)
+        {
+            foreach (var defectInfo in _defectInfos)
+            {
+                var coord = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16384);
+                var shaprearea = new RectangleF(coord.X, coord.Y - 3.5f, 7, 7);
+                if (shaprearea.Contains(e.Location))
+                {
+                    SelectedDefectChanged?.Invoke(defectInfo.Index);
+                    dpnlMapArea.Invalidate();
+                    break;
+                }
+            }
         }
 
         private void DrawGridAndLength(Graphics g)
@@ -157,9 +185,10 @@ namespace Jastech.Battery.Winform.UI.Controls
             g.DrawLine(sideLinePen, new Point((int)_displayArea.Right, 5), new Point((int)_displayArea.Right, Height));
         }
 
-        private void ChangeSelectedDefect(int index)
+        public void ChangeSelectedDefect(int index)
         { 
             _selectedDefectIndex = index;
+            dpnlMapArea.Invalidate();
         }
         #endregion
     }

@@ -31,42 +31,44 @@
             this.tlpLayout = new System.Windows.Forms.TableLayoutPanel();
             this.lblDefectInfo = new System.Windows.Forms.Label();
             this.lblDefectType = new System.Windows.Forms.Label();
-            this.pbxCropImage = new System.Windows.Forms.PictureBox();
             this.lblCamDirection = new System.Windows.Forms.Label();
+            this.pnlDefectInfoControl = new System.Windows.Forms.Panel();
+            this.pbxCropImage = new System.Windows.Forms.PictureBox();
             this.tlpLayout.SuspendLayout();
+            this.pnlDefectInfoControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxCropImage)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpLayout
             // 
+            this.tlpLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.tlpLayout.ColumnCount = 2;
             this.tlpLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpLayout.Controls.Add(this.pbxCropImage, 0, 1);
             this.tlpLayout.Controls.Add(this.lblDefectInfo, 0, 2);
             this.tlpLayout.Controls.Add(this.lblDefectType, 1, 0);
-            this.tlpLayout.Controls.Add(this.pbxCropImage, 0, 1);
             this.tlpLayout.Controls.Add(this.lblCamDirection, 0, 0);
             this.tlpLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpLayout.Location = new System.Drawing.Point(0, 0);
+            this.tlpLayout.Location = new System.Drawing.Point(1, 1);
             this.tlpLayout.Name = "tlpLayout";
             this.tlpLayout.RowCount = 3;
             this.tlpLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpLayout.Size = new System.Drawing.Size(150, 190);
+            this.tlpLayout.Size = new System.Drawing.Size(148, 188);
             this.tlpLayout.TabIndex = 0;
             // 
             // lblDefectInfo
             // 
             this.lblDefectInfo.AutoSize = true;
-            this.lblDefectInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.tlpLayout.SetColumnSpan(this.lblDefectInfo, 2);
             this.lblDefectInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDefectInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDefectInfo.ForeColor = System.Drawing.Color.White;
-            this.lblDefectInfo.Location = new System.Drawing.Point(3, 170);
+            this.lblDefectInfo.Location = new System.Drawing.Point(3, 168);
             this.lblDefectInfo.Name = "lblDefectInfo";
-            this.lblDefectInfo.Size = new System.Drawing.Size(144, 20);
+            this.lblDefectInfo.Size = new System.Drawing.Size(142, 20);
             this.lblDefectInfo.TabIndex = 4;
             this.lblDefectInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblDefectInfo.Click += new System.EventHandler(this.ClickControlEvent);
@@ -77,24 +79,12 @@
             this.lblDefectType.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDefectType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDefectType.ForeColor = System.Drawing.Color.White;
-            this.lblDefectType.Location = new System.Drawing.Point(78, 0);
+            this.lblDefectType.Location = new System.Drawing.Point(77, 0);
             this.lblDefectType.Name = "lblDefectType";
-            this.lblDefectType.Size = new System.Drawing.Size(69, 20);
+            this.lblDefectType.Size = new System.Drawing.Size(68, 20);
             this.lblDefectType.TabIndex = 3;
             this.lblDefectType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblDefectType.Click += new System.EventHandler(this.ClickControlEvent);
-            // 
-            // pbxCropImage
-            // 
-            this.tlpLayout.SetColumnSpan(this.pbxCropImage, 2);
-            this.pbxCropImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbxCropImage.Location = new System.Drawing.Point(3, 23);
-            this.pbxCropImage.Name = "pbxCropImage";
-            this.pbxCropImage.Size = new System.Drawing.Size(144, 144);
-            this.pbxCropImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbxCropImage.TabIndex = 0;
-            this.pbxCropImage.TabStop = false;
-            this.pbxCropImage.Click += new System.EventHandler(this.ClickControlEvent);
             // 
             // lblCamDirection
             // 
@@ -104,10 +94,36 @@
             this.lblCamDirection.ForeColor = System.Drawing.Color.White;
             this.lblCamDirection.Location = new System.Drawing.Point(3, 0);
             this.lblCamDirection.Name = "lblCamDirection";
-            this.lblCamDirection.Size = new System.Drawing.Size(69, 20);
+            this.lblCamDirection.Size = new System.Drawing.Size(68, 20);
             this.lblCamDirection.TabIndex = 1;
             this.lblCamDirection.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblCamDirection.Click += new System.EventHandler(this.ClickControlEvent);
+            // 
+            // pnlDefectInfoControl
+            // 
+            this.pnlDefectInfoControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.pnlDefectInfoControl.Controls.Add(this.tlpLayout);
+            this.pnlDefectInfoControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDefectInfoControl.Location = new System.Drawing.Point(0, 0);
+            this.pnlDefectInfoControl.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlDefectInfoControl.Name = "pnlDefectInfoControl";
+            this.pnlDefectInfoControl.Padding = new System.Windows.Forms.Padding(1);
+            this.pnlDefectInfoControl.Size = new System.Drawing.Size(150, 190);
+            this.pnlDefectInfoControl.TabIndex = 5;
+            // 
+            // pbxCropImage
+            // 
+            this.pbxCropImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.tlpLayout.SetColumnSpan(this.pbxCropImage, 2);
+            this.pbxCropImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbxCropImage.Location = new System.Drawing.Point(0, 20);
+            this.pbxCropImage.Margin = new System.Windows.Forms.Padding(0);
+            this.pbxCropImage.Name = "pbxCropImage";
+            this.pbxCropImage.Size = new System.Drawing.Size(148, 148);
+            this.pbxCropImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbxCropImage.TabIndex = 0;
+            this.pbxCropImage.TabStop = false;
+            this.pbxCropImage.Click += new System.EventHandler(this.ClickControlEvent);
             // 
             // DefectInfoControl
             // 
@@ -115,12 +131,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.tlpLayout);
+            this.Controls.Add(this.pnlDefectInfoControl);
             this.DoubleBuffered = true;
             this.Name = "DefectInfoControl";
             this.Size = new System.Drawing.Size(150, 190);
             this.tlpLayout.ResumeLayout(false);
             this.tlpLayout.PerformLayout();
+            this.pnlDefectInfoControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbxCropImage)).EndInit();
             this.ResumeLayout(false);
 
@@ -133,5 +150,6 @@
         private System.Windows.Forms.Label lblCamDirection;
         private System.Windows.Forms.Label lblDefectType;
         private System.Windows.Forms.Label lblDefectInfo;
+        private System.Windows.Forms.Panel pnlDefectInfoControl;
     }
 }

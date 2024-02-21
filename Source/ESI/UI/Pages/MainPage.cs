@@ -98,6 +98,7 @@ namespace ESI.UI.Pages
                 IsVertical = true
             };
             DefectMapControl.SelectedDefectChanged += DefectInfoContainerControl.SelectedControlIndexChanged;
+            DefectInfoContainerControl.SelectedDefectChanged += DefectMapControl.ChangeSelectedDefect;
         }
 
         private void InitializeDrawBoxControls()
