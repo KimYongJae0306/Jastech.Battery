@@ -19,18 +19,13 @@ using System.Globalization;
 using System.Runtime.Remoting.Channels;
 using Emgu.CV;
 using System.Diagnostics;
+using System.Collections.Concurrent;
 
 namespace ESI.UI.Pages
 {
     public partial class MainPage : UserControl
     {
         #region 필드
-        private Queue<DefectInfo> _dfsQueue = new Queue<DefectInfo>();
-
-        private Task _defectHandlingTask = null;      // TODO : UI 클래스말고 외부로 뺄건지 검토
-
-        public CancellationTokenSource _cancellationDefectHandling = null;
-
         public Dictionary<DefectTypes, int> _defectCounts;
         #endregion
 
@@ -75,7 +70,6 @@ namespace ESI.UI.Pages
             AddControls();
 
             ClearDatas();
-            InitializeTasks();
         }
 
         private void AddControls()
@@ -144,9 +138,8 @@ namespace ESI.UI.Pages
 
             CenterMismatchGraphControl.Initialize();
             CenterMismatchGraphControl.SetCaption(captionAxisX: "m", captionAxisY: "mm");
-            CenterMismatchGraphControl.AddLegend("Center_Upper", 0, Color.LightSalmon);
-            CenterMismatchGraphControl.AddLegend("Center_Lower", 1, Color.DodgerBlue);
-            CenterMismatchGraphControl.AddLegend("Center_Missmatch", 2, Color.FloralWhite);
+            CenterMismatchGraphControl.AddLegend("Missmatch_Upper", 0, Color.LightSalmon);
+            CenterMismatchGraphControl.AddLegend("Missmatch_Lower", 1, Color.DodgerBlue);
         }
 
         private void ClearDatas()
@@ -157,46 +150,6 @@ namespace ESI.UI.Pages
             CenterMismatchGraphControl.Clear();
             for (int index = 0; index < _defectCounts.Count; index++)
                 _defectCounts[(DefectTypes)index] = 0;
-        }
-
-        private void InitializeTasks()
-        {
-            _cancellationDefectHandling = new CancellationTokenSource();
-            _defectHandlingTask = new Task(new Action(async () =>
-            {
-                var checkQueueDelegate = new Action(CheckQueue);
-                while(_cancellationDefectHandling.IsCancellationRequested == false)
-                {
-                    BeginInvoke(checkQueueDelegate);
-                    await Task.Delay(40);
-                }
-            }), _cancellationDefectHandling.Token, TaskCreationOptions.LongRunning);
-
-            _defectHandlingTask.Start();
-        }
-
-        private void CheckQueue()
-        {
-            while (_dfsQueue.Count > 0)
-            {
-                var defectInfo = _dfsQueue.Dequeue();
-
-                DefectInfoContainerControl.AddDefectInfo(defectInfo);
-                DefectMapControl.AddCoordinate(defectInfo);
-                _defectCounts[defectInfo.DefectType]++;
-
-                lblDefectSummaryPinholeValue.Text = $"{_defectCounts[DefectTypes.Pinhole]}ea";
-                lblDefectSummaryDentValue.Text = $"{_defectCounts[DefectTypes.Dent]}ea";
-                lblDefectSummaryCraterValue.Text = $"{_defectCounts[DefectTypes.Crater]}ea";
-                lblDefectSummaryIslandValue.Text = $"{_defectCounts[DefectTypes.Island]}ea";
-                lblDefectSummaryDragValue.Text = $"{_defectCounts[DefectTypes.Drag]}ea";
-
-                Button btnJudgement = defectInfo.CameraName == "Upper" ? btnUpperJudgement : btnLowerJudgement;
-                btnJudgement.Text = $"{defectInfo.Judgement}";
-                btnJudgement.BackColor = defectInfo.Judgement.HasFlag(DefectJudge.NG) ? Color.Red : Color.LimeGreen;
-
-                Thread.Sleep(50);
-            }
         }
 
         private void Test_Click(object sender, EventArgs e)
@@ -250,53 +203,76 @@ namespace ESI.UI.Pages
                     {
                         if (rand.Next(20) == 0)
                         {
-                            var testInfo = new DefectInfo
+                            List<DefectInfo> defectInfos = new List<DefectInfo>();
+                            int loop = rand.Next(1, 5);
+                            while (loop-- > 0)
                             {
-                                Index = yValue / 50000,
-                                InspectionTime = DateTime.Now,
-                                Judgement = (DefectJudge)Enum.GetValues(typeof(DefectJudge)).GetValue(rand.Next(1, 4)),
-                                DefectLevel = rand.Next(1, 6),
-                                DefectType = (DefectTypes)rand.Next(1, 6),
-                                CameraName = rand.Next(2) == 0 ? "Upper" : "Lower",
-                                Lane = 1
-                            };
+                                var testInfo = new DefectInfo
+                                {
+                                    InspectionTime = DateTime.Now,
+                                    Judgement = (DefectJudge)Enum.GetValues(typeof(DefectJudge)).GetValue(rand.Next(1, 4)),
+                                    DefectLevel = rand.Next(1, 6),
+                                    DefectType = (DefectTypes)rand.Next(1, 6),
+                                    CameraName = rand.Next(2) == 0 ? "Upper" : "Lower",
+                                    Lane = 1
+                                };
+                                testInfo.Index = testInfo.GetHashCode();
 
-                            testInfo.SetFeatureDataType(FeatureTypes.X, typeof(float));
-                            testInfo.SetFeatureDataType(FeatureTypes.Y, typeof(float));
-                            testInfo.SetFeatureDataType(FeatureTypes.Width, typeof(float));
-                            testInfo.SetFeatureDataType(FeatureTypes.Height, typeof(float));
-                            testInfo.SetFeatureDataType(FeatureTypes.LocalImagePath, typeof(string));
+                                testInfo.SetFeatureDataType(FeatureTypes.X, typeof(float));
+                                testInfo.SetFeatureDataType(FeatureTypes.Y, typeof(float));
+                                testInfo.SetFeatureDataType(FeatureTypes.Width, typeof(float));
+                                testInfo.SetFeatureDataType(FeatureTypes.Height, typeof(float));
+                                testInfo.SetFeatureDataType(FeatureTypes.LocalImagePath, typeof(string));
 
-                            testInfo.SetFeatureValue(FeatureTypes.X, rand.Next(16383));            // TODO: maximage width 받을 것
-                            testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
-                            testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
-                            testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
+                                testInfo.SetFeatureValue(FeatureTypes.X, rand.Next(16384));            // TODO: maximage width 받을 것
+                                testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
+                                testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
+                                testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
 
-                            if (File.Exists(@"Y:\TestImg.bmp"))
-                                testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, @"Y:\TestImg.bmp");
-                            else
-                                testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
+                                if (File.Exists(@"Y:\TestImg.bmp"))
+                                    testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, @"Y:\TestImg.bmp");
+                                else
+                                    testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
 
-                            _dfsQueue.Enqueue(testInfo);
+                                _defectCounts[testInfo.DefectType]++;
+
+                                defectInfos.Add(testInfo);
+                                //_dfsQueue.Enqueue(testInfo);
+                            }
+
+                            BeginInvoke(new Action(() =>
+                            {
+                                DefectInfoContainerControl.AddDefectInfo(defectInfos);
+                                DefectMapControl.AddCoordinate(defectInfos);
+
+                                lblDefectSummaryPinholeValue.Text = $"{_defectCounts[DefectTypes.Pinhole]}ea";
+                                lblDefectSummaryDentValue.Text = $"{_defectCounts[DefectTypes.Dent]}ea";
+                                lblDefectSummaryCraterValue.Text = $"{_defectCounts[DefectTypes.Crater]}ea";
+                                lblDefectSummaryIslandValue.Text = $"{_defectCounts[DefectTypes.Island]}ea";
+                                lblDefectSummaryDragValue.Text = $"{_defectCounts[DefectTypes.Drag]}ea";
+                            }));
+
+                            UpperDrawBoxControl.SetOverlay(new List<OverlayGraphic> { new OverlayGraphic(new Point(30, 30), new Point(200, 200)) });
+                            LowerDrawBoxControl.SetOverlay(new List<OverlayGraphic> { new OverlayGraphic(new Point(30, 30), new Point(200, 200)) });
                         }
 
                         float testLeftUpperMismatch = (rand.Next(1700, 1800) / 100f);
                         float testRightUpperMismatch = (rand.Next(1200, 1300) / 100f);
                         float testLeftLowerMismatch = (rand.Next(1800, 1950) / 100f);
                         float testRightLowerMismatch = (rand.Next(1111, 1222) / 100f);
+                        float testUpperMismatch = Math.Abs(testLeftUpperMismatch - testRightUpperMismatch);
+                        float testLowerMismatch = Math.Abs(testLeftLowerMismatch - testRightLowerMismatch);
 
                         float testCenterLowerMismatch = (rand.Next(1900, 2150) / 100f);
                         float testCenterUpperMismatch = (rand.Next(2300, 2550) / 100f);
-                        float testCenterMismatch = Math.Abs(testCenterUpperMismatch - testCenterLowerMismatch);
 
                         SideMismatchGraphControl.AddData(0, testLeftUpperMismatch);
                         SideMismatchGraphControl.AddData(1, testRightUpperMismatch);
                         SideMismatchGraphControl.AddData(2, testLeftLowerMismatch);
                         SideMismatchGraphControl.AddData(3, testRightLowerMismatch, true);
                         
-                        CenterMismatchGraphControl.AddData(0, testCenterLowerMismatch);
-                        CenterMismatchGraphControl.AddData(1, testCenterUpperMismatch, true);
-                        CenterMismatchGraphControl.AddData(2, testCenterMismatch, true);
+                        CenterMismatchGraphControl.AddData(0, testUpperMismatch);
+                        CenterMismatchGraphControl.AddData(1, testLowerMismatch, true);
 
                         DefectMapControl.MaximumY = yValue + 50000;
 

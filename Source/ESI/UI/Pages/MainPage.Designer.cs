@@ -383,7 +383,7 @@ namespace ESI.UI.Pages
             this.tlpMismatchLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             this.tlpMismatchLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tlpMismatchLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpMismatchLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tlpMismatchLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
             this.tlpMismatchLayout.Controls.Add(this.tlpUpperMismatch, 0, 0);
             this.tlpMismatchLayout.Controls.Add(this.btnUpperJudgement, 2, 0);
             this.tlpMismatchLayout.Controls.Add(this.tlpLowerMismatch, 3, 0);
@@ -1109,7 +1109,7 @@ namespace ESI.UI.Pages
             this.lblMismatchChart2.Size = new System.Drawing.Size(432, 35);
             this.lblMismatchChart2.TabIndex = 10;
             this.lblMismatchChart2.Tag = "";
-            this.lblMismatchChart2.Text = "COATING WIDTH";
+            this.lblMismatchChart2.Text = "MISMATCH";
             this.lblMismatchChart2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pnlMismatchChart1

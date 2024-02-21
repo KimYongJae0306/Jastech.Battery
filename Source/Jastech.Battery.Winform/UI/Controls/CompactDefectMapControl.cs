@@ -116,7 +116,9 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         public void AddCoordinate(List<DefectInfo> defectInfos)
         {
+            dpnlMapArea.SuspendLayout();
             defectInfos.ForEach(defectInfo => AddCoordinate(defectInfo));
+            dpnlMapArea.ResumeLayout(true);
         }
 
         private PointF GetScaledLocation(PointF coordinates, float ImageMaxWidth /*추후 모델에서 가져올 것*/)

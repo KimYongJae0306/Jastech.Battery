@@ -3,6 +3,7 @@ using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform.Helper;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Jastech.Battery.Winform.UI.Controls
@@ -67,16 +68,13 @@ namespace Jastech.Battery.Winform.UI.Controls
             defectInfoControl.Size = controlSize;
             defectInfoControl.Location = controlLocation;
             pnlContainer.Controls.Add(defectInfoControl);
-
-            if (IsVertical)
-                pnlContainer.VerticalScroll.Value = pnlContainer.VerticalScroll.Maximum;
-            else
-                pnlContainer.HorizontalScroll.Value = pnlContainer.HorizontalScroll.Maximum;
         }
 
         public void AddDefectInfo(List<DefectInfo> defectInfos)
         {
+            pnlContainer.SuspendLayout();
             defectInfos.ForEach(defectInfo => AddDefectInfo(defectInfo));
+            pnlContainer.ResumeLayout(true);
         }
 
         public void Clear()

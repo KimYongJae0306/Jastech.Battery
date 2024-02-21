@@ -2,10 +2,10 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace Jastech.Battery.Winform.UI.Controls
@@ -18,7 +18,9 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private readonly Color _nonSelectedColor = Color.FromArgb(52, 52, 52);
 
-        public object _lock = new object();
+        private List<OverlayGraphic> _overlays = new List<OverlayGraphic>();
+
+        private object _lock = new object();
         #endregion
 
         #region 속성
@@ -77,6 +79,29 @@ namespace Jastech.Battery.Winform.UI.Controls
                 DrawTexture(textureID);;
                 DisplayControl.SwapBuffers();
             }
+        }
+
+        public void SetOverlay(List<OverlayGraphic> overlays)
+        {
+            _overlays = overlays;
+        }
+
+        private void DrawOverlay()
+        {
+            GL.GenFramebuffers(1, out int frameBufferID);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, frameBufferID);
+
+            GL.Color3(255, 0, 0);
+            foreach (var overlay in _overlays)
+            {
+                GL.Begin(PrimitiveType.LineStrip);
+                GL.Vertex2(overlay.Start.X, overlay.Start.Y);
+                GL.Vertex2(overlay.End.X, overlay.Start.Y);
+                GL.Vertex2(overlay.End.X, overlay.End.Y);
+                GL.Vertex2(overlay.Start.X, overlay.End.Y);
+                GL.End();
+            }
+            GL.Color3(0, 0, 0);
         }
 
         private void UpdateViewPort()
@@ -209,6 +234,9 @@ namespace Jastech.Battery.Winform.UI.Controls
 
         private void DisplayControl_MouseWheel(object sender, MouseEventArgs e)
         {
+            float imageX = e.X / ZoomScale - OffsetX;
+            float imageY = e.Y / ZoomScale - OffsetY;
+
             var zoomAmount = e.Delta * (float)Math.Sqrt(Math.Abs(e.Delta)) / 10000;
             ZoomScale += zoomAmount;
 
@@ -216,8 +244,6 @@ namespace Jastech.Battery.Winform.UI.Controls
             if (ZoomScale < minimumScale)
                 ZoomScale = minimumScale;
 
-            float imageX = e.X / ZoomScale - OffsetX;
-            float imageY = e.Y / ZoomScale - OffsetY;
             OffsetX = e.X / ZoomScale - imageX;
             OffsetY = e.Y / ZoomScale - imageY;
 
@@ -330,5 +356,18 @@ namespace Jastech.Battery.Winform.UI.Controls
             }
         }
         #endregion
+    }
+
+    public class OverlayGraphic
+    {
+        public Point Start { get; set; }
+        
+        public Point End { get; set; }
+
+        public OverlayGraphic(Point start, Point end)
+        {
+            this.Start = start;
+            this.End = end;
+        }
     }
 }
