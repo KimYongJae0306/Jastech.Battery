@@ -118,6 +118,30 @@ namespace Jastech.Battery.Winform.UI.Controls
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
         }
 
+        private void SetOrthographicalProjection()
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(
+                left: 0,
+                right: DisplayControl.Width,
+                bottom: DisplayControl.Height,
+                top: 0,
+                zNear: -1,
+                zFar: 1);
+        }
+
+        private void SetTranslatedModelView()
+        {
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            Matrix4 scale = Matrix4.CreateScale(ZoomScale, ZoomScale, 0);
+            Matrix4 translationOffset = Matrix4.CreateTranslation(OffsetX * ZoomScale, OffsetY * ZoomScale, 0);
+
+            Matrix4 modelViewMatrix = scale * translationOffset;
+            GL.LoadMatrix(ref modelViewMatrix);
+        }
+
         private void DrawTexture(int textureID)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -141,30 +165,6 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             GL.TexCoord2(textureCoord.X, textureCoord.Y);
             GL.Vertex2(vertextCoord.X, vertextCoord.Y);
-        }
-
-        private void SetOrthographicalProjection()
-        {
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(
-                left: 0,
-                right: DisplayControl.Width,
-                bottom: DisplayControl.Height,
-                top: 0,
-                zNear: -1,
-                zFar: 1);
-        }
-
-        private void SetTranslatedModelView()
-        {
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Matrix4 scale = Matrix4.CreateScale(ZoomScale, ZoomScale, 0);
-            Matrix4 translationOffset = Matrix4.CreateTranslation(OffsetX * ZoomScale, OffsetY * ZoomScale, 0);
-
-            Matrix4 modelViewMatrix = scale * translationOffset;
-            GL.LoadMatrix(ref modelViewMatrix);
         }
 
         public void SetImage(Bitmap bmp, bool dataDispose = true)

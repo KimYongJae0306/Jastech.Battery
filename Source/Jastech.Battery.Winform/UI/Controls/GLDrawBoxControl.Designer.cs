@@ -198,6 +198,7 @@
             // btnDeleteFigure
             // 
             this.btnDeleteFigure.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.btnDeleteFigure.BackgroundImage = global::Jastech.Battery.Winform.Properties.Resources.Delete_White;
             this.btnDeleteFigure.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnDeleteFigure.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDeleteFigure.Location = new System.Drawing.Point(0, 160);
@@ -211,6 +212,7 @@
             // btnFitZoom
             // 
             this.btnFitZoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.btnFitZoom.BackgroundImage = global::Jastech.Battery.Winform.Properties.Resources.Fit_White;
             this.btnFitZoom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnFitZoom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnFitZoom.Location = new System.Drawing.Point(0, 120);
@@ -224,6 +226,7 @@
             // btnDrawLine
             // 
             this.btnDrawLine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.btnDrawLine.BackgroundImage = global::Jastech.Battery.Winform.Properties.Resources.Line_arrow_White;
             this.btnDrawLine.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnDrawLine.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDrawLine.Location = new System.Drawing.Point(0, 80);
@@ -237,6 +240,7 @@
             // btnDrawNone
             // 
             this.btnDrawNone.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.btnDrawNone.BackgroundImage = global::Jastech.Battery.Winform.Properties.Resources.Pointer_White;
             this.btnDrawNone.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnDrawNone.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDrawNone.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
@@ -250,6 +254,7 @@
             // 
             // btnPanning
             // 
+            this.btnPanning.BackgroundImage = global::Jastech.Battery.Winform.Properties.Resources.Panning_White;
             this.btnPanning.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnPanning.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnPanning.Location = new System.Drawing.Point(0, 40);
