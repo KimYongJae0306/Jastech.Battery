@@ -11,8 +11,8 @@ namespace Jastech.Battery.Structure.Data
         {
             { DefectTypes.Undefined, Color.Red },
             // 표면 형상계 (극판)
-            { DefectTypes.PinHole, Color.DodgerBlue},
-            { DefectTypes.Crater, Color.DodgerBlue},
+            { DefectTypes.Pinhole, Color.DodgerBlue},
+            { DefectTypes.Crater, Color.LightCoral},
             { DefectTypes.Dent, Color.White},
             { DefectTypes.Island, Color.Orange},
             { DefectTypes.Drag, Color.Lime},
@@ -21,6 +21,16 @@ namespace Jastech.Battery.Structure.Data
         #endregion
 
         #region 열거자
+        [Flags]
+        public enum DefectJudge
+        {
+            None = 0,
+            Good = 1 << 1,
+            NG = 1 << 2,
+            Acceptable = 1 << 3,
+            Passed = 1 << 4,
+        }
+
         public enum FeatureTypes        // TODO : DefectInfo Feature Dictionary와 함께 정리
         {
             X,                      // X좌표
@@ -47,10 +57,11 @@ namespace Jastech.Battery.Structure.Data
 
             LocalImagePath,
         }
+
         public enum DefectTypes
         {
             Undefined,
-            PinHole,
+            Pinhole,
             Crater,
             Dent,
             Island,

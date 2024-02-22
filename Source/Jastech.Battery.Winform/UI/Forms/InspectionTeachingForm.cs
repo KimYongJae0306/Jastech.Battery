@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace Jastech.Battery.Winform.UI.Forms
 {
@@ -24,11 +25,10 @@ namespace Jastech.Battery.Winform.UI.Forms
         private Color _selectedColor;
 
         private Color _nonSelectedColor;
-
-        private Mat _orgMat { get; set; } = null;
         #endregion
 
         #region 속성
+        private Mat OrgMat { get; set; } = null;
 
         //public InspDirection InspDirection { get; set; }
 
@@ -114,8 +114,8 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            _orgMat?.Dispose();
-            _orgMat = null;
+            OrgMat?.Dispose();
+            OrgMat = null;
 
             ParamTrackingLogger.ClearChangedLog();
             this.Close();
@@ -132,7 +132,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                //_orgMat?.Dispose();
+                //OrgMat?.Dispose();
                 //OrgMat = null;
 
                 //OrgMat = new Mat(dlg.FileName, ImreadModes.Grayscale);

@@ -20,6 +20,8 @@ namespace Jastech.Battery.Structure.Data
 
         public DefectTypes DefectType { get; set; }
 
+        public DefectJudge Judgement { get; set; }
+
         public int Lane { get; set; }
 
         public string CameraName { get; set; }
@@ -29,8 +31,6 @@ namespace Jastech.Battery.Structure.Data
         public SizeF Size => GetSize();
 
         public int DefectLevel { get; set; }
-
-        public string Judgement { get; set; }       // TODO : String -> Enum OK,NG(진성, 가성)
         #endregion
 
         #region 이벤트
@@ -43,9 +43,9 @@ namespace Jastech.Battery.Structure.Data
         #endregion
 
         #region 메서드
-        public PointF GetCoord() => new PointF(GetFeatureValue(FeatureTypes.X), GetFeatureValue(FeatureTypes.Y));
+        private PointF GetCoord() => new PointF(GetFeatureValue(FeatureTypes.X), GetFeatureValue(FeatureTypes.Y));
 
-        public SizeF GetSize() => new SizeF(GetFeatureValue(FeatureTypes.Width), GetFeatureValue(FeatureTypes.Height));
+        private SizeF GetSize() => new SizeF(GetFeatureValue(FeatureTypes.Width), GetFeatureValue(FeatureTypes.Height));
 
         public dynamic GetFeatureValue(FeatureTypes featureType)
         {

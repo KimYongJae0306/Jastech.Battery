@@ -1,5 +1,6 @@
 ﻿using Jastech.Battery.Structure.Data;
 using Jastech.Framework.Winform.Controls;
+using OpenTK.Graphics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,15 +14,21 @@ namespace Jastech.Battery.Winform.UI.Controls
     public partial class CompactDefectMapControl : UserControl
     {
         #region 필드
-        private RectangleF DisplayArea; // TODO : _소문자
+        private RectangleF _displayArea;
+
+        private float _pixelResolution = 20; // TODO : MaterialInfo에서 가져올 것
 
         private float _maximumY = 50000;
+
+        private int _selectedDefectIndex = -1;
+
+        private List<DefectInfo> _defectInfos = new List<DefectInfo>();
         #endregion
 
         #region 속성
-        private DoubleBufferedPanel pnlMapArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };     // TODO : Load 이벤트로 빼기, 대문자로
+        private DoubleBufferedPanel dpnlMapArea { get; set; } = null;
 
-        public int maximumMeter = 600;
+        public int MaximumMeter { get; set; } = 600; // TODO: MaterialInfo에 넣기
 
         public float MaximumY {
             get
@@ -33,11 +40,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 _maximumY = value;
                 Invalidate();
             }
-        } // TODO: Resolution 참고하여 Meter 단위로 환산, Model에서 가져올 것
-
-        public List<DefectInfo> _defectInfos = new List<DefectInfo>();
-
-        public double PixelResolution = 20; // TODO : Config에서 가져올 것
+        } // TODO: MaterialInfo 참고하여 Meter 단위로 환산, Model에서 가져올 것
         #endregion
 
         #region 이벤트
@@ -58,95 +61,152 @@ namespace Jastech.Battery.Winform.UI.Controls
         #region 메서드
         private void CompactDefectMapControl_Load(object sender, EventArgs e)
         {
-            DisplayArea = GetDisplayArea();
-            pnlMapArea.Paint += pnlMapArea_Paint;
-            Controls.Add(pnlMapArea);
+            dpnlMapArea = new DoubleBufferedPanel { Dock = DockStyle.Fill };
+
+            _displayArea = GetDisplayArea();
+            SelectedDefectChanged += ChangeSelectedDefect;
+            dpnlMapArea.Paint += dpnlMapArea_Paint;
+            dpnlMapArea.MouseClick += dpnlMapArea_MouseClick;
+            Controls.Add(dpnlMapArea);
         }
 
         public void Clear()
         {
-            MaximumY = 0;
+            _maximumY = 0;
+            _selectedDefectIndex = -1;
             _defectInfos.Clear();
-            pnlMapArea.Invalidate();
+            dpnlMapArea.Invalidate();
         }
 
         private RectangleF GetDisplayArea()
         {
-            return new RectangleF(new PointF(pnlMapArea.Left + 70, pnlMapArea.Top + 20), new SizeF(pnlMapArea.DisplayRectangle.Width - 90, pnlMapArea.DisplayRectangle.Height - 60));
+            (int left, int top, int right, int bottom) margin = (70, 20, 90, 60);
+            var location = new PointF(dpnlMapArea.Left + margin.left, dpnlMapArea.Top + margin.top);
+            var size = new SizeF(dpnlMapArea.DisplayRectangle.Width - margin.right, dpnlMapArea.DisplayRectangle.Height - margin.bottom);
+
+            return new RectangleF(location, size);
         }
 
         private void DrawDefectShape(Graphics g, DefectInfo defectInfo)
         {
-            var coord = GetScaledLocation(defectInfo.GetCoord(), ImageMaxWidth: 16383);
+            var scaledDefectLocation = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16384);
+            var brush = new SolidBrush(Colors[defectInfo.DefectType]);
+            var shapeSize = 7f;
+            var shapeArea = new RectangleF(scaledDefectLocation.X, scaledDefectLocation.Y - shapeSize / 2, shapeSize, shapeSize);
+            g.FillEllipse(brush, shapeArea);
 
-            var color = Colors[defectInfo.DefectType];
-            var brush = new SolidBrush(color);
-            var area = new RectangleF(coord.X, coord.Y - 3.5f, 7, 7);
+            if (defectInfo.Index == _selectedDefectIndex)
+            {
+                var ellipseSize = 13f;
+                var ellipseMargin = (ellipseSize - shapeArea.Width) / 2f ;
+                Pen dashPen = new Pen(Color.White, 1) { DashStyle = DashStyle.Dash, DashOffset = ellipseMargin };
+                g.DrawEllipse(dashPen, shapeArea.X - ellipseMargin, shapeArea.Y - ellipseMargin, ellipseSize, ellipseSize);
 
-            g.DrawString($"{defectInfo.DefectType}", Font, new SolidBrush(Color.Crimson), new PointF(coord.X + 4.5f, coord.Y + 4.5f));
-            g.FillEllipse(brush, area);
+                var stringLocation = new PointF(scaledDefectLocation.X + ellipseSize / 2, scaledDefectLocation.Y + ellipseSize / 2);
+                g.DrawString($"{defectInfo.DefectType}", base.Font, brush, stringLocation);
+            }
         }
 
         public void AddCoordinate(DefectInfo defectInfo)
         {
             _defectInfos.Add(defectInfo);
-            var defectCoord = defectInfo.GetCoord();
-            var defectSize = defectInfo.GetSize();
-            if (defectCoord.Y + defectSize.Height > MaximumY)
-                MaximumY = defectCoord.Y + defectSize.Height;
+            if (defectInfo.Coord.Y + defectInfo.Size.Height > MaximumY)
+                MaximumY = defectInfo.Coord.Y + defectInfo.Size.Height;
         }
 
         public void AddCoordinate(List<DefectInfo> defectInfos)
         {
+            dpnlMapArea.SuspendLayout();
             defectInfos.ForEach(defectInfo => AddCoordinate(defectInfo));
+            dpnlMapArea.ResumeLayout(true);
         }
 
         private PointF GetScaledLocation(PointF coordinates, float ImageMaxWidth /*추후 모델에서 가져올 것*/)
         {
             return new PointF
             {
-                X = Convert.ToSingle(DisplayArea.Left + coordinates.X * ((DisplayArea.Width - 9f) / ImageMaxWidth) + 1f),
-                Y = Convert.ToSingle(DisplayArea.Top + DisplayArea.Height - (coordinates.Y * DisplayArea.Height / MaximumY)),
+                X = Convert.ToSingle(_displayArea.Left + coordinates.X * ((_displayArea.Width - 9f) / ImageMaxWidth) + 1f),
+                Y = Convert.ToSingle(_displayArea.Top + _displayArea.Height - (coordinates.Y * _displayArea.Height / MaximumY)),
             };
         }
 
-        private void pnlMapArea_Paint(object sender, PaintEventArgs e)
+        private void dpnlMapArea_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.TranslateTransform(pnlMapArea.AutoScrollPosition.X, pnlMapArea.AutoScrollPosition.Y);
-            DisplayArea = GetDisplayArea();
+            _displayArea = GetDisplayArea();
 
-            // TODO : 주석 남기지 말고 Block 단위 메서드 추출
+            dpnlMapArea.SuspendLayout();
+            e.Graphics.TranslateTransform(dpnlMapArea.AutoScrollPosition.X, dpnlMapArea.AutoScrollPosition.Y);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            // Draw Side Lines
-            Pen sideLinePen = new Pen(Color.FromArgb(208,208,208))
+            DrawSideLines(e.Graphics);
+            DrawGridAndLength(e.Graphics);
+            foreach (var defectInfo in _defectInfos)
+                DrawDefectShape(e.Graphics, defectInfo);
+            dpnlMapArea.ResumeLayout(true);
+        }
+
+        private void dpnlMapArea_MouseClick(object sender, MouseEventArgs e)
+        {
+            foreach (var defectInfo in _defectInfos)
             {
-                Width = 5,
-                StartCap = LineCap.ArrowAnchor
-            };
-            e.Graphics.DrawLine(sideLinePen, new Point((int)DisplayArea.Left, 5), new Point((int)DisplayArea.Left, Height));
-            e.Graphics.DrawLine(sideLinePen, new Point((int)DisplayArea.Right, 5), new Point((int)DisplayArea.Right, Height));
+                var coord = GetScaledLocation(defectInfo.Coord, ImageMaxWidth: 16384);
+                float shapeSize = 7;
+                var shapeArea = new RectangleF(coord.X, coord.Y - shapeSize / 2, shapeSize, shapeSize);
+                if (shapeArea.Contains(e.Location))
+                {
+                    SelectedDefectChanged?.Invoke(defectInfo.Index);
+                    dpnlMapArea.Invalidate();
+                    break;
+                }
+            }
+        }
 
-            // Drawing Grid and Length
-            double maximumHeight = MaximumY / 1000;
-            double gridMargin = maximumHeight / 10;
-            Font stringFont = new Font("맑은 고딕", 9, FontStyle.Bold);
+        private void DrawGridAndLength(Graphics g)
+        {
+            int gridCount = 10;
+            float maximumHeight = MaximumY / 1000;
+            float gridMargin = maximumHeight / gridCount;
             var dashPen = new Pen(Color.FromArgb(208, 208, 208))
             {
                 DashStyle = DashStyle.Dash,
                 Width = 0.3f
             };
-            for (int count = 0; count <= 10; count++)
+            for (int count = 0; count <= gridCount; count++)
             {
-                int drawingHeight = (int)(count * (DisplayArea.Height / 10)) + (int)DisplayArea.Top;
-                
-                e.Graphics.DrawLine(dashPen, new Point((int)DisplayArea.Left, drawingHeight), new Point((int)DisplayArea.Left + (int)DisplayArea.Width, drawingHeight));
-                e.Graphics.DrawString($"{((maximumHeight - (count * gridMargin)) * PixelResolution) / 1000:N2}m", stringFont, Brushes.White, new PointF(5, drawingHeight - Font.Size / 2));
-            }
+                int drawingHeight = (int)(count * (_displayArea.Height / gridCount)) + (int)_displayArea.Top;
 
-            pnlMapArea.SuspendLayout();
-            foreach (var defectInfo in _defectInfos)
-                DrawDefectShape(e.Graphics, defectInfo);
-            pnlMapArea.ResumeLayout(true);
+                var lineStartLocation = new Point((int)_displayArea.Left, drawingHeight);
+                var lineEndLocation = new Point((int)_displayArea.Left + (int)_displayArea.Width, drawingHeight);
+                g.DrawLine(dashPen, lineStartLocation, lineEndLocation);
+
+                var stringLocation = new PointF(5, drawingHeight - Font.Size / 2);
+                var currentHeight = (maximumHeight - (count * gridMargin)) * _pixelResolution;
+                g.DrawString($"{currentHeight / 1000:N2}m", base.Font, Brushes.White, stringLocation);
+            }
+        }
+
+        private void DrawSideLines(Graphics g)
+        {
+            Pen sideLinePen = new Pen(Color.FromArgb(208, 208, 208))
+            {
+                Width = 5,
+                StartCap = LineCap.ArrowAnchor
+            };
+
+            var horizontalOffset = 5;
+            var leftLineStartLocation = new Point((int)_displayArea.Left, horizontalOffset);
+            var rightLineStartLocation = new Point((int)_displayArea.Right, horizontalOffset);
+            var leftLineEndLocation = new Point((int)_displayArea.Left, Height);
+            var rightLineEndLocation = new Point((int)_displayArea.Right, Height);
+
+            g.DrawLine(sideLinePen, leftLineStartLocation, leftLineEndLocation);
+            g.DrawLine(sideLinePen, rightLineStartLocation, rightLineEndLocation);
+        }
+
+        public void ChangeSelectedDefect(int index)
+        { 
+            _selectedDefectIndex = index;
+            dpnlMapArea.Invalidate();
         }
         #endregion
     }

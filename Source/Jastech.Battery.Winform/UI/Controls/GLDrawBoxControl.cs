@@ -1,98 +1,137 @@
 ﻿using Jastech.Framework.Winform.Controls;
-using Jastech.Framework.Winform.Data;
 using OpenTK;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace Jastech.Battery.Winform.UI.Controls
 {
     public partial class GLDrawBoxControl : UserControl
     {
 
+        #region 필드
         private readonly Color _selectedColor = Color.FromArgb(104, 104, 104);
 
         private readonly Color _nonSelectedColor = Color.FromArgb(52, 52, 52);
+
+        private List<OverlayGraphic> _overlays = new List<OverlayGraphic>();
+
+        private object _lock = new object();
+        #endregion
+
+        #region 속성
+        private PointF PanningStartPoint = new PointF();
+
         public DisplayMode DisplayMode { get; set; } = DisplayMode.None;
-        public object _lock = new object();
 
-        private double ZoomScale { get; set; } = 1.0;
+        private float ZoomScale { get; set; } = 1.0f;
 
-        private double OffsetX { get; set; } = 0.0;
+        private float OffsetX { get; set; } = 0f;
 
-        private double OffsetY { get; set; } = 0.0;
+        private float OffsetY { get; set; } = 0f;
 
-        GLControl glDisplay { get; set; } = null;
+        GLControl DisplayControl { get; set; } = null;
 
         public Bitmap OrgImage { get; set; } = null;
 
         private int ImageWidth { get; set; } = 0;
 
         private int ImageHeight { get; set; } = 0;
+        #endregion
 
+        #region 생성자
         public GLDrawBoxControl()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region 메서드
         private void GLDrawBoxControl_Load(object sender, EventArgs e)
         {
-            glDisplay = new GLControl();
-            glDisplay.BackColor = Color.FromArgb(26,255,26);
-            glDisplay.Dock = DockStyle.Fill;
-            glDisplay.Paint += glDisplay_Paint;
-            glDisplay.MouseWheel += glDisplay_MouseWheel;
-            pnlDisplay.Controls.Add(glDisplay);
+            DisplayControl = new GLControl { Dock = DockStyle.Fill };
+            DisplayControl.Paint += DisplayControl_Paint;
+            DisplayControl.MouseWheel += DisplayControl_MouseWheel;
+            DisplayControl.MouseDown += DisplayControl_MouseDown;
+            DisplayControl.MouseMove += DisplayControl_MouseMove;
+            pnlDisplay.Controls.Add(DisplayControl);
 
-            GL.ClearColor(Color.Red);
+            GL.ClearColor(Color.FromArgb(26, 26, 26));
+            SetImage(new Bitmap(1, 1));
         }
 
-        private void glDisplay_MouseWheel(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void glDisplay_Paint(object sender, PaintEventArgs e)
+        private void DisplayControl_Paint(object sender, PaintEventArgs e)
         {
             lock (_lock)
             {
                 if (OrgImage == null)
                     return;
 
-                glDisplay.MakeCurrent();
+                DisplayControl.MakeCurrent();
                 UpdateViewPort();
+                SetTranslatedModelView();
+                SetOrthographicalProjection();
                 GetTexture(out int textureID);
-                DrawTexture(textureID);
-                glDisplay.SwapBuffers();
+                DrawTexture(textureID);;
+                DisplayControl.SwapBuffers();
             }
+        }
+
+        public void SetOverlay(List<OverlayGraphic> overlays)
+        {
+            _overlays = overlays;
+        }
+
+        private void DrawOverlay()
+        {
+            GL.GenFramebuffers(1, out int frameBufferID);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, frameBufferID);
+
+            GL.Color3(255, 0, 0);
+            foreach (var overlay in _overlays)
+            {
+                GL.Begin(PrimitiveType.LineStrip);
+                GL.Vertex2(overlay.Start.X, overlay.Start.Y);
+                GL.Vertex2(overlay.End.X, overlay.Start.Y);
+                GL.Vertex2(overlay.End.X, overlay.End.Y);
+                GL.Vertex2(overlay.Start.X, overlay.End.Y);
+                GL.End();
+            }
+            GL.Color3(0, 0, 0);
         }
 
         private void UpdateViewPort()
         {
+            RectangleF viewRect = new RectangleF(0, 0, DisplayControl.Width, DisplayControl.Height);
+            GL.Viewport(Rectangle.Round(viewRect));
+        }
+
+        private void SetOrthographicalProjection()
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(
+                left: 0,
+                right: DisplayControl.Width,
+                bottom: DisplayControl.Height,
+                top: 0,
+                zNear: -1,
+                zFar: 1);
+        }
+
+        private void SetTranslatedModelView()
+        {
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
+            Matrix4 scale = Matrix4.CreateScale(ZoomScale, ZoomScale, 0);
+            Matrix4 translationOffset = Matrix4.CreateTranslation(OffsetX * ZoomScale, OffsetY * ZoomScale, 0);
 
-            float widthScaleFactor = 2f;
-            float heightScaleFactor = 2f;
-            float testWidth = DisplayRectangle.Width * widthScaleFactor;
-            float testHeight = DisplayRectangle.Height * heightScaleFactor;
-
-            float testX = 0 - DisplayRectangle.Width;
-            float testY = 0 - DisplayRectangle.Y;
-
-            RectangleF viewRect = new RectangleF(testX, testY, testWidth, testHeight);
-            GL.Viewport(Rectangle.Round(viewRect));
+            Matrix4 modelViewMatrix = scale * translationOffset;
+            GL.LoadMatrix(ref modelViewMatrix);
         }
 
         private void GetTexture(out int textureID)
@@ -130,37 +169,24 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.PushMatrix();
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(
-                left: 1,
-                bottom: 1,
-                right: 1,
-                top: 1,
-                zNear: -1,
-                zFar: 1);
-            GL.PushMatrix();
-
-            GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, textureID);
-
+            GL.Enable(EnableCap.Texture2D);
             GL.Begin(PrimitiveType.Quads);
-            GL.TexCoord2(0, 0); GL.Vertex2(0, 0);
-            GL.TexCoord2(1, 0); GL.Vertex2(1, 0);
-            GL.TexCoord2(1, 1); GL.Vertex2(1, -1);
-            GL.TexCoord2(0, 1); GL.Vertex2(0, -1);
+
+            PlaceVertex(new Point(0, 0), new Point(0, 0));
+            PlaceVertex(new Point(1, 0), new Point(DisplayControl.Width, 0));
+            PlaceVertex(new Point(1, 1), new Point(DisplayControl.Width, DisplayControl.Height));
+            PlaceVertex(new Point(0, 1), new Point(0, DisplayControl.Height));
+
             GL.End();
-
             GL.Disable(EnableCap.Texture2D);
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PopMatrix();
-            GL.MatrixMode(MatrixMode.Modelview);
-
             GL.DeleteTexture(textureID);
+        }
+
+        private static void PlaceVertex(Point textureCoord, Point vertextCoord)
+        {
+            GL.TexCoord2(textureCoord.X, textureCoord.Y);
+            GL.Vertex2(vertextCoord.X, vertextCoord.Y);
         }
 
         public void SetImage(Bitmap bmp, bool dataDispose = true)
@@ -184,35 +210,85 @@ namespace Jastech.Battery.Winform.UI.Controls
                 ImageHeight = bmp.Height;
             }
 
-            glDisplay.Invalidate();
+            DisplayControl.Invalidate();
         }
 
-        public void DisableFunctionButtons() { }
-        public void EnableInteractive(bool temp) { }
-        public void FitZoom() { }
+        public void DisableFunctionButtons()
+        {
+            tlpMainLayout.Controls.Remove(tlpFunctionButtonsLayout);
+            tlpMainLayout.ColumnStyles.RemoveAt(0);
+            tlpMainLayout.ColumnCount--;
+
+            tlpDisplayAreaLayout.Controls.Remove(pnlGrayText);
+            tlpDisplayAreaLayout.RowStyles.RemoveAt(1);
+            tlpDisplayAreaLayout.RowCount--;
+        }
+
+        public void FitZoom()
+        {
+            ZoomScale = 1f;
+            OffsetX = 0f;
+            OffsetY = 0f;
+            DisplayControl.Invalidate();
+        }
+
+        private void DisplayControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            float imageX = e.X / ZoomScale - OffsetX;
+            float imageY = e.Y / ZoomScale - OffsetY;
+
+            var zoomAmount = e.Delta * (float)Math.Sqrt(Math.Abs(e.Delta)) / 10000;
+            ZoomScale += zoomAmount;
+
+            const float minimumScale = 0.2f;
+            if (ZoomScale < minimumScale)
+                ZoomScale = minimumScale;
+
+            OffsetX = e.X / ZoomScale - imageX;
+            OffsetY = e.Y / ZoomScale - imageY;
+
+            DisplayControl.Invalidate();
+        }
+
+        private void DisplayControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            float imageX = e.X / ZoomScale - OffsetX;
+            float imageY = e.Y / ZoomScale - OffsetY;
+            PanningStartPoint = new PointF(imageX, imageY);
+        }
+
+        private void DisplayControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (DisplayMode == DisplayMode.Panning)
+                {
+                    OffsetX = e.X / ZoomScale - PanningStartPoint.X;
+                    OffsetY = e.Y / ZoomScale - PanningStartPoint.Y;
+                }
+                DisplayControl.Invalidate();
+            }
+        }
 
         private void ctxDisplayMode_Opening(object sender, CancelEventArgs e)
         {
             MenuStripSelectedNone();
-            //if (DisplayMode == DisplayMode.None)
-            //{
-            //    menuPointerMode.Checked = true;
-            //}
-            //else if (DisplayMode == DisplayMode.Panning)
-            //{
-            //    menuPanningMode.Checked = true;
-            //}
-            //else if (DisplayMode == DisplayMode.Drawing)
-            //{
-            //    menuROIMode.Checked = true;
-            //}
+            if (DisplayMode == DisplayMode.None)
+                menuPointerMode.Checked = true;
+            else if (DisplayMode == DisplayMode.Panning)
+                menuPanningMode.Checked = true;
+            else if (DisplayMode == DisplayMode.Drawing)
+                menuROIMode.Checked = true;
         }
 
         private void MenuStripSelectedNone()
         {
-            //menuPointerMode.Checked = false;
-            //menuPanningMode.Checked = false;
-            //menuROIMode.Checked = false;
+            menuPointerMode.Checked = false;
+            menuPanningMode.Checked = false;
+            menuROIMode.Checked = false;
         }
 
         private void menuPointerMode_Click(object sender, EventArgs e)
@@ -266,6 +342,7 @@ namespace Jastech.Battery.Winform.UI.Controls
         {
             FitZoom();
         }
+
         private void menuSaveImage_Click(object sender, EventArgs e)
         {
             if (OrgImage == null)
@@ -277,6 +354,20 @@ namespace Jastech.Battery.Winform.UI.Controls
             {
                 OrgImage.Save(dialog.FileName);
             }
+        }
+        #endregion
+    }
+
+    public class OverlayGraphic
+    {
+        public Point Start { get; set; }
+        
+        public Point End { get; set; }
+
+        public OverlayGraphic(Point start, Point end)
+        {
+            this.Start = start;
+            this.End = end;
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using Jastech.Battery.Structure.Data;
+using Jastech.Framework.Util.Helper;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using static Jastech.Battery.Structure.Data.DefectDefine;
+using static Jastech.Battery.Winform.UI.Controls.DefectInfoContainerControl;
 
 namespace Jastech.Battery.Winform.UI.Controls
 {
@@ -13,11 +16,7 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 이벤트
-        public event ControlClickedHandler ControlClicked;
-        #endregion
-
-        #region 델리게이트
-        public delegate void ControlClickedHandler(int index);
+        public event SelectedIndexChangedHandler SelectedDefectIndexChanged;
         #endregion
 
         #region 생성자
@@ -28,22 +27,45 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 메서드
-        public void SetDefectInfo(DefectInfo defectInfo)    // TODO : Null, 기타 예외처리 필요
+        public void SetDefectInfo(DefectInfo defectInfo)
         {
+            if(defectInfo == null)
+            {
+                Logger.Write(LogType.Error, "DefectInfo object cant not be null");
+                return;
+            }
             DefectInfo = defectInfo;
-            lblCamDirection.Text = $"{DefectInfo.CameraName}Cam";
+            lblCamDirection.Text = $"{DefectInfo.CameraName}";
             lblDefectType.Text = $"{DefectInfo.DefectType}";
             lblDefectType.ForeColor = Colors[DefectInfo.DefectType];
-            lblDefectInfo.Text = $"{DefectInfo.GetCoord()}\r\n{DefectInfo.GetSize()}";
+            lblDefectInfo.Text = $"W:{DefectInfo.Size.Width}mm, H:{DefectInfo.Size.Height}mm";
 
             string imagePath = DefectInfo.GetFeatureValue(FeatureTypes.LocalImagePath);
             if (imagePath != null)
                 pbxCropImage.Image = new Bitmap(imagePath);
         }
 
+        public void SetBorderColor()
+        {
+            pnlDefectInfoControl.BackColor = Color.FromArgb(208,52,52);
+        }
+
+        public void ResetBorderColor()
+        {
+            pnlDefectInfoControl.BackColor = Color.Transparent;
+        }
+
         private void ClickControlEvent(object sender, EventArgs e)
         {
-            ControlClicked?.Invoke(DefectInfo.Index);
+            SelectedDefectIndexChanged?.Invoke(DefectInfo.Index);
+        }
+
+        public int GetDefectIndex()
+        {
+            if (DefectInfo == null)
+                return -1;
+            else
+                return DefectInfo.Index;
         }
         #endregion
     }
