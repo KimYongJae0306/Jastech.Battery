@@ -1,4 +1,5 @@
 ﻿using Jastech.Battery.Structure;
+using Jastech.Battery.Structure.Parameters;
 using Jastech.Framework.Structure;
 using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
@@ -21,6 +22,12 @@ namespace ESI.Core
         public override void AddModelData(InspModel inspModel)
         {
             AppsInspModel appInspModel = inspModel as AppsInspModel;
+
+            for (int laneIndex = 0; laneIndex < appInspModel.LaneCount; laneIndex++)
+            {
+                CoatingParam coatingParam = new CoatingParam();
+
+            }
         }
 
         public override InspModel Load(string filePath)

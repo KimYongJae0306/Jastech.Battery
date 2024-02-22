@@ -68,6 +68,8 @@
     <Compile Include="Data\MaterialInfo.cs" />
     <Compile Include="Data\TeachingData.cs" />
     <Compile Include="ModelManager.cs" />
+    <Compile Include="Parameters\CoatingParam.cs" />
+    <Compile Include="Parameters\InspParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisionTool\AlgorithmTool.cs" />
   </ItemGroup>
@@ -77,6 +79,10 @@
       <Name>Jastech.Framework.Structure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

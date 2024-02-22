@@ -1,17 +1,17 @@
 ﻿using Jastech.Battery.Winform;
+using Jastech.Battery.Winform.Forms;
 using Jastech.Battery.Winform.Settings;
+using Jastech.Framework.Comm;
 using Jastech.Framework.Config;
 using Jastech.Framework.Device.Cameras;
 using Jastech.Framework.Device.LightCtrls;
+using Jastech.Framework.Device.LightCtrls.Darea;
+using Jastech.Framework.Device.LightCtrls.Darea.Parser;
 using Jastech.Framework.Imaging;
-using Jastech.Framework.Matrox;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform.Forms;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ESI
@@ -42,7 +42,7 @@ namespace ESI
                 CameraMil.BufferPoolCount = 400;
                 //SystemHelper.StartChecker(@"D:\ATT_Memory_Test.txt");
                 //AppsConfig.Instance().UnitCount = 1;
-        
+
                 ConfigSet.Instance().PathConfigCreated += ConfigSet_PathConfigCreated;
                 ConfigSet.Instance().OperationConfigCreated += ConfigSet_OperationConfigCreated;
                 ConfigSet.Instance().MachineConfigCreated += ConfigSet_MachineConfigCreated;
@@ -61,7 +61,7 @@ namespace ESI
                 Application.Exit();
             }
         }
-        
+
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             string message = "Application_ThreadException " + e.Exception.Message;
@@ -98,8 +98,28 @@ namespace ESI
         {
             if (ConfigSet.Instance().Operation.VirtualMode)
             {
-                var cam0 = new CameraVirtual("Cam0", 16384, 1024, ColorFormat.Gray, SensorType.Line);
-                config.Add(cam0);
+                AppsConfig.Instance().MachineName = "ESI (Virtual)";
+
+                // Initialize Config by Program Types
+                string[] typeList = Enum.GetNames(typeof(ProgramType));
+                ProgramSelectForm form = new ProgramSelectForm();
+                form.SetList(typeList);
+                form.ShowDialog();
+                AppsConfig.Instance().ProgramType = form.SelectedProgramType;
+
+                // Upper Linescanner
+                var upperCamera = new CameraVirtual("UpperCamera", 16384, 1024, ColorFormat.Gray, SensorType.Line);
+                upperCamera.OffsetX = 0;
+                upperCamera.PixelResolution_um = 3.52F;
+                upperCamera.LensScale = 0.2F;
+                config.Add(upperCamera);
+
+                // Lower Linescanner
+                var lowerCamera = new CameraVirtual("LowerCamera", 16384, 1024, ColorFormat.Gray, SensorType.Line);
+                lowerCamera.OffsetX = 0;
+                lowerCamera.PixelResolution_um = 3.52F;
+                lowerCamera.LensScale = 0.2F;
+                config.Add(lowerCamera);
 
                 var light = new VirtualLightCtrl("Light", 6);
                 light.ChannelNameMap["Ch.White"] = 1; // channel 지정
@@ -107,8 +127,161 @@ namespace ESI
             }
             else
             {
+                // Initialize Config by Program Types
+                string[] typeList = Enum.GetNames(typeof(ProgramType));
+                ProgramSelectForm form = new ProgramSelectForm();
+                form.SetList(typeList);
+                form.ShowDialog();
+                AppsConfig.Instance().ProgramType = form.SelectedProgramType;
 
+                var programType = StringHelper.StringToEnum<ProgramType>(AppsConfig.Instance().ProgramType);
+                switch (programType)
+                {
+                    case ProgramType.Coater:
+                        AppsConfig.Instance().MachineName = "ESI (Coater)";
+                        CreateCoaterDeviceConfig(config);
+                        break;
+
+                    case ProgramType.Press:
+                        AppsConfig.Instance().MachineName = "ESI (Press)";
+                        CreatePressDeviceConfig(config);
+                        break;
+
+                    case ProgramType.Slitter:
+                        AppsConfig.Instance().MachineName = "ESI (Slitter)";
+                        CreateSlitterDeviceConfig(config);
+                        break;
+                }
             }
+        }
+
+        private static void CreateCoaterDeviceConfig(MachineConfig config)
+        {
+            // Linescanner
+            int upperCameraMaxWidth = 1024 * 16;
+            int upperCameraWidth = 1024 * 16;
+            int upperCameraOffsetX = 0;
+            int upperCameraHeight = 1024;
+
+            if (CheckCameraProperty(ref upperCameraWidth, ref upperCameraOffsetX, upperCameraMaxWidth) == true)
+            {
+                var upperCamera = new CameraDalsa("UpperCamera", upperCameraWidth, upperCameraHeight, ColorFormat.Gray, SensorType.Line);
+                config.Add(upperCamera);
+            }
+
+            int lowerCameraMaxWidth = 1024 * 16;
+            int lowerCameraWidth = 1024 * 16;
+            int lowerCameraOffsetX = 0;
+            int lowerCameraHeight = 1024;
+
+            if (CheckCameraProperty(ref lowerCameraWidth, ref lowerCameraOffsetX, lowerCameraMaxWidth) == true)
+            {
+                var upperCamera = new CameraDalsa("UpperCamera", lowerCameraWidth, lowerCameraHeight, ColorFormat.Gray, SensorType.Line);
+                config.Add(upperCamera);
+            }
+
+            // Light
+            var backLight = new DareaLightCtrl("Back", 4, new SerialPortComm("COM1", 19200), new DareaSerialParser());
+            config.Add(backLight);
+        }
+
+        private static void CreatePressDeviceConfig(MachineConfig config)
+        {
+            // Linescanner
+            int upperCameraMaxWidth = 1024 * 16;
+            int upperCameraWidth = 1024 * 16;
+            int upperCameraOffsetX = 0;
+            int upperCameraHeight = 1024;
+
+            if (CheckCameraProperty(ref upperCameraWidth, ref upperCameraOffsetX, upperCameraMaxWidth) == true)
+            {
+                var upperCamera = new CameraDalsa("UpperCamera", upperCameraWidth, upperCameraHeight, ColorFormat.Gray, SensorType.Line);
+                config.Add(upperCamera);
+            }
+
+            int lowerCameraMaxWidth = 1024 * 16;
+            int lowerCameraWidth = 1024 * 16;
+            int lowerCameraOffsetX = 0;
+            int lowerCameraHeight = 1024;
+
+            if (CheckCameraProperty(ref lowerCameraWidth, ref lowerCameraOffsetX, lowerCameraMaxWidth) == true)
+            {
+                var upperCamera = new CameraDalsa("UpperCamera", lowerCameraWidth, lowerCameraHeight, ColorFormat.Gray, SensorType.Line);
+                config.Add(upperCamera);
+            }
+
+            // Light
+            var backLight = new DareaLightCtrl("Back", 4, new SerialPortComm("COM1", 19200), new DareaSerialParser());
+            config.Add(backLight);
+        }
+
+        private static void CreateSlitterDeviceConfig(MachineConfig config)
+        {
+            // Linescanner
+            int upperCameraMaxWidth = 1024 * 16;
+            int upperCameraWidth = 1024 * 16;
+            int upperCameraOffsetX = 0;
+            int upperCameraHeight = 1024;
+
+            if (CheckCameraProperty(ref upperCameraWidth, ref upperCameraOffsetX, upperCameraMaxWidth) == true)
+            {
+                var upperCamera = new CameraDalsa("UpperCamera", upperCameraWidth, upperCameraHeight, ColorFormat.Gray, SensorType.Line);
+                config.Add(upperCamera);
+            }
+
+            int lowerCameraMaxWidth = 1024 * 16;
+            int lowerCameraWidth = 1024 * 16;
+            int lowerCameraOffsetX = 0;
+            int lowerCameraHeight = 1024;
+
+            if (CheckCameraProperty(ref lowerCameraWidth, ref lowerCameraOffsetX, lowerCameraMaxWidth) == true)
+            {
+                var upperCamera = new CameraDalsa("UpperCamera", lowerCameraWidth, lowerCameraHeight, ColorFormat.Gray, SensorType.Line);
+                config.Add(upperCamera);
+            }
+
+            // Light
+            var backLight = new DareaLightCtrl("Back", 4, new SerialPortComm("COM1", 19200), new DareaSerialParser());
+            config.Add(backLight);
+        }
+
+        private static bool CheckCameraProperty(ref int width, ref int offsetX, int fullPixelSize)
+        {
+            if (width % 16 != 0 || offsetX % 16 != 0)
+            {
+                string errorMessage = string.Format("Set parameter to a multiple of 16\r\n Width : {0}, Offset : {1}", width, offsetX);
+                Logger.Debug(LogType.Device, errorMessage);
+
+                MessageConfirmForm form = new MessageConfirmForm();
+                form.Message = errorMessage;
+
+                return false;
+            }
+
+            if (width > fullPixelSize)
+                width = fullPixelSize;
+
+            if (width + offsetX > fullPixelSize)
+            {
+                string errorMessage = "Width + Offset <= " + fullPixelSize.ToString();
+                Logger.Debug(LogType.Device, errorMessage);
+
+                int newOffsetX = fullPixelSize - width;
+                errorMessage = string.Format("{0}\r\n\r\nInput Width : {1},Offset : {2}\r\n\r\nDo you want to Change Parameter?\r\n\r\nSet Width : {3},Offset : {4}",
+                                            errorMessage, width, offsetX, width, newOffsetX);
+
+                MessageYesNoForm form = new MessageYesNoForm();
+                form.Message = errorMessage;
+                if (form.ShowDialog() == DialogResult.Yes)
+                {
+                    offsetX = newOffsetX;
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return true;
         }
     }
 }

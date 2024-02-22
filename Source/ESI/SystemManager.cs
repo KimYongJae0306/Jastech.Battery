@@ -108,4 +108,11 @@ namespace ESI
         }
         #endregion
     }
+
+    public enum ProgramType
+    {
+        Coater,
+        Press,
+        Slitter,
+    }
 }

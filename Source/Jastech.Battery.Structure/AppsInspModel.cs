@@ -10,6 +10,7 @@ namespace Jastech.Battery.Structure
 {
     public class AppsInspModel : InspModel
     {
+		public int LaneCount { get; set; } = 1;
         public MaterialInfo MaterialInfo { get; set; } = new MaterialInfo();
 
         public int InspThreadCount { get; set; } = 10;

@@ -1,12 +1,6 @@
 ﻿using Jastech.Framework.Config;
 using Jastech.Framework.Util.Helper;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jastech.Battery.Winform.Settings
 {
@@ -17,10 +11,9 @@ namespace Jastech.Battery.Winform.Settings
         #endregion
 
         #region 속성
-        [JsonProperty]
         public string MachineName { get; set; } = "ESI";
 
-        [JsonProperty]
+		public string ProgramType { get; set; } = string.Empty;
         public bool EnablePLCTime { get; set; } = false;
         #endregion
 
