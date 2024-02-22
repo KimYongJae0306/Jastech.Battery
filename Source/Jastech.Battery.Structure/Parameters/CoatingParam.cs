@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jastech.Framework.Util.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,7 +49,10 @@ namespace Jastech.Battery.Structure.Parameters
         #endregion
 
         #region 메서드
+        public CoatingParam DeepCopy()
+        {
+            return JsonConvertHelper.DeepCopy(this) as CoatingParam;
+        }
         #endregion
-
     }
 }
