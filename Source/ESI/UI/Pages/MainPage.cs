@@ -201,7 +201,7 @@ namespace ESI.UI.Pages
                 {
                     for (int yValue = 0; yValue < DefectMapControl.MaximumMeter * 50000; yValue += 50000)
                     {
-                        if (rand.Next(20) == 0)
+                        if (rand.Next(3) == 0)
                         {
                             List<DefectInfo> defectInfos = new List<DefectInfo>();
                             int loop = rand.Next(1, 5);

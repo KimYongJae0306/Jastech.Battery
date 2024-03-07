@@ -1,5 +1,6 @@
 ﻿using Jastech.Battery.Structure.Data;
 using Jastech.Framework.Util.Helper;
+using Jastech.Framework.Winform.Controls;
 using Jastech.Framework.Winform.Helper;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,6 +13,8 @@ namespace Jastech.Battery.Winform.UI.Controls
     {
         #region 속성
         public bool IsVertical { get; set; } = true;
+
+        DoubleBufferedPanel dpnlContainer { get; set; } = null;
         #endregion
 
         #region 이벤트
@@ -30,6 +33,17 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 메서드
+        private void DefectInfoContainerControl_Load(object sender, System.EventArgs e)
+        {
+            dpnlContainer = new DoubleBufferedPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            };
+            Controls.Add(dpnlContainer);
+        }
 
         public void AddDefectInfo(DefectInfo defectInfo)
         {
@@ -50,10 +64,10 @@ namespace Jastech.Battery.Winform.UI.Controls
                 int drawingCount = Width / defectInfoControl.Width;
                 if (drawingCount == 0)
                     drawingCount = 1;
-                controlSize.Width =(pnlContainer.Width - scrollBarSize) / drawingCount;
+                controlSize.Width =(dpnlContainer.Width - scrollBarSize) / drawingCount;
                 controlSize.Height = defectInfoControl.Height;
-                controlLocation.X = (pnlContainer.Controls.Count % drawingCount) * controlSize.Width;
-                controlLocation.Y = (pnlContainer.Controls.Count / drawingCount) * controlSize.Height + pnlContainer.AutoScrollPosition.Y;
+                controlLocation.X = (dpnlContainer.Controls.Count % drawingCount) * controlSize.Width;
+                controlLocation.Y = (dpnlContainer.Controls.Count / drawingCount) * controlSize.Height + dpnlContainer.AutoScrollPosition.Y;
             }
             else
             {
@@ -61,25 +75,26 @@ namespace Jastech.Battery.Winform.UI.Controls
                 if (drawingCount == 0)
                     drawingCount = 1;
                 controlSize.Width = defectInfoControl.Width;
-                controlSize.Height = (pnlContainer.Height - scrollBarSize) / drawingCount;
-                controlLocation.X = (pnlContainer.Controls.Count / drawingCount) * (defectInfoControl.Width / drawingCount) + pnlContainer.AutoScrollPosition.X;
-                controlLocation.Y = (pnlContainer.Controls.Count % drawingCount) * (defectInfoControl.Height / drawingCount);
+                controlSize.Height = (dpnlContainer.Height - scrollBarSize) / drawingCount;
+                controlLocation.X = (dpnlContainer.Controls.Count / drawingCount) * (defectInfoControl.Width / drawingCount) + dpnlContainer.AutoScrollPosition.X;
+                controlLocation.Y = (dpnlContainer.Controls.Count % drawingCount) * (defectInfoControl.Height / drawingCount);
             }
             defectInfoControl.Size = controlSize;
             defectInfoControl.Location = controlLocation;
-            pnlContainer.Controls.Add(defectInfoControl);
+            dpnlContainer.Controls.Add(defectInfoControl);
         }
 
         public void AddDefectInfo(List<DefectInfo> defectInfos)
         {
-            pnlContainer.SuspendLayout();
+            dpnlContainer.SuspendLayout();
             defectInfos.ForEach(defectInfo => AddDefectInfo(defectInfo));
-            pnlContainer.ResumeLayout(true);
+            dpnlContainer.ResumeLayout(true);
         }
 
         public void Clear()
         {
-            foreach (Control control in pnlContainer.Controls)
+            dpnlContainer.SuspendLayout();
+            foreach (Control control in dpnlContainer.Controls)
             {
                 if (control is DefectInfoControl defectInfoControl)
                 {
@@ -87,15 +102,16 @@ namespace Jastech.Battery.Winform.UI.Controls
                     ControlHelper.DisposeChildControls(defectInfoControl);
                 }
             }
-            pnlContainer.Controls.Clear();
-            pnlContainer.VerticalScroll.Value = 0;
-            pnlContainer.HorizontalScroll.Value = 0;
+            dpnlContainer.Controls.Clear();
+            dpnlContainer.VerticalScroll.Value = 0;
+            dpnlContainer.HorizontalScroll.Value = 0;
+            dpnlContainer.ResumeLayout(true);
         }
 
         public void SelectedControlIndexChanged(int index)
         {
             SelectedDefectChanged?.Invoke(index);
-            foreach (Control control in pnlContainer.Controls)
+            foreach (Control control in dpnlContainer.Controls)
             {
                 if (control is DefectInfoControl defectInfoControl)
                 {

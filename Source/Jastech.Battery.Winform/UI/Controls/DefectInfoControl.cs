@@ -42,7 +42,7 @@ namespace Jastech.Battery.Winform.UI.Controls
 
             string imagePath = DefectInfo.GetFeatureValue(FeatureTypes.LocalImagePath);
             if (imagePath != null)
-                pbxCropImage.Image = new Bitmap(imagePath);
+                pbxCropImage.LoadAsync(imagePath);
         }
 
         public void SetBorderColor()

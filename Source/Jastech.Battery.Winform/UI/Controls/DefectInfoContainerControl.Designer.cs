@@ -28,35 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlContainer = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // pnlContainer
-            // 
-            this.pnlContainer.AutoScroll = true;
-            this.pnlContainer.AutoSize = true;
-            this.pnlContainer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContainer.Location = new System.Drawing.Point(0, 0);
-            this.pnlContainer.Name = "pnlContainer";
-            this.pnlContainer.Size = new System.Drawing.Size(450, 450);
-            this.pnlContainer.TabIndex = 0;
             // 
             // DefectInfoContainerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.Controls.Add(this.pnlContainer);
+            this.DoubleBuffered = true;
             this.Name = "DefectInfoContainerControl";
             this.Size = new System.Drawing.Size(450, 450);
+            this.Load += new System.EventHandler(this.DefectInfoContainerControl_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnlContainer;
     }
 }
