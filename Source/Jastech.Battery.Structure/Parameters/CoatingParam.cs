@@ -8,10 +8,9 @@ namespace Jastech.Battery.Structure.Parameters
 {
     public class CoatingParam
     {
-        #region 필드
-        #endregion
-
         #region 속성
+        public int LaneNumber { get; set; } = -1;
+
         public int ImageWidth { get; set; } = 0;
 
         public int ImageHeight { get; set; } = 0;
@@ -37,15 +36,6 @@ namespace Jastech.Battery.Structure.Parameters
         public ScratchParam ScratchBlackParam = new ScratchParam();
 
         public TapeParam TapeParam = new TapeParam();
-        #endregion
-
-        #region 이벤트
-        #endregion
-
-        #region 델리게이트
-        #endregion
-
-        #region 생성자
         #endregion
 
         #region 메서드

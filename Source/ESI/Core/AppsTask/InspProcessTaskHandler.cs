@@ -39,13 +39,13 @@ namespace ESI.Core.AppsTask
             if (inspModel == null)
                 return false;
 
-            int inspThreadCount = inspModel.InspThreadCount;
+            int inspThreadCount = 1;// inspModel.InspThreadCount;
 
-            var topLineCamera =LineCameraManager.Instance().GetLineCamera("Top");
-            InitalizeInspUpper(topLineCamera, inspThreadCount);
+            var upperLineCamera = LineCameraManager.Instance().GetLineCamera("Upper");
+            InitalizeInspUpper(upperLineCamera, inspThreadCount);
 
-            var bottomLineCamera = LineCameraManager.Instance().GetLineCamera("Bottom");
-            InitalizeInspLower(bottomLineCamera, inspThreadCount);
+            var lowerLineCamera = LineCameraManager.Instance().GetLineCamera("Lower");
+            InitalizeInspLower(lowerLineCamera, inspThreadCount);
 
             return true;
         }
@@ -114,6 +114,11 @@ namespace ESI.Core.AppsTask
             {
 
             }
+        }
+
+        public void StopTask()
+        {
+
         }
         #endregion
     }

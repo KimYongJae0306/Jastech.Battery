@@ -101,7 +101,7 @@ namespace ESI
                 AppsConfig.Instance().MachineName = "ESI (Virtual)";
 
                 // Initialize Config by Program Types
-                string[] typeList = Enum.GetNames(typeof(ProgramType));
+                string[] typeList = Enum.GetNames(typeof(ProcessType));
                 ProgramSelectForm form = new ProgramSelectForm();
                 form.SetList(typeList);
                 form.ShowDialog();
@@ -128,26 +128,26 @@ namespace ESI
             else
             {
                 // Initialize Config by Program Types
-                string[] typeList = Enum.GetNames(typeof(ProgramType));
+                string[] typeList = Enum.GetNames(typeof(ProcessType));
                 ProgramSelectForm form = new ProgramSelectForm();
                 form.SetList(typeList);
                 form.ShowDialog();
                 AppsConfig.Instance().ProgramType = form.SelectedProgramType;
 
-                var programType = StringHelper.StringToEnum<ProgramType>(AppsConfig.Instance().ProgramType);
+                var programType = StringHelper.StringToEnum<ProcessType>(AppsConfig.Instance().ProgramType);
                 switch (programType)
                 {
-                    case ProgramType.Coater:
+                    case ProcessType.Coater:
                         AppsConfig.Instance().MachineName = "ESI (Coater)";
                         CreateCoaterDeviceConfig(config);
                         break;
 
-                    case ProgramType.Press:
+                    case ProcessType.Press:
                         AppsConfig.Instance().MachineName = "ESI (Press)";
                         CreatePressDeviceConfig(config);
                         break;
 
-                    case ProgramType.Slitter:
+                    case ProcessType.Slitter:
                         AppsConfig.Instance().MachineName = "ESI (Slitter)";
                         CreateSlitterDeviceConfig(config);
                         break;

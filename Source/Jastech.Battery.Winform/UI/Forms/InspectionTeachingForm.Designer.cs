@@ -52,6 +52,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tlpTeachingPage = new System.Windows.Forms.TableLayoutPanel();
+            this.btnTest = new System.Windows.Forms.Button();
             this.pnlTeachingItems.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tlpTeachingItems.SuspendLayout();
@@ -238,6 +239,7 @@
             this.tlpCommon.ColumnCount = 1;
             this.tlpCommon.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpCommon.Controls.Add(this.tlpUnit, 0, 0);
+            this.tlpCommon.Controls.Add(this.btnTest, 0, 1);
             this.tlpCommon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpCommon.Location = new System.Drawing.Point(0, 0);
             this.tlpCommon.Margin = new System.Windows.Forms.Padding(0);
@@ -413,6 +415,21 @@
             this.tlpTeachingPage.Size = new System.Drawing.Size(1900, 911);
             this.tlpTeachingPage.TabIndex = 2;
             // 
+            // btnTest
+            // 
+            this.btnTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.btnTest.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnTest.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
+            this.btnTest.ForeColor = System.Drawing.Color.White;
+            this.btnTest.Location = new System.Drawing.Point(0, 40);
+            this.btnTest.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(292, 40);
+            this.btnTest.TabIndex = 288;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = false;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
             // InspectionTeachingForm
             // 
             this.AllowDrop = true;
@@ -473,5 +490,6 @@
         private System.Windows.Forms.Button btnDistance;
         private System.Windows.Forms.Button btnCoating;
         private System.Windows.Forms.Button btnNonCoating;
+        private System.Windows.Forms.Button btnTest;
     }
 }

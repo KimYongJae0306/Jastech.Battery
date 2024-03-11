@@ -14,7 +14,14 @@ namespace Jastech.Battery.Winform.Settings
         public string MachineName { get; set; } = "ESI";
 
 		public string ProgramType { get; set; } = string.Empty;
+
         public bool EnablePLCTime { get; set; } = false;
+
+        public bool UseTeachingArea { get; set; } = false;
+
+        public const int VERTICAL_COATING_MAX_COUNT = 5;
+
+        public double Zoom { get; set; } = 0.08825;
         #endregion
 
         #region 이벤트
@@ -76,5 +83,12 @@ namespace Jastech.Battery.Winform.Settings
             JsonConvertHelper.LoadToExistingTarget<AppsConfig>(fullPath, this);
         }
         #endregion
+    }
+
+    public enum ProcessType
+    {
+        Coater,
+        Press,
+        Slitter,
     }
 }

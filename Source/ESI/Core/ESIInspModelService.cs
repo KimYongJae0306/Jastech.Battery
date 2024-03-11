@@ -1,8 +1,12 @@
 ﻿using Jastech.Battery.Structure;
+using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Structure.Parameters;
+using Jastech.Battery.Winform.Settings;
+using Jastech.Framework.Device.LightCtrls;
 using Jastech.Framework.Structure;
 using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
+using Jastech.Framework.Winform;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,8 +16,9 @@ using System.Threading.Tasks;
 
 namespace ESI.Core
 {
-    public class ESIInspModelService : Jastech.Framework.Structure.Service.InspModelService
+    public class ESIInspModelService : InspModelService
     {
+        #region 메서드
         public override InspModel New()
         {
             return new InspModel();
@@ -23,11 +28,27 @@ namespace ESI.Core
         {
             AppsInspModel appInspModel = inspModel as AppsInspModel;
 
-            for (int laneIndex = 0; laneIndex < appInspModel.LaneCount; laneIndex++)
+            foreach (UnitName unitName in Enum.GetValues(typeof(UnitName)))
             {
-                CoatingParam coatingParam = new CoatingParam();
+                Unit unit = new Unit();
 
+                unit.Name = unitName.ToString();
+                unit.CameraData = new LineCameraData();
+                unit.CameraData.Name = unitName.ToString() + "Camera";
+
+                unit.LightParam = CreateLightParameter();
+
+                for (int laneIndex = 0; laneIndex < appInspModel.LaneCount; laneIndex++)
+                {
+
+                }
             }
+
+            //for (int laneIndex = 0; laneIndex < appInspModel.LaneCount; laneIndex++)
+            //{
+            //    CoatingParam coatingParam = new CoatingParam();
+
+            //}
         }
 
         public override InspModel Load(string filePath)
@@ -52,5 +73,22 @@ namespace ESI.Core
         {
             
         }
+
+        private LightParameter CreateLightParameter()
+        {
+            LightParameter lightParameter = new LightParameter("Light");
+
+            var lightCtrlHandler = DeviceManager.Instance().LightCtrlHandler;
+            var backLightCtrl = lightCtrlHandler.Get("Back");
+            var spotLightCtrl = lightCtrlHandler.Get("Spot");
+            var ringLightCtrl = lightCtrlHandler.Get("Ring");
+
+            lightParameter.Add(backLightCtrl, new LightValue(backLightCtrl.TotalChannelCount));
+            lightParameter.Add(spotLightCtrl, new LightValue(spotLightCtrl.TotalChannelCount));
+            lightParameter.Add(ringLightCtrl, new LightValue(ringLightCtrl.TotalChannelCount));
+
+            return lightParameter;
+        }
+        #endregion
     }
 }

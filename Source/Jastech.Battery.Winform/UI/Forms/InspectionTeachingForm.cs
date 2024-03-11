@@ -1,13 +1,19 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Jastech.Battery.Structure;
 using Jastech.Battery.Structure.Data;
+using Jastech.Battery.Structure.VisionTool;
+using Jastech.Battery.Winform.Settings;
 using Jastech.Battery.Winform.UI.Controls;
+using Jastech.Framework.Imaging.Helper;
+using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -25,9 +31,15 @@ namespace Jastech.Battery.Winform.UI.Forms
         private Color _selectedColor;
 
         private Color _nonSelectedColor;
+
+        private Bitmap _orgBmp = null;
         #endregion
 
         #region 속성
+        public UnitName UnitName { get; set; } = UnitName.Upper;
+
+        public InspModelService InspModelService { get; set; } = null;
+
         private Mat OrgMat { get; set; } = null;
 
         //public InspDirection InspDirection { get; set; }
@@ -144,6 +156,7 @@ namespace Jastech.Battery.Winform.UI.Forms
                 //    DrawBoxControl.FitZoom();
                 //}
                 LoadImage(dlg.FileNames);
+                _orgBmp = new Bitmap(dlg.FileName, useIcm:false);
             }
         }
 
@@ -234,6 +247,36 @@ namespace Jastech.Battery.Winform.UI.Forms
             }
         }
         #endregion
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            if (_orgBmp == null)
+                return;
+
+            SliceInspResult sliceInspResult = new SliceInspResult();
+
+            AlgorithmTool algorithmTool = new AlgorithmTool();
+
+            DistanceResult distanceResult = new DistanceResult();
+
+            Stopwatch sw = Stopwatch.StartNew();
+
+            if (AppsConfig.Instance().UseTeachingArea == true)
+                distanceResult = algorithmTool.FindFoilEnd_WithTeachingArea(_orgBmp);
+            else
+                distanceResult = algorithmTool.FindFoilEnd(_orgBmp);
+
+            if (distanceResult == null)
+                return;
+
+            if (algorithmTool.CheckNonCoating(_orgBmp, distanceResult) == true)
+            {
+                sliceInspResult.IsCoating = false;
+                return;
+            }
+
+            Console.WriteLine("FindFoilEnd : " + sw.ElapsedMilliseconds);
+        }
     }
 
     public enum DisplayType

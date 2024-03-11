@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using Jastech.Battery.Winform.UI.Forms;
 using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Winform;
+using ESI.Core;
+using Jastech.Battery.Structure;
 
 namespace ESI.UI.Pages
 {
@@ -12,6 +14,7 @@ namespace ESI.UI.Pages
         #endregion
 
         #region 속성
+        private ESIInspModelService ESIInspModelService { get; set; } = null;
         #endregion
 
         #region 이벤트
@@ -28,23 +31,11 @@ namespace ESI.UI.Pages
         #endregion
 
         #region 메서드
-        private void btnLowerInspectionPage_Click(object sender, EventArgs e)
-        {
-            InspectionTeachingForm form = new InspectionTeachingForm();
-            //form.InspDirection = InspDirection.Upper;
-            form.ShowDialog();
-        }
-
-        private void btnUpperInspectionPage_Click(object sender, EventArgs e)
-        {
-            InspectionTeachingForm form = new InspectionTeachingForm();
-            //form.InspDirection = InspDirection.Lower;
-            form.ShowDialog();
-        }
-
         private void btnUpperCameraSetting_Click(object sender, EventArgs e)
         {
             OpticTeachingForm form = new OpticTeachingForm();
+            form.UnitName = UnitName.Upper;
+            form.InspModelService = ESIInspModelService;
             form.LineCamera = LineCameraManager.Instance().GetLineCamera("Upper");
             form.ShowDialog();
         }
@@ -52,8 +43,33 @@ namespace ESI.UI.Pages
         private void btnLowerCameraSetting_Click(object sender, EventArgs e)
         {
             OpticTeachingForm form = new OpticTeachingForm();
+            form.UnitName = UnitName.Lower;
+            form.InspModelService = ESIInspModelService;
             form.LineCamera = LineCameraManager.Instance().GetLineCamera("Lower");
             form.ShowDialog();
+        }
+
+        private void btnLowerInspectionPage_Click(object sender, EventArgs e)
+        {
+            InspectionTeachingForm form = new InspectionTeachingForm();
+            //form.InspDirection = InspDirection.Upper;
+            form.UnitName = UnitName.Lower;
+            form.InspModelService = ESIInspModelService;
+            form.ShowDialog();
+        }
+
+        private void btnUpperInspectionPage_Click(object sender, EventArgs e)
+        {
+            InspectionTeachingForm form = new InspectionTeachingForm();
+            //form.InspDirection = InspDirection.Lower;
+            form.UnitName = UnitName.Lower;
+            form.InspModelService = ESIInspModelService;
+            form.ShowDialog();
+        }
+
+        internal void SetInspModelService(ESIInspModelService inspModelService)
+        {
+            ESIInspModelService = inspModelService;
         }
         #endregion
     }
