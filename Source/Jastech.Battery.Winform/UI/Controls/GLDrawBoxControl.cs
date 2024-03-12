@@ -61,7 +61,6 @@ namespace Jastech.Battery.Winform.UI.Controls
             pnlDisplay.Controls.Add(DisplayControl);
 
             GL.ClearColor(Color.FromArgb(26, 26, 26));
-            SetImage(new Bitmap(1, 1));
         }
 
         private void DisplayControl_Paint(object sender, PaintEventArgs e)

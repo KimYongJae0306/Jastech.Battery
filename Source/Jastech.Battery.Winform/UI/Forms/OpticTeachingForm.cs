@@ -34,8 +34,7 @@ namespace Jastech.Battery.Winform.UI.Forms
         #endregion
 
         #region 속성
-
-        public AxisName AxisNameZ { get; set; } = AxisName.Z0;
+        public UnitName UnitName { get; set; } = UnitName.Upper;
 
         public InspModelService InspModelService { get; set; } = null;
 
@@ -48,8 +47,6 @@ namespace Jastech.Battery.Winform.UI.Forms
         public AxisHandler AxisHandler { get; set; } = null;
 
         public LineCamera LineCamera { get; set; } = null;
-
-        private Axis SelectedAxis { get; set; } = null;
         #endregion
 
         #region 이벤트

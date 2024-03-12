@@ -57,4 +57,10 @@ namespace Jastech.Battery.Structure
         }
         #endregion
     }
+
+    public enum UnitName
+    {
+        Upper,
+        Lower,
+    }
 }

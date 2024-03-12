@@ -13,6 +13,7 @@ namespace Jastech.Battery.Structure.Data
         #endregion
 
         #region 속성
+        public List<Unit> UnitList { get; set; } = new List<Unit>();
         #endregion
 
         #region 이벤트

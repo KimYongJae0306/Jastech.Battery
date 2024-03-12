@@ -217,27 +217,17 @@ namespace ESI.UI.Pages
                                     Lane = 1
                                 };
                                 testInfo.Index = testInfo.GetHashCode();
-
-                                testInfo.SetFeatureDataType(FeatureTypes.X, typeof(float));
-                                testInfo.SetFeatureDataType(FeatureTypes.Y, typeof(float));
-                                testInfo.SetFeatureDataType(FeatureTypes.Width, typeof(float));
-                                testInfo.SetFeatureDataType(FeatureTypes.Height, typeof(float));
-                                testInfo.SetFeatureDataType(FeatureTypes.LocalImagePath, typeof(string));
-
-                                testInfo.SetFeatureValue(FeatureTypes.X, rand.Next(16384));            // TODO: maximage width 받을 것
-                                testInfo.SetFeatureValue(FeatureTypes.Y, yValue);
-                                testInfo.SetFeatureValue(FeatureTypes.Width, 7f + rand.Next(0, 10) / 10f);
-                                testInfo.SetFeatureValue(FeatureTypes.Height, 3f + rand.Next(70, 150) / 10f);
+                                testInfo.Coord = new PointF(rand.Next(/* TODO : Width Material 정보에서 받아올 것*/16384), yValue);
+                                testInfo.Size = new SizeF(7f + rand.Next(0, 10) / 10f, 3f + rand.Next(70, 150) / 10f);
 
                                 if (File.Exists(@"Y:\TestImg.bmp"))
-                                    testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, @"Y:\TestImg.bmp");
+                                    testInfo.ImagePath = @"Y:\TestImg.bmp";
                                 else
-                                    testInfo.SetFeatureValue(FeatureTypes.LocalImagePath, imgPath);
+                                    testInfo.ImagePath = imgPath;
 
                                 _defectCounts[testInfo.DefectType]++;
 
                                 defectInfos.Add(testInfo);
-                                //_dfsQueue.Enqueue(testInfo);
                             }
 
                             BeginInvoke(new Action(() =>

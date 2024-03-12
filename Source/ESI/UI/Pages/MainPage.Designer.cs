@@ -693,7 +693,7 @@ namespace ESI.UI.Pages
             this.lblDefectInfos.Size = new System.Drawing.Size(305, 35);
             this.lblDefectInfos.TabIndex = 8;
             this.lblDefectInfos.Tag = "";
-            this.lblDefectInfos.Text = "DefectImages";
+            this.lblDefectInfos.Text = "DEFECT IMAGES";
             this.lblDefectInfos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tlpDefectMap

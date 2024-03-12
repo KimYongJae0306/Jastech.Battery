@@ -16,9 +16,9 @@ namespace ESI.Core.AppsTask
         #endregion
 
         #region 속성
-        private List<InspProcessTask> TopInspTaskList { get; set; } = new List<InspProcessTask>();
+        private List<InspProcessTask> UpperInspTaskList { get; set; } = new List<InspProcessTask>();
 
-        private List<InspProcessTask> BottomInspTaskList { get; set; } = new List<InspProcessTask>();
+        private List<InspProcessTask> LowerInspTaskList { get; set; } = new List<InspProcessTask>();
         #endregion
 
         #region 이벤트
@@ -39,13 +39,13 @@ namespace ESI.Core.AppsTask
             if (inspModel == null)
                 return false;
 
-            int inspThreadCount = inspModel.InspThreadCount;
+            int inspThreadCount = 1;// inspModel.InspThreadCount;
 
-            var topLineCamera =LineCameraManager.Instance().GetLineCamera("Top");
-            InitalizeInspTop(topLineCamera, inspThreadCount);
+            var upperLineCamera = LineCameraManager.Instance().GetLineCamera("Upper");
+            InitalizeInspUpper(upperLineCamera, inspThreadCount);
 
-            var bottomLineCamera = LineCameraManager.Instance().GetLineCamera("Bottom");
-            InitalizeInspBottom(bottomLineCamera, inspThreadCount);
+            var lowerLineCamera = LineCameraManager.Instance().GetLineCamera("Lower");
+            InitalizeInspLower(lowerLineCamera, inspThreadCount);
 
             return true;
         }
@@ -56,7 +56,7 @@ namespace ESI.Core.AppsTask
             DisposeInspBottomTask();
         }
 
-        private void InitalizeInspTop(LineCamera lineCamera, int threadCount)
+        private void InitalizeInspUpper(LineCamera lineCamera, int threadCount)
         {
             DisposeInspTopTask();
 
@@ -66,11 +66,11 @@ namespace ESI.Core.AppsTask
                 task.SliceInspectDoneDelegateEvent += SliceInspectDone;
                 task.StartTask();
 
-                TopInspTaskList.Add(task);
+                UpperInspTaskList.Add(task);
             }
         }
 
-        private void InitalizeInspBottom(LineCamera lineCamera, int threadCount)
+        private void InitalizeInspLower(LineCamera lineCamera, int threadCount)
         {
             DisposeInspBottomTask();
 
@@ -80,28 +80,28 @@ namespace ESI.Core.AppsTask
                 task.SliceInspectDoneDelegateEvent += SliceInspectDone;
                 task.StartTask();
 
-                BottomInspTaskList.Add(task);
+                LowerInspTaskList.Add(task);
             }
         }
 
         private void DisposeInspTopTask()
         {
-            foreach (var inspTask in TopInspTaskList)
+            foreach (var inspTask in UpperInspTaskList)
             {
                 inspTask.SliceInspectDoneDelegateEvent -= SliceInspectDone;
                 inspTask.Dispose();
             }
-            TopInspTaskList.Clear();
+            UpperInspTaskList.Clear();
         }
 
         private void DisposeInspBottomTask()
         {
-            foreach (var inspTask in BottomInspTaskList)
+            foreach (var inspTask in LowerInspTaskList)
             {
                 inspTask.SliceInspectDoneDelegateEvent -= SliceInspectDone;
                 inspTask.Dispose();
             }
-            BottomInspTaskList.Clear();
+            LowerInspTaskList.Clear();
         }
 
         private void SliceInspectDone(SliceInspResult sliceInspResult)
@@ -114,6 +114,11 @@ namespace ESI.Core.AppsTask
             {
 
             }
+        }
+
+        public void StopTask()
+        {
+
         }
         #endregion
     }

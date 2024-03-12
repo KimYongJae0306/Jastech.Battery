@@ -1,9 +1,12 @@
 ﻿using ESI.Core;
 using ESI.UI.Pages;
+using Jastech.Battery.Structure;
 using Jastech.Battery.Winform;
 using Jastech.Battery.Winform.Forms;
 using Jastech.Battery.Winform.Settings;
+using Jastech.Framework.Structure;
 using Jastech.Framework.Users;
+using Jastech.Framework.Winform;
 using Jastech.Framework.Winform.Helper;
 using System;
 using System.Collections.Generic;
@@ -33,6 +36,8 @@ namespace ESI
         private DataPage DataPageControl { get; set; } = null;
 
         private LogForm LogForm { get; set; } = null;
+
+        public ESIInspModelService ESIInspModelService { get; set; } = new ESIInspModelService();
         #endregion
 
         #region 이벤트
@@ -59,6 +64,19 @@ namespace ESI
             AddControls();
             SelectMainPage();
 
+            TeachingPageControl.SetInspModelService(ESIInspModelService);
+            DataPageControl.SetInspModelService(ESIInspModelService);
+            DataPageControl.ApplyModelEventHandler += ModelPageControl_ApplyModelEventHandler;
+            ModelManager.Instance().CurrentModelChangedEvent += MainForm_CurrentModelChangedEvent;
+
+            if (ModelManager.Instance().CurrentModel != null)
+            {
+                lblCurrentModel.Text = ModelManager.Instance().CurrentModel.Name;
+                ModelManager.Instance().ApplyChangedEvent();
+            }
+
+            SystemManager.Instance().InitializeInspRunner();
+
             ESIInspRunner test = new ESIInspRunner();
             test.Initialize();
         }   
@@ -81,6 +99,16 @@ namespace ESI
             PageControlList.Add(DataPageControl);
 
             LogForm = new LogForm();
+        }
+
+        private void ModelPageControl_ApplyModelEventHandler(string modelName)
+        {
+
+        }
+
+        private void MainForm_CurrentModelChangedEvent(InspModel inspModel)
+        {
+
         }
 
         private void SelectMainPage()
@@ -132,5 +160,21 @@ namespace ESI
             LogForm.ShowDialog();
         }
         #endregion
+
+        private void StopProgramEventFunction()
+        {
+
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            DeviceManager.Instance().Release();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SystemManager.Instance().ReleaseInspRunner();
+            SystemManager.Instance().StopRun();
+        }
     }
 }

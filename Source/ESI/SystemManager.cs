@@ -1,11 +1,16 @@
-﻿using Jastech.Framework.Config;
+﻿using ESI.Core;
+using Jastech.Battery.Structure;
+using Jastech.Battery.Winform;
+using Jastech.Framework.Config;
 using Jastech.Framework.Device.Cameras;
 using Jastech.Framework.Device.LightCtrls;
+using Jastech.Framework.Structure;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform;
 using Jastech.Framework.Winform.Forms;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -19,6 +24,8 @@ namespace ESI
         private static SystemManager _instance = null;
 
         private MainForm _mainForm = null;
+
+        private ESIInspRunner _inspRunner = new ESIInspRunner();
         #endregion
 
         #region 속성
@@ -69,10 +76,29 @@ namespace ESI
             DoReportProgress(reportProgress, percent, "Initialize Device");
 
             DeviceManager.Instance().Initialized += SystemManager_Initialized;
+            DeviceManager.Instance().Initialize(ConfigSet.Instance());
 
             percent = 50;
             DoReportProgress(reportProgress, percent, "Initialize Manager.");
+            LineCameraManager.Instance().Initialize();
 
+            if (ConfigSet.Instance().Operation.LastModelName != "")
+            {
+                percent = 90;
+                DoReportProgress(reportProgress, percent, "Open Last Model.");
+
+                string filePath = Path.Combine(ConfigSet.Instance().Path.Model,
+                                    ConfigSet.Instance().Operation.LastModelName,
+                                    InspModel.FileName);
+                if (File.Exists(filePath))
+                {
+                    DoReportProgress(reportProgress, percent, "Model Loading");
+                    ModelManager.Instance().CurrentModel = _mainForm.ESIInspModelService.Load(filePath);
+                }
+            }
+
+            percent = 100;
+            DoReportProgress(reportProgress, percent, "Initialize Completed.");
 
             return true;
         }
@@ -105,6 +131,28 @@ namespace ESI
                 form.Message = message;
                 form.ShowDialog();
             }
+        }
+
+        public void InitializeInspRunner()
+        {
+            _inspRunner.Initialize();
+        }
+
+        public void ReleaseInspRunner()
+        {
+            _inspRunner.Release();
+        }
+
+        public void StopRun()
+        {
+            if (ModelManager.Instance().CurrentModel == null)
+            {
+                MessageConfirmForm form = new MessageConfirmForm();
+                form.Message = "Current Model is null.";
+                return;
+            }
+
+            //StopAutoMode();
         }
         #endregion
     }

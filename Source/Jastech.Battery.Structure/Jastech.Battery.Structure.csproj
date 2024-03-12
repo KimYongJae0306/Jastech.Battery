@@ -64,19 +64,40 @@
     <Compile Include="Data\AppsEnum.cs" />
     <Compile Include="Data\DefectDefine.cs" />
     <Compile Include="Data\DefectInfo.cs" />
+    <Compile Include="Data\LineCameraData.cs" />
     <Compile Include="Data\SliceInspResult.cs" />
     <Compile Include="Data\MaterialInfo.cs" />
     <Compile Include="Data\TeachingData.cs" />
+    <Compile Include="Data\Unit.cs" />
     <Compile Include="ModelManager.cs" />
+    <Compile Include="Parameters\CoatingParam.cs" />
+    <Compile Include="Parameters\InspParam.cs" />
+    <Compile Include="Parameters\NonCoatingParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisionTool\AlgorithmTool.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Device\Jastech.Framework.Device.csproj">
+      <Project>{F43DDCCA-E65C-4131-B789-DB4109E91B68}</Project>
+      <Name>Jastech.Framework.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Imaging\Jastech.Framework.Imaging.csproj">
+      <Project>{2380DA0F-851A-4430-9A43-E7B2DEEE29F2}</Project>
+      <Name>Jastech.Framework.Imaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Structure\Jastech.Framework.Structure.csproj">
       <Project>{DCFF7B48-8DF8-4ED9-9F0F-F11C2CCB7547}</Project>
       <Name>Jastech.Framework.Structure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Util\Jastech.Framework.Util.csproj">
+      <Project>{07EF86CC-AC6A-454E-B12B-EB63454A1DCA}</Project>
+      <Name>Jastech.Framework.Util</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,12 +1,6 @@
 ﻿using Jastech.Framework.Config;
 using Jastech.Framework.Util.Helper;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jastech.Battery.Winform.Settings
 {
@@ -17,11 +11,17 @@ namespace Jastech.Battery.Winform.Settings
         #endregion
 
         #region 속성
-        [JsonProperty]
         public string MachineName { get; set; } = "ESI";
 
-        [JsonProperty]
+		public string ProgramType { get; set; } = string.Empty;
+
         public bool EnablePLCTime { get; set; } = false;
+
+        public bool UseTeachingArea { get; set; } = false;
+
+        public const int VERTICAL_COATING_MAX_COUNT = 5;
+
+        public double Zoom { get; set; } = 0.08825;
         #endregion
 
         #region 이벤트
@@ -83,5 +83,12 @@ namespace Jastech.Battery.Winform.Settings
             JsonConvertHelper.LoadToExistingTarget<AppsConfig>(fullPath, this);
         }
         #endregion
+    }
+
+    public enum ProcessType
+    {
+        Coater,
+        Press,
+        Slitter,
     }
 }

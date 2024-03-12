@@ -1,7 +1,6 @@
 ﻿using Jastech.Battery.Structure.Data;
 using Jastech.Framework.Util.Helper;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using static Jastech.Battery.Structure.Data.DefectDefine;
@@ -40,7 +39,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             lblDefectType.ForeColor = Colors[DefectInfo.DefectType];
             lblDefectInfo.Text = $"W:{DefectInfo.Size.Width}mm, H:{DefectInfo.Size.Height}mm";
 
-            string imagePath = DefectInfo.GetFeatureValue(FeatureTypes.LocalImagePath);
+            string imagePath = DefectInfo.ImagePath;
             if (imagePath != null)
                 pbxCropImage.LoadAsync(imagePath);
         }

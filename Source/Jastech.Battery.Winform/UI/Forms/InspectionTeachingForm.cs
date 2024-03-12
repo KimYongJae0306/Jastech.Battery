@@ -1,13 +1,21 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Jastech.Battery.Structure;
 using Jastech.Battery.Structure.Data;
+using Jastech.Battery.Structure.Parameters;
+using Jastech.Battery.Structure.VisionTool;
+using Jastech.Battery.Winform.Settings;
 using Jastech.Battery.Winform.UI.Controls;
+using Jastech.Framework.Device.Plcs;
+using Jastech.Framework.Imaging.Helper;
+using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -25,9 +33,23 @@ namespace Jastech.Battery.Winform.UI.Forms
         private Color _selectedColor;
 
         private Color _nonSelectedColor;
+
+        private Bitmap _orgBmp = null;
+
+        private Bitmap _grayImage = null;
+
+        private byte[] _imageData = null;
+
+        private int _imageWidth = 0;
+
+        private int _imageHeight = 0;
         #endregion
 
         #region 속성
+        public UnitName UnitName { get; set; } = UnitName.Upper;
+
+        public InspModelService InspModelService { get; set; } = null;
+
         private Mat OrgMat { get; set; } = null;
 
         //public InspDirection InspDirection { get; set; }
@@ -61,7 +83,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             InitializeComponent();
         }
         #endregion
-        
+
         #region 메서드
         private void InspectionTeachingForm_Load(object sender, EventArgs e)
         {
@@ -144,6 +166,7 @@ namespace Jastech.Battery.Winform.UI.Forms
                 //    DrawBoxControl.FitZoom();
                 //}
                 LoadImage(dlg.FileNames);
+                _orgBmp = new Bitmap(dlg.FileName, useIcm: false);
             }
         }
 
@@ -234,6 +257,56 @@ namespace Jastech.Battery.Winform.UI.Forms
             }
         }
         #endregion
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            if (_orgBmp == null)
+                return;
+
+            AppsInspModel model = ModelManager.Instance().CurrentModel as AppsInspModel;
+            SliceInspResult sliceInspResult = new SliceInspResult();
+            AlgorithmTool algorithmTool = new AlgorithmTool();
+
+            _imageWidth = _orgBmp.Width;
+            _imageHeight = _orgBmp.Height;
+
+            _grayImage?.Dispose();
+            _imageData?.Initialize();
+            _grayImage = ImageHelper.ConvertToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요
+            _imageData = ImageHelper.GetByteArrayFromBitmap(_grayImage);
+
+            if (model == null)
+                model = new AppsInspModel();
+            model.DistanceParam.LeftScanMargin = 350;    // 시퀀스 검증용 임시 하드코딩, 티칭 완성 후 제거
+            model.DistanceParam.RightScanMargin = 210;    // 시퀀스 검증용 임시 하드코딩, 티칭 완성 후 제거
+
+            DistanceResult distanceResult = new DistanceResult
+            {
+                FoilStartX = model.DistanceParam.LeftScanMargin,
+                FoilEndX = _imageWidth - model.DistanceParam.RightScanMargin,
+                FoilStartY = model.DistanceParam.TopScanMargin,
+                FoilEndY = _imageHeight - model.DistanceParam.BottomScanMargin,
+            };
+            sliceInspResult.DistanceResult = distanceResult;
+
+            // teaching 영역 사용 시 별도 계산 하지 않음
+            if (AppsConfig.Instance().UseTeachingArea == false)
+                sliceInspResult.foilFound = algorithmTool.FindVerticalFoilEdge(ref distanceResult, _imageData, _imageWidth, _imageHeight);
+
+            if (AppsConfig.Instance().UseTeachingArea == false && sliceInspResult.foilFound == false)
+                return;     // Define.RESULT_NO_FOIL
+
+            sliceInspResult.IsCoating = algorithmTool.CheckFoilExistance(distanceResult, _imageData, _imageWidth, _imageHeight);
+
+            if (sliceInspResult.IsCoating == false)
+                return;     // Define.RESULT_NON_COAT_ONE_SIDE
+
+            //algorithmTool.FindCoatingArea_Vertical();
+
+            
+            //if(model.ModelType == Structure.Parameters.ModelType.None) // PLC로부터 받아온 정보가 없거나 그냥 모델이 설정이 안되어 있으면, 모델을 식별한다
+            //    algorithmTool. IdentifyModelType(ref foilStartY, ref foilEndX, ref y1, ref imageHeight);
+        }
     }
 
     public enum DisplayType
