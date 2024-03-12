@@ -33,12 +33,13 @@ namespace Jastech.Battery.Structure.VisionTool
 
         // 아마 Teaching, Model
         public int foilExistanceCriteria = 70;
+        public int foilExistanceLength = 10;
         public int foilExistanceThreshold = 179;
         public int contrastOffsetBrighter = 20;
         public int contrastOffsetDarker = -20;
         public int brightBackGroundGrayLevelCriteria = 100;
-        public int widthDenominator = 300;
-        public int heightDenominator = 200;
+        public int widthSamplingScale = 300;
+        public int heightSamplingScale = 200;
 
         List<CopperInfo> CopperInfos = new List<CopperInfo>();      //이거 지워야할수도 있음
         #endregion
@@ -338,28 +339,29 @@ namespace Jastech.Battery.Structure.VisionTool
 
         public bool CheckFoilExistance(DistanceResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
         {
-            if (distanceResult == null)
-                return false;
-            else if (distanceResult.FoilStartX < distanceResult.FoilEndX && distanceResult.FoilStartX > 0 && distanceResult.FoilEndX > 0)
+            if (distanceResult == null || distanceResult.IsValidWidth == false)
                 return false;
 
             int foilWidth = distanceResult.FoilEndX - distanceResult.FoilStartX;
-            int horizontalSpacing = Math.Max(1, foilWidth / widthDenominator);
-            int slicedAreaCount = foilWidth / horizontalSpacing;
+            int samplingWidth = Math.Max(1, foilWidth / widthSamplingScale);
+            int samplingAreaCount = foilWidth / samplingWidth;
 
             for (int y = 0, length = 0; y < imageHeight; y++)
             {
                 int coveredAreaCount = 0;
-                for (int x = distanceResult.FoilStartX; x < distanceResult.FoilEndX; x += horizontalSpacing)
+                for (int x = distanceResult.FoilStartX; x < distanceResult.FoilEndX; x += samplingWidth)
                 {
                     if (imageData[y * imageWidth + x] < foilExistanceThreshold)
                         coveredAreaCount++;
                 }
 
-                double coveringPercentage = slicedAreaCount / coveredAreaCount * 100;
+                double coveringPercentage = (double)samplingAreaCount / (double)coveredAreaCount * 100;
                 if (coveringPercentage < foilExistanceCriteria)
                     length = 0;
-                else if (++length >= pixelLength1mm * 10)
+                else
+                    length++;
+
+                if (length >= pixelLength1mm * foilExistanceLength)
                     return true;
             }
 
@@ -368,10 +370,8 @@ namespace Jastech.Battery.Structure.VisionTool
 
         public bool FindVerticalFoilEdge(ref DistanceResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
         {
-            int verticalSpacing = imageHeight / heightDenominator;
-
-            int foilStartReferenceGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, verticalSpacing, distanceResult.FoilStartX);
-            int foilEndReferenceGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, verticalSpacing, distanceResult.FoilEndX);
+            int foilStartReferenceGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, distanceResult.FoilStartX);
+            int foilEndReferenceGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, distanceResult.FoilEndX);
 
             int foilStartLocation = FindContinuousContrastLocation(distanceResult, foilStartReferenceGrayLevel, imageData, imageWidth, imageHeight, true);
             int foilEndLocation = FindContinuousContrastLocation(distanceResult, foilEndReferenceGrayLevel, imageData, imageWidth, imageHeight, false);
@@ -379,32 +379,32 @@ namespace Jastech.Battery.Structure.VisionTool
             distanceResult.FoilStartX = foilStartLocation > 0 ? foilStartLocation : distanceResult.FoilStartX;
             distanceResult.FoilEndX = foilStartLocation > 0 ? foilEndLocation : distanceResult.FoilEndX;
 
-            bool isValidArea = distanceResult.FoilStartX < distanceResult.FoilEndX && distanceResult.FoilStartX > 0 && distanceResult.FoilEndX > 0;
-            return isValidArea;
+            return distanceResult.IsValidWidth;
         }
 
         private int FindContinuousContrastLocation(DistanceResult distanceResult, int referenceGrayLevel, byte[] imageData, int imageWidth, int imageHeight, bool searchForward)
         {
-            // Pixel이 연속된 지점 찾기
-            int verticalSpacing = imageHeight / heightDenominator;
             bool isBackGroundWhite = referenceGrayLevel >= brightBackGroundGrayLevelCriteria;
-            var range = searchForward ?
+            var searchRange = searchForward ?
                 Enumerable.Range(distanceResult.FoilStartX, distanceResult.FoilEndX - distanceResult.FoilStartX) :
                 Enumerable.Range(distanceResult.FoilStartX, distanceResult.FoilEndX - distanceResult.FoilStartX).Reverse();
 
+            // Pixel이 연속된 지점 찾기
             int pixelStreak = 0, continousLocation = 0;
-            foreach (int x in range)
+            foreach (int x in searchRange)
             {
-                int meanGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, verticalSpacing, x);
+                int meanGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, x);
                 bool hasContrast =
                     (isBackGroundWhite && meanGrayLevel <= referenceGrayLevel + contrastOffsetDarker) ||
                     (!isBackGroundWhite && meanGrayLevel >= referenceGrayLevel + contrastOffsetBrighter);
 
-                if (hasContrast)
+                if (hasContrast)        // 기준레벨값과 비교하여 대비가 있으면, 연속된 픽셀 개수 증가
                 {
-                    if (pixelStreak++ == 0)
+                    if (pixelStreak == 0)
                         continousLocation = x;
-                    else if (pixelStreak >= pixelLength1mm)
+
+                    pixelStreak++;
+                    if (pixelStreak >= pixelLength1mm)
                         return continousLocation;
                 }
                 else
@@ -414,12 +414,15 @@ namespace Jastech.Battery.Structure.VisionTool
             return -1;
         }
 
-        private double GetMeanGrayLevel(byte[] image, int width, int height, int verticalSpacing, int horizontalOffset)
+        private double GetMeanGrayLevel(byte[] image, int width, int height, int horizontalOffset)
         {
-            int sum, row;
-            for (sum = 0, row = 0; row < height / verticalSpacing; row++)
+            int sum = 0;
+            int samplingCount = height / heightSamplingScale;
+
+            for (int row = 0; row < samplingCount; row++)
                 sum += image[row * width + horizontalOffset];
-            return sum / Math.Max(1, row);
+
+            return sum / Math.Max(1, samplingCount);
         }
 
         public int FindCoatingArea_Vertical(Bitmap bmp, DistanceResult distanceResult, int verticalCoatingMaxCount = 5)
@@ -450,7 +453,7 @@ namespace Jastech.Battery.Structure.VisionTool
             int imageHeight = bmp.Height; // m_ImgH;
 
             int foilWidth = foilEndX - foilStartX;
-            int horizontalSpacing = Math.Max(1, foilWidth / widthDenominator);
+            int horizontalSpacing = Math.Max(1, foilWidth / widthSamplingScale);
 
             if (foilStartX < 0 || foilStartX > imageWidth/*m_ImgW*/ || foilEndX < 0 || foilEndX > imageWidth/*m_ImgW*/)
                 return 29;// Define.RESULT_IMAGE_PROCESS_FAIL;

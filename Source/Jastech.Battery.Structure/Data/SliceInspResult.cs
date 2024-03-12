@@ -29,5 +29,9 @@ namespace Jastech.Battery.Structure.Data
         public int FoilStartY { get; set; } = 0;
 
         public int FoilEndY { get; set; } = 0;
+
+        public bool IsValidWidth => FoilStartX < FoilEndX && FoilStartX > 0 && FoilEndX > 0;
+
+        public bool IsValidHeight => FoilStartY < FoilEndY && FoilStartY > 0 && FoilEndY > 0;
     }
 }
