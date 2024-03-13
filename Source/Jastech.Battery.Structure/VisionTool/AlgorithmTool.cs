@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.ComponentModel.Design;
 
 namespace Jastech.Battery.Structure.VisionTool
 {
@@ -26,20 +27,23 @@ namespace Jastech.Battery.Structure.VisionTool
         public const double CalibrationX = 0.0423; // CIS 사용 시 X,Y Scale 확인할 것
         public const double CalibrationY = 0.0423; // CIS 사용 시 X,Y Scale 확인할 것
         public const double pixelLength1mm = 1.0 / CalibrationX;
-        public const int MAX_COPPER_NUM = 10;
 
         // 확인 필요
         double zoom = 0.08825; //Config.Zoom[m_ModuleNo]
 
         // 아마 Teaching, Model
-        public int foilExistanceCriteria = 70;
-        public int foilExistanceLength = 10;
-        public int foilExistanceThreshold = 179;
-        public int contrastOffsetBrighter = 20;
-        public int contrastOffsetDarker = -20;
-        public int brightBackGroundGrayLevelCriteria = 100;
-        public int widthSamplingScale = 300;
-        public int heightSamplingScale = 200;
+        public int CoatingMinimumLength = 10;
+        public int CoatingAreaMaximumCount = 5;
+        public sbyte ContrastOffsetBrighter = 20;
+        public sbyte ContrastOffsetDarker = -20;
+        public byte CoatingExistanceThreshold = 179;
+        public byte CoatingExistanceCriteria = 70;
+        public byte CoatingEdgeConstrastCriteria = 39; // Para.CoatEdgeLv[m_ModuleNo];                EdgeThreashold TeachingParameter로 따로 빼기
+        public byte BackGroundGrayLevelCriteria = 100;
+
+
+        public int WidthSamplingScale = 300;
+        public int HeightSamplingScale = 200;
 
         List<CopperInfo> CopperInfos = new List<CopperInfo>();      //이거 지워야할수도 있음
         #endregion
@@ -337,66 +341,69 @@ namespace Jastech.Battery.Structure.VisionTool
             Buffer.BlockCopy(pBuff, 0, testInspParam.m_pImgBuff, 0, BuffW * BuffH);
         }
 
-        public bool CheckFoilExistance(DistanceResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
+        public bool CheckCoatingWidth(DistanceResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
         {
-            if (distanceResult == null || distanceResult.IsValidWidth == false)
+            if (distanceResult == null || distanceResult.IsValidScanWidth == false)
                 return false;
 
-            int foilWidth = distanceResult.FoilEndX - distanceResult.FoilStartX;
-            int samplingWidth = Math.Max(1, foilWidth / widthSamplingScale);
-            int samplingAreaCount = foilWidth / samplingWidth;
+            int coatingWidth = distanceResult.ScanEndX - distanceResult.ScanStartX;
+            int samplingWidth = Math.Max(1, coatingWidth / WidthSamplingScale);
+            int samplingAreaCount = coatingWidth / samplingWidth;
 
             for (int y = 0, length = 0; y < imageHeight; y++)
             {
-                int coveredAreaCount = 0;
-                for (int x = distanceResult.FoilStartX; x < distanceResult.FoilEndX; x += samplingWidth)
+                int coatingAreaCount = 0;
+                for (int x = distanceResult.ScanStartX; x < distanceResult.ScanEndX; x += samplingWidth)
                 {
-                    if (imageData[y * imageWidth + x] < foilExistanceThreshold)
-                        coveredAreaCount++;
+                    if (imageData[y * imageWidth + x] < CoatingExistanceThreshold)
+                        coatingAreaCount++;
                 }
 
-                double coveringPercentage = (double)samplingAreaCount / (double)coveredAreaCount * 100;
-                if (coveringPercentage < foilExistanceCriteria)
+                double coveringPercentage = (double)samplingAreaCount / (double)coatingAreaCount * 100;
+                if (coveringPercentage < CoatingExistanceCriteria)
                     length = 0;
                 else
                     length++;
 
-                if (length >= pixelLength1mm * foilExistanceLength)
+                if (length >= pixelLength1mm * CoatingMinimumLength)
                     return true;
             }
 
             return false;
         }
 
-        public bool FindVerticalFoilEdge(ref DistanceResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
+        public bool FindVerticalCoatingAreaEdges(ref DistanceResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
         {
-            int foilStartReferenceGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, distanceResult.FoilStartX);
-            int foilEndReferenceGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, distanceResult.FoilEndX);
+            if (distanceResult == null)
+                return false;
 
-            int foilStartLocation = FindContinuousContrastLocation(distanceResult, foilStartReferenceGrayLevel, imageData, imageWidth, imageHeight, true);
-            int foilEndLocation = FindContinuousContrastLocation(distanceResult, foilEndReferenceGrayLevel, imageData, imageWidth, imageHeight, false);
+            byte startReferenceGrayLevel = (byte)GetMeanSampledLevel(imageData, imageWidth, imageHeight, distanceResult.ScanStartX);
+            byte endReferenceGrayLevel = (byte)GetMeanSampledLevel(imageData, imageWidth, imageHeight, distanceResult.ScanEndX);
 
-            distanceResult.FoilStartX = foilStartLocation > 0 ? foilStartLocation : distanceResult.FoilStartX;
-            distanceResult.FoilEndX = foilStartLocation > 0 ? foilEndLocation : distanceResult.FoilEndX;
+            int coatingStartLocation = FindContinuousContrastLocation(distanceResult, startReferenceGrayLevel, imageData, imageWidth, imageHeight, pixelLength1mm, true);
+            int coatingEndLocation = FindContinuousContrastLocation(distanceResult, endReferenceGrayLevel, imageData, imageWidth, imageHeight, pixelLength1mm, false);
 
-            return distanceResult.IsValidWidth;
+            distanceResult.ScanStartX = coatingStartLocation > 0 ? coatingStartLocation : distanceResult.ScanStartX;
+            distanceResult.ScanEndX = coatingStartLocation > 0 ? coatingEndLocation : distanceResult.ScanEndX;
+
+            return distanceResult.IsValidScanWidth;
         }
 
-        private int FindContinuousContrastLocation(DistanceResult distanceResult, int referenceGrayLevel, byte[] imageData, int imageWidth, int imageHeight, bool searchForward)
+        private int FindContinuousContrastLocation(DistanceResult distanceResult, byte referenceGrayLevel, byte[] imageData, int imageWidth, int imageHeight, double searchLength, bool searchForward)
         {
-            bool isBackGroundWhite = referenceGrayLevel >= brightBackGroundGrayLevelCriteria;
+            bool isBackGroundWhite = referenceGrayLevel >= BackGroundGrayLevelCriteria;
             var searchRange = searchForward ?
-                Enumerable.Range(distanceResult.FoilStartX, distanceResult.FoilEndX - distanceResult.FoilStartX) :
-                Enumerable.Range(distanceResult.FoilStartX, distanceResult.FoilEndX - distanceResult.FoilStartX).Reverse();
+                Enumerable.Range(distanceResult.ScanStartX, distanceResult.ScanEndX - distanceResult.ScanStartX) :
+                Enumerable.Range(distanceResult.ScanStartX, distanceResult.ScanEndX - distanceResult.ScanStartX).Reverse();
 
             // Pixel이 연속된 지점 찾기
             int pixelStreak = 0, continousLocation = 0;
             foreach (int x in searchRange)
             {
-                int meanGrayLevel = (int)GetMeanGrayLevel(imageData, imageWidth, imageHeight, x);
+                byte meanGrayLevel = (byte)GetMeanSampledLevel(imageData, imageWidth, imageHeight, x);
                 bool hasContrast =
-                    (isBackGroundWhite && meanGrayLevel <= referenceGrayLevel + contrastOffsetDarker) ||
-                    (!isBackGroundWhite && meanGrayLevel >= referenceGrayLevel + contrastOffsetBrighter);
+                    (isBackGroundWhite && meanGrayLevel <= referenceGrayLevel + ContrastOffsetDarker) ||
+                    (!isBackGroundWhite && meanGrayLevel >= referenceGrayLevel + ContrastOffsetBrighter);
 
                 if (hasContrast)        // 기준레벨값과 비교하여 대비가 있으면, 연속된 픽셀 개수 증가
                 {
@@ -404,7 +411,7 @@ namespace Jastech.Battery.Structure.VisionTool
                         continousLocation = x;
 
                     pixelStreak++;
-                    if (pixelStreak >= pixelLength1mm)
+                    if (pixelStreak >= searchLength)
                         return continousLocation;
                 }
                 else
@@ -414,244 +421,102 @@ namespace Jastech.Battery.Structure.VisionTool
             return -1;
         }
 
-        private double GetMeanGrayLevel(byte[] image, int width, int height, int horizontalOffset)
+        public double GetMeanSampledLevel(byte[] image, int width, int height, int horizontalOffset)
         {
             int sum = 0;
-            int samplingCount = height / heightSamplingScale;
+            int samplingCount = height / HeightSamplingScale;
 
             for (int row = 0; row < samplingCount; row++)
-                sum += image[row * width + horizontalOffset];
+                sum += image[(row * HeightSamplingScale * width) + horizontalOffset];
 
             return sum / Math.Max(1, samplingCount);
         }
 
-        public int FindCoatingArea_Vertical(Bitmap bmp, DistanceResult distanceResult, int verticalCoatingMaxCount = 5)
+        private double GetMeanSampledLevel(byte[] image, int width, int verticalOffset)
         {
-            int result = 0;
-
             int sum = 0;
-            int count = 0;
+            int samplingCount = width / WidthSamplingScale;
 
-            int start = -1;
-            int end = -1;
+            for (int col = 0; col < samplingCount; col++)
+                sum += image[(verticalOffset * width) + (col * WidthSamplingScale)];
 
-            int unitHeight = 0;
-            int unitMaxHeight = 0;
+            return sum / Math.Max(1, samplingCount);
+        }
 
-            double maxLevel = 0, minLevel = 0;
-            int diffLevel = 0;
-            int threshold = 0;
+        public bool FindCoatingAreas(ref DistanceResult distanceResult, AppsInspModel model, byte[] imageData, int imageWidth, int imageHeight, int minimumFoilLength)
+        {
+            if (distanceResult == null)
+                return false;
 
-            int coatingCount = 0;
-            int EdgeLv = 39; // Para.CoatEdgeLv[m_ModuleNo];
+            int scanStartX = distanceResult.ScanStartX;
+            int scanEndX = distanceResult.ScanEndX;
+            int scanStartY = distanceResult.ScanStartY;
+            int scanEndY = distanceResult.ScanEndY;
+            int scanWidth = scanEndX - scanStartX;
+            int scanHeight = scanEndY - scanStartY;
 
-            int foilStartX = distanceResult.FoilStartX; // m_FoilSt;
-            int foilEndX = distanceResult.FoilEndX; // m_FoilEnd;
-            int y1 = 0;
+            if (distanceResult.IsValidScanWidth == false || scanWidth > imageWidth ||
+                distanceResult.IsValidScanHeight == false || scanHeight > imageHeight)
+                return false;   // Define.RESULT_IMAGE_PROCESS_FAIL;
 
-            int imageWidth = bmp.Width;
-            int imageHeight = bmp.Height; // m_ImgH;
+            // 수직 샘플링
+            List<byte> verticalSamplingResults = new List<byte>();
+            for (int y = scanStartY; y < scanEndY; y++)
+                verticalSamplingResults.Add((byte)GetMeanSampledLevel(imageData, imageWidth, y));
+            distanceResult.VerticalSamplingResults = verticalSamplingResults;
 
-            int foilWidth = foilEndX - foilStartX;
-            int horizontalSpacing = Math.Max(1, foilWidth / widthSamplingScale);
+            byte foilEdgeConstrast = (byte)(verticalSamplingResults.Max() - verticalSamplingResults.Min());
+            bool isSlittingPouchCell = model.ProcessType == ProcessType.Slitting && model.ModelType == ModelType.Pouch;
 
-            if (foilStartX < 0 || foilStartX > imageWidth/*m_ImgW*/ || foilEndX < 0 || foilEndX > imageWidth/*m_ImgW*/)
-                return 29;// Define.RESULT_IMAGE_PROCESS_FAIL;
-
-            Array.Clear(testInspParam.m_pH, 0, testInspParam.m_ImgH);
-
-            //======================================================= 수직방향 프로파일 얻기
-            for (int j = 0; j < testInspParam.m_ImgH; j++)
-            {
-                sum = 0;
-                count = 0;
-                for (int i = foilStartX; i < foilEndX; i += horizontalSpacing)
-                {
-                    sum += testInspParam.m_pImgBuff[j * testInspParam.m_ImgW + i];
-                    count++;
-                }
-                if (count < 1) count = 1;
-                testInspParam.m_pH[j] = sum / count;
-            }
-
-            //======================================================= 프로파일에서 최소값, 최대값을 찾는다.
-            maxLevel = 0.0;
-            minLevel = 255;
-            for (int j = 0; j < testInspParam.m_ImgH; j++)
-            {
-                if (testInspParam.m_pH[j] <= 0)
-                    continue;
-
-                if (j < 5 || j > testInspParam.m_ImgH - 5)   // 위,아래 마진을 두고 계산한다.
-                    continue;
-
-                if (testInspParam.m_pH[j] < minLevel) minLevel = testInspParam.m_pH[j];
-                if (testInspParam.m_pH[j] > maxLevel) maxLevel = testInspParam.m_pH[j];
-            }
-
-            diffLevel = (int)(maxLevel - minLevel);
-
-            if (diffLevel < EdgeLv)
-            {
-                // 밝기의 변화가 생기는 엣지를 못 찾았을 경우
-                testInspParam.coatingRowCount = 1;
-                testInspParam.verticalCoatArea[0].X = foilStartX;
-                testInspParam.verticalCoatArea[0].Y = 0;
-                testInspParam.verticalCoatArea[0].Width = foilEndX - foilStartX;
-                testInspParam.verticalCoatArea[0].Height = testInspParam.m_ImgH;
-                testInspParam.m_MaxVertCoatArea = testInspParam.verticalCoatArea[0];
-            }
+            // Edge 대비가 기준치 이하 일때, 혹은 Slitting공정 Pouch 모델일 때 Foil 영역은 하나로 검사
+            if (foilEdgeConstrast < CoatingEdgeConstrastCriteria || isSlittingPouchCell)
+                distanceResult.CoatingAreas.Add(new Rectangle(scanStartX, scanStartY, scanWidth, scanHeight));
+            // 여러 Foil 영역이 존재할 것으로 판단하고 영역 탐색
             else
             {
-                //====================================================== 엣지 부분이 발견이 됐다면 코팅 부분을 찾음
-                threshold = (int)(minLevel + maxLevel) / 2;
+                byte foilThreshold = (byte)((verticalSamplingResults.Max() + verticalSamplingResults.Min()) / 2);
+                bool foundTop = false, foundBottom = false;
+                int top = 0, bottom = 0;
 
-                start = -1;
-                end = -1;
-                coatingCount = 0;
-                for (int j = 0; j < testInspParam.m_ImgH; j++)
+                for (int index = 0; index < verticalSamplingResults.Count; index++)
                 {
-                    if (start < 0 && testInspParam.m_pH[j] <= threshold)
-                        start = j;   // 코팅 시작 부분 찾기
-                    if (start < 0)
-                        continue;
+                    bool isFoilArea = verticalSamplingResults[index] > foilThreshold;
 
-                    if (end < 0 && testInspParam.m_pH[j] > threshold)
-                        end = j;
-                    if (end < 0)
-                        continue;
-
-                    //----- 찾아낸 코팅 길이가 100픽셀이 안되면 패스..
-                    if (start >= 0 && end >= 0)
+                    if (foundTop && foundBottom)
                     {
-                        int CoatLen = end - start;
-                        if (CoatLen < 100)
+                        int foilLength = bottom - top;
+                        if (foilLength >= pixelLength1mm * minimumFoilLength && isFoilArea == false)    // 크기를 만족하고 영역이 끝나는 지점에서 영역 분할
                         {
-                            start = -1;
-                            end = -1;
-                            continue;
+                            distanceResult.CoatingAreas.Add(new Rectangle(scanStartX, top, scanWidth, bottom - top));
+                            foundTop = foundBottom = false;
                         }
                     }
 
-                    if (coatingCount < verticalCoatingMaxCount)
+                    if (foundTop == false && isFoilArea == false)
                     {
-                        testInspParam.verticalCoatArea[coatingCount].X = foilStartX;
-                        testInspParam.verticalCoatArea[coatingCount].Width = foilEndX - foilStartX;
-                        testInspParam.verticalCoatArea[coatingCount].Y = start;
-                        testInspParam.verticalCoatArea[coatingCount].Height = end - start;
-                        coatingCount++;
+                        top = scanStartY + index;
+                        foundTop = true;
                     }
 
-                    start = -1;
-                    end = -1;
-                }
-
-                if (start >= 0 && end < 0)
-                {
-                    end = testInspParam.m_ImgH;
-
-                    if (coatingCount < verticalCoatingMaxCount)
+                    if (foundTop == true && isFoilArea == true)
                     {
-                        testInspParam.verticalCoatArea[coatingCount].X = foilStartX;
-                        testInspParam.verticalCoatArea[coatingCount].Width = foilEndX - foilStartX;
-                        testInspParam.verticalCoatArea[coatingCount].Y = start;
-                        testInspParam.verticalCoatArea[coatingCount].Height = end - start;
-                        coatingCount++;
+                        bottom = scanStartY + index;
+                        foundBottom = true;
                     }
                 }
 
-                testInspParam.coatingRowCount = coatingCount;
+                if (foundTop == true && foundBottom == false)    // 탐색 종료 시점에서 마지막 영역 처리
+                    distanceResult.CoatingAreas.Add(new Rectangle(scanStartX, top, scanWidth, scanHeight - top));
             }
 
-            //===== 예외 처리
-            if (testInspParam.coatingRowCount < 1 || testInspParam.coatingRowCount >= verticalCoatingMaxCount)
-            {
-                return 33; // Define.RESULT_ETC;
-            }
+            // Foil 영역이 없거나 너무 많으면 실패 처리
+            if (distanceResult.CoatingAreas.Count == 0 || distanceResult.CoatingAreas.Count >= CoatingAreaMaximumCount)
+                return false; // Define.RESULT_ETC;
 
-            //==================================== 찾아낸 영역 중 가장 큰 영역을 얻는다.
-            unitMaxHeight = 0;
-            for (int iCoat = 0; iCoat < testInspParam.coatingRowCount; iCoat++)
-            {
-                unitHeight = testInspParam.verticalCoatArea[iCoat].Height;
-                if (unitHeight > unitMaxHeight)
-                {
-                    unitMaxHeight = unitHeight;
-                    testInspParam.m_MaxVertCoatArea = testInspParam.verticalCoatArea[iCoat];
-                }
-            }
+            // 제일 큰 영역은 처리 속도를 위해 별도 저장
+            distanceResult.LargestCoatingArea = distanceResult.CoatingAreas.Aggregate((maxRect, nextRect) => (maxRect.Width * maxRect.Height >= nextRect.Width * nextRect.Height) ? maxRect : nextRect);
 
-            foilStartX = testInspParam.m_MaxVertCoatArea.X - (int)(30 / zoom);
-            foilEndX = testInspParam.m_MaxVertCoatArea.X;
-            y1 = testInspParam.m_MaxVertCoatArea.Y;
-            imageHeight = testInspParam.m_MaxVertCoatArea.Y + testInspParam.m_MaxVertCoatArea.Height;
-
-            return 0; // Define.RESULT_OK;
-
-            return result;
-        }
-
-        public void IdentifyModelType(int imageWidth,  int imageHeight, DistanceResult distanceResult)
-        {
-            //=================================== 파우치인지.. 패턴타입인지 파악한다 (PLC로부터 어떤 정보도 받지 못했을 경우에만 실행됨)
-            //DistanceParam distanceParam = new DistanceParam();
-
-            //if (distanceParam.ModelType == ModelType.None/*Global.ModelType == 0*/)
-            //{
-            //    if (distanceParam.FrameCountTotal < distanceParam.FRAME_COUNT_TOTAL /*m_FrameCountTotal < 30*/)
-            //    {
-            //        int DiffT = testInspParam.m_MaxVertCoatArea.Y;
-            //        int DiffB = testInspParam.m_ImgH - testInspParam.m_MaxVertCoatArea.Bottom;
-
-            //        if (DiffT < 10 && DiffB < 10)
-            //        {
-            //            // Pouch타입이다.
-            //            distanceParam.FrameCountPouch++; // m_FrameCountPouch++;
-
-            //            if (distanceParam.FrameCountPouch >= distanceParam.FRAME_COUNT_POUCH/*m_FrameCountPouch >= 5*/)
-            //            {
-            //                //Global.ModelType = Define.MODEL_POUCH;
-            //                distanceParam.ModelType = ModelType.Pouch;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            //m_FrameCountPouch = 0;
-            //            distanceParam.FrameCountPouch = 0;
-            //        }
-
-            //        //m_FrameCountTotal++;
-            //        distanceParam.FrameCountTotal++;
-            //    }
-            //    else
-            //    {
-            //        // 30Frame이 지나는 동안 Pouch로 판정할 만한 근거가 없으면 Pattern모델로 인식한다.
-            //        //Global.ModelType = Define.MODEL_PATTERN;
-            //        distanceParam.ModelType = ModelType.Pattern;
-            //    }
-            //}
-            //else if (distanceParam.ModelType == ModelType.Pouch/*Global.ModelType == Define.MODEL_POUCH*/)
-            //{
-            //    //if (AppsConfig.Instance().ProcessType) 종속성 때문에 상호참조 안됨. /*if (Config.VisionType == Define.VISION_SLITTER)*/
-            //    //===== 파우치일 경우에는 Y방향으로 영역이 여러개 나올수가 없음 (중간에 테이핑 영역을 불량으로 찾기 위해서 필요함, 슬리터에서만 필요함)
-            //    {
-            //        foilStartX = testInspParam.verticalCoatArea[0].Left;
-            //        foilEndX = testInspParam.verticalCoatArea[0].Right;
-            //        y1 = testInspParam.verticalCoatArea[0].Top;
-            //        imageHeight = testInspParam.verticalCoatArea[testInspParam.coatingRowCount - 1].Bottom;
-
-            //        //===== 완전한 코팅 상태일 경우에는 전체 영역임 (테이핑 영역이 이미지의 맨위, 맨 아래에 있는 경우 검사 영역에서 빠지는 걸 막기 위해서)
-            //        if (testInspParam.coatingRowCount/*m_CoatingCount*/ > 0)
-            //        {
-            //            y1 = 0;
-            //            imageHeight = testInspParam.m_ImgH;
-            //        }
-
-            //        testInspParam.verticalCoatArea[0].Y = y1;
-            //        testInspParam.verticalCoatArea[0].Height = imageHeight - y1;
-            //        testInspParam.coatingRowCount = 1;
-            //    }
-            //}
+            return ShapeHelper.CheckValidRectangle(distanceResult.LargestCoatingArea, distanceResult.LargestCoatingArea.Width, distanceResult.LargestCoatingArea.Height);
         }
 
         public int GetCoatingLevel()

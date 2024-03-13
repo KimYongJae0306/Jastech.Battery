@@ -20,5 +20,7 @@ namespace Jastech.Battery.Structure
         public int InspThreadCount { get; set; } = 10;
 
         public ModelType ModelType { get; set; } = ModelType.None;
+
+        public ProcessType ProcessType { get; set; } = ProcessType.None;
     }
 }

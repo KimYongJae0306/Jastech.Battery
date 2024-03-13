@@ -38,8 +38,6 @@ namespace Jastech.Battery.Structure.Parameters
 
     public class DistanceParam
     {
-        public ModelType ModelType { get; set; } = ModelType.Pouch;
-
         public int FRAME_COUNT_TOTAL
         {
             get { return 30; }
@@ -62,15 +60,15 @@ namespace Jastech.Battery.Structure.Parameters
         
         public List<Rectangle> VerticalCoatingArea = new List<Rectangle>();
 
-        public int ImageWidth { get; set; } = 0;
-
         public int LeftScanMargin { get; set; } = 200;
 
         public int RightScanMargin { get; set; } = 200;
 
-        public int TopScanMargin { get; set; } = 200;
+        public int TopScanMargin { get; set; } = 5;
 
-        public int BottomScanMargin { get; set; } = 200;
+        public int BottomScanMargin { get; set; } = 5;
+
+        public int MinimumFoilLength { get; set; } = 5;
     }
 
     public class LineParam
@@ -227,6 +225,15 @@ namespace Jastech.Battery.Structure.Parameters
         public double InsulationRightWidth = 0, InsulationRightGap = 0, InsulationRightOverlayWidth = 0;
         public int InsulationLeftAvgLv = 0, InsulationRightAvgLv = 0;      // 절연 영역의 평균 밝기
         public int InsulationLeftResult = 0, InsulationRightResult = 0;
+    }
+
+
+    public enum ProcessType
+    {
+        None,
+        Coating,
+        Press,
+        Slitting,
     }
 
     public enum ModelType

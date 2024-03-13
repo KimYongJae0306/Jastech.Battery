@@ -1,4 +1,5 @@
-﻿using Jastech.Battery.Winform;
+﻿using Jastech.Battery.Structure.Parameters;
+using Jastech.Battery.Winform;
 using Jastech.Battery.Winform.Forms;
 using Jastech.Battery.Winform.Settings;
 using Jastech.Framework.Comm;
@@ -137,7 +138,7 @@ namespace ESI
                 var programType = StringHelper.StringToEnum<ProcessType>(AppsConfig.Instance().ProgramType);
                 switch (programType)
                 {
-                    case ProcessType.Coater:
+                    case ProcessType.Coating:
                         AppsConfig.Instance().MachineName = "ESI (Coater)";
                         CreateCoaterDeviceConfig(config);
                         break;
@@ -147,7 +148,7 @@ namespace ESI
                         CreatePressDeviceConfig(config);
                         break;
 
-                    case ProcessType.Slitter:
+                    case ProcessType.Slitting:
                         AppsConfig.Instance().MachineName = "ESI (Slitter)";
                         CreateSlitterDeviceConfig(config);
                         break;

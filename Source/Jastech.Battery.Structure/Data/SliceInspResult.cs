@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,12 @@ namespace Jastech.Battery.Structure.Data
         public InspDirection InspDirection { get; set; }
 
         public DistanceResult DistanceResult { get; set; }
-        public bool foilFound { get; set; } = false;
 
-        public bool IsCoating { get; set; } = false;
+        public bool CoatingVerticalEdgesExist { get; set; } = false;
+
+        public bool CoatingWidthSufficient { get; set; } = false;
+
+        public bool CoatingROIFound { get; set; } = false;
     }
 
     public class DistanceResult
@@ -22,16 +26,22 @@ namespace Jastech.Battery.Structure.Data
 
         public string Name { get; set; } = string.Empty;
 
-        public int FoilStartX { get; set; } = 0;
+        public List<byte> VerticalSamplingResults { get; set; } = new List<byte>();
 
-        public int FoilEndX { get; set; } = 0;
+        public List<Rectangle> CoatingAreas { get; private set; } = new List<Rectangle>();
 
-        public int FoilStartY { get; set; } = 0;
+        public Rectangle LargestCoatingArea { get; set; } = Rectangle.Empty;
 
-        public int FoilEndY { get; set; } = 0;
+        public int ScanStartX { get; set; } = 0;
 
-        public bool IsValidWidth => FoilStartX < FoilEndX && FoilStartX > 0 && FoilEndX > 0;
+        public int ScanStartY { get; set; } = 0;
 
-        public bool IsValidHeight => FoilStartY < FoilEndY && FoilStartY > 0 && FoilEndY > 0;
+        public int ScanEndX { get; set; } = 0;
+
+        public int ScanEndY { get; set; } = 0;
+
+        public bool IsValidScanWidth => ScanStartX < ScanEndX && ScanStartX > 0 && ScanEndX > 0;
+
+        public bool IsValidScanHeight => ScanStartY < ScanEndY && ScanStartY > 0 && ScanEndY > 0;
     }
 }

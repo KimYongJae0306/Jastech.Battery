@@ -1,29 +1,20 @@
 ﻿using Emgu.CV;
-using Emgu.CV.CvEnum;
 using Jastech.Battery.Structure;
 using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Structure.Parameters;
 using Jastech.Battery.Structure.VisionTool;
 using Jastech.Battery.Winform.Settings;
 using Jastech.Battery.Winform.UI.Controls;
-using Jastech.Framework.Device.Plcs;
 using Jastech.Framework.Imaging.Helper;
 using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform.Controls;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
 
 namespace Jastech.Battery.Winform.UI.Forms
 {
@@ -263,6 +254,9 @@ namespace Jastech.Battery.Winform.UI.Forms
             if (_orgBmp == null)
                 return;
 
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            WriteTactTime(stopwatch, "=================================Test Start=================================");
+
             AppsInspModel model = ModelManager.Instance().CurrentModel as AppsInspModel;
             SliceInspResult sliceInspResult = new SliceInspResult();
             AlgorithmTool algorithmTool = new AlgorithmTool();
@@ -272,8 +266,12 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             _grayImage?.Dispose();
             _imageData?.Initialize();
-            _grayImage = ImageHelper.ConvertToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요
+
+            WriteTactTime(stopwatch, "Before converting image");
+            _grayImage = ImageHelper.ConvertRGB24ToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요
+            WriteTactTime(stopwatch, "After converting image to grayscale");
             _imageData = ImageHelper.GetByteArrayFromBitmap(_grayImage);
+            WriteTactTime(stopwatch, "After converting image to byte array");
 
             if (model == null)
                 model = new AppsInspModel();
@@ -282,30 +280,89 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             DistanceResult distanceResult = new DistanceResult
             {
-                FoilStartX = model.DistanceParam.LeftScanMargin,
-                FoilEndX = _imageWidth - model.DistanceParam.RightScanMargin,
-                FoilStartY = model.DistanceParam.TopScanMargin,
-                FoilEndY = _imageHeight - model.DistanceParam.BottomScanMargin,
+                ScanStartX = model.DistanceParam.LeftScanMargin,
+                ScanEndX = _imageWidth - model.DistanceParam.RightScanMargin,
+                ScanStartY = model.DistanceParam.TopScanMargin,
+                ScanEndY = _imageHeight - model.DistanceParam.BottomScanMargin,
             };
             sliceInspResult.DistanceResult = distanceResult;
 
+            WriteTactTime(stopwatch, "Initializing finished");
+
             // teaching 영역 사용 시 별도 계산 하지 않음
             if (AppsConfig.Instance().UseTeachingArea == false)
-                sliceInspResult.foilFound = algorithmTool.FindVerticalFoilEdge(ref distanceResult, _imageData, _imageWidth, _imageHeight);
+                sliceInspResult.CoatingVerticalEdgesExist = algorithmTool.FindVerticalCoatingAreaEdges(ref distanceResult, _imageData, _imageWidth, _imageHeight);
 
-            if (AppsConfig.Instance().UseTeachingArea == false && sliceInspResult.foilFound == false)
+            if (AppsConfig.Instance().UseTeachingArea == false && sliceInspResult.CoatingVerticalEdgesExist == false)
                 return;     // Define.RESULT_NO_FOIL
 
-            sliceInspResult.IsCoating = algorithmTool.CheckFoilExistance(distanceResult, _imageData, _imageWidth, _imageHeight);
+            WriteTactTime(stopwatch, "Coating vertical edges were found");
 
-            if (sliceInspResult.IsCoating == false)
+            sliceInspResult.CoatingWidthSufficient = algorithmTool.CheckCoatingWidth(distanceResult, _imageData, _imageWidth, _imageHeight);
+
+            if (sliceInspResult.CoatingWidthSufficient == false)
                 return;     // Define.RESULT_NON_COAT_ONE_SIDE
 
-            //algorithmTool.FindCoatingArea_Vertical();
+            WriteTactTime(stopwatch, "Coating width checked");
 
-            
-            //if(model.ModelType == Structure.Parameters.ModelType.None) // PLC로부터 받아온 정보가 없거나 그냥 모델이 설정이 안되어 있으면, 모델을 식별한다
-            //    algorithmTool. IdentifyModelType(ref foilStartY, ref foilEndX, ref y1, ref imageHeight);
+            sliceInspResult.CoatingROIFound = algorithmTool.FindCoatingAreas(ref distanceResult, model, _imageData, _imageWidth, _imageHeight, model.DistanceParam.MinimumFoilLength);
+
+            if (sliceInspResult.CoatingROIFound == false)
+                return;     // Define.RESULT_NON_COAT_ONE_SIDE
+
+            WriteTactTime(stopwatch, "Coating Areas were found");
+            #region 추가 검증용 코드
+            List<byte> horizontalSamplingResults = new List<byte>();
+            for (int x = 0; x < _imageWidth; x++)
+                horizontalSamplingResults.Add((byte)algorithmTool.GetMeanSampledLevel(_imageData, _imageWidth, _imageHeight, x));
+            PixelValueGraphControl.SetData(horizontalSamplingResults.ToArray());
+
+            SaveTestResults(distanceResult);
+            #endregion
+            WriteTactTime(stopwatch, "=================================Test Finished==============================");
+        }
+
+        private void SaveTestResults(DistanceResult distanceResult)
+        {
+            if (_orgBmp == null)
+                return;
+
+            Pen foilEdgeXPen = new Pen(Color.Red, 5);
+            Pen foilEdgeYPen = new Pen(Color.Indigo, 5);
+            Pen foilWidthPen = new Pen(Color.LawnGreen, 7)
+            {
+                StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
+                EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
+            };
+            Pen foilROIPen = new Pen(Color.Yellow, 3)
+            {
+                DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
+            };
+            using (Bitmap cloneBitmap = ImageHelper.ConvertGrayscaleToRGB24((Bitmap)_orgBmp.Clone()))
+            {
+                using (Graphics g = Graphics.FromImage(cloneBitmap))
+                {
+                    g.DrawLine(foilEdgeXPen, distanceResult.ScanStartX, 0, distanceResult.ScanStartX, _imageHeight);
+                    g.DrawLine(foilEdgeXPen, distanceResult.ScanEndX, 0, distanceResult.ScanEndX, _imageHeight);
+                    g.DrawLine(foilEdgeYPen, 0, distanceResult.ScanStartY, _imageWidth, distanceResult.ScanStartY);
+                    g.DrawLine(foilEdgeYPen, 0, distanceResult.ScanEndY, _imageWidth, distanceResult.ScanEndY);
+
+                    g.DrawLine(foilWidthPen, distanceResult.ScanStartX, _imageHeight / 2, distanceResult.ScanEndX, _imageHeight / 2);
+                    g.DrawRectangle(foilROIPen, distanceResult.LargestCoatingArea);
+
+                    g.Save();
+                }
+                cloneBitmap.Save(@"D:\FoilTestResult.bmp");
+            }
+        }
+
+        private long WriteTactTime(Stopwatch stopwatch, string message)     // 2024.03.13 테스트 후 참조 모두 제거할 것
+        {
+            stopwatch.Stop();
+            long elapsedTime = stopwatch.ElapsedMilliseconds;
+            stopwatch.Start();
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] {message}, Elapsed : {elapsedTime}ms");
+            return elapsedTime;
         }
     }
 

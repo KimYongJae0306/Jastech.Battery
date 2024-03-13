@@ -84,11 +84,4 @@ namespace Jastech.Battery.Winform.Settings
         }
         #endregion
     }
-
-    public enum ProcessType
-    {
-        Coater,
-        Press,
-        Slitter,
-    }
 }
