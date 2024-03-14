@@ -501,7 +501,7 @@ namespace Jastech.Battery.Structure.VisionTool
             derivedSamplingResult.Clear();
             derivedSamplingResult.AddRange(MathHelper.GetDerivedArray(horizontalSamplingResult.ToArray(), 1));
 
-            var nonCoatingPeaks = FindPeakPairs(derivedSamplingResult, pixelLength1mm * 10, pixelLength1mm * 20);
+            var nonCoatingPeaks = FindPeakPairs(derivedSamplingResult, pixelLength1mm * 15, pixelLength1mm * 20);
             foreach(var peakPair in nonCoatingPeaks)
             {
                 var nonCoatingArea = new Rectangle

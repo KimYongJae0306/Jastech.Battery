@@ -337,7 +337,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             Pen coatingEdgeXPen = new Pen(Color.Red, 10);
             Pen coatingEdgeYPen = new Pen(Color.Indigo, 10);
-            Pen coatingWidthPen = new Pen(Color.LawnGreen, 15)
+            Pen coatingWidthPen = new Pen(Color.LawnGreen, 20)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
@@ -345,6 +345,11 @@ namespace Jastech.Battery.Winform.UI.Forms
             Pen coatingROIPen = new Pen(Color.Yellow, 10)
             {
                 DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
+            };
+            Pen nonCoatingWidthPen = new Pen(Color.HotPink, 20)
+            {
+                StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
+                EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
             Pen nonCoatingROIPen = new Pen(Color.HotPink, 10)
             {
@@ -364,8 +369,8 @@ namespace Jastech.Battery.Winform.UI.Forms
 
                     foreach (Rectangle nonCoatingArea in distanceResult.NonCoatingAreas)
                     {
-                        g.DrawLine(coatingWidthPen, nonCoatingArea.Left, _imageHeight*2 / 3, nonCoatingArea.Right, _imageHeight*2 / 3);
-                        g.DrawLine(coatingWidthPen, nonCoatingArea.Left, _imageHeight / 3, nonCoatingArea.Right, _imageHeight / 3);
+                        g.DrawLine(nonCoatingWidthPen, nonCoatingArea.Left, _imageHeight*2 / 3, nonCoatingArea.Right, _imageHeight*2 / 3);
+                        g.DrawLine(nonCoatingWidthPen, nonCoatingArea.Left, _imageHeight / 3, nonCoatingArea.Right, _imageHeight / 3);
                         g.DrawRectangle(nonCoatingROIPen, nonCoatingArea);
                     }
 
