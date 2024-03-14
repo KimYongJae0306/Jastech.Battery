@@ -105,6 +105,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             //pnlDisplay.Controls.Add(DrawBoxControl);
 
             PixelValueGraphControl = new PixelValueGraphControl();
+            PixelValueGraphControl.DataPen = new Pen(Color.Olive);
             PixelValueGraphControl.Dock = DockStyle.Fill;
             pnlGraph.Controls.Add(PixelValueGraphControl);
 
@@ -275,26 +276,27 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             if (model == null)
                 model = new AppsInspModel();
-            model.DistanceParam.LeftScanMargin = 350;    // 시퀀스 검증용 임시 하드코딩, 티칭 완성 후 제거
-            model.DistanceParam.RightScanMargin = 210;    // 시퀀스 검증용 임시 하드코딩, 티칭 완성 후 제거
+            model.DistanceParam.LeftScanMargin = 80;    // 시퀀스 검증용 임시 하드코딩, 티칭 완성 후 제거
+            model.DistanceParam.RightScanMargin = 80;    // 시퀀스 검증용 임시 하드코딩, 티칭 완성 후 제거
 
-            DistanceResult distanceResult = new DistanceResult
+            DistanceInspResult distanceResult = new DistanceInspResult
             {
                 ScanStartX = model.DistanceParam.LeftScanMargin,
                 ScanEndX = _imageWidth - model.DistanceParam.RightScanMargin,
                 ScanStartY = model.DistanceParam.TopScanMargin,
                 ScanEndY = _imageHeight - model.DistanceParam.BottomScanMargin,
             };
-            sliceInspResult.DistanceResult = distanceResult;
 
             WriteTactTime(stopwatch, "Initializing finished");
 
             // teaching 영역 사용 시 별도 계산 하지 않음
             if (AppsConfig.Instance().UseTeachingArea == false)
-                sliceInspResult.CoatingVerticalEdgesExist = algorithmTool.FindVerticalCoatingAreaEdges(ref distanceResult, _imageData, _imageWidth, _imageHeight);
+                sliceInspResult.CoatingVerticalEdgesFound = algorithmTool.FindVerticalCoatingAreaEdges(ref distanceResult, _imageData, _imageWidth, _imageHeight);
 
-            if (AppsConfig.Instance().UseTeachingArea == false && sliceInspResult.CoatingVerticalEdgesExist == false)
+            if (AppsConfig.Instance().UseTeachingArea == false && sliceInspResult.CoatingVerticalEdgesFound == false)
                 return;     // Define.RESULT_NO_FOIL
+            else
+                sliceInspResult.DistanceResult = distanceResult;
 
             WriteTactTime(stopwatch, "Coating vertical edges were found");
 
@@ -305,36 +307,46 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             WriteTactTime(stopwatch, "Coating width checked");
 
-            sliceInspResult.CoatingROIFound = algorithmTool.FindCoatingAreas(ref distanceResult, model, _imageData, _imageWidth, _imageHeight, model.DistanceParam.MinimumFoilLength);
+            sliceInspResult.CoatingAreasFound = algorithmTool.FindCoatingAreas(ref distanceResult, model, _imageData, _imageWidth, _imageHeight, model.DistanceParam.MinimumFoilLength);
 
-            if (sliceInspResult.CoatingROIFound == false)
+            if (sliceInspResult.CoatingAreasFound == false)
                 return;     // Define.RESULT_NON_COAT_ONE_SIDE
 
             WriteTactTime(stopwatch, "Coating Areas were found");
-            #region 추가 검증용 코드
-            List<byte> horizontalSamplingResults = new List<byte>();
-            for (int x = 0; x < _imageWidth; x++)
-                horizontalSamplingResults.Add((byte)algorithmTool.GetMeanSampledLevel(_imageData, _imageWidth, _imageHeight, x));
-            PixelValueGraphControl.SetData(horizontalSamplingResults.ToArray());
+            // TODO : Insulator 사용 공정 확인 후 Insulator영역 식별 구현)
+            // if (model.ProcessType == ProcessType.Slitting)
+            //    algorithmTool.FindInsulatorAreas(ref distanceResult, _imageData, _imageWidth, _imageHeight);
 
-            SaveTestResults(distanceResult);
+            algorithmTool.FindNonCoatingAreas(ref distanceResult, _imageData, _imageWidth, _imageHeight);
+
+            WriteTactTime(stopwatch, "Non Coating Areas were found");
+
+            #region 추가 검증용 코드
+            //PixelValueGraphControl.SetData(distanceResult.HorizontalSamplingResults.ToArray());
+            PixelValueGraphControl.SetData(distanceResult.DerivedHorizontalSamplingResults.ToArray());
+
+            ShowTestResults(distanceResult);
             #endregion
             WriteTactTime(stopwatch, "=================================Test Finished==============================");
         }
 
-        private void SaveTestResults(DistanceResult distanceResult)
+        private void ShowTestResults(DistanceInspResult distanceResult)
         {
             if (_orgBmp == null)
                 return;
 
-            Pen foilEdgeXPen = new Pen(Color.Red, 5);
-            Pen foilEdgeYPen = new Pen(Color.Indigo, 5);
-            Pen foilWidthPen = new Pen(Color.LawnGreen, 7)
+            Pen coatingEdgeXPen = new Pen(Color.Red, 10);
+            Pen coatingEdgeYPen = new Pen(Color.Indigo, 10);
+            Pen coatingWidthPen = new Pen(Color.LawnGreen, 15)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen foilROIPen = new Pen(Color.Yellow, 3)
+            Pen coatingROIPen = new Pen(Color.Yellow, 10)
+            {
+                DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
+            };
+            Pen nonCoatingROIPen = new Pen(Color.HotPink, 10)
             {
                 DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
             };
@@ -342,17 +354,27 @@ namespace Jastech.Battery.Winform.UI.Forms
             {
                 using (Graphics g = Graphics.FromImage(cloneBitmap))
                 {
-                    g.DrawLine(foilEdgeXPen, distanceResult.ScanStartX, 0, distanceResult.ScanStartX, _imageHeight);
-                    g.DrawLine(foilEdgeXPen, distanceResult.ScanEndX, 0, distanceResult.ScanEndX, _imageHeight);
-                    g.DrawLine(foilEdgeYPen, 0, distanceResult.ScanStartY, _imageWidth, distanceResult.ScanStartY);
-                    g.DrawLine(foilEdgeYPen, 0, distanceResult.ScanEndY, _imageWidth, distanceResult.ScanEndY);
+                    g.DrawLine(coatingEdgeXPen, distanceResult.ScanStartX, 0, distanceResult.ScanStartX, _imageHeight);
+                    g.DrawLine(coatingEdgeXPen, distanceResult.ScanEndX, 0, distanceResult.ScanEndX, _imageHeight);
+                    g.DrawLine(coatingEdgeYPen, 0, distanceResult.ScanStartY, _imageWidth, distanceResult.ScanStartY);
+                    g.DrawLine(coatingEdgeYPen, 0, distanceResult.ScanEndY, _imageWidth, distanceResult.ScanEndY);
 
-                    g.DrawLine(foilWidthPen, distanceResult.ScanStartX, _imageHeight / 2, distanceResult.ScanEndX, _imageHeight / 2);
-                    g.DrawRectangle(foilROIPen, distanceResult.LargestCoatingArea);
+                    g.DrawLine(coatingWidthPen, distanceResult.ScanStartX, _imageHeight / 2, distanceResult.ScanEndX, _imageHeight / 2);
+                    g.DrawRectangle(coatingROIPen, distanceResult.LargestCoatingArea);
+
+                    foreach (Rectangle nonCoatingArea in distanceResult.NonCoatingAreas)
+                    {
+                        g.DrawLine(coatingWidthPen, nonCoatingArea.Left, _imageHeight*2 / 3, nonCoatingArea.Right, _imageHeight*2 / 3);
+                        g.DrawLine(coatingWidthPen, nonCoatingArea.Left, _imageHeight / 3, nonCoatingArea.Right, _imageHeight / 3);
+                        g.DrawRectangle(nonCoatingROIPen, nonCoatingArea);
+                    }
 
                     g.Save();
                 }
-                cloneBitmap.Save(@"D:\FoilTestResult.bmp");
+
+                var tempDiag = new Form { Size = new Size(500, 500), StartPosition = FormStartPosition.CenterParent };
+                tempDiag.Controls.Add(new PictureBox { Image = cloneBitmap, Dock = DockStyle.Fill, SizeMode = PictureBoxSizeMode.Zoom });
+                tempDiag.ShowDialog();
             }
         }
 
