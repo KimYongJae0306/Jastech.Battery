@@ -101,7 +101,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
         //////////////////////////////////
         ///
-        public bool CheckCoatingWidth(DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
+        public bool CheckCoatingLength(DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
         {
             if (distanceResult == null || imageData.Length == 0 || distanceResult.IsValidScanWidth() == false)
                 return false;
@@ -232,9 +232,9 @@ namespace Jastech.Battery.Structure.VisionTool
 
             var coatingAreas = distanceResult.CoatingAreas;
             coatingAreas.Clear();
-            // Edge 대비가 기준치 이하 일때, 혹은 Slitting공정 Pouch 모델일 때 Foil 영역은 하나이다.
+            // Edge 대비가 기준치 이하 일때, 혹은 Slitting공정 Pouch 모델일 때 Foil 영역은 하나이다. 
             if (foilEdgeConstrast < CoatingEdgeConstrastThreshold || isSlittingPouchCell)
-                coatingAreas.Add(new Rectangle(scanStartX, scanStartY, scanEndX, scanEndY));
+                coatingAreas.Add(new Rectangle(scanStartX, scanStartY, scanWidth, scanHeight));
             // 여러 코팅 영역이 존재할 것으로 판단하고 영역 탐색을 시작한다.
             else
             {
@@ -354,41 +354,40 @@ namespace Jastech.Battery.Structure.VisionTool
             return true;
         }
 
-        public List<(int startX, int endX)> FindPeakPairs(List<byte> levelDifferences, double minimumWidth, double maximumWidth)
+        public List<(int startPos, int endPos)> FindPeakPairs(List<byte> levelDifferences, double minimumWidth, double maximumWidth)
         {
             var positionIndices = new List<(int, int)>();
 
             if (levelDifferences.Count == 0)
                 return positionIndices;
 
-            // 피크 지점에서 가장 차이값이 크므로 차이값 기준으로 내림차순 정렬 후 상위 데이터만 샘플링한다.
-            int peakSamplingCount = Math.Max(2, levelDifferences.Count / 50);
-            var topPeakSamples = levelDifferences
-                .Select((value, index) => new { index, value })
-                .OrderByDescending(x => x.value)
-                .Take(peakSamplingCount);
+            // 최대 피크의 절반 지점에서 최대 50개 만큼 샘플링한다.
+            var halfOfMaxDifference = levelDifferences.Max(value => (double)value) / 2;
 
-            // 샘플링 데이터의 평균값으로 가장 강한 피크들을 추출하고 위치 기준으로 오름차순 정렬(왼쪽->오른쪽)한다
-            var halfOfMaxPeak = topPeakSamples.Max(peak => (double)peak.value) / 2;
-            var mostIntensePeaks = topPeakSamples.Where(peak => peak.value > halfOfMaxPeak).OrderBy(peak => peak.index).ToArray();
+            var mostIntensePeaks = levelDifferences
+                .Select((value, position) => new { value, position })
+                .Where(peak => peak.value > halfOfMaxDifference)
+                .OrderBy(peak => peak.position)
+                .ThenByDescending(peak => peak.value)
+                .ToArray();
 
             var usedIndices = new List<int>();
-            for (int startX = 0; startX < mostIntensePeaks.Length; startX++)
+            for (int startPos = 0; startPos < mostIntensePeaks.Length; startPos++)
             {
                 // 이미 사용된 위치는 건너뛴다.
-                if (usedIndices.Contains(startX))
+                if (usedIndices.Contains(startPos))
                     continue;
 
-                for (int endX = startX + 1; endX < mostIntensePeaks.Length; endX++)
+                for (int endPos = startPos + 1; endPos < mostIntensePeaks.Length; endPos++)
                 {
-                    int width = mostIntensePeaks[endX].index - mostIntensePeaks[startX].index;
+                    int width = mostIntensePeaks[endPos].position - mostIntensePeaks[startPos].position;
 
                     // 피크 쌍이 너비 조건을 충족하면 start, end 위치를 추가한다
                     if (width >= minimumWidth && width <= maximumWidth)
                     {
-                        positionIndices.Add((mostIntensePeaks[startX].index, mostIntensePeaks[endX].index));
+                        positionIndices.Add((mostIntensePeaks[startPos].position, mostIntensePeaks[endPos].position));
 
-                        for (int skipIndex = startX; skipIndex < endX; skipIndex++)
+                        for (int skipIndex = startPos; skipIndex < endPos; skipIndex++)
                             usedIndices.Add(skipIndex);    // 쌍을 이룬 피크 및 사이에 포함된 피크는 이후 탐색에서 제외한다
                         break;
                     }

@@ -107,7 +107,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             //pnlDisplay.Controls.Add(DrawBoxControl);
 
             PixelValueGraphControl = new PixelValueGraphControl();
-            PixelValueGraphControl.DataPen = new Pen(Color.Olive);
+            PixelValueGraphControl.DataPen = new Pen(Color.AliceBlue);
             PixelValueGraphControl.Dock = DockStyle.Fill;
             pnlGraph.Controls.Add(PixelValueGraphControl);
 
@@ -301,8 +301,8 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             WriteTactTime(stopwatch, "Coating vertical edges were found");
 
-            sliceInspResult.CoatingWidthSufficient = algorithmTool.CheckCoatingWidth(distanceResult, _imageData, _imageWidth, _imageHeight);
-            if (sliceInspResult.CoatingWidthSufficient == false)
+            sliceInspResult.CoatingLengthSufficient = algorithmTool.CheckCoatingLength(distanceResult, _imageData, _imageWidth, _imageHeight);
+            if (sliceInspResult.CoatingLengthSufficient == false)
                 return;
 
             WriteTactTime(stopwatch, "Coating width checked");
@@ -335,35 +335,27 @@ namespace Jastech.Battery.Winform.UI.Forms
             if (_orgBmp == null)
                 return;
 
-            Pen coatingEdgeXPen = new Pen(Color.Red, 10);
-            Pen coatingEdgeYPen = new Pen(Color.Indigo, 10);
-            Pen coatingWidthPen = new Pen(Color.LawnGreen, 20)
+            Pen coatingWidthPen = new Pen(Color.LawnGreen, 50)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen nonCoatingWidthPen = new Pen(Color.HotPink, 20)
+            Pen nonCoatingWidthPen = new Pen(Color.Crimson, 50)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen coatingROIpen = new Pen(Color.Yellow, 30) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
-            Pen nonCoatingROIpen = new Pen(Color.DodgerBlue, 30) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            Pen coatingROIpen = new Pen(Color.Yellow, 50) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, 50) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
             Bitmap cloneBitmap = ImageHelper.ConvertGrayscaleToRGB24((Bitmap)_orgBmp.Clone());
             {
                 using (Graphics g = Graphics.FromImage(cloneBitmap))
                 {
-                    g.DrawLine(coatingEdgeXPen, distanceResult.ScanStartX, 0, distanceResult.ScanStartX, _imageHeight);
-                    g.DrawLine(coatingEdgeXPen, distanceResult.ScanEndX, 0, distanceResult.ScanEndX, _imageHeight);
-                    g.DrawLine(coatingEdgeYPen, 0, distanceResult.ScanStartY, _imageWidth, distanceResult.ScanStartY);
-                    g.DrawLine(coatingEdgeYPen, 0, distanceResult.ScanEndY, _imageWidth, distanceResult.ScanEndY);
-
-
-                    foreach (Rectangle coatingArea in distanceResult.CoatingAreas)
-                    {
-                        g.DrawLine(coatingWidthPen, coatingArea.Left, coatingArea.Top + coatingArea.Height / 2, coatingArea.Right, coatingArea.Top + coatingArea.Height / 2);
-                        g.DrawRectangle(coatingROIpen, coatingArea.Left, coatingArea.Top, coatingArea.Width, coatingArea.Height);
-                    }
+                    //foreach (Rectangle coatingArea in distanceResult.CoatingAreas)
+                    //{
+                    //    g.DrawLine(coatingWidthPen, coatingArea.Left, coatingArea.Top + coatingArea.Height / 2, coatingArea.Right, coatingArea.Top + coatingArea.Height / 2);
+                    //    g.DrawRectangle(coatingROIpen, coatingArea.Left, coatingArea.Top, coatingArea.Width, coatingArea.Height);
+                    //}
 
                     foreach (Rectangle nonCoatingArea in distanceResult.NonCoatingAreas)
                     {
