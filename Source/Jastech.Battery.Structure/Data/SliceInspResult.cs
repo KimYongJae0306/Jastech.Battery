@@ -18,5 +18,7 @@ namespace Jastech.Battery.Structure.Data
         public bool CoatingWidthSufficient { get; set; } = false;
 
         public bool CoatingAreasFound { get; set; } = false;
+
+        public bool NonCoatingAreasFound { get; set; } = false;
     }
 }
