@@ -235,7 +235,7 @@ namespace Jastech.Battery.Structure.VisionTool
             // Edge 대비가 기준치 이하 일때, 혹은 Slitting공정 Pouch 모델일 때 Foil 영역은 하나이다.
             if (foilEdgeConstrast < CoatingEdgeConstrastThreshold || isSlittingPouchCell)
                 coatingAreas.Add(new Rectangle(scanStartX, scanStartY, scanEndX, scanEndY));
-            // 여러 Foil 영역이 존재할 것으로 판단하고 영역 탐색을 시작한다.
+            // 여러 코팅 영역이 존재할 것으로 판단하고 영역 탐색을 시작한다.
             else
             {
                 byte foilThreshold = (byte)((verticalSamplingResults.Max() + verticalSamplingResults.Min()) / 2);
@@ -289,12 +289,12 @@ namespace Jastech.Battery.Structure.VisionTool
 
         public bool FindNonCoatingAreas(ref DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
         {
-            if(distanceResult == null || imageData.Length == 0)
+            if (distanceResult == null || imageData.Length == 0)
                 return false;
 
-                // 피크 쌍으로 ROI를 생성하여 추가한다.
             var nonCoatingAreas = distanceResult.NonCoatingAreas;
             nonCoatingAreas.Clear();
+
             foreach(Rectangle coatingArea in distanceResult.CoatingAreas)
             {
                 Rectangle searchArea = new Rectangle(coatingArea.Location, coatingArea.Size);
@@ -317,23 +317,44 @@ namespace Jastech.Battery.Structure.VisionTool
                 if (nonCoatingPeaks.Count == 0)
                     return false;
 
-                foreach ((int startIndex, int endIndex) in nonCoatingPeaks)
+                // 피크 쌍으로 ROI를 생성하여 추가한다.
+                foreach ((int startX, int endX) in nonCoatingPeaks)
                 {
                     var nonCoatingArea = new Rectangle
                     {
-                        X = searchArea.Left + startIndex,
+                        X = searchArea.Left + startX,
                         Y = searchArea.Top,
-                        Width = endIndex - startIndex,
+                        Width = endX - startX,
                         Height = searchArea.Height
                     };
                     nonCoatingAreas.Add(nonCoatingArea);
                 }
             }
 
+            if (false)  // 만약 코팅면 사이 빈 공간을 활용할거라면               bool useBlankArea
+            {
+                if (nonCoatingAreas.Count != 0 && distanceResult.CoatingAreas.Count >= 2)
+                {
+                    var additionalNonCoatingAreas = new List<Rectangle>();
+                    int startX = nonCoatingAreas.Min(rect => rect.Left);
+                    int endX = nonCoatingAreas.Max(rect => rect.Right);
+
+                    for (int previousIndex = 0, nextIndex = 1; nextIndex < distanceResult.CoatingAreas.Count; nextIndex++)
+                    {
+                        var previousRectangle = distanceResult.CoatingAreas[previousIndex];
+                        var nextRectangle = distanceResult.CoatingAreas[nextIndex];
+
+                        var blankArea = new Rectangle(startX, previousRectangle.Bottom, endX - startX, nextRectangle.Top - previousRectangle.Bottom);
+                        additionalNonCoatingAreas.Add(blankArea);
+                    }
+                    nonCoatingAreas.AddRange(additionalNonCoatingAreas);
+                }
+            }
+
             return true;
         }
 
-        public List<(int startIndex, int endIndex)> FindPeakPairs(List<byte> levelDifferences, double minimumWidth, double maximumWidth)
+        public List<(int startX, int endX)> FindPeakPairs(List<byte> levelDifferences, double minimumWidth, double maximumWidth)
         {
             var positionIndices = new List<(int, int)>();
 
@@ -352,22 +373,22 @@ namespace Jastech.Battery.Structure.VisionTool
             var mostIntensePeaks = topPeakSamples.Where(peak => peak.value > halfOfMaxPeak).OrderBy(peak => peak.index).ToArray();
 
             var usedIndices = new List<int>();
-            for (int startIndex = 0; startIndex < mostIntensePeaks.Length; startIndex++)
+            for (int startX = 0; startX < mostIntensePeaks.Length; startX++)
             {
                 // 이미 사용된 위치는 건너뛴다.
-                if (usedIndices.Contains(startIndex))
+                if (usedIndices.Contains(startX))
                     continue;
 
-                for (int endIndex = startIndex + 1; endIndex < mostIntensePeaks.Length; endIndex++)
+                for (int endX = startX + 1; endX < mostIntensePeaks.Length; endX++)
                 {
-                    int width = mostIntensePeaks[endIndex].index - mostIntensePeaks[startIndex].index;
+                    int width = mostIntensePeaks[endX].index - mostIntensePeaks[startX].index;
 
                     // 피크 쌍이 너비 조건을 충족하면 start, end 위치를 추가한다
                     if (width >= minimumWidth && width <= maximumWidth)
                     {
-                        positionIndices.Add((mostIntensePeaks[startIndex].index, mostIntensePeaks[endIndex].index));
+                        positionIndices.Add((mostIntensePeaks[startX].index, mostIntensePeaks[endX].index));
 
-                        for (int skipIndex = startIndex; skipIndex < endIndex; skipIndex++)
+                        for (int skipIndex = startX; skipIndex < endX; skipIndex++)
                             usedIndices.Add(skipIndex);    // 쌍을 이룬 피크 및 사이에 포함된 피크는 이후 탐색에서 제외한다
                         break;
                     }
