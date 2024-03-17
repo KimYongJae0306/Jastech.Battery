@@ -406,13 +406,16 @@ namespace Jastech.Battery.Structure.VisionTool
             return threshold;
         }
 
-        public void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, byte[] imageData, int imageWidth, int imageHeight)
+        public void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam)
         {
             int ratioX = 2;
             int ratioY = 6;
 
             int buffWidth = 0;
             int buffHeight = 0;
+
+            double referenceSizeX = 0.0;
+            double referenceSizeY = 0.0;
 
             foreach (var inspArea in distanceInspResult.CoatingAreas)
             {
@@ -450,7 +453,16 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 int averageLevel = sum / count;
 
-                surfaceInspResult.CoatingAverageLevel = averageLevel;
+                surfaceInspResult.CoatingAverageLevel.Add(averageLevel);
+
+                int threshold = 0;
+
+                if (surfaceParam.TapeParam.EnableConnectionTape)
+                {
+                    threshold = averageLevel + surfaceParam.LineParam.LineLevel;
+                    referenceSizeX = inspArea.Width / 2 * CalibrationX;
+                    referenceSizeY = 1.0;
+                }
             }
         }
 
@@ -484,6 +496,34 @@ namespace Jastech.Battery.Structure.VisionTool
 
             return outputBuff;
         }
+
+        private void BlobContour(byte[] imageData, int imageWidth, int imageHeight, Rectangle rect, int lowThreshold, int highThreshold)
+        {
+            if (ShapeHelper.CheckValidRectangle(rect, imageWidth, imageHeight) == false)
+                return;
+
+            int x = rect.Left;
+            int y = 0;
+
+            byte[] tempBuff = new byte[rect.Width * rect.Height];
+
+            for (int h = 0; h < rect.Height; h++)
+            {
+                y = rect.Top + h;
+                Array.Copy(imageData, y * imageWidth + x, tempBuff, h * imageWidth, imageWidth);
+            }
+
+            int fillValue = 0;
+
+            if (lowThreshold >= 50)
+                fillValue = 0;
+            else
+                fillValue = 255;
+
+            //ShapeHelper.FillBound(tempBuff, rect.Width, rect.Height, fillValue);
+        }
+
+        //private Point Line
 
         public void GetCoatingArea_WidthoutNonCoat()
         {

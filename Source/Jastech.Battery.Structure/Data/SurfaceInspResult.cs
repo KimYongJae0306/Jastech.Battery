@@ -12,7 +12,7 @@ namespace Jastech.Battery.Structure.Data
         #endregion
 
         #region 속성
-        public int CoatingAverageLevel { get; set; } = 0;
+        public List<int> CoatingAverageLevel { get; set; } = null;
         #endregion
 
         #region 이벤트

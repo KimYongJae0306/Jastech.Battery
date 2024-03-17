@@ -68,6 +68,7 @@
     <Compile Include="Data\LineCameraData.cs" />
     <Compile Include="Data\SliceInspResult.cs" />
     <Compile Include="Data\MaterialInfo.cs" />
+    <Compile Include="Data\SurfaceInspResult.cs" />
     <Compile Include="Data\TeachingData.cs" />
     <Compile Include="Data\Unit.cs" />
     <Compile Include="ModelManager.cs" />
