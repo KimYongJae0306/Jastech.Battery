@@ -15,7 +15,7 @@ namespace Jastech.Battery.Structure.Data
 
         public List<byte> HorizontalSamplingResults { get; private set; } = new List<byte>();
 
-        public List<byte> DerivedHorizontalSamplingResults { get; private set; } = new List<byte>();
+        public List<byte> HorizontalDifferentials { get; private set; } = new List<byte>();
 
         public List<Rectangle> CoatingAreas { get; private set; } = new List<Rectangle>();
 
@@ -36,17 +36,24 @@ namespace Jastech.Battery.Structure.Data
         #region 메소드
         public bool IsValidScanWidth()
         {
-            return ScanStartX < ScanEndX && ScanStartX > 0 && ScanEndX > 0;
+            bool isPositiveValue = ScanStartX > 0 && ScanEndX > 0;
+            bool isFromLeftToRight = ScanStartX < ScanEndX;
+            return isPositiveValue && isFromLeftToRight;
         }
 
         public bool IsValidScanHeight()
         {
-            return ScanStartY < ScanEndY && ScanStartY > 0 && ScanEndY > 0;
+            bool isPositiveValue = ScanStartY > 0 && ScanEndY > 0;
+            bool isFromTopToBottom = ScanStartY < ScanEndY;
+            return isPositiveValue && isFromTopToBottom;
         }
 
         public void UpdateLargestCoatingArea()
         {
-            LargestCoatingArea = CoatingAreas.Aggregate((maxRect, nextRect) => (maxRect.Width * maxRect.Height >= nextRect.Width * nextRect.Height) ? maxRect : nextRect);
+            LargestCoatingArea = CoatingAreas.Aggregate((maxRect, nextRect) =>
+            {
+                return maxRect.Width * maxRect.Height >= nextRect.Width * nextRect.Height ? maxRect : nextRect;
+            });
         }
         #endregion
     }
