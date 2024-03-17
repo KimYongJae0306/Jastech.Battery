@@ -13,6 +13,8 @@ namespace Jastech.Battery.Structure.Data
 
         public DistanceInspResult DistanceResult { get; set; }
 
+        public SurfaceInspResult SurfaceInspResult { get; set; }
+
         public bool CoatingVerticalEdgesFound { get; set; } = false;
 
         public bool CoatingWidthSufficient { get; set; } = false;

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Xml.Schema;
+using Emgu.CV.BgSegm;
 
 namespace Jastech.Battery.Structure.VisionTool
 {
@@ -64,7 +65,6 @@ namespace Jastech.Battery.Structure.VisionTool
 
         }
 
-
         public Rectangle GetInspectionArea(int maxLaneCount)
         {
             Rectangle rect = new Rectangle();
@@ -77,12 +77,6 @@ namespace Jastech.Battery.Structure.VisionTool
 
 
             return rect;
-        }
-
-        public void GetWorkBuffer(Rectangle rect, int ratioX, int ratioY)
-        {
-            if (ShapeHelper.CheckValidRectangle(rect, 16 * 1024, 1024))
-                return;
         }
 
         public void CoatingArea_Line()
@@ -951,10 +945,83 @@ namespace Jastech.Battery.Structure.VisionTool
             return threshold;
         }
 
-
-        public void GetCoatingArea()
+        public void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, byte[] imageData, int imageWidth, int imageHeight)
         {
+            int ratioX = 2;
+            int ratioY = 6;
 
+            int buffWidth = 0;
+            int buffHeight = 0;
+
+            foreach (var inspArea in distanceInspResult.CoatingAreas)
+            {
+                SurfaceInspResult surfaceInspResult = new SurfaceInspResult();
+
+                var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+
+                byte[] workBuff = GetWorkBuffer(inspArea, ratioX, ratioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
+                if (workBuff == null)
+                    continue;
+
+                int stepX = buffWidth / 100;
+                int stepY = buffHeight / 100;
+
+                if (stepX < 1)
+                    stepX = 1;
+
+                if (stepY < 1)
+                    stepY = 1;
+
+                int sum = 0;
+                int count = 0;
+
+                for (int h = 0; h < buffHeight; h++)
+                {
+                    for (int w = 0; w < buffWidth; w++)
+                    {
+                        sum += workBuff[h * imageWidth + w];
+                        count++;
+                    }
+                }
+
+                if (count < 1)
+                    count = 1;
+
+                int averageLevel = sum / count;
+
+                surfaceInspResult.CoatingAverageLevel = averageLevel;
+            }
+        }
+
+        private byte[] GetWorkBuffer(Rectangle inputRect, int ratioX, int ratioY, byte[] imageData, int imageWidth, int imageHeight, out int buffWidth, out int buffHeight)
+        {
+            buffWidth = inputRect.Width / ratioX;
+            buffHeight = inputRect.Height / ratioY;
+
+            if (ShapeHelper.CheckValidRectangle(inputRect, imageWidth, imageHeight))
+                return null;
+
+            if (buffWidth < 1 || buffHeight < 1)
+                return null;
+
+            byte[] outputBuff = new byte[buffWidth * buffHeight];
+
+            int x = 0;
+            int y = 0;
+
+            for (int h = 0; h < buffHeight; h++)
+            {
+                y = inputRect.Top + h * ratioY;
+
+                for (int w = 0; w < buffWidth; w++)
+                {
+                    x = inputRect.Left + w * ratioX;
+
+                    outputBuff[h * buffWidth + w] = imageData[y * imageWidth + x];
+                }
+            }
+
+            return outputBuff;
         }
 
         public void GetCoatingArea_WidthoutNonCoat()

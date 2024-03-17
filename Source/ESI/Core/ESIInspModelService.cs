@@ -43,12 +43,6 @@ namespace ESI.Core
 
                 }
             }
-
-            //for (int laneIndex = 0; laneIndex < appInspModel.LaneCount; laneIndex++)
-            //{
-            //    CoatingParam coatingParam = new CoatingParam();
-
-            //}
         }
 
         public override InspModel Load(string filePath)
