@@ -126,6 +126,30 @@
     <Compile Include="UI\Controls\NonCoatingControl.Designer.cs">
       <DependentUpon>NonCoatingControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\BatteryMaterialInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\BatteryMaterialInfoForm.Designer.cs">
+      <DependentUpon>BatteryMaterialInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\BatteryModellerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\BatteryModellerForm.Designer.cs">
+      <DependentUpon>BatteryModellerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\CreateBatteryModelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\CreateBatteryModelForm.designer.cs">
+      <DependentUpon>CreateBatteryModelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\EditBatteryModelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\EditBatteryModelForm.designer.cs">
+      <DependentUpon>EditBatteryModelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\InspectionTeachingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +200,10 @@
     <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Imaging\Jastech.Framework.Imaging.csproj">
       <Project>{2380DA0F-851A-4430-9A43-E7B2DEEE29F2}</Project>
       <Name>Jastech.Framework.Imaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Modeller\Jastech.Framework.Modeller.csproj">
+      <Project>{feb6ea9b-86d3-41b0-a950-c5b2555916cf}</Project>
+      <Name>Jastech.Framework.Modeller</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Structure\Jastech.Framework.Structure.csproj">
       <Project>{DCFF7B48-8DF8-4ED9-9F0F-F11C2CCB7547}</Project>
@@ -250,6 +278,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\NonCoatingControl.resx">
       <DependentUpon>NonCoatingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\BatteryMaterialInfoForm.resx">
+      <DependentUpon>BatteryMaterialInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\BatteryModellerForm.resx">
+      <DependentUpon>BatteryModellerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\CreateBatteryModelForm.resx">
+      <DependentUpon>CreateBatteryModelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\EditBatteryModelForm.resx">
+      <DependentUpon>EditBatteryModelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\InspectionTeachingForm.resx">
       <DependentUpon>InspectionTeachingForm.cs</DependentUpon>

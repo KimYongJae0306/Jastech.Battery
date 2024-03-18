@@ -20,6 +20,10 @@ namespace Jastech.Battery.Structure.Data
 
         public int RightScanMargin { get; set; } = 200;
         #endregion
+
+        #region 메소드
+        public MaterialInfo ShallowCopy() => (MaterialInfo)MemberwiseClone();
+        #endregion
     }
 
     //public partial class  MaterialInfo

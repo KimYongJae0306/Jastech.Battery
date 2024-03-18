@@ -17,11 +17,11 @@ namespace Jastech.Battery.Winform.Settings
 
         public bool EnablePLCTime { get; set; } = false;
 
-        public bool UseTeachingArea { get; set; } = false;
-
         public const int VERTICAL_COATING_MAX_COUNT = 5;
 
         public double Zoom { get; set; } = 0.08825;
+
+        public bool UseMaterialInfo { get; set; } = true;
         #endregion
 
         #region 이벤트

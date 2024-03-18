@@ -4,6 +4,7 @@ using Jastech.Battery.Structure;
 using Jastech.Battery.Winform;
 using Jastech.Battery.Winform.Forms;
 using Jastech.Battery.Winform.Settings;
+using Jastech.Framework.Config;
 using Jastech.Framework.Structure;
 using Jastech.Framework.Users;
 using Jastech.Framework.Winform;
@@ -14,6 +15,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,7 +105,14 @@ namespace ESI
 
         private void ModelPageControl_ApplyModelEventHandler(string modelName)
         {
+            string modelDir = ConfigSet.Instance().Path.Model;
+            string filePath = Path.Combine(modelDir, modelName, InspModel.FileName);
 
+            ModelManager.Instance().CurrentModel = ESIInspModelService.Load(filePath);
+            SelectMainPage();
+
+            ConfigSet.Instance().Operation.LastModelName = modelName;
+            ConfigSet.Instance().Operation.Save(ConfigSet.Instance().Path.Config);
         }
 
         private void MainForm_CurrentModelChangedEvent(InspModel inspModel)
