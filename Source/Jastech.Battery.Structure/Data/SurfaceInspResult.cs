@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,5 +28,20 @@ namespace Jastech.Battery.Structure.Data
         #region 메서드
         #endregion
 
+    }
+
+    public class BlobContourResult
+    {
+        public int Left { get; set; } = 0;
+
+        public int Top { get; set; } = 0;
+
+        public int Right { get; set; } = 0;
+
+        public int Bottom { get; set; } = 0;
+
+        public int PixelCount { get; set; } = 0;
+
+        public List<Point> ContourPointList { get; set; } = new List<Point>();
     }
 }

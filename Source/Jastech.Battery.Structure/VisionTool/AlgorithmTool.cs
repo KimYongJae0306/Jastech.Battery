@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Xml.Schema;
 using Emgu.CV.BgSegm;
+using System.Reflection;
 
 namespace Jastech.Battery.Structure.VisionTool
 {
@@ -406,10 +407,19 @@ namespace Jastech.Battery.Structure.VisionTool
             return threshold;
         }
 
-        public void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam)
+        private bool _isConnectionTape = false;
+        private Rectangle _connectionTapeArea = new Rectangle();
+
+        public void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam, bool isTapeInsp)
         {
-            int ratioX = 2;
-            int ratioY = 6;
+            if (surfaceParam.LineParam.EnableCheckLine == false)
+                return;
+
+            int pix5mm = (int)(5.0 / CalibrationX);
+            int pix40mm = (int)(40.0 / CalibrationX);
+
+            int workRatioX = 2;
+            int workRatioY = 6;
 
             int buffWidth = 0;
             int buffHeight = 0;
@@ -417,13 +427,22 @@ namespace Jastech.Battery.Structure.VisionTool
             double referenceSizeX = 0.0;
             double referenceSizeY = 0.0;
 
+            Rectangle fullArea = new Rectangle();
+            Rectangle findArea = new Rectangle();
+            Rectangle drawArea = new Rectangle();
+
+            double findWidth = 0.0;
+            double findHeight = 0.0;
+
             foreach (var inspArea in distanceInspResult.CoatingAreas)
             {
                 SurfaceInspResult surfaceInspResult = new SurfaceInspResult();
 
                 var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                if (area.Width < pix40mm && area.Height < pix5mm)
+                    continue;
 
-                byte[] workBuff = GetWorkBuffer(inspArea, ratioX, ratioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
+                byte[] workBuff = GetWorkBuffer(area, workRatioX, workRatioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
                 if (workBuff == null)
                     continue;
 
@@ -457,12 +476,91 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 int threshold = 0;
 
-                if (surfaceParam.TapeParam.EnableConnectionTape)
+                fullArea.X = 0;
+                fullArea.Width = buffWidth;
+                fullArea.Y = 0;
+                fullArea.Height = buffHeight;
+
+                if (isTapeInsp == true)
+                {
+                    if (surfaceParam.TapeParam.EnableConnectionTape)
+                    {
+                        threshold = averageLevel + surfaceParam.TapeParam.ConnectionTapeLevel;
+                        referenceSizeX = area.Width / 2 * CalibrationX;
+                        referenceSizeY = 1.0;
+                    }
+                }
+                else
                 {
                     threshold = averageLevel + surfaceParam.LineParam.LineLevel;
-                    referenceSizeX = inspArea.Width / 2 * CalibrationX;
-                    referenceSizeY = 1.0;
+                    referenceSizeX = surfaceParam.LineParam.LineSizeX;
+                    referenceSizeY = surfaceParam.LineParam.LineSizeY;
                 }
+
+                var blobList = BlobContour(imageData, buffWidth, buffHeight, fullArea, threshold, 255);
+
+                foreach (var item in blobList)
+                {
+                    int left = area.Left + item.Left * workRatioX;
+                    int right = area.Left + item.Right * workRatioX;
+                    int top = area.Top + item.Top * workRatioY;
+                    int bottom = area.Bottom + item.Bottom * workRatioY;
+
+                    findArea.X = left;
+                    findArea.Y = top;
+                    findArea.Width = right - left;
+                    findArea.Height = bottom - top;
+
+                    findWidth = (findArea.Width + 1) * CalibrationX;
+                    findHeight = (findArea.Height + 1) * CalibrationY;
+
+                    if (findWidth < referenceSizeX || findHeight < referenceSizeY)
+                        continue;
+
+                    bool samePos = CheckAlreadySaved();
+                    if (samePos == true)
+                        continue;
+
+                    drawArea = findArea;
+                    drawArea.Inflate(20 /* / zoom */, 20 /* / zoom */);
+
+                    if (isTapeInsp == true)
+                    {
+                        _isConnectionTape = true;
+                        _connectionTapeArea = drawArea;
+                    }
+                    else
+                    {
+                        _isConnectionTape = false;
+                        _connectionTapeArea = new Rectangle();
+                    }
+                }
+            }
+        }
+
+        public void CheckCoatingArea_LineBlack(SurfaceParam surfaceParam)
+        {
+            if (surfaceParam.LineBlackParam.EnableCheckLine == false)
+                return;
+
+            int pix5mm = (int)(5.0 / CalibrationX);
+            int pix40mm = (int)(40.0 / CalibrationX);
+
+            int workRatioX = 3;
+            int workRatioY = 10;
+
+            Rectangle fullArea = new Rectangle();
+            Rectangle findArea = new Rectangle();
+            Rectangle drawArea = new Rectangle();
+
+            int threshold = 128 - surfaceParam.LineBlackParam.LineLevel;
+
+            double findWidth = 0.0;
+            double findHeight = 0.0;
+
+            if (_isConnectionTape == true)
+            {
+
             }
         }
 
@@ -497,20 +595,22 @@ namespace Jastech.Battery.Structure.VisionTool
             return outputBuff;
         }
 
-        private void BlobContour(byte[] imageData, int imageWidth, int imageHeight, Rectangle rect, int lowThreshold, int highThreshold)
+        private List<BlobContourResult> BlobContour(byte[] imageData, int width, int height, Rectangle inputRect, int lowThreshold, int highThreshold)
         {
-            if (ShapeHelper.CheckValidRectangle(rect, imageWidth, imageHeight) == false)
-                return;
+            if (ShapeHelper.CheckValidRectangle(inputRect, width, height) == false)
+                return null;
 
-            int x = rect.Left;
+            List<BlobContourResult> resultList = new List<BlobContourResult>();
+
+            int x = inputRect.Left;
             int y = 0;
 
-            byte[] tempBuff = new byte[rect.Width * rect.Height];
+            byte[] tempBuff = new byte[inputRect.Width * inputRect.Height];
 
-            for (int h = 0; h < rect.Height; h++)
+            for (int h = 0; h < inputRect.Height; h++)
             {
-                y = rect.Top + h;
-                Array.Copy(imageData, y * imageWidth + x, tempBuff, h * imageWidth, imageWidth);
+                y = inputRect.Top + h;
+                Array.Copy(imageData, y * width + x, tempBuff, h * width, width);
             }
 
             int fillValue = 0;
@@ -520,10 +620,47 @@ namespace Jastech.Battery.Structure.VisionTool
             else
                 fillValue = 255;
 
-            //ShapeHelper.FillBound(tempBuff, rect.Width, rect.Height, fillValue);
+            ShapeHelper.FillBound(tempBuff, inputRect.Width, inputRect.Height, fillValue);
+
+            List<Point> pointList = ShapeHelper.GetPointListBetweenThresholdRange(imageData, width, height, new Point(0, 0), lowThreshold, highThreshold);
+
+            foreach (var point in pointList)
+            {
+                if (point.X == -1 && point.Y == -1)
+                    break;
+
+                Rectangle foundrect = ShapeHelper.DetectEdge(imageData, width, height, point, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
+
+                if (foundrect.Left == 0 || foundrect.Top == 0 || foundrect.Right == 0 || foundrect.Bottom == 0)
+                    break;
+
+                if (foundrect.Left == -1 || foundrect.Top == -1 || foundrect.Right == -1 || foundrect.Bottom == -1)
+                {
+                    imageData[point.Y * width + point.X] = (byte)fillValue;
+                    continue;
+                }
+
+                ShapeHelper.FillValueWithCount(imageData, foundrect, fillValue, lowThreshold, highThreshold, out int fillCount);
+
+                BlobContourResult blobContourResult = new BlobContourResult();
+
+                blobContourResult.Left = inputRect.X + foundrect.Left;
+                blobContourResult.Top = inputRect.Y + foundrect.Top;
+                blobContourResult.Right = inputRect.X + foundrect.Right;
+                blobContourResult.Bottom = inputRect.Y + foundrect.Bottom;
+                blobContourResult.PixelCount = fillCount;
+                blobContourResult.ContourPointList.Add(new Point(inputRect.X + point.X, inputRect.Y + point.Y));
+
+                resultList.Add(blobContourResult);
+            }
+
+            return resultList;
         }
 
-        //private Point Line
+        private bool CheckAlreadySaved()
+        {
+            return false;
+        }
 
         public void GetCoatingArea_WidthoutNonCoat()
         {
