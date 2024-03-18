@@ -77,22 +77,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return rect;
         }
 
-        public void CoatingArea_Line()
-        {
-            int workRatioX = 2;
-            int workRatioY = 6;
-        }
 
-        public void CoatingArea_LineBlack(SurfaceParam param)
-        {
-            int threshold = 128 - param.LineParam.LineLevel;
-
-            int workRatioX = 3;
-            int workRatioY = 10;
-
-            int tapePosY1 = 0;
-            int tapePosY2 = param.ImageHeight;
-        }
 
         //////////////////////////////////
         ///
@@ -407,10 +392,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return threshold;
         }
 
-        private bool _isConnectionTape = false;
-        private Rectangle _connectionTapeArea = new Rectangle();
-
-        public void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam, bool isTapeInsp)
+        private void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam, bool isTapeInsp)
         {
             if (surfaceParam.LineParam.EnableCheckLine == false)
                 return;
@@ -436,8 +418,6 @@ namespace Jastech.Battery.Structure.VisionTool
 
             foreach (var inspArea in distanceInspResult.CoatingAreas)
             {
-                SurfaceInspResult surfaceInspResult = new SurfaceInspResult();
-
                 var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
                 if (area.Width < pix40mm && area.Height < pix5mm)
                     continue;
@@ -497,7 +477,7 @@ namespace Jastech.Battery.Structure.VisionTool
                     referenceSizeY = surfaceParam.LineParam.LineSizeY;
                 }
 
-                var blobList = BlobContour(imageData, buffWidth, buffHeight, fullArea, threshold, 255);
+                var blobList = BlobContour(workBuff, buffWidth, buffHeight, fullArea, threshold, 255);
 
                 foreach (var item in blobList)
                 {
@@ -526,22 +506,25 @@ namespace Jastech.Battery.Structure.VisionTool
 
                     if (isTapeInsp == true)
                     {
-                        _isConnectionTape = true;
-                        _connectionTapeArea = drawArea;
+                        surfaceInspResult.IsConnectionTape = true;
+                        surfaceInspResult.ConnectionTapeArea = drawArea;
                     }
                     else
                     {
-                        _isConnectionTape = false;
-                        _connectionTapeArea = new Rectangle();
+                        surfaceInspResult.IsConnectionTape = false;
+                        surfaceInspResult.ConnectionTapeArea = new Rectangle();
                     }
                 }
             }
         }
 
-        public void CheckCoatingArea_LineBlack(SurfaceParam surfaceParam)
+        private void CheckCoatingArea_LineBlack(DistanceInspResult distanceInspResult, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam)
         {
             if (surfaceParam.LineBlackParam.EnableCheckLine == false)
                 return;
+
+            int buffWidth = 0;
+            int buffHeight = 0;
 
             int pix5mm = (int)(5.0 / CalibrationX);
             int pix40mm = (int)(40.0 / CalibrationX);
@@ -558,9 +541,66 @@ namespace Jastech.Battery.Structure.VisionTool
             double findWidth = 0.0;
             double findHeight = 0.0;
 
-            if (_isConnectionTape == true)
+            int tapePosY1 = 0;
+            int tapePosY2 = imageHeight;
+            if (surfaceInspResult.IsConnectionTape == true)
             {
+                tapePosY1 = surfaceInspResult.ConnectionTapeArea.Top * workRatioY;
+                tapePosY2 = surfaceInspResult.ConnectionTapeArea.Bottom * workRatioY;
+            }
 
+            int averageSize = (int)(10 / CalibrationX);
+
+            int samplingStep = averageSize / 5;
+
+            if (samplingStep < 1)
+                samplingStep = 1;
+
+            foreach (var inspArea in distanceInspResult.CoatingAreas)
+            {
+                var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                if (area.Width < pix40mm && area.Height < pix5mm)
+                    continue;
+
+                byte[] workBuff = GetWorkBuffer(area, workRatioX, workRatioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
+                if (workBuff == null)
+                    continue;
+
+                Parallel.For(0, buffHeight, h =>
+                {
+                    for (int w = 0; w < buffWidth; w++)
+                    {
+                        int tempSum = 0;
+                        int tempCount = 0;
+
+                        for (int y = h - averageSize; y < h + averageSize; y += samplingStep)
+                        {
+                            if (y < 0 || y >= buffHeight)
+                                continue;
+
+                            if (y < tapePosY1 || y >= tapePosY2)
+                                continue;
+
+                            for (int x = w - averageSize; x < w + averageSize; x += samplingStep)
+                            {
+                                if (x < 0 || x > buffWidth)
+                                    continue;
+
+                                // TODO : asfas
+                                if (workBuff[y * buffWidth + x] > 0 /* noncoatinglevel */)
+                                    continue;
+
+                                tempSum += workBuff[y * buffWidth + x];
+                                tempCount++;
+                            }
+                        }
+
+                        if (tempCount < 1)
+                            tempCount = 1;
+
+
+                    }
+                });
             }
         }
 
