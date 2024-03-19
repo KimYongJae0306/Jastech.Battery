@@ -20,10 +20,6 @@ namespace Jastech.Battery.Structure.VisionTool
 {
     public class AlgorithmTool
     {
-
-        TestClass testInspParam = new TestClass();
-
-
         #region 2024.03.11 구조 변경 중
         // 아마 고정
         public const double CalibrationX = 0.0423; // CIS 사용 시 X,Y Scale 확인할 것
@@ -40,9 +36,9 @@ namespace Jastech.Battery.Structure.VisionTool
         public byte CoatingEdgeConstrastThreshold = 39; // Para.CoatEdgeLv[m_ModuleNo];
         public byte BackGroundGrayLevelCriteria = 100;
 
-        public double CoatingAreaInflationScale = 40.0;       // NonCoating 영역 탐색 시 CoatingArea 확장에 사용됨
-        public double NonCoatingMinimumWidthScale = 15.0;       // NonCoating 영역 탐색 시 최소 너비 계산에 사용됨
-        public double NonCoatingMaximumWidthScale = 20.0;       // NonCoating 영역 탐색 시 최대 너비 계산에 사용됨
+        public double CoatingAreaInflationScale = 40;       // NonCoating 영역 탐색 시 CoatingArea 확장에 사용됨
+        public double NonCoatingMinimumWidthScale = 3;       // NonCoating 영역 탐색 시 최소 너비 계산에 사용됨
+        public double NonCoatingMaximumWidthScale = 100;       // NonCoating 영역 탐색 시 최대 너비 계산에 사용됨
 
         public int WidthSamplingScale = 300;
         public int HeightSamplingScale = 200;
@@ -93,39 +89,7 @@ namespace Jastech.Battery.Structure.VisionTool
             int tapePosY2 = param.ImageHeight;
         }
 
-        //////////////////////////////////
-        ///
-        public bool CheckCoatingLength(DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
-        {
-            if (distanceResult == null || imageData.Length == 0 || distanceResult.IsValidScanWidth() == false)
-                return false;
-
-            int coatingWidth = distanceResult.ScanEndX - distanceResult.ScanStartX;
-            int samplingWidth = Math.Max(1, coatingWidth / WidthSamplingScale);
-            int samplingAreaCount = coatingWidth / samplingWidth;
-             
-            for (int y = 0, length = 0; y < imageHeight; y++)
-            {
-                int coatingAreaCount = 0;
-                for (int x = distanceResult.ScanStartX; x < distanceResult.ScanEndX; x += samplingWidth)
-                {
-                    if (imageData[y * imageWidth + x] < CoatingExistanceThreshold)
-                        coatingAreaCount++;
-                }
-
-                double coveringPercentage = (double)samplingAreaCount / (double)coatingAreaCount * 100;
-                if (coveringPercentage < CoatingExistanceCriteria)
-                    length = 0;
-                else
-                    length++;
-
-                if (length >= pixelLength1mm * CoatingMinimumLength)
-                    return true;
-            }
-
-            return false;
-        }
-
+        [Obsolete("2024.03.18 코드 리뷰 간 불필요 판단, FindCoating/NonCoatingAreas() 통합 후 제거 예정")]
         public bool FindVerticalCoatingAreaEdges(ref DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
         {
             if (distanceResult == null || imageData.Length == 0)
@@ -145,6 +109,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return distanceResult.IsValidScanWidth();
         }
 
+        [Obsolete("2024.03.18 코드 리뷰 간 불필요 판단, FindCoating/NonCoatingAreas() 통합 후 제거 예정")]
         private int FindContinuousContrastLocation(DistanceInspResult distanceResult, byte referenceGrayLevel, byte[] imageData, int imageWidth, int imageHeight, double searchLength, bool searchForward)
         {
             bool isBackGroundWhite = referenceGrayLevel >= BackGroundGrayLevelCriteria;
@@ -199,6 +164,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return sum / Math.Max(1, samplingCount);
         }
 
+        [Obsolete("2024.03.18 코드 리뷰 간 불필요 판단, NonCoatingAreas()과 통합 예정")]
         public bool FindCoatingAreas(ref DistanceInspResult distanceResult, AppsInspModel model, byte[] imageData, int imageWidth, int imageHeight, int minimumFoilLength)
         {
             if (distanceResult == null || imageData.Length == 0)
@@ -222,12 +188,12 @@ namespace Jastech.Battery.Structure.VisionTool
                 verticalSamplingResults.Add((byte)GetMeanSampledLevel(imageData, imageWidth, 0, y));
 
             byte foilEdgeConstrast = (byte)(verticalSamplingResults.Max() - verticalSamplingResults.Min());
-            bool isSlittingPouchCell = model.ProcessType == ProcessType.Slitting && model.ModelType == ModelType.Pouch;
+            bool isSlitting = model.ProcessType == ProcessType.Slitting;
 
             var coatingAreas = distanceResult.CoatingAreas;
             coatingAreas.Clear();
             // Edge 대비가 기준치 이하 일때, 혹은 Slitting공정 Pouch 모델일 때 Foil 영역은 하나이다. 
-            if (foilEdgeConstrast < CoatingEdgeConstrastThreshold || isSlittingPouchCell)
+            if (foilEdgeConstrast < CoatingEdgeConstrastThreshold || isSlitting)
                 coatingAreas.Add(new Rectangle(scanStartX, scanStartY, scanWidth, scanHeight));
             // 여러 코팅 영역이 존재할 것으로 판단하고 영역 탐색을 시작한다.
             else
@@ -276,11 +242,6 @@ namespace Jastech.Battery.Structure.VisionTool
             return ShapeHelper.CheckValidRectangle(distanceResult.LargestCoatingArea, distanceResult.LargestCoatingArea.Width, distanceResult.LargestCoatingArea.Height);
         }
 
-        public void FindInsulatorAreas(ref DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
-        {
-            // 절연필름 사용하는 공정 확인하여 내용 추가할 것
-        }
-
         public bool FindNonCoatingAreas(ref DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
         {
             if (distanceResult == null || imageData.Length == 0)
@@ -301,9 +262,10 @@ namespace Jastech.Battery.Structure.VisionTool
                 for (int x = searchArea.Left; x < searchArea.Right; x++)
                     horizontalSamplingResult.Add((byte)GetMeanSampledLevel(imageData, imageWidth, imageHeight, searchArea.Top, x));
 
-                // 그래프 출력을 위해 미분 데이터를 별도로 저장한다.
+                // 그래프 출력을 위해 미분 데이터를 별도로 저장한다.     // TODO : 다중 영역에 대해서 List로 관리
                 var levelDifferences = distanceResult.HorizontalDifferentials;
                 levelDifferences.Clear();
+
                 levelDifferences.AddRange(MathHelper.GetDerivedArray(horizontalSamplingResult.ToArray(), 1));
 
                 // 미분 데이터에서 피크 쌍을 추출한다.

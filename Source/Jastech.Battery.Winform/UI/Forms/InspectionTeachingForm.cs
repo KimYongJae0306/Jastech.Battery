@@ -1,14 +1,18 @@
 ﻿using Emgu.CV;
+using Emgu.CV.Dnn;
 using Jastech.Battery.Structure;
 using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Structure.Parameters;
 using Jastech.Battery.Structure.VisionTool;
 using Jastech.Battery.Winform.Settings;
 using Jastech.Battery.Winform.UI.Controls;
+using Jastech.Framework.Config;
 using Jastech.Framework.Imaging.Helper;
+using Jastech.Framework.Structure;
 using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform.Controls;
+using Jastech.Framework.Winform.Forms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -45,7 +49,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private Mat OrgMat { get; set; } = null;
 
-        //public InspDirection InspDirection { get; set; }
+        public InspDirection InspDirection { get; set; }
 
         private DrawBoxControl DrawBoxControl { get; set; } = null;
 
@@ -107,7 +111,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             //pnlDisplay.Controls.Add(DrawBoxControl);
 
             PixelValueGraphControl = new PixelValueGraphControl();
-            PixelValueGraphControl.DataPen = new Pen(Color.AliceBlue);
+            PixelValueGraphControl.DataPen = new Pen(Color.LightYellow);
             PixelValueGraphControl.Dock = DockStyle.Fill;
             pnlGraph.Controls.Add(PixelValueGraphControl);
 
@@ -210,6 +214,9 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private void SelectPage(DisplayType displayType)
         {
+            if (ModelManager.Instance().CurrentModel == null || UnitName.ToString() == "")
+                return;
+
             ClearSelectedButton();
             SetTeachingControl(displayType);
         }
@@ -227,12 +234,15 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private void SetTeachingControl(DisplayType displayType)
         {
+            var currentModel = ModelManager.Instance().CurrentModel as AppsInspModel;
             _displayType = displayType;
 
             switch (displayType)
             {
                 case DisplayType.Distance:
                     btnDistance.BackColor = _selectedColor;
+                    var isUpper = InspDirection == InspDirection.Upper;
+                    DistanceControl.SetParam(isUpper ? currentModel.GetUnit(UnitName).UpperDistanceParam : currentModel.GetUnit(UnitName).LowerDistanceParam);
                     pnlTeach.Controls.Add(DistanceControl);
                     break;
 
@@ -260,13 +270,31 @@ namespace Jastech.Battery.Winform.UI.Forms
             Stopwatch stopwatch = Stopwatch.StartNew();
             WriteTactTime(stopwatch, "=================================Test Start=================================");
 
-            AppsInspModel model = ModelManager.Instance().CurrentModel as AppsInspModel;
+            var model = ModelManager.Instance().CurrentModel as AppsInspModel;
+            DistanceParam distanceParam;
+            if (InspDirection == InspDirection.Upper)
+                distanceParam = (model.GetUnit(UnitName.ToString())?.UpperDistanceParam);
+            else
+                distanceParam = (model.GetUnit(UnitName.ToString())?.LowerDistanceParam);
+
+            if (model == null)
+            {
+                MessageBox.Show("CurrentModel이 Null 입니다.");
+                return;
+            }
+            if (distanceParam == null)
+            {
+                MessageBox.Show("DistanceParam이 Null 입니다.");
+                return;
+            }
+
+
             SliceInspResult sliceInspResult = new SliceInspResult();
             AlgorithmTool algorithmTool = new AlgorithmTool();
 
             _imageWidth = _orgBmp.Width;
             _imageHeight = _orgBmp.Height;
-
+                                                                                                                                    
             _imageData?.Initialize();
 
             WriteTactTime(stopwatch, "Before converting image");
@@ -275,48 +303,41 @@ namespace Jastech.Battery.Winform.UI.Forms
             _imageData = ImageHelper.GetByteArrayFromBitmap(_grayImage);
             WriteTactTime(stopwatch, "After converting image to byte array");
 
-            if (model == null)
-                model = new AppsInspModel();
-            model.DistanceParam.LeftScanMargin = 300;    // 시퀀스 검증용 임시 하드코딩, 티칭 완성 후 제거
-            model.DistanceParam.RightScanMargin = 300;    // 시퀀스 검증용 임시 하드코딩, 티칭 완성 후 제거
-
-            DistanceInspResult distanceResult = new DistanceInspResult
+            DistanceInspResult distanceResult = new DistanceInspResult      // 아래 Rectangle 사용후 제거, 결과값만 넣을 것 ScanStart, End 다 삭제
             {
-                ScanStartX = model.DistanceParam.LeftScanMargin,
-                ScanEndX = _imageWidth - model.DistanceParam.RightScanMargin,
-                ScanStartY = model.DistanceParam.TopScanMargin,
-                ScanEndY = _imageHeight - model.DistanceParam.BottomScanMargin,
+                ScanStartX = distanceParam.ROIMarginLeft,
+                ScanEndX = _imageWidth - distanceParam.ROIMarginRight,
+                ScanStartY = distanceParam.ROIMarginTop,
+                ScanEndY = _imageHeight - distanceParam.ROIMarginBottom,
+            };
+
+            Rectangle searchROI = new Rectangle
+            {
+                X = distanceParam.ROIMarginLeft,
+                Y = distanceParam.ROIMarginLeft,
+                Width = _imageWidth - distanceParam.ROIMarginRight,
+                Height = _imageHeight - distanceParam.ROIMarginBottom,
             };
 
             WriteTactTime(stopwatch, "Initializing finished");
 
-            // teaching 영역 사용 시 별도 계산 하지 않음
-            if (AppsConfig.Instance().UseTeachingArea == false)
-                sliceInspResult.CoatingVerticalEdgesFound = algorithmTool.FindVerticalCoatingAreaEdges(ref distanceResult, _imageData, _imageWidth, _imageHeight);
+            // Image 객체 ImageBuffer로 통합
+            sliceInspResult.CoatingVerticalEdgesFound = algorithmTool.FindVerticalCoatingAreaEdges(ref distanceResult, _imageData, _imageWidth, _imageHeight);
 
-            if (AppsConfig.Instance().UseTeachingArea == false && sliceInspResult.CoatingVerticalEdgesFound == false)
+            if (sliceInspResult.CoatingVerticalEdgesFound == false)
                 return;
             else
                 sliceInspResult.DistanceResult = distanceResult;
 
             WriteTactTime(stopwatch, "Coating vertical edges were found");
 
-            sliceInspResult.CoatingLengthSufficient = algorithmTool.CheckCoatingLength(distanceResult, _imageData, _imageWidth, _imageHeight);
-            if (sliceInspResult.CoatingLengthSufficient == false)
-                return;
-
-            WriteTactTime(stopwatch, "Coating width checked");
-
-            sliceInspResult.CoatingAreasFound = algorithmTool.FindCoatingAreas(ref distanceResult, model, _imageData, _imageWidth, _imageHeight, model.DistanceParam.MinimumFoilLength);
+            sliceInspResult.CoatingAreasFound = algorithmTool.FindCoatingAreas(ref distanceResult, model, _imageData, _imageWidth, _imageHeight, distanceParam.CoatingMinimumSize);
             if (sliceInspResult.CoatingAreasFound == false)
+                return;
+            else if (distanceResult.CoatingAreas.Count / model.LaneCount > 1)
                 return;
 
             WriteTactTime(stopwatch, "Coating Areas were found");
-
-            // TODO : Insulator 사용 공정 확인 후 Insulator영역 식별 구현)
-            // if (model.ProcessType == ProcessType.Slitting)
-            //    algorithmTool.FindInsulatorAreas(ref distanceResult, _imageData, _imageWidth, _imageHeight);
-            // WriteTactTime(stopwatch, "Insulator Areas were found");
 
             algorithmTool.FindNonCoatingAreas(ref distanceResult, _imageData, _imageWidth, _imageHeight);
 
@@ -324,7 +345,6 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             // 추가 검증용 코드
             PixelValueGraphControl.SetData(distanceResult.HorizontalDifferentials.ToArray());
-            //PixelValueGraphControl.SetData(distanceResult.HorizontalSamplingResults.ToArray());
             ShowTestResults(distanceResult);
 
             WriteTactTime(stopwatch, "=================================Test Finished==============================");
@@ -335,27 +355,27 @@ namespace Jastech.Battery.Winform.UI.Forms
             if (_orgBmp == null)
                 return;
 
-            Pen coatingWidthPen = new Pen(Color.LawnGreen, 50)
+            Pen coatingWidthPen = new Pen(Color.LawnGreen, _imageWidth/100)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen nonCoatingWidthPen = new Pen(Color.Crimson, 50)
+            Pen nonCoatingWidthPen = new Pen(Color.Crimson, _imageWidth / 100)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen coatingROIpen = new Pen(Color.Yellow, 50) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
-            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, 50) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            Pen coatingROIpen = new Pen(Color.Yellow, _imageWidth / 100) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, _imageWidth / 100) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
             Bitmap cloneBitmap = ImageHelper.ConvertGrayscaleToRGB24((Bitmap)_orgBmp.Clone());
             {
                 using (Graphics g = Graphics.FromImage(cloneBitmap))
                 {
-                    //foreach (Rectangle coatingArea in distanceResult.CoatingAreas)
-                    //{
-                    //    g.DrawLine(coatingWidthPen, coatingArea.Left, coatingArea.Top + coatingArea.Height / 2, coatingArea.Right, coatingArea.Top + coatingArea.Height / 2);
-                    //    g.DrawRectangle(coatingROIpen, coatingArea.Left, coatingArea.Top, coatingArea.Width, coatingArea.Height);
-                    //}
+                    foreach (Rectangle coatingArea in distanceResult.CoatingAreas)
+                    {
+                        g.DrawLine(coatingWidthPen, coatingArea.Left, coatingArea.Top + coatingArea.Height / 2, coatingArea.Right, coatingArea.Top + coatingArea.Height / 2);
+                        g.DrawRectangle(coatingROIpen, coatingArea.Left, coatingArea.Top, coatingArea.Width, coatingArea.Height);
+                    }
 
                     foreach (Rectangle nonCoatingArea in distanceResult.NonCoatingAreas)
                     {
@@ -380,6 +400,42 @@ namespace Jastech.Battery.Winform.UI.Forms
             stopwatch.Start();
             Console.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] {message}, Elapsed : {elapsedTime}ms");
             return elapsedTime;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            AppsInspModel model = ModelManager.Instance().CurrentModel as AppsInspModel;
+
+            if (model == null)
+                return;
+
+            MessageYesNoForm yesNoForm = new MessageYesNoForm();
+            yesNoForm.Message = "Teaching data will change.\nDo you agree?";
+
+            if (yesNoForm.ShowDialog() == DialogResult.Yes)
+            {
+                SaveModelData(model);
+
+                MessageConfirmForm confirmForm = new MessageConfirmForm();
+                confirmForm.Message = "Save Model Completed.";
+                confirmForm.ShowDialog();
+
+                if (ParamTrackingLogger.IsEmpty == false)
+                {
+                    ParamTrackingLogger.AddLog($"{_displayType} Teaching Saved.");
+                    ParamTrackingLogger.WriteLogToFile();
+                }
+            }
+
+            Logger.Write(LogType.GUI, "Clicked InpectionTeachingForm Save Button");
+        }
+
+        private void SaveModelData(AppsInspModel model)
+        {
+            model.SetUnitList(TeachingData.Instance().UnitList);
+
+            string fileName = Path.Combine(ConfigSet.Instance().Path.Model, model.Name, InspModel.FileName);
+            InspModelService?.Save(fileName, model);
         }
     }
 

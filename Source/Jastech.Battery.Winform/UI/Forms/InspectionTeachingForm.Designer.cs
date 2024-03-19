@@ -43,6 +43,7 @@
             this.tlpUnit = new System.Windows.Forms.TableLayoutPanel();
             this.btnLoadImage = new System.Windows.Forms.Button();
             this.lblDirection = new System.Windows.Forms.Label();
+            this.btnTest = new System.Windows.Forms.Button();
             this.pnlTeach = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -52,7 +53,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tlpTeachingPage = new System.Windows.Forms.TableLayoutPanel();
-            this.btnTest = new System.Windows.Forms.Button();
             this.pnlTeachingItems.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tlpTeachingItems.SuspendLayout();
@@ -189,6 +189,7 @@
             this.btnSave.TabIndex = 19;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // pnlTeachingPage
             // 
@@ -296,6 +297,21 @@
             this.lblDirection.TabIndex = 294;
             this.lblDirection.Text = "CAM : ";
             this.lblDirection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnTest
+            // 
+            this.btnTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.btnTest.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnTest.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
+            this.btnTest.ForeColor = System.Drawing.Color.White;
+            this.btnTest.Location = new System.Drawing.Point(0, 40);
+            this.btnTest.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(292, 40);
+            this.btnTest.TabIndex = 288;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = false;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // pnlTeach
             // 
@@ -414,21 +430,6 @@
             this.tlpTeachingPage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpTeachingPage.Size = new System.Drawing.Size(1900, 911);
             this.tlpTeachingPage.TabIndex = 2;
-            // 
-            // btnTest
-            // 
-            this.btnTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            this.btnTest.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnTest.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold);
-            this.btnTest.ForeColor = System.Drawing.Color.White;
-            this.btnTest.Location = new System.Drawing.Point(0, 40);
-            this.btnTest.Margin = new System.Windows.Forms.Padding(0);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(292, 40);
-            this.btnTest.TabIndex = 288;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = false;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // InspectionTeachingForm
             // 

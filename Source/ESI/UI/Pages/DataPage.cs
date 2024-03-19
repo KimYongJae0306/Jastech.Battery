@@ -1,5 +1,6 @@
 ﻿using ESI.Core;
 using Jastech.Battery.Winform.UI.Forms;
+using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
 using Jastech.Framework.Winform;
 using System;
@@ -30,10 +31,10 @@ namespace ESI.UI.Pages
         #region 메서드
         private void btnModelPage_Click(object sender, EventArgs e)
         {
-            //ATTModellerForm form = new ATTModellerForm();
-            //form.InspModelService = ATTInspModelService;
-            //form.ApplyModelEventHandler += Form_ApplyModelEventHandler;
-            //form.ShowDialog();
+            BatteryModellerForm form = new BatteryModellerForm();
+            form.InspModelService = ESIInspModelService;
+            form.ApplyModelEventHandler += Form_ApplyModelEventHandler;
+            form.ShowDialog();
 
             Logger.Write(LogType.GUI, "Clicked Model List Dialog");
         }

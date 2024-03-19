@@ -36,14 +36,14 @@ namespace Jastech.Battery.Structure.Data
         #region 메소드
         public bool IsValidScanWidth()
         {
-            bool isPositiveValue = ScanStartX > 0 && ScanEndX > 0;
+            bool isPositiveValue = ScanStartX >= 0 && ScanEndX >= 0;
             bool isFromLeftToRight = ScanStartX < ScanEndX;
             return isPositiveValue && isFromLeftToRight;
         }
 
         public bool IsValidScanHeight()
         {
-            bool isPositiveValue = ScanStartY > 0 && ScanEndY > 0;
+            bool isPositiveValue = ScanStartY >= 0 && ScanEndY >= 0;
             bool isFromTopToBottom = ScanStartY < ScanEndY;
             return isPositiveValue && isFromTopToBottom;
         }

@@ -21,7 +21,7 @@ namespace ESI.Core
         #region 메서드
         public override InspModel New()
         {
-            return new InspModel();
+            return new AppsInspModel();
         }
 
         public override void AddModelData(InspModel inspModel)
@@ -42,6 +42,7 @@ namespace ESI.Core
                 {
 
                 }
+                appInspModel.AddUnit(unit);
             }
         }
 
@@ -72,14 +73,14 @@ namespace ESI.Core
         {
             LightParameter lightParameter = new LightParameter("Light");
 
-            var lightCtrlHandler = DeviceManager.Instance().LightCtrlHandler;
-            var backLightCtrl = lightCtrlHandler.Get("Back");
-            var spotLightCtrl = lightCtrlHandler.Get("Spot");
-            var ringLightCtrl = lightCtrlHandler.Get("Ring");
+            //var lightCtrlHandler = DeviceManager.Instance().LightCtrlHandler;
+            //var backLightCtrl = lightCtrlHandler.Get("Back");
+            //var spotLightCtrl = lightCtrlHandler.Get("Spot");
+            //var ringLightCtrl = lightCtrlHandler.Get("Ring");
 
-            lightParameter.Add(backLightCtrl, new LightValue(backLightCtrl.TotalChannelCount));
-            lightParameter.Add(spotLightCtrl, new LightValue(spotLightCtrl.TotalChannelCount));
-            lightParameter.Add(ringLightCtrl, new LightValue(ringLightCtrl.TotalChannelCount));
+            //lightParameter.Add(backLightCtrl, new LightValue(backLightCtrl.TotalChannelCount));
+            //lightParameter.Add(spotLightCtrl, new LightValue(spotLightCtrl.TotalChannelCount));
+            //lightParameter.Add(ringLightCtrl, new LightValue(ringLightCtrl.TotalChannelCount));
 
             return lightParameter;
         }

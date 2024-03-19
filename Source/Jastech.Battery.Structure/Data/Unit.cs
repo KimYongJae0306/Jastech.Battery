@@ -1,4 +1,8 @@
-﻿using Jastech.Framework.Device.LightCtrls;
+﻿using Emgu.CV.Alphamat;
+using Jastech.Battery.Structure.Parameters;
+using Jastech.Framework.Device.LightCtrls;
+using Jastech.Framework.Structure;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +19,20 @@ namespace Jastech.Battery.Structure.Data
         public LineCameraData CameraData { get; set; } = null;
 
         public LightParameter LightParam { get; set; } = null;
+
+        public DistanceParam UpperDistanceParam { get; set; } = new DistanceParam();
+
+        public DistanceParam LowerDistanceParam { get; set; } = new DistanceParam();
+
+        public SurfaceParam SurfaceParam { get; set; } = new SurfaceParam();
         #endregion
 
         #region 메서드
+        public void Dispose()
+        {
+            // TODO : Disposing Image buffers, Device handles
+        }
+
         public Unit DeepCopy()
         {
             Unit unit = new Unit();
@@ -25,6 +40,9 @@ namespace Jastech.Battery.Structure.Data
             unit.Name = Name;
             unit.CameraData = CameraData?.DeepCopy();
             unit.LightParam = LightParam?.DeepCopy();
+            unit.UpperDistanceParam = UpperDistanceParam?.DeepCopy();
+            unit.LowerDistanceParam = LowerDistanceParam?.DeepCopy();
+            unit.SurfaceParam = SurfaceParam?.DeepCopy();
 
             return unit;
         }

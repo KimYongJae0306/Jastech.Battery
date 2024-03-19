@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Jastech.Framework.Util.Helper;
+using Jastech.Framework.Winform.Helper;
+using Jastech.Battery.Structure;
+using Jastech.Battery.Structure.Parameters;
 
 namespace Jastech.Battery.Winform.UI.Controls
 {
@@ -15,6 +18,7 @@ namespace Jastech.Battery.Winform.UI.Controls
     {
 
         #region 필드
+        private DistanceParam _distanceParam = null;
         #endregion
 
         #region 속성
@@ -34,6 +38,30 @@ namespace Jastech.Battery.Winform.UI.Controls
         #endregion
 
         #region 메서드
+        private void DistanceControl_Load(object sender, EventArgs e)
+        {
+            UpdateCaptions();
+        }
+
+        private void UpdateCaptions()
+        {
+            if (_distanceParam == null)
+                return;
+
+            lblCoatingThreshold.Text = _distanceParam.CoatingThreshold.ToString();
+            lblCoatingMinimumWidth.Text = _distanceParam.CoatingMinimumSize.ToString();
+            lblCoatingMaximumWidth.Text = _distanceParam.CoatingMaximumSize.ToString();
+
+            lblNonCoatingThreshold.Text = _distanceParam.NonCoatingThreshold.ToString();
+            lblNonCoatingMinimumWidth.Text = _distanceParam.NonCoatingMinimumSize.ToString();
+            lblNonCoatingMaximumWidth.Text = _distanceParam.NonCoatingMaximumSize.ToString();
+
+            lblROIMarginLeft.Text = _distanceParam.ROIMarginLeft.ToString();
+            lblROIMarginTop.Text = _distanceParam.ROIMarginTop.ToString();
+            lblROIMarginRight.Text = _distanceParam.ROIMarginRight.ToString();
+            lblROIMarginBottom.Text = _distanceParam.ROIMarginBottom.ToString();
+        }
+
         private void DrawComboboxCenterAlign(object sender, DrawItemEventArgs e)
         {
             try
@@ -66,6 +94,67 @@ namespace Jastech.Battery.Winform.UI.Controls
                 Console.WriteLine(err.ToString());
                 throw;
             }
+        }
+
+        public void SetParam(DistanceParam param)
+        {
+            if (param != null)
+                _distanceParam = param;
+            UpdateCaptions();
+        }
+
+        private void lblCoatingThreshold_Click(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control =  sender as Control;
+            _distanceParam.CoatingThreshold = KeyPadHelper.SetLabelIntegerData(control) ;
+        }
+
+        private void lblNonCoatingThreshold_Click(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control = sender as Control;
+            _distanceParam.NonCoatingThreshold = KeyPadHelper.SetLabelIntegerData(control);
+        }
+
+        private void lblMarginLeft_Click(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control = sender as Control;
+            _distanceParam.ROIMarginLeft = KeyPadHelper.SetLabelIntegerData(control);
+        }
+
+        private void lblMarginRight_Click(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control = sender as Control;
+            _distanceParam.ROIMarginRight = KeyPadHelper.SetLabelIntegerData(control);
+        }
+
+        private void lblMarginTop_Click(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control = sender as Control;
+            _distanceParam.ROIMarginTop = KeyPadHelper.SetLabelIntegerData(control);
+        }
+
+        private void lblMarginBottom_Click(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control = sender as Control;
+            _distanceParam.ROIMarginBottom = KeyPadHelper.SetLabelIntegerData(control);
         }
         #endregion
     }

@@ -33,6 +33,49 @@ namespace Jastech.Battery.Structure.Data
 
             return _instance;
         }
+
+        public void UpdateTeachingData()
+        {
+            var inspModel = ModelManager.Instance().CurrentModel as AppsInspModel;
+            if (inspModel != null)
+            {
+                Dispose();
+                Initialize(inspModel);
+            }
+        }
+
+        public void Initialize(AppsInspModel inspModel)
+        {
+            Dispose();
+            lock (UnitList)
+            {
+                foreach (var unit in inspModel.GetUnitList())
+                {
+                    UnitList.Add(unit.DeepCopy());
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            lock (UnitList)
+            {
+                foreach (var unit in UnitList)
+                    unit.Dispose();
+
+                UnitList.Clear();
+
+            }
+        }
+
+        public Unit GetUnit(string name)
+        {
+            Unit unit = null;
+            lock (UnitList)
+                unit = UnitList.FirstOrDefault(x => x.Name == name);
+
+            return unit;
+        }
         #endregion
     }
 }
