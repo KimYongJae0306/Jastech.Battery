@@ -52,7 +52,7 @@ namespace ESI.Core
 
         public void StopDevice()
         {
-            LightCtrlHandler.TurnOff();
+            LightCtrlHandler?.TurnOff();
         }
 
         public void StopSeqTask()

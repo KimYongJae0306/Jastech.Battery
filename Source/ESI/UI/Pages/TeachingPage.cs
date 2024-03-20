@@ -52,7 +52,7 @@ namespace ESI.UI.Pages
         private void btnLowerInspectionPage_Click(object sender, EventArgs e)
         {
             InspectionTeachingForm form = new InspectionTeachingForm();
-            //form.InspDirection = InspDirection.Upper;
+            //form.InspDirection = InspDirection.Lower;
             form.UnitName = UnitName.Lower;
             form.InspModelService = ESIInspModelService;
             form.ShowDialog();
@@ -61,8 +61,8 @@ namespace ESI.UI.Pages
         private void btnUpperInspectionPage_Click(object sender, EventArgs e)
         {
             InspectionTeachingForm form = new InspectionTeachingForm();
-            //form.InspDirection = InspDirection.Lower;
-            form.UnitName = UnitName.Lower;
+            //form.InspDirection = InspDirection.Upper;
+            form.UnitName = UnitName.Upper;
             form.InspModelService = ESIInspModelService;
             form.ShowDialog();
         }

@@ -81,6 +81,8 @@ namespace Jastech.Battery.Winform.UI.Forms
             InitializeUI();
             AddControl();
 
+            TeachingData.Instance().UpdateTeachingData();
+
             SelectPage(DisplayType.Distance);
         }
 
@@ -217,15 +219,14 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private void SetTeachingControl(DisplayType displayType)
         {
-            var currentModel = ModelManager.Instance().CurrentModel as AppsInspModel;
+            var currentUnit = TeachingData.Instance().GetUnit(UnitName.ToString());
             _displayType = displayType;
 
             switch (displayType)
             {
                 case DisplayType.Distance:
                     btnDistance.BackColor = _selectedColor;
-                    var isUpper = InspDirection == InspDirection.Upper;
-                    DistanceControl.SetParam(isUpper ? currentModel.GetUnit(UnitName).UpperDistanceParam : currentModel.GetUnit(UnitName).LowerDistanceParam);
+                    DistanceControl.SetParam(currentUnit.DistanceParam);
                     pnlTeach.Controls.Add(DistanceControl);
                     break;
 
@@ -254,11 +255,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             WriteTactTime(stopwatch, "=================================Test Start=================================");
 
             var model = ModelManager.Instance().CurrentModel as AppsInspModel;
-            DistanceParam distanceParam;
-            if (InspDirection == InspDirection.Upper)
-                distanceParam = (model.GetUnit(UnitName.ToString())?.UpperDistanceParam);
-            else
-                distanceParam = (model.GetUnit(UnitName.ToString())?.LowerDistanceParam);
+            DistanceParam distanceParam = model.GetUnit(UnitName.ToString())?.DistanceParam;
 
             if (model == null)
             {
@@ -303,7 +300,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             // 추가 검증용 코드
             PixelValueGraphControl.SetData(distanceInspResult.VerticalDifferentials.ToArray());
-            //ShowTestResults(distanceInspResult);
+            ShowTestResults(distanceInspResult);
 
             WriteTactTime(stopwatch, "=================================Test Finished==============================");
         }

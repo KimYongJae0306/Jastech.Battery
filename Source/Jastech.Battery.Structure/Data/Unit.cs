@@ -20,9 +20,7 @@ namespace Jastech.Battery.Structure.Data
 
         public LightParameter LightParam { get; set; } = null;
 
-        public DistanceParam UpperDistanceParam { get; set; } = new DistanceParam();
-
-        public DistanceParam LowerDistanceParam { get; set; } = new DistanceParam();
+        public DistanceParam DistanceParam { get; set; } = new DistanceParam();
 
         public SurfaceParam SurfaceParam { get; set; } = new SurfaceParam();
         #endregion
@@ -40,8 +38,7 @@ namespace Jastech.Battery.Structure.Data
             unit.Name = Name;
             unit.CameraData = CameraData?.DeepCopy();
             unit.LightParam = LightParam?.DeepCopy();
-            unit.UpperDistanceParam = UpperDistanceParam?.DeepCopy();
-            unit.LowerDistanceParam = LowerDistanceParam?.DeepCopy();
+            unit.DistanceParam = DistanceParam?.DeepCopy();
             unit.SurfaceParam = SurfaceParam?.DeepCopy();
 
             return unit;

@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Xml.Schema;
 using Emgu.CV.BgSegm;
+using System.Reflection;
 using System.Data;
 
 namespace Jastech.Battery.Structure.VisionTool
@@ -56,24 +57,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return rect;
         }
 
-        public void CoatingArea_Line()
-        {
-            int workRatioX = 2;
-            int workRatioY = 6;
-        }
-
-        public void CoatingArea_LineBlack(SurfaceParam param)
-        {
-            int threshold = 128 - param.LineParam.LineLevel;
-
-            int workRatioX = 3;
-            int workRatioY = 10;
-
-            int tapePosY1 = 0;
-            int tapePosY2 = param.ImageHeight;
-        }
-
-        public double GetHorizontalMeanSampledLevel(DistanceParam distanceParam,  ImageBuffer image, int rowStartIndex, int horizontalOffset)
+        public double GetHorizontalMeanSampledLevel(DistanceParam distanceParam, ImageBuffer image, int rowStartIndex, int horizontalOffset)
         {
             byte[] imageData = image.ImageData;
             int imageWidth = image.Width;
@@ -82,7 +66,7 @@ namespace Jastech.Battery.Structure.VisionTool
             int heightSamplingScale = distanceParam.HeightSamplingScale;
 
             int sum = 0;
-            for (int rowIndex = rowStartIndex; rowIndex < imageHeight; rowIndex+= heightSamplingScale)
+            for (int rowIndex = rowStartIndex; rowIndex < imageHeight; rowIndex += heightSamplingScale)
             {
                 var currentRow = rowIndex * imageWidth;
                 sum += imageData[currentRow + horizontalOffset];
@@ -277,21 +261,37 @@ namespace Jastech.Battery.Structure.VisionTool
             return threshold;
         }
 
-        public void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, byte[] imageData, int imageWidth, int imageHeight)
+        private void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, byte[] imageData, int imageWidth, int imageHeight, ref SurfaceInspResult surfaceInspResult, bool isTapeInsp)
         {
-            int ratioX = 2;
-            int ratioY = 6;
+            if (surfaceParam.LineParam.EnableCheckLine == false)
+                return;
+
+            int pix5mm = (int)(5.0 / CalibrationX);
+            int pix40mm = (int)(40.0 / CalibrationX);
+
+            int workRatioX = 2;
+            int workRatioY = 6;
 
             int buffWidth = 0;
             int buffHeight = 0;
 
+            double referenceSizeX = 0.0;
+            double referenceSizeY = 0.0;
+
+            Rectangle workArea = new Rectangle();
+            Rectangle findArea = new Rectangle();
+            Rectangle drawArea = new Rectangle();
+
+            double findWidth = 0.0;
+            double findHeight = 0.0;
+
             foreach (var inspArea in distanceInspResult.CoatingAreas)
             {
-                SurfaceInspResult surfaceInspResult = new SurfaceInspResult();
-
                 var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                if (area.Width < pix40mm && area.Height < pix5mm)
+                    continue;
 
-                byte[] workBuff = GetWorkBuffer(inspArea, ratioX, ratioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
+                byte[] workBuff = GetWorkBuffer(area, workRatioX, workRatioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
                 if (workBuff == null)
                     continue;
 
@@ -321,8 +321,466 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 int averageLevel = sum / count;
 
-                surfaceInspResult.CoatingAverageLevel = averageLevel;
+                surfaceInspResult.CoatingAverageLevel.Add(averageLevel);
+
+                int threshold = 0;
+
+                workArea.X = 0;
+                workArea.Width = buffWidth;
+                workArea.Y = 0;
+                workArea.Height = buffHeight;
+
+                if (isTapeInsp == true)
+                {
+                    if (surfaceParam.TapeParam.EnableConnectionTape)
+                    {
+                        threshold = averageLevel + surfaceParam.TapeParam.ConnectionTapeLevel;
+                        referenceSizeX = area.Width / 2 * CalibrationX;
+                        referenceSizeY = 1.0;
+                    }
+                }
+                else
+                {
+                    threshold = averageLevel + surfaceParam.LineParam.LineLevel;
+                    referenceSizeX = surfaceParam.LineParam.LineSizeX;
+                    referenceSizeY = surfaceParam.LineParam.LineSizeY;
+                }
+
+                var blobList = BlobContour(workBuff, workArea, threshold, 255);
+
+                foreach (var item in blobList)
+                {
+                    int blobLeft = area.Left + item.Left * workRatioX;
+                    int blobRight = area.Left + item.Right * workRatioX;
+                    int blobTop = area.Top + item.Top * workRatioY;
+                    int blobBottom = area.Bottom + item.Bottom * workRatioY;
+
+                    findArea.X = blobLeft;
+                    findArea.Y = blobTop;
+                    findArea.Width = blobRight - blobLeft;
+                    findArea.Height = blobBottom - blobTop;
+
+                    findWidth = (findArea.Width + 1) * CalibrationX;
+                    findHeight = (findArea.Height + 1) * CalibrationY;
+
+                    if (findWidth < referenceSizeX || findHeight < referenceSizeY)
+                        continue;
+
+                    bool samePos = CheckAlreadySaved();
+                    if (samePos == true)
+                        continue;
+
+                    drawArea = findArea;
+                    drawArea.Inflate(20 /* / zoom */, 20 /* / zoom */);
+
+                    if (isTapeInsp == true)
+                    {
+                        surfaceInspResult.IsConnectionTape = true;
+                        surfaceInspResult.ConnectionTapeArea = drawArea;
+                    }
+                    else
+                    {
+                        surfaceInspResult.IsConnectionTape = false;
+                        surfaceInspResult.ConnectionTapeArea = new Rectangle();
+                    }
+                }
             }
+        }
+
+        private void CheckCoatingArea_LineBlack(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, byte[] imageData, int imageWidth, int imageHeight, ref SurfaceInspResult surfaceInspResult)
+        {
+            if (surfaceParam.LineBlackParam.EnableCheckLine == false)
+                return;
+
+            int buffWidth = 0;
+            int buffHeight = 0;
+
+            int pix5mm = (int)(5.0 / CalibrationX);
+            int pix40mm = (int)(40.0 / CalibrationX);
+
+            int workRatioX = 3;
+            int workRatioY = 10;
+
+            Rectangle workArea = new Rectangle();
+            Rectangle findArea = new Rectangle();
+            Rectangle drawArea = new Rectangle();
+
+            int threshold = 128 - surfaceParam.LineBlackParam.LineLevel;
+
+            double findWidth = 0.0;
+            double findHeight = 0.0;
+
+            int tapePosY1 = 0;
+            int tapePosY2 = imageHeight;
+
+            if (surfaceInspResult.IsConnectionTape == true)
+            {
+                tapePosY1 = surfaceInspResult.ConnectionTapeArea.Top * workRatioY;
+                tapePosY2 = surfaceInspResult.ConnectionTapeArea.Bottom * workRatioY;
+            }
+
+            int averageSize = (int)(10 / CalibrationX);
+
+            int samplingStep = averageSize / 5;
+
+            if (samplingStep < 1)
+                samplingStep = 1;
+
+            foreach (var inspArea in distanceInspResult.CoatingAreas)
+            {
+                var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                if (area.Width < pix40mm && area.Height < pix5mm)
+                    continue;
+
+                byte[] workBuff = GetWorkBuffer(area, workRatioX, workRatioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
+                if (workBuff == null)
+                    continue;
+
+                Parallel.For(0, buffHeight, h =>
+                {
+                    for (int w = 0; w < buffWidth; w++)
+                    {
+                        int tempSum = 0;
+                        int tempCount = 0;
+
+                        for (int y = h - averageSize; y < h + averageSize; y += samplingStep)
+                        {
+                            if (y < 0 || y >= buffHeight)
+                                continue;
+
+                            if (y < tapePosY1 || y >= tapePosY2)
+                                continue;
+
+                            for (int x = w - averageSize; x < w + averageSize; x += samplingStep)
+                            {
+                                if (x < 0 || x > buffWidth)
+                                    continue;
+
+                                // TODO : asfas
+                                if (workBuff[y * buffWidth + x] > 0 /* noncoatinglevel */)
+                                    continue;
+
+                                tempSum += workBuff[y * buffWidth + x];
+                                tempCount++;
+                            }
+                        }
+
+                        if (tempCount < 1)
+                            tempCount = 1;
+
+                        byte[] workBuffAverage = new byte[buffWidth * buffHeight];
+                        workBuffAverage[h * buffWidth + w] = (byte)(tempSum / tempCount);
+
+                        int diffValue = 128 + workBuff[h * buffWidth + w] - workBuffAverage[h * buffWidth + w];
+
+                        if (diffValue < 0)
+                            diffValue = 0;
+                        if (diffValue > 255)
+                            diffValue = 255;
+
+                        workBuff[h * buffWidth + w] = (byte)diffValue;
+                    }
+                });
+
+                workArea.X = 0;
+                workArea.Width = buffWidth;
+                workArea.Y = 0;
+                workArea.Height = buffHeight;
+
+                var blobList = BlobContour(workBuff, workArea, threshold, 255);
+
+                foreach (var item in blobList)
+                {
+                    int blobLeft = area.Left + item.Left * workRatioX;
+                    int blobRight = area.Left + item.Right * workRatioX;
+                    int blobTop = area.Top + item.Top * workRatioY;
+                    int blobBottom = area.Bottom + item.Bottom * workRatioY;
+
+                    findArea.X = blobLeft;
+                    findArea.Y = blobTop;
+                    findArea.Width = blobRight - blobLeft;
+                    findArea.Height = blobBottom - blobTop;
+
+                    findWidth = (findArea.Width + 1) * CalibrationX;
+                    findHeight = (findArea.Height + 1) * CalibrationY;
+
+                    if (findWidth < surfaceParam.LineParam.LineSizeY)
+                        continue;
+
+                    bool samePos = CheckAlreadySaved();
+                    if (samePos == true)
+                        continue;
+
+                    drawArea = findArea;
+                    drawArea.Inflate(20 /* / zoom */, 20 /* / zoom */);
+                }
+            }
+        }
+
+        private void CheckCoatingArea_Edge(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, byte[] imageData, int imageWidth, int imageHeight, ref SurfaceInspResult surfaceInspResult)
+        {
+            int pix5mm = (int)(5.0 / CalibrationX);
+            int pix40mm = (int)(40.0 / CalibrationX);
+
+            int pixRefernceHeight = (int)((surfaceParam.LineParam.LineSizeY + 1.0) / CalibrationY);
+
+            Rectangle findArea = new Rectangle();
+            Rectangle drawArea = new Rectangle();
+
+            double findWidth = 0.0;
+            double findHeight = 0.0;
+
+            foreach (var inspArea in distanceInspResult.CoatingAreas)
+            {
+                var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                if (area.Width < pix40mm && area.Height < pix5mm)
+                    continue;
+
+                int threshold = 0;
+
+                int left = 0;
+                int right = 0;
+                int pinholeLeft = 0;
+                int pinholeRight = 0;
+
+                for (int direction = 0; direction < 2; direction++)
+                {
+                    if (direction == 0)
+                    {
+                        if (area.Left < 2)
+                            continue;
+
+                        left = area.Left - surfaceParam.PinHoleParam.MarginOut;
+                        right = area.Left + surfaceParam.PinHoleParam.MarginIn;
+
+                        if (left < 0)
+                            left = 0;
+
+                        if (right > imageWidth)
+                            right = imageWidth;
+
+                        pinholeLeft = area.Left;
+                        pinholeRight = right;
+                    }
+                    else
+                    {
+                        if (area.Right > imageWidth - 3)
+                            continue;
+
+                        left = area.Right - surfaceParam.PinHoleParam.MarginIn;
+                        right = area.Right + surfaceParam.PinHoleParam.MarginOut;
+
+                        if (left < 0)
+                            left = 0;
+
+                        if (right > imageWidth)
+                            right = imageWidth;
+
+                        pinholeLeft = left;
+                        pinholeRight = area.Right;
+                    }
+
+                    area.X = left;
+                    area.Width = right - left;
+
+                    area = ShapeHelper.GetValidRectangle(area, imageWidth, imageHeight);
+                }
+
+                if (surfaceParam.LineParam.EnableCheckLine)
+                {
+                    threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.LineParam.LineEdgeLevel;
+
+                    int divideCount = area.Height / pixRefernceHeight;
+
+                    for (int divideIndex = 0; divideIndex < divideCount; divideIndex++)
+                    {
+                        Rectangle edgeRect = new Rectangle();
+
+                        edgeRect.X = area.X;
+                        edgeRect.Width = area.Width;
+                        edgeRect.Y = divideIndex * pixRefernceHeight;
+                        edgeRect.Height = pixRefernceHeight;
+
+                        if (edgeRect.Bottom > area.Bottom)
+                            edgeRect.Height = area.Bottom - edgeRect.Y;
+
+                        var blobList = BlobContour(imageData, edgeRect, threshold, 255);
+
+                        foreach (var item in blobList)
+                        {
+                            int blobLeft = item.Left;
+                            int blobRight = item.Right;
+                            int blobTop = item.Top;
+                            int blobBottom = item.Bottom;
+
+                            findArea.X = blobLeft;
+                            findArea.Width = blobRight - blobLeft;
+                            findArea.Y = blobTop;
+                            findArea.Height = blobBottom - blobTop;
+
+                            int diffLeft = blobLeft - edgeRect.Left;
+                            int diffRight = edgeRect.Right - blobRight;
+
+                            findWidth = (findArea.Width + 1) * CalibrationX;
+                            findHeight = (findArea.Height + 1) * CalibrationY;
+
+                            if (findHeight > surfaceParam.LineParam.LineSizeY)
+                            {
+                                drawArea = findArea;
+                                drawArea.Inflate(20 /* / zoom */, 20 /* / zoom */);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (surfaceParam.PinHoleParam.EnablePinHole)
+                {
+                    area.X = pinholeLeft;
+                    area.Width = pinholeRight - pinholeLeft;
+                    threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.PinHoleEdgeParam.PinHoleLevel;
+
+                    var blobList = BlobContour(imageData, area, threshold, 255);
+                    foreach (var item in blobList)
+                    {
+                        int blobLeft = item.Left;
+                        int blobRight = item.Right;
+                        int blobTop = item.Top;
+                        int blobBottom = item.Bottom;
+
+                        findArea.X = blobLeft;
+                        findArea.Width = blobRight - blobLeft;
+                        findArea.Y = blobTop;
+                        findArea.Height = blobBottom - blobTop;
+
+                        findWidth = (findArea.Width + 1) * CalibrationX;
+                        findHeight = (findArea.Height + 1) * CalibrationY;
+
+                        var pinholeSize = surfaceParam.PinHoleEdgeParam.PinHoleSize;
+                        if (findWidth >= pinholeSize && findHeight >= pinholeSize)
+                        {
+                            drawArea = findArea;
+                            drawArea.Inflate(20 /* / zoom */, 20 /* / zoom */);
+                            break;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private void CheckCoatingArea(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, byte[] imageData, int imageWidth, int imageHeight, ref SurfaceInspResult surfaceInspResult)
+        {
+            Rectangle originArea = new Rectangle();
+
+            double defectMinSize = 10.0;
+
+            double defectMinSizeWhite = 0.0;
+            double defectMinSizeDent = 0.0;
+            double defectMinSizeCrater = 0.0;
+
+            if (surfaceParam.PinHoleParam.EnablePinHole)
+                defectMinSizeWhite = surfaceParam.PinHoleParam.PinHoleSize;
+
+            if (surfaceParam.NonCoatingDentParam.EnableDent)
+                defectMinSizeDent = surfaceParam.NonCoatingDentParam.DentSize;
+
+            if (surfaceParam.CraterParam.EnableCrater)
+            {
+                if (surfaceParam.CraterParam.CraterLargeSize > 0 && surfaceParam.CraterParam.CraterLargeSize < defectMinSizeDent)
+                    defectMinSizeCrater = surfaceParam.CraterParam.CraterLargeSize;
+
+                if (surfaceParam.CraterParam.CraterSmallSize > 0 && surfaceParam.CraterParam.CraterSmallSize < defectMinSizeDent)
+                    defectMinSizeCrater = surfaceParam.CraterParam.CraterSmallSize;
+            }
+
+            foreach (var inspArea in distanceInspResult.CoatingAreas)
+            {
+                var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                if (area.Width < 2 && area.Height < 2)
+                    continue;
+
+                //MakeBinary(0, area, surfaceInspResult.IsConnectionTape);
+            }
+        }
+
+        private void MakeBinary(int inputIndex, Rectangle inputRect, byte[] imageData, int imageWidth, int imageHeight, SurfaceInspResult surfaceInspResult)
+        {
+            int averageSize = (int)(10 / CalibrationX);
+            int scanSampling = averageSize / 5;
+            if (scanSampling < 1)
+                scanSampling = 1;
+
+            int targetValue = 128; // Config.ImageProcTargetValue;
+
+            for (int x = inputRect.Left; x < inputRect.Right; x++)
+            {
+                int sum = 0;
+                int count = 0;
+
+                for (int y = inputRect.Top; y < inputRect.Bottom; y+= 10)
+                {
+                    bool checkConnectionTape = CheckConnectionTape(surfaceInspResult, y);
+                    if (checkConnectionTape)
+                        continue;
+
+                    sum += imageData[y * imageWidth + x];
+                    count++;
+                }
+
+
+            }
+        }
+
+        private bool CheckConnectionTape(SurfaceInspResult surfaceInspResult, int height)
+        {
+            if (surfaceInspResult.IsConnectionTape)
+            {
+                if (height < surfaceInspResult.ConnectionTapeArea.Top || height > surfaceInspResult.ConnectionTapeArea.Bottom)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void CheckNonCoating(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight)
+        {
+            foreach (var inspArea in distanceInspResult.CoatingAreas)
+            {
+                //var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                //if (area.Width < pix40mm && area.Height < pix5mm)
+                //    continue;
+
+                //byte[] workBuff = GetWorkBuffer(area, workRatioX, workRatioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
+                //if (workBuff == null)
+                //    continue;
+            }
+        }
+
+        private void CheckCoating(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight)
+        {
+            // Input Insp Area
+            foreach (var inspArea in distanceInspResult.NonCoatingAreas)
+            {
+                //var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                //if (area.Width < pix40mm && area.Height < pix5mm)
+                //    continue;
+
+                //byte[] workBuff = GetWorkBuffer(area, workRatioX, workRatioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
+                //if (workBuff == null)
+                //    continue;
+            }
+
+            // Blob
+
+            // Coordinate -> Rect
+
+            // Add Rect at SurfaceInspResult.Rectagle
+        }
+
+        private void DrawRectangle(Rectangle inputRectangle)
+        {
+
         }
 
         private byte[] GetWorkBuffer(Rectangle inputRect, int ratioX, int ratioY, byte[] imageData, int imageWidth, int imageHeight, out int buffWidth, out int buffHeight)
@@ -354,6 +812,76 @@ namespace Jastech.Battery.Structure.VisionTool
             }
 
             return outputBuff;
+        }
+
+        private List<BlobContourResult> BlobContour(byte[] imageData, /*int width, int height,*/ Rectangle inputRect, int lowThreshold, int highThreshold)
+        {
+            int width = inputRect.Width;
+            int height = inputRect.Height;
+
+            if (ShapeHelper.CheckValidRectangle(inputRect, width, height) == false)
+                return null;
+
+            List<BlobContourResult> resultList = new List<BlobContourResult>();
+
+            int x = inputRect.Left;
+            int y = 0;
+
+            byte[] tempBuff = new byte[width * height];
+
+            for (int h = 0; h < height; h++)
+            {
+                y = inputRect.Top + h;
+                Array.Copy(imageData, y * width + x, tempBuff, h * width, width);
+            }
+
+            int fillValue = 0;
+
+            if (lowThreshold >= 50)
+                fillValue = 0;
+            else
+                fillValue = 255;
+
+            ShapeHelper.FillBound(tempBuff, width, height, fillValue);
+
+            List<Point> pointList = ShapeHelper.GetPointListBetweenThresholdRange(imageData, width, height, new Point(0, 0), lowThreshold, highThreshold);
+
+            foreach (var point in pointList)
+            {
+                if (point.X == -1 && point.Y == -1)
+                    break;
+
+                Rectangle foundrect = ShapeHelper.DetectEdge(imageData, width, height, point, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
+
+                if (foundrect.Left == 0 || foundrect.Top == 0 || foundrect.Right == 0 || foundrect.Bottom == 0)
+                    break;
+
+                if (foundrect.Left == -1 || foundrect.Top == -1 || foundrect.Right == -1 || foundrect.Bottom == -1)
+                {
+                    imageData[point.Y * width + point.X] = (byte)fillValue;
+                    continue;
+                }
+
+                ShapeHelper.FillValueWithCount(imageData, foundrect, fillValue, lowThreshold, highThreshold, out int fillCount);
+
+                BlobContourResult blobContourResult = new BlobContourResult();
+
+                blobContourResult.Left = inputRect.X + foundrect.Left;
+                blobContourResult.Top = inputRect.Y + foundrect.Top;
+                blobContourResult.Right = inputRect.X + foundrect.Right;
+                blobContourResult.Bottom = inputRect.Y + foundrect.Bottom;
+                blobContourResult.PixelCount = fillCount;
+                blobContourResult.ContourPointList.Add(new Point(inputRect.X + point.X, inputRect.Y + point.Y));
+
+                resultList.Add(blobContourResult);
+            }
+
+            return resultList;
+        }
+
+        private bool CheckAlreadySaved()
+        {
+            return false;
         }
 
         public void GetCoatingArea_WidthoutNonCoat()
