@@ -31,6 +31,8 @@ namespace Jastech.Battery.Structure.Parameters
 
         public DentParam DentParam = new DentParam();
 
+        public NonCoatingDentParam NonCoatingDentParam = new NonCoatingDentParam();
+
         public DentParam DentEdgeParam = new DentParam();
 
         public CraterParam CraterParam = new CraterParam();
@@ -129,6 +131,15 @@ namespace Jastech.Battery.Structure.Parameters
 
         [JsonProperty]
         public int DentSmallCount { get; set; } = 1;
+    }
+
+    public class NonCoatingDentParam
+    {
+        [JsonProperty]
+        public bool EnableDent { get; set; } = false;
+
+        [JsonProperty]
+        public double DentSize { get; set; } = 1.0;
     }
 
     public class ScratchParam

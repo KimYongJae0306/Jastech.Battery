@@ -392,7 +392,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return threshold;
         }
 
-        private void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam, bool isTapeInsp)
+        private void CheckCoatingArea_Line(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, byte[] imageData, int imageWidth, int imageHeight, ref SurfaceInspResult surfaceInspResult, bool isTapeInsp)
         {
             if (surfaceParam.LineParam.EnableCheckLine == false)
                 return;
@@ -518,7 +518,7 @@ namespace Jastech.Battery.Structure.VisionTool
             }
         }
 
-        private void CheckCoatingArea_LineBlack(DistanceInspResult distanceInspResult, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam)
+        private void CheckCoatingArea_LineBlack(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, byte[] imageData, int imageWidth, int imageHeight, ref SurfaceInspResult surfaceInspResult)
         {
             if (surfaceParam.LineBlackParam.EnableCheckLine == false)
                 return;
@@ -648,7 +648,7 @@ namespace Jastech.Battery.Structure.VisionTool
             }
         }
 
-        private void CheckCoatingArea_Edge(DistanceInspResult distanceInspResult, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam)
+        private void CheckCoatingArea_Edge(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, byte[] imageData, int imageWidth, int imageHeight, ref SurfaceInspResult surfaceInspResult)
         {
             int pix5mm = (int)(5.0 / CalibrationX);
             int pix40mm = (int)(40.0 / CalibrationX);
@@ -800,9 +800,78 @@ namespace Jastech.Battery.Structure.VisionTool
             }
         }
 
-        private void CheckCoatingArea()
+        private void CheckCoatingArea(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, byte[] imageData, int imageWidth, int imageHeight, ref SurfaceInspResult surfaceInspResult)
         {
             Rectangle originArea = new Rectangle();
+
+            double defectMinSize = 10.0;
+
+            double defectMinSizeWhite = 0.0;
+            double defectMinSizeDent = 0.0;
+            double defectMinSizeCrater = 0.0;
+
+            if (surfaceParam.PinHoleParam.EnablePinHole)
+                defectMinSizeWhite = surfaceParam.PinHoleParam.PinHoleSize;
+
+            if (surfaceParam.NonCoatingDentParam.EnableDent)
+                defectMinSizeDent = surfaceParam.NonCoatingDentParam.DentSize;
+
+            if (surfaceParam.CraterParam.EnableCrater)
+            {
+                if (surfaceParam.CraterParam.CraterLargeSize > 0 && surfaceParam.CraterParam.CraterLargeSize < defectMinSizeDent)
+                    defectMinSizeCrater = surfaceParam.CraterParam.CraterLargeSize;
+
+                if (surfaceParam.CraterParam.CraterSmallSize > 0 && surfaceParam.CraterParam.CraterSmallSize < defectMinSizeDent)
+                    defectMinSizeCrater = surfaceParam.CraterParam.CraterSmallSize;
+            }
+
+            foreach (var inspArea in distanceInspResult.CoatingAreas)
+            {
+                var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
+                if (area.Width < 2 && area.Height < 2)
+                    continue;
+
+                //MakeBinary(0, area, surfaceInspResult.IsConnectionTape);
+            }
+        }
+
+        private void MakeBinary(int inputIndex, Rectangle inputRect, byte[] imageData, int imageWidth, int imageHeight, SurfaceInspResult surfaceInspResult)
+        {
+            int averageSize = (int)(10 / CalibrationX);
+            int scanSampling = averageSize / 5;
+            if (scanSampling < 1)
+                scanSampling = 1;
+
+            int targetValue = 128; // Config.ImageProcTargetValue;
+
+            for (int x = inputRect.Left; x < inputRect.Right; x++)
+            {
+                int sum = 0;
+                int count = 0;
+
+                for (int y = inputRect.Top; y < inputRect.Bottom; y+= 10)
+                {
+                    bool checkConnectionTape = CheckConnectionTape(surfaceInspResult, y);
+                    if (checkConnectionTape)
+                        continue;
+
+                    sum += imageData[y * imageWidth + x];
+                    count++;
+                }
+
+
+            }
+        }
+
+        private bool CheckConnectionTape(SurfaceInspResult surfaceInspResult, int height)
+        {
+            if (surfaceInspResult.IsConnectionTape)
+            {
+                if (height < surfaceInspResult.ConnectionTapeArea.Top || height > surfaceInspResult.ConnectionTapeArea.Bottom)
+                    return true;
+            }
+
+            return false;
         }
 
         private void CheckNonCoating(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight)
