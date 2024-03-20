@@ -409,7 +409,7 @@ namespace Jastech.Battery.Structure.VisionTool
             double referenceSizeX = 0.0;
             double referenceSizeY = 0.0;
 
-            Rectangle fullArea = new Rectangle();
+            Rectangle workArea = new Rectangle();
             Rectangle findArea = new Rectangle();
             Rectangle drawArea = new Rectangle();
 
@@ -456,10 +456,10 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 int threshold = 0;
 
-                fullArea.X = 0;
-                fullArea.Width = buffWidth;
-                fullArea.Y = 0;
-                fullArea.Height = buffHeight;
+                workArea.X = 0;
+                workArea.Width = buffWidth;
+                workArea.Y = 0;
+                workArea.Height = buffHeight;
 
                 if (isTapeInsp == true)
                 {
@@ -477,7 +477,7 @@ namespace Jastech.Battery.Structure.VisionTool
                     referenceSizeY = surfaceParam.LineParam.LineSizeY;
                 }
 
-                var blobList = BlobContour(workBuff, buffWidth, buffHeight, fullArea, threshold, 255);
+                var blobList = BlobContour(workBuff, workArea, threshold, 255);
 
                 foreach (var item in blobList)
                 {
@@ -532,7 +532,7 @@ namespace Jastech.Battery.Structure.VisionTool
             int workRatioX = 3;
             int workRatioY = 10;
 
-            Rectangle fullArea = new Rectangle();
+            Rectangle workArea = new Rectangle();
             Rectangle findArea = new Rectangle();
             Rectangle drawArea = new Rectangle();
 
@@ -543,6 +543,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
             int tapePosY1 = 0;
             int tapePosY2 = imageHeight;
+
             if (surfaceInspResult.IsConnectionTape == true)
             {
                 tapePosY1 = surfaceInspResult.ConnectionTapeArea.Top * workRatioY;
@@ -598,9 +599,60 @@ namespace Jastech.Battery.Structure.VisionTool
                         if (tempCount < 1)
                             tempCount = 1;
 
+                        byte[] workBuffAverage = new byte[buffWidth * buffHeight];
+                        workBuffAverage[h * buffWidth + w] = (byte)(tempSum / tempCount);
 
+                        int diffValue = 128 + workBuff[h * buffWidth + w] - workBuffAverage[h * buffWidth + w];
+
+                        if (diffValue < 0)
+                            diffValue = 0;
+                        if (diffValue > 255)
+                            diffValue = 255;
+
+                        workBuff[h * buffWidth + w] = (byte)diffValue;
                     }
                 });
+
+                workArea.X = 0;
+                workArea.Width = buffWidth;
+                workArea.Y = 0;
+                workArea.Height = buffHeight;
+
+                var blobList = BlobContour(workBuff, workArea, threshold, 255);
+
+                foreach (var item in blobList)
+                {
+                    int left = area.Left + item.Left * workRatioX;
+                    int right = area.Left + item.Right * workRatioX;
+                    int top = area.Top + item.Top * workRatioY;
+                    int bottom = area.Bottom + item.Bottom * workRatioY;
+
+                    findArea.X = left;
+                    findArea.Y = top;
+                    findArea.Width = right - left;
+                    findArea.Height = bottom - top;
+
+                    findWidth = (findArea.Width + 1) * CalibrationX;
+                    findHeight = (findArea.Height + 1) * CalibrationY;
+
+                    if (findWidth < surfaceParam.LineParam.LineSizeY)
+                        continue;
+
+                    bool samePos = CheckAlreadySaved();
+                    if (samePos == true)
+                        continue;
+
+                    drawArea = findArea;
+                    drawArea.Inflate(20 /* / zoom */, 20 /* / zoom */);
+                }
+            }
+        }
+
+        private void CheckCoatingArea_Edge(DistanceInspResult distanceInspResult, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight, SurfaceParam surfaceParam)
+        {
+            foreach (var inspArea in distanceInspResult.CoatingAreas)
+            {
+
             }
         }
 
@@ -635,8 +687,11 @@ namespace Jastech.Battery.Structure.VisionTool
             return outputBuff;
         }
 
-        private List<BlobContourResult> BlobContour(byte[] imageData, int width, int height, Rectangle inputRect, int lowThreshold, int highThreshold)
+        private List<BlobContourResult> BlobContour(byte[] imageData, /*int width, int height,*/ Rectangle inputRect, int lowThreshold, int highThreshold)
         {
+            int width = inputRect.Width;
+            int height = inputRect.Height;
+
             if (ShapeHelper.CheckValidRectangle(inputRect, width, height) == false)
                 return null;
 
@@ -645,9 +700,9 @@ namespace Jastech.Battery.Structure.VisionTool
             int x = inputRect.Left;
             int y = 0;
 
-            byte[] tempBuff = new byte[inputRect.Width * inputRect.Height];
+            byte[] tempBuff = new byte[width * height];
 
-            for (int h = 0; h < inputRect.Height; h++)
+            for (int h = 0; h < height; h++)
             {
                 y = inputRect.Top + h;
                 Array.Copy(imageData, y * width + x, tempBuff, h * width, width);
@@ -660,7 +715,7 @@ namespace Jastech.Battery.Structure.VisionTool
             else
                 fillValue = 255;
 
-            ShapeHelper.FillBound(tempBuff, inputRect.Width, inputRect.Height, fillValue);
+            ShapeHelper.FillBound(tempBuff, width, height, fillValue);
 
             List<Point> pointList = ShapeHelper.GetPointListBetweenThresholdRange(imageData, width, height, new Point(0, 0), lowThreshold, highThreshold);
 
