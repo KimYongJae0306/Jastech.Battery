@@ -71,6 +71,9 @@
             this.label22 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tlpSpecificationLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblCoatingMinimumLength = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
             this.lblNonCoatingMaximumWidth = new System.Windows.Forms.Label();
@@ -100,6 +103,9 @@
             this.lblNonCoatingMinimumWidth = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblParameter = new System.Windows.Forms.Label();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblROIThreshold = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.pnlTeachingParameter.SuspendLayout();
             this.tlpROILayout.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -117,6 +123,7 @@
             this.tlpGrayLevelCoating.SuspendLayout();
             this.tlpGrayLevelNonCoating.SuspendLayout();
             this.tlpSpecificationLayout.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tlpSubTitleMismatch.SuspendLayout();
@@ -126,6 +133,7 @@
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlTeachingParameter
@@ -154,7 +162,7 @@
             this.tlpROILayout.Controls.Add(this.tableLayoutPanel15, 1, 3);
             this.tlpROILayout.Controls.Add(this.tableLayoutPanel16, 1, 4);
             this.tlpROILayout.Controls.Add(this.tableLayoutPanel17, 1, 5);
-            this.tlpROILayout.Location = new System.Drawing.Point(5, 282);
+            this.tlpROILayout.Location = new System.Drawing.Point(5, 315);
             this.tlpROILayout.Margin = new System.Windows.Forms.Padding(0);
             this.tlpROILayout.Name = "tlpROILayout";
             this.tlpROILayout.RowCount = 7;
@@ -557,23 +565,23 @@
             this.tlpThresholdLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlpThresholdLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tlpThresholdLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpThresholdLayout.Controls.Add(this.tableLayoutPanel7, 1, 2);
             this.tlpThresholdLayout.Controls.Add(this.pnlTitleThresholdContainer, 0, 0);
             this.tlpThresholdLayout.Controls.Add(this.tlpSubTitleGrayLevel, 1, 1);
-            this.tlpThresholdLayout.Controls.Add(this.tlpGrayLevelCoating, 1, 2);
-            this.tlpThresholdLayout.Controls.Add(this.tlpGrayLevelNonCoating, 1, 3);
+            this.tlpThresholdLayout.Controls.Add(this.tlpGrayLevelCoating, 1, 3);
+            this.tlpThresholdLayout.Controls.Add(this.tlpGrayLevelNonCoating, 1, 4);
             this.tlpThresholdLayout.Controls.Add(this.label6, 0, 2);
             this.tlpThresholdLayout.Location = new System.Drawing.Point(5, 100);
             this.tlpThresholdLayout.Margin = new System.Windows.Forms.Padding(20, 20, 0, 0);
             this.tlpThresholdLayout.Name = "tlpThresholdLayout";
-            this.tlpThresholdLayout.RowCount = 5;
+            this.tlpThresholdLayout.RowCount = 6;
+            this.tlpThresholdLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpThresholdLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpThresholdLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpThresholdLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpThresholdLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpThresholdLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpThresholdLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpThresholdLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpThresholdLayout.Size = new System.Drawing.Size(405, 171);
+            this.tlpThresholdLayout.Size = new System.Drawing.Size(405, 215);
             this.tlpThresholdLayout.TabIndex = 0;
             // 
             // pnlTitleThresholdContainer
@@ -608,7 +616,7 @@
             this.lblTitleThreshold.Name = "lblTitleThreshold";
             this.lblTitleThreshold.Size = new System.Drawing.Size(400, 33);
             this.lblTitleThreshold.TabIndex = 51;
-            this.lblTitleThreshold.Text = "Threshold";
+            this.lblTitleThreshold.Text = "Pixel";
             this.lblTitleThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tlpSubTitleGrayLevel
@@ -665,7 +673,7 @@
             this.tlpGrayLevelCoating.Controls.Add(this.lblCoatingThreshold, 0, 0);
             this.tlpGrayLevelCoating.Controls.Add(this.label2, 0, 0);
             this.tlpGrayLevelCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpGrayLevelCoating.Location = new System.Drawing.Point(100, 82);
+            this.tlpGrayLevelCoating.Location = new System.Drawing.Point(100, 122);
             this.tlpGrayLevelCoating.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.tlpGrayLevelCoating.Name = "tlpGrayLevelCoating";
             this.tlpGrayLevelCoating.RowCount = 1;
@@ -711,7 +719,7 @@
             this.tlpGrayLevelNonCoating.Controls.Add(this.lblNonCoatingThreshold, 0, 0);
             this.tlpGrayLevelNonCoating.Controls.Add(this.label22, 0, 0);
             this.tlpGrayLevelNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpGrayLevelNonCoating.Location = new System.Drawing.Point(100, 122);
+            this.tlpGrayLevelNonCoating.Location = new System.Drawing.Point(100, 162);
             this.tlpGrayLevelNonCoating.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.tlpGrayLevelNonCoating.Name = "tlpGrayLevelNonCoating";
             this.tlpGrayLevelNonCoating.RowCount = 1;
@@ -757,10 +765,10 @@
             this.label6.Location = new System.Drawing.Point(0, 82);
             this.label6.Margin = new System.Windows.Forms.Padding(0, 2, 2, 0);
             this.label6.Name = "label6";
-            this.tlpThresholdLayout.SetRowSpan(this.label6, 2);
-            this.label6.Size = new System.Drawing.Size(98, 78);
+            this.tlpThresholdLayout.SetRowSpan(this.label6, 3);
+            this.label6.Size = new System.Drawing.Size(98, 118);
             this.label6.TabIndex = 54;
-            this.label6.Text = "Gray\r\nLevel";
+            this.label6.Text = "Peak\r\nThreshold";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tlpSpecificationLayout
@@ -769,21 +777,23 @@
             this.tlpSpecificationLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlpSpecificationLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tlpSpecificationLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel4, 1, 7);
-            this.tlpSpecificationLayout.Controls.Add(this.label3, 0, 6);
-            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel2, 1, 5);
+            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel6, 1, 4);
+            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel4, 1, 8);
+            this.tlpSpecificationLayout.Controls.Add(this.label3, 0, 7);
+            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel2, 1, 6);
             this.tlpSpecificationLayout.Controls.Add(this.lblSideTitleMismatch, 0, 2);
             this.tlpSpecificationLayout.Controls.Add(this.tlpSubTitleMismatch, 1, 1);
             this.tlpSpecificationLayout.Controls.Add(this.pnlTitleSpecificationContainer, 0, 0);
             this.tlpSpecificationLayout.Controls.Add(this.lblSideTitleCoating, 0, 4);
             this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel9, 1, 2);
             this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel10, 1, 3);
-            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel11, 1, 4);
-            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel12, 1, 6);
+            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel11, 1, 5);
+            this.tlpSpecificationLayout.Controls.Add(this.tableLayoutPanel12, 1, 7);
             this.tlpSpecificationLayout.Location = new System.Drawing.Point(415, 100);
             this.tlpSpecificationLayout.Margin = new System.Windows.Forms.Padding(20, 20, 0, 0);
             this.tlpSpecificationLayout.Name = "tlpSpecificationLayout";
-            this.tlpSpecificationLayout.RowCount = 9;
+            this.tlpSpecificationLayout.RowCount = 10;
+            this.tlpSpecificationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpSpecificationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpSpecificationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpSpecificationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
@@ -793,9 +803,54 @@
             this.tlpSpecificationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpSpecificationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tlpSpecificationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSpecificationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpSpecificationLayout.Size = new System.Drawing.Size(411, 332);
+            this.tlpSpecificationLayout.Size = new System.Drawing.Size(411, 370);
             this.tlpSpecificationLayout.TabIndex = 0;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel6.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.lblCoatingMinimumLength, 1, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(100, 162);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(300, 38);
+            this.tableLayoutPanel6.TabIndex = 65;
+            // 
+            // label5
+            // 
+            this.label5.AutoEllipsis = true;
+            this.label5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label5.Location = new System.Drawing.Point(0, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(180, 38);
+            this.label5.TabIndex = 57;
+            this.label5.Text = "Minimum Length (mm)";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblCoatingMinimumLength
+            // 
+            this.lblCoatingMinimumLength.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.lblCoatingMinimumLength.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblCoatingMinimumLength.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCoatingMinimumLength.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblCoatingMinimumLength.Location = new System.Drawing.Point(180, 0);
+            this.lblCoatingMinimumLength.Margin = new System.Windows.Forms.Padding(0);
+            this.lblCoatingMinimumLength.Name = "lblCoatingMinimumLength";
+            this.lblCoatingMinimumLength.Size = new System.Drawing.Size(120, 38);
+            this.lblCoatingMinimumLength.TabIndex = 57;
+            this.lblCoatingMinimumLength.Text = "0.0";
+            this.lblCoatingMinimumLength.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblCoatingMinimumLength.Click += new System.EventHandler(this.lblCoatingMinimumLength_Click);
             // 
             // tableLayoutPanel4
             // 
@@ -805,7 +860,7 @@
             this.tableLayoutPanel4.Controls.Add(this.label8, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.lblNonCoatingMaximumWidth, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(100, 282);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(100, 322);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
@@ -840,6 +895,7 @@
             this.lblNonCoatingMaximumWidth.TabIndex = 57;
             this.lblNonCoatingMaximumWidth.Text = "0.0";
             this.lblNonCoatingMaximumWidth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNonCoatingMaximumWidth.Click += new System.EventHandler(this.lblNonCoatingMaximumWidth_Click);
             // 
             // label3
             // 
@@ -847,7 +903,7 @@
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label3.Location = new System.Drawing.Point(0, 242);
+            this.label3.Location = new System.Drawing.Point(0, 282);
             this.label3.Margin = new System.Windows.Forms.Padding(0, 2, 2, 0);
             this.label3.Name = "label3";
             this.tlpSpecificationLayout.SetRowSpan(this.label3, 2);
@@ -864,7 +920,7 @@
             this.tableLayoutPanel2.Controls.Add(this.label1002, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblCoatingMaximumWidth, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(100, 202);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(100, 242);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
@@ -899,6 +955,7 @@
             this.lblCoatingMaximumWidth.TabIndex = 57;
             this.lblCoatingMaximumWidth.Text = "0.0";
             this.lblCoatingMaximumWidth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblCoatingMaximumWidth.Click += new System.EventHandler(this.lblCoatingMaximumWidth_Click);
             // 
             // lblSideTitleMismatch
             // 
@@ -1004,8 +1061,8 @@
             this.lblSideTitleCoating.Location = new System.Drawing.Point(0, 162);
             this.lblSideTitleCoating.Margin = new System.Windows.Forms.Padding(0, 2, 2, 0);
             this.lblSideTitleCoating.Name = "lblSideTitleCoating";
-            this.tlpSpecificationLayout.SetRowSpan(this.lblSideTitleCoating, 2);
-            this.lblSideTitleCoating.Size = new System.Drawing.Size(98, 78);
+            this.tlpSpecificationLayout.SetRowSpan(this.lblSideTitleCoating, 3);
+            this.lblSideTitleCoating.Size = new System.Drawing.Size(98, 118);
             this.lblSideTitleCoating.TabIndex = 55;
             this.lblSideTitleCoating.Text = "Coating";
             this.lblSideTitleCoating.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1106,7 +1163,7 @@
             this.tableLayoutPanel11.Controls.Add(this.label1001, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.lblCoatingMinimumWidth, 1, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(100, 162);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(100, 202);
             this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
@@ -1142,6 +1199,7 @@
             this.lblCoatingMinimumWidth.TabIndex = 57;
             this.lblCoatingMinimumWidth.Text = "0.0";
             this.lblCoatingMinimumWidth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblCoatingMinimumWidth.Click += new System.EventHandler(this.lblCoatingMinimumWidth_Click);
             // 
             // tableLayoutPanel12
             // 
@@ -1151,7 +1209,7 @@
             this.tableLayoutPanel12.Controls.Add(this.label37, 0, 0);
             this.tableLayoutPanel12.Controls.Add(this.lblNonCoatingMinimumWidth, 1, 0);
             this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel12.Location = new System.Drawing.Point(100, 242);
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(100, 282);
             this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 1;
@@ -1186,6 +1244,7 @@
             this.lblNonCoatingMinimumWidth.TabIndex = 57;
             this.lblNonCoatingMinimumWidth.Text = "0.0";
             this.lblNonCoatingMinimumWidth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNonCoatingMinimumWidth.Click += new System.EventHandler(this.lblNonCoatingMinimumWidth_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -1215,6 +1274,52 @@
             this.lblParameter.TabIndex = 1;
             this.lblParameter.Text = "Parameter";
             this.lblParameter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel7.Controls.Add(this.lblROIThreshold, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label17, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(100, 82);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(300, 38);
+            this.tableLayoutPanel7.TabIndex = 61;
+            // 
+            // lblROIThreshold
+            // 
+            this.lblROIThreshold.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.lblROIThreshold.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblROIThreshold.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblROIThreshold.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblROIThreshold.Location = new System.Drawing.Point(150, 0);
+            this.lblROIThreshold.Margin = new System.Windows.Forms.Padding(0);
+            this.lblROIThreshold.Name = "lblROIThreshold";
+            this.lblROIThreshold.Size = new System.Drawing.Size(150, 38);
+            this.lblROIThreshold.TabIndex = 58;
+            this.lblROIThreshold.Text = "0";
+            this.lblROIThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblROIThreshold.Click += new System.EventHandler(this.lblROIThreshold_Click);
+            // 
+            // label17
+            // 
+            this.label17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label17.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label17.Location = new System.Drawing.Point(0, 0);
+            this.label17.Margin = new System.Windows.Forms.Padding(0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(150, 38);
+            this.label17.TabIndex = 57;
+            this.label17.Text = "ROI";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // DistanceControl
             // 
@@ -1247,6 +1352,7 @@
             this.tlpGrayLevelCoating.ResumeLayout(false);
             this.tlpGrayLevelNonCoating.ResumeLayout(false);
             this.tlpSpecificationLayout.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tlpSubTitleMismatch.ResumeLayout(false);
@@ -1257,6 +1363,7 @@
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel7.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1335,5 +1442,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
         private System.Windows.Forms.Label label74;
         private System.Windows.Forms.Label lblROIMarginBottom;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblCoatingMinimumLength;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.Label lblROIThreshold;
+        private System.Windows.Forms.Label label17;
     }
 }

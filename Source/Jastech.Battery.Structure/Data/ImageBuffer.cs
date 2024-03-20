@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jastech.Battery.Winform.Core
+namespace Jastech.Battery.Structure.Data
 {
     public class ImageBuffer
     {
@@ -13,6 +13,12 @@ namespace Jastech.Battery.Winform.Core
         public int Index { get; set; }
 
         public Mat Image { get; set; } = null;
+
+        public byte[] ImageData { get; set; } = null;
+
+        public int Width { get; set; }
+
+        public int Height { get; set; }
         #endregion
 
         #region 메서드

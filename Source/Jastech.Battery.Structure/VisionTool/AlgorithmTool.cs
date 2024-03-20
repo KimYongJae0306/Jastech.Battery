@@ -15,33 +15,17 @@ using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Xml.Schema;
 using Emgu.CV.BgSegm;
+using System.Data;
 
 namespace Jastech.Battery.Structure.VisionTool
 {
     public class AlgorithmTool
     {
         #region 2024.03.11 구조 변경 중
-        // 아마 고정
+        // 상수 어디에 넣을지
         public const double CalibrationX = 0.0423; // CIS 사용 시 X,Y Scale 확인할 것
         public const double CalibrationY = 0.0423; // CIS 사용 시 X,Y Scale 확인할 것
         public const double pixelLength1mm = 1.0 / CalibrationX;
-
-        // 아마 Teaching, Model
-        public int CoatingMinimumLength = 10;
-        public int CoatingAreaMaximumCount = 5;
-        public sbyte ContrastOffsetBrighter = 20;
-        public sbyte ContrastOffsetDarker = -20;
-        public byte CoatingExistanceThreshold = 179;
-        public byte CoatingExistanceCriteria = 70;
-        public byte CoatingEdgeConstrastThreshold = 39; // Para.CoatEdgeLv[m_ModuleNo];
-        public byte BackGroundGrayLevelCriteria = 100;
-
-        public double CoatingAreaInflationScale = 40;       // NonCoating 영역 탐색 시 CoatingArea 확장에 사용됨
-        public double NonCoatingMinimumWidthScale = 3;       // NonCoating 영역 탐색 시 최소 너비 계산에 사용됨
-        public double NonCoatingMaximumWidthScale = 100;       // NonCoating 영역 탐색 시 최대 너비 계산에 사용됨
-
-        public int WidthSamplingScale = 300;
-        public int HeightSamplingScale = 200;
         #endregion
 
         public void Inspect()
@@ -89,191 +73,125 @@ namespace Jastech.Battery.Structure.VisionTool
             int tapePosY2 = param.ImageHeight;
         }
 
-        [Obsolete("2024.03.18 코드 리뷰 간 불필요 판단, FindCoating/NonCoatingAreas() 통합 후 제거 예정")]
-        public bool FindVerticalCoatingAreaEdges(ref DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
+        public double GetHorizontalMeanSampledLevel(DistanceParam distanceParam,  ImageBuffer image, int rowStartIndex, int horizontalOffset)
         {
-            if (distanceResult == null || imageData.Length == 0)
-                return false;
+            byte[] imageData = image.ImageData;
+            int imageWidth = image.Width;
+            int imageHeight = image.Height;
 
-            // 스캔 시작, 끝 지점의 기준 레벨값을 얻는다.
-            byte startReferenceGrayLevel = (byte)GetMeanSampledLevel(imageData, imageWidth, imageHeight, 0, distanceResult.ScanStartX);
-            byte endReferenceGrayLevel = (byte)GetMeanSampledLevel(imageData, imageWidth, imageHeight, 0, distanceResult.ScanEndX);
+            int heightSamplingScale = distanceParam.HeightSamplingScale;
 
-            // 기준 레벨값과 다른 값이 연속적으로 나타나는 지점을 찾는다.
-            int coatingStartLocation = FindContinuousContrastLocation(distanceResult, startReferenceGrayLevel, imageData, imageWidth, imageHeight, pixelLength1mm, true);
-            int coatingEndLocation = FindContinuousContrastLocation(distanceResult, endReferenceGrayLevel, imageData, imageWidth, imageHeight, pixelLength1mm, false);
-
-            distanceResult.ScanStartX = coatingStartLocation > 0 ? coatingStartLocation : distanceResult.ScanStartX;
-            distanceResult.ScanEndX = coatingStartLocation > 0 ? coatingEndLocation : distanceResult.ScanEndX;
-
-            return distanceResult.IsValidScanWidth();
-        }
-
-        [Obsolete("2024.03.18 코드 리뷰 간 불필요 판단, FindCoating/NonCoatingAreas() 통합 후 제거 예정")]
-        private int FindContinuousContrastLocation(DistanceInspResult distanceResult, byte referenceGrayLevel, byte[] imageData, int imageWidth, int imageHeight, double searchLength, bool searchForward)
-        {
-            bool isBackGroundWhite = referenceGrayLevel >= BackGroundGrayLevelCriteria;
-            var searchRange = searchForward ?
-                Enumerable.Range(distanceResult.ScanStartX, distanceResult.ScanEndX - distanceResult.ScanStartX) :
-                Enumerable.Range(distanceResult.ScanStartX, distanceResult.ScanEndX - distanceResult.ScanStartX).Reverse();
-
-            // Pixel이 연속된 지점 찾기
-            int pixelStreak = 0, continousLocation = 0;
-            foreach (int x in searchRange)
+            int sum = 0;
+            for (int rowIndex = rowStartIndex; rowIndex < imageHeight; rowIndex+= heightSamplingScale)
             {
-                byte meanGrayLevel = (byte)GetMeanSampledLevel(imageData, imageWidth, imageHeight, 0, x);
-                bool hasContrast =
-                    (isBackGroundWhite && meanGrayLevel <= referenceGrayLevel + ContrastOffsetDarker) ||
-                    (!isBackGroundWhite && meanGrayLevel >= referenceGrayLevel + ContrastOffsetBrighter);
-
-                if (hasContrast)        // 기준레벨값과 비교하여 대비가 있으면, 연속된 픽셀 개수를 증가시킨다.
-                {
-                    if (pixelStreak == 0)
-                        continousLocation = x;
-
-                    pixelStreak++;
-                    if (pixelStreak >= searchLength)
-                        return continousLocation;
-                }
-                else
-                    pixelStreak = 0;
+                var currentRow = rowIndex * imageWidth;
+                sum += imageData[currentRow + horizontalOffset];
             }
 
-            return -1;
-        }
-
-        public double GetMeanSampledLevel(byte[] imageData, int imageWidth, int imageHeight, int rowStartIndex, int horizontalOffset)
-        {
-            int sum = 0;
-            int samplingCount = imageHeight / HeightSamplingScale;
-
-            for (int row = rowStartIndex / HeightSamplingScale; row < samplingCount; row++)
-                sum += imageData[(row * HeightSamplingScale * imageWidth) + horizontalOffset];
-
+            int samplingCount = imageHeight / heightSamplingScale;
             return sum / Math.Max(1, samplingCount);
         }
 
-        private double GetMeanSampledLevel(byte[] imageData, int imageWidth, int columnStartIndex, int verticalOffset)
+        private double GetVerticalMeanSampledLevel(DistanceParam distanceParam, ImageBuffer image, int columnStartIndex, int verticalOffset)
         {
+            byte[] imageData = image.ImageData;
+            int imageWidth = image.Width;
+            int imageHeight = image.Height;
+
+            int widthSamplingScale = distanceParam.WidthSamplingScale;
+
             int sum = 0;
-            int samplingCount = imageWidth / WidthSamplingScale;
+            for (int columnIndex = columnStartIndex; columnIndex < imageWidth; columnIndex += widthSamplingScale)
+            {
+                var currentRow = verticalOffset * imageWidth;
+                sum += imageData[currentRow + columnIndex];
+            }
 
-            for (int column = columnStartIndex / WidthSamplingScale; column < samplingCount; column++)
-                sum += imageData[(verticalOffset * imageWidth) + (column * WidthSamplingScale)];
-
+            int samplingCount = imageWidth / widthSamplingScale;
             return sum / Math.Max(1, samplingCount);
         }
 
-        [Obsolete("2024.03.18 코드 리뷰 간 불필요 판단, NonCoatingAreas()과 통합 예정")]
-        public bool FindCoatingAreas(ref DistanceInspResult distanceResult, AppsInspModel model, byte[] imageData, int imageWidth, int imageHeight, int minimumFoilLength)
+        public DistanceInspResult ExecuteDistanceInspection(ImageBuffer imageBuffer, DistanceParam parameters, Rectangle searchROI)
         {
-            if (distanceResult == null || imageData.Length == 0)
-                return false;
+            if (imageBuffer == null || imageBuffer.ImageData.Length == 0)
+                return null;
 
-            int scanStartX = distanceResult.ScanStartX;
-            int scanEndX = distanceResult.ScanEndX;
-            int scanStartY = distanceResult.ScanStartY;
-            int scanEndY = distanceResult.ScanEndY;
-            int scanWidth = scanEndX - scanStartX;
-            int scanHeight = scanEndY - scanStartY;
+            // 수직방향 샘플링 결과를 저장한다.
+            var verticalSamplingResult = new List<byte>();
+            for (int y = searchROI.Top; y < searchROI.Bottom; y++)
+                verticalSamplingResult.Add((byte)GetVerticalMeanSampledLevel(parameters, imageBuffer, searchROI.Top, y));
 
-            if (distanceResult.IsValidScanWidth() == false || scanWidth > imageWidth ||
-                distanceResult.IsValidScanHeight() == false || scanHeight > imageHeight)
-                return false;
+            // 수직방향 순간 변화량 계산, 피크 추출
+            var verticalLevelDifferences = MathHelper.GetDerivedArray(verticalSamplingResult.ToArray(), 2).ToList();
+            var verticalPeaks = FindPeakPairs(verticalLevelDifferences, parameters.ROIThreshold, pixelLength1mm * parameters.CoatingMinimumLength, searchROI.Height);
 
-            // 수직 방향 샘플링을 수행하고 결과에 저장한다.
-            var verticalSamplingResults = distanceResult.VerticalSamplingResults;
-            verticalSamplingResults.Clear();
-            for (int y = scanStartY; y < scanEndY; y++)
-                verticalSamplingResults.Add((byte)GetMeanSampledLevel(imageData, imageWidth, 0, y));
-
-            byte foilEdgeConstrast = (byte)(verticalSamplingResults.Max() - verticalSamplingResults.Min());
-            bool isSlitting = model.ProcessType == ProcessType.Slitting;
-
-            var coatingAreas = distanceResult.CoatingAreas;
-            coatingAreas.Clear();
-            // Edge 대비가 기준치 이하 일때, 혹은 Slitting공정 Pouch 모델일 때 Foil 영역은 하나이다. 
-            if (foilEdgeConstrast < CoatingEdgeConstrastThreshold || isSlitting)
-                coatingAreas.Add(new Rectangle(scanStartX, scanStartY, scanWidth, scanHeight));
-            // 여러 코팅 영역이 존재할 것으로 판단하고 영역 탐색을 시작한다.
+            // 영역 저장
+            var searchAreas = new List<Rectangle>();
+            if (verticalPeaks.Count == 0)
+                searchAreas.Add(searchROI);
             else
             {
-                byte foilThreshold = (byte)((verticalSamplingResults.Max() + verticalSamplingResults.Min()) / 2);
-                bool foundTop = false, foundBottom = false;
-                int top = -1, bottom = -1;
-
-                for (int index = 0; index < verticalSamplingResults.Count; index++)
+                foreach ((int startY, int endY) in verticalPeaks)
                 {
-                    bool isFoilArea = verticalSamplingResults[index] > foilThreshold;
-
-                    if (foundTop && foundBottom)
+                    var searchArea = new Rectangle
                     {
-                        bool isSufficientLength = bottom - top >= pixelLength1mm * minimumFoilLength;
-                        bool isBorder = isFoilArea == false || index + 1 == verticalSamplingResults.Count;
-                        // 크기를 만족하면서 영역이 끝나는 지점에서 영역을 분할한다
-                        if (isSufficientLength && isBorder)
-                        {
-                            coatingAreas.Add(new Rectangle(scanStartX, top, scanWidth, bottom - top));
-                            foundTop = foundBottom = false;
-                        }
-                    }
-
-                    if (top == -1 || isFoilArea == false)
-                    {
-                        top = scanStartY + index;
-                        foundTop = true;
-                    }
-
-                    if (foundTop == true && isFoilArea == true)
-                    {
-                        bottom = scanStartY + index;
-                        foundBottom = true;
-                    }
+                        X = searchROI.Left,
+                        Y = searchROI.Top + startY,
+                        Width = searchROI.Width,
+                        Height = endY - startY,
+                    };
+                    searchAreas.Add(searchArea);
                 }
+
+                // 구분된 영역에 대해 NG 처리를 하기 위해 검사 영역을 제외한 영역을 탐색
+                var additionalAreas = new List<Rectangle>();
+                Rectangle previousArea = new Rectangle(searchROI.Left, searchROI.Top, searchROI.Width, 0);
+                Rectangle currentArea;
+                for (int index = 0; index <= searchAreas.Count; index++)
+                {
+                    if (index != searchAreas.Count)
+                        currentArea = searchAreas[index];
+                    else
+                        currentArea = new Rectangle(searchROI.Left, searchROI.Bottom, searchROI.Width, 0);
+
+                    var additionalArea = new Rectangle(currentArea.Left, previousArea.Bottom, currentArea.Width, currentArea.Top - previousArea.Bottom);
+                    previousArea = currentArea;
+
+                    additionalAreas.Add(additionalArea);
+                }
+                searchAreas.AddRange(additionalAreas.Where(rect => rect.Height > 1));
             }
 
-            // Foil 영역이 없거나 너무 많으면 실패 처리한다.
-            if (coatingAreas.Count == 0 || coatingAreas.Count >= CoatingAreaMaximumCount)
-                return false; // Define.RESULT_ETC;
-
-            // 제일 큰 영역은 이후 처리 속도를 위해 미리 저장한다.
-            distanceResult.UpdateLargestCoatingArea();
-
-            return ShapeHelper.CheckValidRectangle(distanceResult.LargestCoatingArea, distanceResult.LargestCoatingArea.Width, distanceResult.LargestCoatingArea.Height);
-        }
-
-        public bool FindNonCoatingAreas(ref DistanceInspResult distanceResult, byte[] imageData, int imageWidth, int imageHeight)
-        {
-            if (distanceResult == null || imageData.Length == 0)
-                return false;
-
-            var nonCoatingAreas = distanceResult.NonCoatingAreas;
-            nonCoatingAreas.Clear();
-
-            foreach(Rectangle coatingArea in distanceResult.CoatingAreas)
+            List<Rectangle> coatingAreas = new List<Rectangle>();
+            List<Rectangle> nonCoatingAreas = new List<Rectangle>();
+            List<byte> horizontalSamplingResult = new List<byte>();
+            List<byte> horizontalLevelDifferences = new List<byte>();
+            foreach (Rectangle searchArea in searchAreas)
             {
-                Rectangle searchArea = new Rectangle(coatingArea.Location, coatingArea.Size);
-                searchArea.Inflate((int)(pixelLength1mm * CoatingAreaInflationScale), 0);
-                searchArea = ShapeHelper.GetValidRectangle(searchArea, imageWidth, imageHeight);
-
                 // 수평방향 샘플링 결과를 저장한다.
-                var horizontalSamplingResult = distanceResult.HorizontalSamplingResults;
-                horizontalSamplingResult.Clear();
+                horizontalSamplingResult = new List<byte>();
                 for (int x = searchArea.Left; x < searchArea.Right; x++)
-                    horizontalSamplingResult.Add((byte)GetMeanSampledLevel(imageData, imageWidth, imageHeight, searchArea.Top, x));
+                    horizontalSamplingResult.Add((byte)GetHorizontalMeanSampledLevel(parameters, imageBuffer, searchArea.Left, x));
 
                 // 그래프 출력을 위해 미분 데이터를 별도로 저장한다.     // TODO : 다중 영역에 대해서 List로 관리
-                var levelDifferences = distanceResult.HorizontalDifferentials;
-                levelDifferences.Clear();
+                horizontalLevelDifferences = MathHelper.GetDerivedArray(horizontalSamplingResult.ToArray(), 1).ToList();
 
-                levelDifferences.AddRange(MathHelper.GetDerivedArray(horizontalSamplingResult.ToArray(), 1));
+                // 미분 데이터에서 피크 쌍을 추출하여 CoatingArea를 저장한다.
+                var coatingPeaks = FindPeakPairs(horizontalLevelDifferences, parameters.CoatingThreshold, pixelLength1mm * parameters.CoatingMinimumWidth, pixelLength1mm * parameters.CoatingMaximumWidth);
+                foreach ((int startX, int endX) in coatingPeaks)
+                {
+                    var coatingArea = new Rectangle
+                    {
+                        X = searchArea.Left + startX,
+                        Y = searchArea.Top,
+                        Width = endX - startX,
+                        Height = searchArea.Height
+                    };
+                    coatingAreas.Add(coatingArea);
+                }
 
-                // 미분 데이터에서 피크 쌍을 추출한다.
-                var nonCoatingPeaks = FindPeakPairs(levelDifferences, pixelLength1mm * NonCoatingMinimumWidthScale, pixelLength1mm * NonCoatingMaximumWidthScale);
-                if (nonCoatingPeaks.Count == 0)
-                    return false;
-
-                // 피크 쌍으로 ROI를 생성하여 추가한다.
+                // 미분 데이터에서 피크 쌍을 추출하여 NonCoatingArea를 저장한다.
+                var nonCoatingPeaks = FindPeakPairs(horizontalLevelDifferences, parameters.NonCoatingThreshold, pixelLength1mm * parameters.NonCoatingMinimumWidth, pixelLength1mm * parameters.NonCoatingMaximumWidth);
                 foreach ((int startX, int endX) in nonCoatingPeaks)
                 {
                     var nonCoatingArea = new Rectangle
@@ -287,30 +205,21 @@ namespace Jastech.Battery.Structure.VisionTool
                 }
             }
 
-            if (false)  // 만약 코팅면 사이 빈 공간을 활용할거라면               bool useBlankArea
+            // TODO Lane 나누기
+
+
+            return new DistanceInspResult
             {
-                if (nonCoatingAreas.Count != 0 && distanceResult.CoatingAreas.Count >= 2)
-                {
-                    var additionalNonCoatingAreas = new List<Rectangle>();
-                    int startX = nonCoatingAreas.Min(rect => rect.Left);
-                    int endX = nonCoatingAreas.Max(rect => rect.Right);
-
-                    for (int previousIndex = 0, nextIndex = 1; nextIndex < distanceResult.CoatingAreas.Count; nextIndex++)
-                    {
-                        var previousRectangle = distanceResult.CoatingAreas[previousIndex];
-                        var nextRectangle = distanceResult.CoatingAreas[nextIndex];
-
-                        var blankArea = new Rectangle(startX, previousRectangle.Bottom, endX - startX, nextRectangle.Top - previousRectangle.Bottom);
-                        additionalNonCoatingAreas.Add(blankArea);
-                    }
-                    nonCoatingAreas.AddRange(additionalNonCoatingAreas);
-                }
-            }
-
-            return true;
+                CoatingAreas = coatingAreas,
+                NonCoatingAreas = nonCoatingAreas,
+                VerticalDifferentials = verticalLevelDifferences,
+                VerticalSamplingResults = verticalSamplingResult,
+                HorizontalDifferentials = horizontalLevelDifferences,
+                HorizontalSamplingResults = horizontalSamplingResult,
+            };
         }
 
-        public List<(int startPos, int endPos)> FindPeakPairs(List<byte> levelDifferences, double minimumWidth, double maximumWidth)
+        public List<(int startPos, int endPos)> FindPeakPairs(List<byte> levelDifferences, int levelThreshold, double minimumSize, double maximumSize)
         {
             var positionIndices = new List<(int, int)>();
 
@@ -318,11 +227,11 @@ namespace Jastech.Battery.Structure.VisionTool
                 return positionIndices;
 
             // 최대 피크의 절반 지점에서 최대 50개 만큼 샘플링한다.
-            var halfOfMaxDifference = levelDifferences.Max(value => (double)value) / 2;
+            //var halfOfMaxDifference = Math.Max(levelThreshold, levelDifferences.Max(value => (double)value) / 2);
 
             var mostIntensePeaks = levelDifferences
                 .Select((value, position) => new { value, position })
-                .Where(peak => peak.value > halfOfMaxDifference)
+                .Where(peak => peak.value > levelThreshold)
                 .OrderBy(peak => peak.position)
                 .ThenByDescending(peak => peak.value)
                 .ToArray();
@@ -336,10 +245,10 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 for (int endPos = startPos + 1; endPos < mostIntensePeaks.Length; endPos++)
                 {
-                    int width = mostIntensePeaks[endPos].position - mostIntensePeaks[startPos].position;
+                    int size = mostIntensePeaks[endPos].position - mostIntensePeaks[startPos].position;
 
                     // 피크 쌍이 너비 조건을 충족하면 start, end 위치를 추가한다
-                    if (width >= minimumWidth && width <= maximumWidth)
+                    if (size >= minimumSize && size <= maximumSize)
                     {
                         positionIndices.Add((mostIntensePeaks[startPos].position, mostIntensePeaks[endPos].position));
 

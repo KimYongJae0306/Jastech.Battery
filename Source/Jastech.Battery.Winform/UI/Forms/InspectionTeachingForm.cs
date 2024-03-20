@@ -34,12 +34,6 @@ namespace Jastech.Battery.Winform.UI.Forms
         private Bitmap _grayImage = null;
 
         private Bitmap _resultImage = null;
-
-        private byte[] _imageData = null;
-
-        private int _imageWidth = 0;
-
-        private int _imageHeight = 0;
         #endregion
 
         #region 속성
@@ -152,17 +146,6 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                //OrgMat?.Dispose();
-                //OrgMat = null;
-
-                //OrgMat = new Mat(dlg.FileName, ImreadModes.Grayscale);
-
-                //if (OrgMat != null)
-                //{
-                //    var bmp = OrgMat.ToBitmap();
-                //    DrawBoxControl.SetImage(bmp);
-                //    DrawBoxControl.FitZoom();
-                //}
                 LoadImage(dlg.FileNames);
                 _orgBmp = new Bitmap(dlg.FileName, useIcm: false);
             }
@@ -292,60 +275,35 @@ namespace Jastech.Battery.Winform.UI.Forms
             SliceInspResult sliceInspResult = new SliceInspResult();
             AlgorithmTool algorithmTool = new AlgorithmTool();
 
-            _imageWidth = _orgBmp.Width;
-            _imageHeight = _orgBmp.Height;
-                                                                                                                                    
-            _imageData?.Initialize();
 
             WriteTactTime(stopwatch, "Before converting image");
             _grayImage = ImageHelper.ConvertRGB24ToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요
             WriteTactTime(stopwatch, "After converting image to grayscale");
-            _imageData = ImageHelper.GetByteArrayFromBitmap(_grayImage);
+            ImageBuffer imageBuffer = new ImageBuffer();
+            imageBuffer.ImageData = ImageHelper.GetByteArrayFromBitmap(_grayImage);
+            imageBuffer.Index = 999999;
+            imageBuffer.Width = _orgBmp.Width;
+            imageBuffer.Height = _orgBmp.Height;
             WriteTactTime(stopwatch, "After converting image to byte array");
-
-            DistanceInspResult distanceResult = new DistanceInspResult      // 아래 Rectangle 사용후 제거, 결과값만 넣을 것 ScanStart, End 다 삭제
-            {
-                ScanStartX = distanceParam.ROIMarginLeft,
-                ScanEndX = _imageWidth - distanceParam.ROIMarginRight,
-                ScanStartY = distanceParam.ROIMarginTop,
-                ScanEndY = _imageHeight - distanceParam.ROIMarginBottom,
-            };
 
             Rectangle searchROI = new Rectangle
             {
                 X = distanceParam.ROIMarginLeft,
                 Y = distanceParam.ROIMarginLeft,
-                Width = _imageWidth - distanceParam.ROIMarginRight,
-                Height = _imageHeight - distanceParam.ROIMarginBottom,
+                Width = imageBuffer.Width - distanceParam.ROIMarginRight,
+                Height = imageBuffer.Height - distanceParam.ROIMarginBottom,
             };
 
             WriteTactTime(stopwatch, "Initializing finished");
 
-            // Image 객체 ImageBuffer로 통합
-            sliceInspResult.CoatingVerticalEdgesFound = algorithmTool.FindVerticalCoatingAreaEdges(ref distanceResult, _imageData, _imageWidth, _imageHeight);
+            DistanceInspResult distanceInspResult = algorithmTool.ExecuteDistanceInspection(imageBuffer, distanceParam, searchROI);
+            sliceInspResult.DistanceResult = distanceInspResult;
 
-            if (sliceInspResult.CoatingVerticalEdgesFound == false)
-                return;
-            else
-                sliceInspResult.DistanceResult = distanceResult;
-
-            WriteTactTime(stopwatch, "Coating vertical edges were found");
-
-            sliceInspResult.CoatingAreasFound = algorithmTool.FindCoatingAreas(ref distanceResult, model, _imageData, _imageWidth, _imageHeight, distanceParam.CoatingMinimumSize);
-            if (sliceInspResult.CoatingAreasFound == false)
-                return;
-            else if (distanceResult.CoatingAreas.Count / model.LaneCount > 1)
-                return;
-
-            WriteTactTime(stopwatch, "Coating Areas were found");
-
-            algorithmTool.FindNonCoatingAreas(ref distanceResult, _imageData, _imageWidth, _imageHeight);
-
-            WriteTactTime(stopwatch, "Non Coating Areas were found");
+            WriteTactTime(stopwatch, "DistanceInspecitonFinished");
 
             // 추가 검증용 코드
-            PixelValueGraphControl.SetData(distanceResult.HorizontalDifferentials.ToArray());
-            ShowTestResults(distanceResult);
+            PixelValueGraphControl.SetData(distanceInspResult.VerticalDifferentials.ToArray());
+            //ShowTestResults(distanceInspResult);
 
             WriteTactTime(stopwatch, "=================================Test Finished==============================");
         }
@@ -355,21 +313,23 @@ namespace Jastech.Battery.Winform.UI.Forms
             if (_orgBmp == null)
                 return;
 
-            Pen coatingWidthPen = new Pen(Color.LawnGreen, _imageWidth/100)
+            int imageWidth = _orgBmp.Width;
+
+            Pen coatingWidthPen = new Pen(Color.LawnGreen, imageWidth/100)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen nonCoatingWidthPen = new Pen(Color.Crimson, _imageWidth / 100)
+            Pen nonCoatingWidthPen = new Pen(Color.Crimson, imageWidth / 100)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen coatingROIpen = new Pen(Color.Yellow, _imageWidth / 100) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
-            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, _imageWidth / 100) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
-            Bitmap cloneBitmap = ImageHelper.ConvertGrayscaleToRGB24((Bitmap)_orgBmp.Clone());
+            Pen coatingROIpen = new Pen(Color.Yellow, imageWidth / 100) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, imageWidth / 100) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            Bitmap convertedBitmap = ImageHelper.ConvertGrayscaleToRGB24(_orgBmp);
             {
-                using (Graphics g = Graphics.FromImage(cloneBitmap))
+                using (Graphics g = Graphics.FromImage(convertedBitmap))
                 {
                     foreach (Rectangle coatingArea in distanceResult.CoatingAreas)
                     {
@@ -385,7 +345,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
                     g.Save();
                 }
-                ImageViewerControl.SetInternalImage((Bitmap)cloneBitmap.Clone());
+                ImageViewerControl.SetInternalImage((Bitmap)convertedBitmap);
 
                 //var tempDiag = new Form { Size = new Size(500, 500), StartPosition = FormStartPosition.CenterParent };
                 //tempDiag.Controls.Add(new PictureBox { Image = cloneBitmap, Dock = DockStyle.Fill, SizeMode = PictureBoxSizeMode.Zoom });

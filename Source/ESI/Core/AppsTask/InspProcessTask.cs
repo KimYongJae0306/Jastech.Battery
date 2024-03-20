@@ -2,7 +2,6 @@
 using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Structure.VisionTool;
 using Jastech.Battery.Winform;
-using Jastech.Battery.Winform.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

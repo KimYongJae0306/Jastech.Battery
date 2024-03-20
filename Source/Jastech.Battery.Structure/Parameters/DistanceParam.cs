@@ -13,6 +13,8 @@ namespace Jastech.Battery.Structure.Parameters
     public class DistanceParam
     {
         #region 속성
+        public int LaneCount { get; set; } = 0;
+
         public int ROIMarginLeft { get; set; } = 0;
 
         public int ROIMarginRight { get; set; } = 0;
@@ -22,17 +24,21 @@ namespace Jastech.Battery.Structure.Parameters
         public int ROIMarginBottom { get; set; } = 0;
 
 
-        public int CoatingThreshold { get; set; } = 40;
+        public int ROIThreshold { get; set; } = 20;
 
-        public int CoatingMinimumSize { get; set; } = 5;
+        public int CoatingThreshold { get; set; } = 20;
 
-        public int CoatingMaximumSize { get; set; } = 10;
+        public int NonCoatingThreshold { get; set; } = 20;
 
-        public int NonCoatingThreshold { get; set; } = 40;
+        public double CoatingMinimumLength { get; set; } = 400.0;
 
-        public int NonCoatingMinimumSize { get; set; } = 5;
+        public double CoatingMinimumWidth { get; set; } = 280.0;
 
-        public int NonCoatingMaximumSize { get; set; } = 10;
+        public double CoatingMaximumWidth { get; set; } = 320.0;
+
+        public double NonCoatingMinimumWidth { get; set; } = 5.0;
+
+        public double NonCoatingMaximumWidth { get; set; } = 50.0;
 
 
         public int WidthSamplingScale { get; set; } = 300;

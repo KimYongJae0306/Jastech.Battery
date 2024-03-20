@@ -1,6 +1,6 @@
 ﻿using Emgu.CV;
 using Jastech.Battery.Structure;
-using Jastech.Battery.Winform.Core;
+using Jastech.Battery.Structure.Data;
 using Jastech.Framework.Device.Cameras;
 using Jastech.Framework.Imaging.Helper;
 using System;

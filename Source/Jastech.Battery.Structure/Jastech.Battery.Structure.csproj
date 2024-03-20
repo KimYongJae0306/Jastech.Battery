@@ -65,9 +65,11 @@
     <Compile Include="Data\DefectDefine.cs" />
     <Compile Include="Data\DefectInfo.cs" />
     <Compile Include="Data\DistanceInspResult.cs" />
+    <Compile Include="Data\ImageBuffer.cs" />
     <Compile Include="Data\LineCameraData.cs" />
     <Compile Include="Data\SliceInspResult.cs" />
     <Compile Include="Data\MaterialInfo.cs" />
+    <Compile Include="Data\SurfaceInspResult.cs" />
     <Compile Include="Data\TeachingData.cs" />
     <Compile Include="Data\Unit.cs" />
     <Compile Include="ModelManager.cs" />
