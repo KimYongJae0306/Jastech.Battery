@@ -802,7 +802,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
         private void CheckCoatingArea()
         {
-
+            Rectangle originArea = new Rectangle();
         }
 
         private void CheckNonCoating(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight)
