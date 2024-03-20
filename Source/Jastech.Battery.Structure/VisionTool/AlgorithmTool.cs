@@ -481,15 +481,15 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 foreach (var item in blobList)
                 {
-                    int left = area.Left + item.Left * workRatioX;
-                    int right = area.Left + item.Right * workRatioX;
-                    int top = area.Top + item.Top * workRatioY;
-                    int bottom = area.Bottom + item.Bottom * workRatioY;
+                    int blobLeft = area.Left + item.Left * workRatioX;
+                    int blobRight = area.Left + item.Right * workRatioX;
+                    int blobTop = area.Top + item.Top * workRatioY;
+                    int blobBottom = area.Bottom + item.Bottom * workRatioY;
 
-                    findArea.X = left;
-                    findArea.Y = top;
-                    findArea.Width = right - left;
-                    findArea.Height = bottom - top;
+                    findArea.X = blobLeft;
+                    findArea.Y = blobTop;
+                    findArea.Width = blobRight - blobLeft;
+                    findArea.Height = blobBottom - blobTop;
 
                     findWidth = (findArea.Width + 1) * CalibrationX;
                     findHeight = (findArea.Height + 1) * CalibrationY;
@@ -622,15 +622,15 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 foreach (var item in blobList)
                 {
-                    int left = area.Left + item.Left * workRatioX;
-                    int right = area.Left + item.Right * workRatioX;
-                    int top = area.Top + item.Top * workRatioY;
-                    int bottom = area.Bottom + item.Bottom * workRatioY;
+                    int blobLeft = area.Left + item.Left * workRatioX;
+                    int blobRight = area.Left + item.Right * workRatioX;
+                    int blobTop = area.Top + item.Top * workRatioY;
+                    int blobBottom = area.Bottom + item.Bottom * workRatioY;
 
-                    findArea.X = left;
-                    findArea.Y = top;
-                    findArea.Width = right - left;
-                    findArea.Height = bottom - top;
+                    findArea.X = blobLeft;
+                    findArea.Y = blobTop;
+                    findArea.Width = blobRight - blobLeft;
+                    findArea.Height = blobBottom - blobTop;
 
                     findWidth = (findArea.Width + 1) * CalibrationX;
                     findHeight = (findArea.Height + 1) * CalibrationY;
@@ -669,9 +669,57 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 int threshold = 0;
 
+                int left = 0;
+                int right = 0;
+                int pinholeLeft = 0;
+                int pinholeRight = 0;
+
+                for (int direction = 0; direction < 2; direction++)
+                {
+                    if (direction == 0)
+                    {
+                        if (area.Left < 2)
+                            continue;
+
+                        left = area.Left - surfaceParam.PinHoleParam.MarginOut;
+                        right = area.Left + surfaceParam.PinHoleParam.MarginIn;
+
+                        if (left < 0)
+                            left = 0;
+
+                        if (right > imageWidth)
+                            right = imageWidth;
+
+                        pinholeLeft = area.Left;
+                        pinholeRight = right;
+                    }
+                    else
+                    {
+                        if (area.Right > imageWidth - 3)
+                            continue;
+
+                        left = area.Right - surfaceParam.PinHoleParam.MarginIn;
+                        right = area.Right + surfaceParam.PinHoleParam.MarginOut;
+
+                        if (left < 0)
+                            left = 0;
+
+                        if (right > imageWidth)
+                            right = imageWidth;
+
+                        pinholeLeft = left;
+                        pinholeRight = area.Right;
+                    }
+
+                    area.X = left;
+                    area.Width = right - left;
+
+                    area = ShapeHelper.GetValidRectangle(area, imageWidth, imageHeight);
+                }
+
                 if (surfaceParam.LineParam.EnableCheckLine)
                 {
-                    threshold = surfaceParam.LineParam.LineEdgeLevel;
+                    threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.LineParam.LineEdgeLevel;
 
                     int divideCount = area.Height / pixRefernceHeight;
 
@@ -691,18 +739,18 @@ namespace Jastech.Battery.Structure.VisionTool
 
                         foreach (var item in blobList)
                         {
-                            int left = item.Left;
-                            int right = item.Right;
-                            int top = item.Top;
-                            int bottom = item.Bottom;
+                            int blobLeft = item.Left;
+                            int blobRight = item.Right;
+                            int blobTop = item.Top;
+                            int blobBottom = item.Bottom;
 
-                            findArea.X = left;
-                            findArea.Width = right - left;
-                            findArea.Y = top;
-                            findArea.Height = bottom - top;
+                            findArea.X = blobLeft;
+                            findArea.Width = blobRight - blobLeft;
+                            findArea.Y = blobTop;
+                            findArea.Height = blobBottom - blobTop;
 
-                            int diffLeft = left - edgeRect.Left;
-                            int diffRight = edgeRect.Right - right;
+                            int diffLeft = blobLeft - edgeRect.Left;
+                            int diffRight = edgeRect.Right - blobRight;
 
                             findWidth = (findArea.Width + 1) * CalibrationX;
                             findHeight = (findArea.Height + 1) * CalibrationY;
@@ -713,42 +761,49 @@ namespace Jastech.Battery.Structure.VisionTool
                                 drawArea.Inflate(20 /* / zoom */, 20 /* / zoom */);
                                 break;
                             }
-                           
                         }
                     }
                 }
 
-                for (int direction = 0; direction < 2; direction++)
-                {
-                    int left = 0;
-                    int right = 0;
-                    int pinholeLeft = 0;
-                    int pinholeRight = 0;
-
-                    if (direction == 0)
-                    {
-                        if (area.Left < 2)
-                            continue;
-
-                        left = area.Left - surfaceParam.PinHoleParam.MarginOut;
-                        right = area.Left + surfaceParam.PinHoleParam.MarginIn;
-
-                        //if (left <)
-                    }
-                    else
-                    {
-
-                    }
-                }
                 if (surfaceParam.PinHoleParam.EnablePinHole)
                 {
-                    //area.X = 
+                    area.X = pinholeLeft;
+                    area.Width = pinholeRight - pinholeLeft;
+                    threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.PinHoleEdgeParam.PinHoleLevel;
+
+                    var blobList = BlobContour(imageData, area, threshold, 255);
+                    foreach (var item in blobList)
+                    {
+                        int blobLeft = item.Left;
+                        int blobRight = item.Right;
+                        int blobTop = item.Top;
+                        int blobBottom = item.Bottom;
+
+                        findArea.X = blobLeft;
+                        findArea.Width = blobRight - blobLeft;
+                        findArea.Y = blobTop;
+                        findArea.Height = blobBottom - blobTop;
+
+                        findWidth = (findArea.Width + 1) * CalibrationX;
+                        findHeight = (findArea.Height + 1) * CalibrationY;
+
+                        var pinholeSize = surfaceParam.PinHoleEdgeParam.PinHoleSize;
+                        if (findWidth >= pinholeSize && findHeight >= pinholeSize)
+                        {
+                            drawArea = findArea;
+                            drawArea.Inflate(20 /* / zoom */, 20 /* / zoom */);
+                            break;
+                        }
+                    }
+
                 }
             }
         }
 
+        private void CheckCoatingArea()
+        {
 
-        // if 외부에서 덴트만 하고 싶어
+        }
 
         private void CheckNonCoating(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight)
         {
