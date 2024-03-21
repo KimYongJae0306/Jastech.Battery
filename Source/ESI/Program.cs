@@ -182,7 +182,8 @@ namespace ESI
             }
 
             // Light
-            var backLight = new DareaLightCtrl("Back", 4, new SerialPortComm("COM1", 19200), new DareaSerialParser());
+            var backLight = new DareaLightCtrl("Back", 8, new SerialPortComm("COM1", 9600), new DareaSerialParser());
+            backLight.ChannelNameMap["Ch.UV"] = 1; // channel 지정
             config.Add(backLight);
         }
 
@@ -212,7 +213,8 @@ namespace ESI
             }
 
             // Light
-            var backLight = new DareaLightCtrl("Back", 4, new SerialPortComm("COM1", 19200), new DareaSerialParser());
+            var backLight = new DareaLightCtrl("Back", 8, new SerialPortComm("COM1", 9600), new DareaSerialParser());
+            backLight.ChannelNameMap["Ch.UV"] = 1; // channel 지정
             config.Add(backLight);
         }
 
@@ -234,7 +236,7 @@ namespace ESI
             int lowerCameraWidth = 1024 * 16;
             int lowerCameraOffsetX = 0;
             int lowerCameraHeight = 1024;
-
+             
             if (CheckCameraProperty(ref lowerCameraWidth, ref lowerCameraOffsetX, lowerCameraMaxWidth) == true)
             {
                 var upperCamera = new CameraDalsa("UpperCamera", lowerCameraWidth, lowerCameraHeight, ColorFormat.Gray, SensorType.Line);
@@ -242,7 +244,8 @@ namespace ESI
             }
 
             // Light
-            var backLight = new DareaLightCtrl("Back", 4, new SerialPortComm("COM1", 19200), new DareaSerialParser());
+            var backLight = new DareaLightCtrl("Back", 8, new SerialPortComm("COM1", 9600), new DareaSerialParser());
+            backLight.ChannelNameMap["Ch.UV"] = 1; // channel 지정
             config.Add(backLight);
         }
 

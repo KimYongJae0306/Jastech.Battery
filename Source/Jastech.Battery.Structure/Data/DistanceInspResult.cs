@@ -7,10 +7,6 @@ namespace Jastech.Battery.Structure.Data
     public class DistanceInspResult
     {
         #region 속성
-        public int Index { get; set; } = 0;
-
-        public string Name { get; set; } = string.Empty;
-
         public List<byte> VerticalSamplingResults { get; set; } = new List<byte>();
 
         public List<byte> HorizontalSamplingResults { get; set; } = new List<byte>();

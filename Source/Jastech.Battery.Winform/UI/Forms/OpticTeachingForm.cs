@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Jastech.Battery.Structure;
+using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Winform.UI.Controls;
 using Jastech.Framework.Config;
 using Jastech.Framework.Device.Cameras;
@@ -9,6 +10,7 @@ using Jastech.Framework.Imaging.Helper;
 using Jastech.Framework.Structure;
 using Jastech.Framework.Structure.Service;
 using Jastech.Framework.Util.Helper;
+using Jastech.Framework.Winform;
 using Jastech.Framework.Winform.Controls;
 using Jastech.Framework.Winform.Forms;
 using System;
@@ -73,8 +75,9 @@ namespace Jastech.Battery.Winform.UI.Forms
         {
             AddControl();
             InitializeUI();
-            InitializeData();
+            TeachingData.Instance().UpdateTeachingData();
 
+            InitializeData();
             //lblCamInfo.Text = $"CAM : {LineCamera.Camera.Name}";
 
             //SelectedAxis = AxisHandler.GetAxis(AxisName.X);
@@ -105,11 +108,16 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             LightControl = new LightControl();
             LightControl.Dock = DockStyle.Fill;
+            LightControl.LightParamChanged += LightParamChanged;
             pnlLight.Controls.Add(LightControl);
         }
 
         private void InitializeData()
         {
+            var currentUnit = TeachingData.Instance().GetUnit(UnitName.ToString());
+
+            LightControl.SetParam(DeviceManager.Instance().LightCtrlHandler, currentUnit.LightParam);
+            LightControl.InitializeData();
         }
 
         public void UpdateUI()
@@ -341,6 +349,11 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             btnGrabStart.Enabled = isEnable;
             btnGrabStop.Enabled = isEnable;
+        }
+
+        private void LightParamChanged(string component, int channel, double oldValue, double newValue)
+        {
+            //ParamTrackingLogger.AddChangeHistory($"{LineCamera.Camera.Name}", $"Light_{component}_{channel}", oldValue, newValue);
         }
         #endregion
     }

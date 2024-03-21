@@ -301,9 +301,8 @@ namespace Jastech.Battery.Winform.UI.Controls
             string channel = cbxChannelNameList.SelectedItem as string;
 
             var lightControl = LightCtrlHandler.Get(ctrlName);
-            var channelNum = lightControl.ChannelNameMap[channel];
 
-            lightControl.TurnOn(LightParam.Map[ctrlName]);
+            lightControl.TurnOn();
         }
 
         private void lblLightOff_Click(object sender, EventArgs e)

@@ -191,7 +191,6 @@ namespace Jastech.Battery.Structure.VisionTool
 
             // TODO Lane 나누기
 
-
             return new DistanceInspResult
             {
                 CoatingAreas = coatingAreas,
@@ -210,9 +209,7 @@ namespace Jastech.Battery.Structure.VisionTool
             if (levelDifferences.Count == 0)
                 return positionIndices;
 
-            // 최대 피크의 절반 지점에서 최대 50개 만큼 샘플링한다.
-            //var halfOfMaxDifference = Math.Max(levelThreshold, levelDifferences.Max(value => (double)value) / 2);
-
+            // 기준 레벨값 이상의 피크들을 샘플링한다.
             var mostIntensePeaks = levelDifferences
                 .Select((value, position) => new { value, position })
                 .Where(peak => peak.value > levelThreshold)

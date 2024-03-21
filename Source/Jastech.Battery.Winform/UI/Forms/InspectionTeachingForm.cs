@@ -299,7 +299,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             WriteTactTime(stopwatch, "DistanceInspecitonFinished");
 
             // 추가 검증용 코드
-            PixelValueGraphControl.SetData(distanceInspResult.VerticalDifferentials.ToArray());
+            PixelValueGraphControl.SetData(distanceInspResult.HorizontalSamplingResults.ToArray());
             ShowTestResults(distanceInspResult);
 
             WriteTactTime(stopwatch, "=================================Test Finished==============================");

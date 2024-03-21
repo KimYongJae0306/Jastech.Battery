@@ -9,6 +9,8 @@ namespace Jastech.Battery.Structure.Data
 {
     public class SliceInspResult
     {
+        public int Index {  get; set; }
+
         public InspDirection InspDirection { get; set; }
 
         public DistanceInspResult DistanceResult { get; set; }
