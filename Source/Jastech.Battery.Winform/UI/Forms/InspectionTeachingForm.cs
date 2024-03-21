@@ -279,16 +279,16 @@ namespace Jastech.Battery.Winform.UI.Forms
             ImageBuffer imageBuffer = new ImageBuffer();
             imageBuffer.ImageData = ImageHelper.GetByteArrayFromBitmap(_grayImage);
             imageBuffer.Index = 999999;
-            imageBuffer.Width = _orgBmp.Width;
-            imageBuffer.Height = _orgBmp.Height;
+            imageBuffer.ImageWidth = _orgBmp.Width;
+            imageBuffer.ImageHeight = _orgBmp.Height;
             WriteTactTime(stopwatch, "After converting image to byte array");
 
             Rectangle searchROI = new Rectangle
             {
                 X = distanceParam.ROIMarginLeft,
                 Y = distanceParam.ROIMarginLeft,
-                Width = imageBuffer.Width - distanceParam.ROIMarginRight,
-                Height = imageBuffer.Height - distanceParam.ROIMarginBottom,
+                Width = imageBuffer.ImageWidth - distanceParam.ROIMarginRight,
+                Height = imageBuffer.ImageHeight - distanceParam.ROIMarginBottom,
             };
 
             WriteTactTime(stopwatch, "Initializing finished");
