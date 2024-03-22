@@ -71,6 +71,12 @@ namespace Jastech.Battery.Structure.Parameters
 
         [JsonProperty]
         public int LineEdgeLevel { get; set; } = 0;
+
+        [JsonProperty]
+        public int WorkRatioX { get; set; } = 2;
+
+        [JsonProperty]
+        public int WorkRatioY { get; set; } = 6;
     }
 
     public class PinHoleParam
