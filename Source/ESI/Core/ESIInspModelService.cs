@@ -2,6 +2,7 @@
 using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Structure.Parameters;
 using Jastech.Battery.Winform.Settings;
+using Jastech.Framework.Config;
 using Jastech.Framework.Device.LightCtrls;
 using Jastech.Framework.Structure;
 using Jastech.Framework.Structure.Service;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -74,6 +76,9 @@ namespace ESI.Core
             LightParameter lightParameter = new LightParameter("Light");
 
             var lightCtrlHandler = DeviceManager.Instance().LightCtrlHandler;
+            if (ConfigSet.Instance().Operation.VirtualMode == true)
+                return lightParameter;
+
             var backLightCtrl = lightCtrlHandler.Get("Back");
             //var spotLightCtrl = lightCtrlHandler.Get("Spot");
             //var ringLightCtrl = lightCtrlHandler.Get("Ring");
