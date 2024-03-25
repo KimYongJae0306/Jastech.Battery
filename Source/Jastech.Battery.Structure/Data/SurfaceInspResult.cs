@@ -17,7 +17,9 @@ namespace Jastech.Battery.Structure.Data
 
         public Rectangle ConnectionTapeArea { get; set; } = new Rectangle();
 
-        public List<int> CoatingAverageLevel { get; set; } = null;
+        public List<int> CoatingAverageLevel { get; set; } = new List<int>();
+
+        public List<int> DoubleCoatingPosY { get; set; } = new List<int>();
         #endregion
 
         #region 이벤트
@@ -31,7 +33,6 @@ namespace Jastech.Battery.Structure.Data
 
         #region 메서드
         #endregion
-
     }
 
     public class BlobContourResult

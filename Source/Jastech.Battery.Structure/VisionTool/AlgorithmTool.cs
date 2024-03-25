@@ -8,6 +8,14 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using System.ComponentModel.Design;
+using System.Xml.Schema;
+using Emgu.CV.BgSegm;
+using System.Reflection;
+using System.Data;
+using Emgu.CV.Cuda;
+using System.Security.Cryptography;
 
 namespace Jastech.Battery.Structure.VisionTool
 {
@@ -18,6 +26,8 @@ namespace Jastech.Battery.Structure.VisionTool
         public const double CalibrationX = 0.0423; // CIS 사용 시 X,Y Scale 확인할 것
         public const double CalibrationY = 0.0423; // CIS 사용 시 X,Y Scale 확인할 것
         public const double pixelLength1mm = 1.0 / CalibrationX;
+        public const double PixelLength5mm = 5.0 / CalibrationX;
+        public const double PixelLength40mm = 40.0 / CalibrationX;
         #endregion
 
         public void Inspect()
@@ -79,32 +89,8 @@ namespace Jastech.Battery.Structure.VisionTool
                 byte[] workBuff = imageBuffer.WorkBuffer.GetWorkBuffer();
                 if (workBuff == null)
                     continue;
-                
-                int stepX = imageBuffer.WorkBuffer.BuffWidth / 100;
-                int stepY = imageBuffer.WorkBuffer.BuffHeight / 100;
 
-                if (stepX < 1)
-                    stepX = 1;
-
-                if (stepY < 1)
-                    stepY = 1;
-
-                int sum = 0;
-                int count = 0;
-
-                for (int h = 0; h < buffHeight; h++)
-                {
-                    for (int w = 0; w < buffWidth; w++)
-                    {
-                        sum += workBuff[h * imageBuffer.WorkBuffer.BuffWidth + w];
-                        count++;
-                    }
-                }
-
-                if (count < 1)
-                    count = 1;
-
-                int averageLevel = sum / count;
+                int averageLevel = ShapeHelper.GetAverageLevel(workBuff, imageBuffer.WorkBuffer.BuffWidth, imageBuffer.WorkBuffer.BuffHeight);
 
                 surfaceInspResult.CoatingAverageLevel.Add(averageLevel);
 
@@ -306,9 +292,6 @@ namespace Jastech.Battery.Structure.VisionTool
 
         private void CheckCoatingArea_Edge(ImageBuffer imageBuffer, DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
         {
-            int pix5mm = (int)(5.0 / CalibrationX);
-            int pix40mm = (int)(40.0 / CalibrationX);
-
             int pixRefernceHeight = (int)((surfaceParam.LineParam.LineSizeY + 1.0) / CalibrationY);
 
             Rectangle findArea = new Rectangle();
@@ -316,7 +299,7 @@ namespace Jastech.Battery.Structure.VisionTool
             foreach (var conatingArea in distanceInspResult.CoatingAreas)
             {
                 var inspArea = ShapeHelper.GetValidRectangle(conatingArea, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
-                if (inspArea.Width < pix40mm && inspArea.Height < pix5mm)
+                if (inspArea.Width < PixelLength40mm && inspArea.Height < PixelLength5mm)
                     continue;
 
                 int threshold = 0;
@@ -486,38 +469,18 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 byte[] smallBuff = MakeBinary(imageBuffer, surfaceParam, inspArea, surfaceInspResult);
 
-                Rectangle smallArea = inspArea;
-                surfaceInspResult.CoatingAverageLevel.Add(GetCoatingAverageLevel(smallBuff/*, width*/, smallArea));
+                int averageLevel = ShapeHelper.GetAverageLevel(smallBuff, imageBuffer.SmallBuffer.BufferWidth, inspArea);
+                surfaceInspResult.CoatingAverageLevel.Add(averageLevel);
+
+                var smallBuffer = imageBuffer.SmallBuffer;
+                int coatingLinePosY = GetDoubleCoatingLine(imageBuffer, smallBuffer.OriginBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, inspArea);
+
+                surfaceInspResult.DoubleCoatingPosY.Add(coatingLinePosY);
+
+                var smallArea = ShapeHelper.GetValidRectangle(inspArea, smallBuffer.BufferWidth, smallBuffer.BufferHeight);
+                if (smallArea.Width < PixelLength40mm && smallArea.Height < PixelLength5mm)
+                    continue;
             }
-        }
-
-        private int GetCoatingAverageLevel(byte[] smallBuffer, Rectangle smallArea)
-        {
-            int samplingX = smallArea.Width / 100;
-            int samplingY = smallArea.Height / 100;
-
-            if (samplingX < 1)
-                samplingX = 1;
-
-            if (samplingY < 1)
-                samplingY = 1;
-
-            int sum = 0;
-            int count = 0;
-
-            for (int h = smallArea.Top; h < smallArea.Bottom; h++)
-            {
-                for (int w = smallArea.Left; w < smallArea.Right; w++)
-                {
-                    sum += smallBuffer[h * 0 + w];
-                    count++;
-                }
-            }
-
-            if (count < 1)
-                count = 1;
-
-            return sum / count;
         }
 
         private byte[] MakeBinary(ImageBuffer imageBuffer, SurfaceParam surfaceParam, Rectangle smallArea, SurfaceInspResult surfaceInspResult)
@@ -540,38 +503,35 @@ namespace Jastech.Battery.Structure.VisionTool
             int smallBuffWidth = (int)((double)imageWidth / (double)smallRatioX);
             int smallBuffHeight = (int)((double)imageHeight / (double)smallRatioX);
             byte[] smallBuff = new byte[smallBuffWidth * smallBuffHeight];
-            byte[] stretchSmallBuff = new byte[smallBuffWidth * smallBuffHeight];
-            byte[] magnifiedSmallBuff = new byte[smallBuffWidth * smallBuffHeight];
             byte[] smallBuff_Bw = new byte[smallBuffWidth * smallBuffHeight];
 
-            for (int x = smallArea.Left; x < smallArea.Right; x++)
+            for (int w = smallArea.Left; w < smallArea.Right; w++)
             {
-                int sum = 0;
-                int count = 0;
+                List<int> verticalDatas = new List<int>();
 
-                for (int y = smallArea.Top; y < smallArea.Bottom; y += 10)
+                for (int h = smallArea.Top; h < smallArea.Bottom; h += 10)
                 {
-                    bool checkConnectionTape = CheckConnectionTape(surfaceInspResult, y);
+                    bool checkConnectionTape = CheckConnectionTape(surfaceInspResult, h);
                     if (checkConnectionTape)
                         continue;
 
-                    sum += imageBuffer.ImageData[y * imageWidth + x];
-                    count++;
+                    verticalDatas.Add(imageBuffer.ImageData[h * imageWidth + w]);
                 }
 
-                if (count < 1)
-                    count = 1;
+                int average = 0;
 
-                int average = sum / count;
-                projectionWidth[x] = (byte)average;
+                if (verticalDatas.Count > 0)
+                    average = (int)verticalDatas.Average();
+
+                projectionWidth[w] = (byte)average;
 
                 if (average < 10)
-                    magnifyFactor[x] = 10.0;
+                    magnifyFactor[w] = 10.0;
                 else
-                    magnifyFactor[x] = (double)(targetValue) / (double)(average);
+                    magnifyFactor[w] = (double)(targetValue) / (double)(average);
 
-                if (magnifyFactor[x] < 1.0)
-                    magnifyFactor[x] = 1.0;
+                if (magnifyFactor[w] < 1.0)
+                    magnifyFactor[w] = 1.0;
             }
 
             smallArea.X = smallArea.X / smallRatioX;
@@ -617,8 +577,10 @@ namespace Jastech.Battery.Structure.VisionTool
                         if (stretchValue > 255)
                             stretchValue = 255;
 
-                        smallBuff[h * smallBuffWidth + w] = (byte)originValue;
-                        stretchSmallBuff[h * smallBuffWidth + w] = (byte)stretchValue;
+                        //smallBuff[h * smallBuffWidth + w] = (byte)originValue;
+                        //stretchSmallBuff[h * smallBuffWidth + w] = (byte)stretchValue;
+                        imageBuffer.SmallBuffer.OriginBuffer[h * smallBuffWidth + w] = (byte)originValue;
+                        imageBuffer.SmallBuffer.StretchBuffer[h * smallBuffWidth + w] = (byte)stretchValue;
 
                         if (magnifiedValue < 0)
                             magnifiedValue = 0;
@@ -626,7 +588,8 @@ namespace Jastech.Battery.Structure.VisionTool
                         if (magnifiedValue > 255)
                             magnifiedValue = 255;
 
-                        magnifiedSmallBuff[h * smallBuffWidth + w] = (byte)magnifiedValue;
+                        //magnifiedSmallBuff[h * smallBuffWidth + w] = (byte)magnifiedValue;
+                        imageBuffer.SmallBuffer.MagnifiedBuffer[h * smallBuffWidth + w] = (byte)fillValue;
 
                         int thresholdWhite = targetValue + defectWhiteLevel;
                         int thresholdDent = targetValue + defectDentLevel;
@@ -641,7 +604,8 @@ namespace Jastech.Battery.Structure.VisionTool
                         else
                             continue;
 
-                        smallBuff_Bw[h * smallBuffWidth + w] = (byte)fillValue;
+                        //smallBuff_Bw[h * smallBuffWidth + w] = (byte)fillValue;
+                        imageBuffer.SmallBuffer.BwBuffer[h * smallBuffWidth + w] = (byte)fillValue;
                     }
                 });
             }
@@ -663,8 +627,6 @@ namespace Jastech.Battery.Structure.VisionTool
 
         private byte[] ReduceDentNoise(Rectangle smallArea, byte[] smallBuff_Bw, int smallBuffWidth)
         {
-            int diffX = 0;
-
             for (int h = smallArea.Top; h < smallArea.Bottom; h++)
             {
                 int startX = -1;
@@ -682,7 +644,7 @@ namespace Jastech.Battery.Structure.VisionTool
                         if (startX >= smallArea.Left && endX < 0)
                         {
                             endX = w;
-                            diffX = endX - startX;
+                            int diffX = endX - startX;
 
                             if (diffX <= 1)
                             {
@@ -710,79 +672,6 @@ namespace Jastech.Battery.Structure.VisionTool
 
             return false;
         }
-
-        private void CheckNonCoating(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight)
-        {
-            foreach (var inspArea in distanceInspResult.CoatingAreas)
-            {
-                //var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
-                //if (area.Width < pix40mm && area.Height < pix5mm)
-                //    continue;
-
-                //byte[] workBuff = GetWorkBuffer(area, workRatioX, workRatioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
-                //if (workBuff == null)
-                //    continue;
-            }
-        }
-
-        private void CheckCoating(DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, byte[] imageData, int imageWidth, int imageHeight)
-        {
-            // Input Insp Area
-            foreach (var inspArea in distanceInspResult.NonCoatingAreas)
-            {
-                //var area = ShapeHelper.GetValidRectangle(inspArea, imageWidth, imageHeight);
-                //if (area.Width < pix40mm && area.Height < pix5mm)
-                //    continue;
-
-                //byte[] workBuff = GetWorkBuffer(area, workRatioX, workRatioY, imageData, imageWidth, imageHeight, out buffWidth, out buffHeight);
-                //if (workBuff == null)
-                //    continue;
-            }
-
-            // Blob
-
-            // Coordinate -> Rect
-
-            // Add Rect at SurfaceInspResult.Rectagle
-        }
-
-        private void DrawRectangle(Rectangle inputRectangle)
-        {
-
-        }
-
-        //private byte[] GetWorkBuffer(ImageBuffer imageBuffer, Rectangle inputRect, int workRatioX, int workRatioY)
-        //{
-        //    if (ShapeHelper.CheckValidRectangle(inputRect, imageBuffer.ImageWidth, imageBuffer.ImageHeight))
-        //        return null;
-
-        //    int buffWidth = inputRect.Width / workRatioX;
-        //    int buffHeight = inputRect.Height / workRatioY;
-
-        //    if (buffWidth < 1 || buffHeight < 1)
-        //        return null;
-
-        //    imageBuffer.InitializeWorkBuffer();
-
-        //    byte[] outputBuff = new byte[buffWidth * buffHeight];
-
-        //    int x = 0;
-        //    int y = 0;
-
-        //    for (int h = 0; h < buffHeight; h++)
-        //    {
-        //        y = inputRect.Top + h * workRatioY;
-
-        //        for (int w = 0; w < buffWidth; w++)
-        //        {
-        //            x = inputRect.Left + w * workRatioX;
-
-        //            outputBuff[h * buffWidth + w] = imageData[y * imageWidth + x];
-        //        }
-        //    }
-
-        //    return outputBuff;
-        //}
 
         private List<BlobContourResult> BlobContour(byte[] imageData, /*int width, int height,*/ Rectangle inputRect, int lowThreshold, int highThreshold)
         {
@@ -854,19 +743,240 @@ namespace Jastech.Battery.Structure.VisionTool
             return false;
         }
 
-        public void GetCoatingArea_WidthoutNonCoat()
+        private int GetDoubleCoatingLine(ImageBuffer imageBuffer, byte[] buffer, int buffWidth, int buffHeight, Rectangle rectangle)
         {
+            Array.Clear(imageBuffer.HorizontalData, 0, imageBuffer.ImageHeight);
 
+            int findPos = -1;
+
+            for (int h = rectangle.Top; h < rectangle.Bottom; h++)
+            {
+                int sum = 0;
+                int count = 0;
+
+                for (int w = rectangle.Left; w < rectangle.Right; w += 10)
+                {
+                    sum += buffer[h * buffWidth + w];
+                    count++;
+                }
+
+                int average = sum / count;
+                imageBuffer.HorizontalData[h] = average;
+            }
+
+            Array.Copy(imageBuffer.HorizontalData, imageBuffer.AverageHorizontalData, buffHeight);
+
+            imageBuffer.AverageHorizontalData = ShapeHelper.GetSmooth1D(imageBuffer.AverageHorizontalData, buffHeight, 0, buffHeight, 100);
+
+            for (int h = rectangle.Top; h < rectangle.Bottom; h++)
+                imageBuffer.DifferentialHorizontalData[h] = imageBuffer.HorizontalData[h] - imageBuffer.AverageHorizontalData[h];
+
+            int threshold = 0; /*Para.DoubleCoatingLv;*/
+
+            int start = -1;
+            int end = -1;
+
+            for (int h = rectangle.Top; h < rectangle.Bottom; h++)
+            {
+                if (start < 0 && imageBuffer.DifferentialHorizontalData[h] <= -threshold)
+                    start = h;
+
+                if (start < 0)
+                    continue;
+
+                if (end < 0 && imageBuffer.DifferentialHorizontalData[h] > -threshold)
+                    end = h;
+
+                if (end < 0)
+                    continue;
+
+                int x1 = (rectangle.Left + 100) * 1; /*Config.SmallRatioX;*/
+                int x2 = (rectangle.Right - 100) * 1; /*Config.SmallRatioX;*/
+                int y1 = 1 * /*Config.SmallRatioX;*/ (start + end) / 2;
+                int y2 = y1;
+
+                findPos = y1;
+            }
+            
+            return findPos;
         }
 
-        public void SaverErrorInfo()
+        private void CheckCorner(ImageBuffer imageBuffer, SurfaceParam surfaceParam, Rectangle inputRect, int smallRatio, out bool isTopCorner, out bool isBottomCorner)
         {
+            isTopCorner = false;
+            isBottomCorner = false;
 
+            int x1 = 0;
+            int y1 = 0;
+
+            int x2 = 0;
+            int y2 = 0;
+
+            int clearMarginX = 0;
+            int clearMarginY = 0;
+
+            int pixelCornerX = (int)(surfaceParam.CornerMargin / CalibrationX);
+            int pixelCornerY = (int)(surfaceParam.CornerMargin / CalibrationY);
+
+            int marginX1 = 0;
+            int marginX2 = 0;
+            int marginY1 = 0;
+            int marginY2 = 0;
+
+            int clearX1 = 0;
+            int clearX2 = 0;
+            int clearY1 = 0;
+            int clearY2 = 0;
+
+            foreach (CornerType cornerType in Enum.GetValues(typeof(CornerType)))
+            {
+                switch (cornerType)
+                {
+                    case CornerType.LeftTop:
+                        x1 = inputRect.Left;
+                        y1 = inputRect.Top;
+
+                        clearMarginX = (pixelCornerX - marginX1) / smallRatio;
+                        clearMarginY = (pixelCornerX - marginY1) / smallRatio;
+
+                        clearX1 = 0;
+                        clearX2 = clearMarginX;
+                        clearY1 = 0;
+                        clearY2 = clearMarginY;
+                        break;
+
+                    case CornerType.RightTop:
+                        x1 = inputRect.Right - pixelCornerX;
+                        y1 = inputRect.Top;
+
+                        clearMarginX = (pixelCornerX - marginX2) / smallRatio;
+                        clearMarginY = (pixelCornerY - marginY1) / smallRatio;
+
+                        clearX1 = imageBuffer.SmallBuffer.BufferWidth - clearMarginX;
+                        clearX2 = imageBuffer.SmallBuffer.BufferWidth;
+                        clearY1 = 0;
+                        clearY2 = clearMarginY;
+                        break;
+
+                    case CornerType.LeftBottom:
+                        x1 = inputRect.Left;
+                        y1 = inputRect.Bottom - pixelCornerY;
+
+                        clearMarginX = (pixelCornerX - marginX1) / smallRatio;
+                        clearMarginY = (pixelCornerY - marginY2) / smallRatio;
+
+                        clearX1 = 0;
+                        clearX2 = clearMarginX;
+                        clearY1 = imageBuffer.SmallBuffer.BufferHeight - clearMarginY;
+                        clearY2 = imageBuffer.SmallBuffer.BufferHeight;
+                        break;
+
+                    case CornerType.RightBottom:
+                        x1 = inputRect.Right - pixelCornerX;
+                        y1 = inputRect.Bottom - pixelCornerY;
+
+                        clearMarginX = (pixelCornerX - marginX2) / smallRatio;
+                        clearMarginY = (pixelCornerY - marginY2) / smallRatio;
+
+                        clearX1 = imageBuffer.SmallBuffer.BufferWidth - clearMarginX;
+                        clearX2 = imageBuffer.SmallBuffer.BufferWidth;
+                        clearY1 = imageBuffer.SmallBuffer.BufferHeight - clearMarginY;
+                        clearY2 = imageBuffer.SmallBuffer.BufferHeight;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                x2 = x1 + pixelCornerX;
+                y2 = y1 + pixelCornerY;
+
+                if (x1 < 0 || y1 < 0 || x2 > imageBuffer.ImageWidth || y2 > imageBuffer.ImageHeight)
+                    continue;
+
+                Rectangle cornerRect = new Rectangle();
+                cornerRect.X = x1;
+                cornerRect.Y = y1;
+                cornerRect.Width = x2 - x1;
+                cornerRect.Height = y2 - y1;
+
+                bool isCorner = IsCorner(imageBuffer, cornerRect, cornerType, surfaceParam.CoatingEdgeLevel);
+                if (isCorner == false)
+                    continue;
+
+                if (clearX1 < 0)
+                    clearX1 = 0;
+
+                if (clearX2 > imageBuffer.SmallBuffer.BufferWidth)
+                    clearX2 = imageBuffer.SmallBuffer.BufferWidth;
+
+                if (clearY1 < 0)
+                    clearY1 = 0;
+
+                if (clearY2 > imageBuffer.SmallBuffer.BufferHeight)
+                    clearY2 = imageBuffer.SmallBuffer.BufferHeight;
+
+                imageBuffer.SmallBuffer.BwBuffer = ShapeHelper.FillValue(imageBuffer.SmallBuffer.BwBuffer, imageBuffer.SmallBuffer.BufferWidth, cornerRect, 0);
+
+                if (cornerType == CornerType.LeftTop || cornerType == CornerType.RightTop)
+                    isTopCorner = true;
+                else if (cornerType == CornerType.LeftBottom || cornerType == CornerType.RightBottom)
+                    isBottomCorner = true;
+            }
         }
 
-        public void GetLaneNumber()
+        private bool IsCorner(ImageBuffer imageBuffer, Rectangle inputRect, CornerType cornerType, int edgeLevel)
         {
+            Rectangle rect1 = new Rectangle();
+            Rectangle rect2 = new Rectangle();
 
+            int inspSizeX = inputRect.Width / 10;
+            if (inspSizeX < 10)
+                inspSizeX = 10;
+
+            int inspSizeY = inputRect.Height / 10;
+            if (inspSizeY < 10)
+                inspSizeY = 10;
+
+            switch (cornerType)
+            {
+                case CornerType.LeftTop:
+                    rect1.X = inputRect.X;
+                    rect1.Y = inputRect.Y;
+
+                    rect2.X = rect2.Right - inspSizeX;
+                    rect2.Y = rect2.Bottom - inspSizeY;
+                    break;
+
+                case CornerType.RightTop:
+                    rect1.X = inputRect.Right - inspSizeX;
+                    rect1.Y = inputRect.Y;
+
+                    rect2.X = inputRect.X;
+                    rect2.Y = inputRect.Bottom - inspSizeY;
+                    break;
+
+                case CornerType.LeftBottom:
+                    rect1.X = inputRect.X;
+                    rect1.Y = inputRect.Bottom - inspSizeY;
+
+                    rect2.X = inputRect.Right - inspSizeX;
+                    rect2.Y = inputRect.Top;
+                    break;
+
+                case CornerType.RightBottom:
+                    rect1.X = inputRect.X;
+                    rect1.Y = inputRect.Y;
+
+                    rect2.X = inputRect.Right - inspSizeX;
+                    rect2.Y = inputRect.Bottom - inspSizeY;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return true;
         }
     }
 
@@ -1080,5 +1190,13 @@ namespace Jastech.Battery.Structure.VisionTool
             }
         }
         #endregion
+    }
+
+    public enum CornerType
+    {
+        LeftTop,
+        RightTop,
+        LeftBottom,
+        RightBottom,
     }
 }
