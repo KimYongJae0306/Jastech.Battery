@@ -89,11 +89,11 @@
     <Compile Include="UI\Controls\DefectInfoControl.Designer.cs">
       <DependentUpon>DefectInfoControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\CoatingControl.cs">
+    <Compile Include="UI\Controls\SurfaceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Controls\CoatingControl.Designer.cs">
-      <DependentUpon>CoatingControl.cs</DependentUpon>
+    <Compile Include="UI\Controls\SurfaceControl.Designer.cs">
+      <DependentUpon>SurfaceControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\DistanceControl.cs">
       <SubType>UserControl</SubType>
@@ -118,12 +118,6 @@
     </Compile>
     <Compile Include="UI\Controls\LogControl.Designer.cs">
       <DependentUpon>LogControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\NonCoatingControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\Controls\NonCoatingControl.Designer.cs">
-      <DependentUpon>NonCoatingControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\BatteryMaterialInfoForm.cs">
       <SubType>Form</SubType>
@@ -262,8 +256,8 @@
     <EmbeddedResource Include="UI\Controls\DefectInfoControl.resx">
       <DependentUpon>DefectInfoControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\CoatingControl.resx">
-      <DependentUpon>CoatingControl.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Controls\SurfaceControl.resx">
+      <DependentUpon>SurfaceControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\DistanceControl.resx">
       <DependentUpon>DistanceControl.cs</DependentUpon>
@@ -276,9 +270,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\LogControl.resx">
       <DependentUpon>LogControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\NonCoatingControl.resx">
-      <DependentUpon>NonCoatingControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\BatteryMaterialInfoForm.resx">
       <DependentUpon>BatteryMaterialInfoForm.cs</DependentUpon>

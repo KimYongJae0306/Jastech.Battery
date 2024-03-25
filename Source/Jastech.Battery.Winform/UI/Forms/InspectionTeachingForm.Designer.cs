@@ -32,8 +32,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tlpTeachingItems = new System.Windows.Forms.TableLayoutPanel();
             this.btnDistance = new System.Windows.Forms.Button();
-            this.btnCoating = new System.Windows.Forms.Button();
-            this.btnNonCoating = new System.Windows.Forms.Button();
+            this.btnSurface = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.pnlTeachingPage = new System.Windows.Forms.Panel();
@@ -49,6 +48,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlGraph = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.pnlDisplay = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -100,8 +103,7 @@
             this.tlpTeachingItems.ColumnCount = 1;
             this.tlpTeachingItems.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpTeachingItems.Controls.Add(this.btnDistance, 0, 0);
-            this.tlpTeachingItems.Controls.Add(this.btnCoating, 0, 1);
-            this.tlpTeachingItems.Controls.Add(this.btnNonCoating, 0, 2);
+            this.tlpTeachingItems.Controls.Add(this.btnSurface, 0, 1);
             this.tlpTeachingItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpTeachingItems.Location = new System.Drawing.Point(0, 0);
             this.tlpTeachingItems.Margin = new System.Windows.Forms.Padding(0);
@@ -131,35 +133,20 @@
             this.btnDistance.UseVisualStyleBackColor = false;
             this.btnDistance.Click += new System.EventHandler(this.btnDistance_Click);
             // 
-            // btnCoating
+            // btnSurface
             // 
-            this.btnCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.btnCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCoating.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
-            this.btnCoating.ForeColor = System.Drawing.Color.White;
-            this.btnCoating.Location = new System.Drawing.Point(2, 102);
-            this.btnCoating.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCoating.Name = "btnCoating";
-            this.btnCoating.Size = new System.Drawing.Size(140, 96);
-            this.btnCoating.TabIndex = 21;
-            this.btnCoating.Text = "Coating";
-            this.btnCoating.UseVisualStyleBackColor = false;
-            this.btnCoating.Click += new System.EventHandler(this.btnCoating_Click);
-            // 
-            // btnNonCoating
-            // 
-            this.btnNonCoating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.btnNonCoating.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnNonCoating.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
-            this.btnNonCoating.ForeColor = System.Drawing.Color.White;
-            this.btnNonCoating.Location = new System.Drawing.Point(2, 202);
-            this.btnNonCoating.Margin = new System.Windows.Forms.Padding(2);
-            this.btnNonCoating.Name = "btnNonCoating";
-            this.btnNonCoating.Size = new System.Drawing.Size(140, 96);
-            this.btnNonCoating.TabIndex = 21;
-            this.btnNonCoating.Text = "Non\r\nCoating";
-            this.btnNonCoating.UseVisualStyleBackColor = false;
-            this.btnNonCoating.Click += new System.EventHandler(this.btnNonCoating_Click);
+            this.btnSurface.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnSurface.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSurface.Font = new System.Drawing.Font("맑은 고딕", 20F, System.Drawing.FontStyle.Bold);
+            this.btnSurface.ForeColor = System.Drawing.Color.White;
+            this.btnSurface.Location = new System.Drawing.Point(2, 102);
+            this.btnSurface.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSurface.Name = "btnSurface";
+            this.btnSurface.Size = new System.Drawing.Size(140, 96);
+            this.btnSurface.TabIndex = 21;
+            this.btnSurface.Text = "Surface";
+            this.btnSurface.UseVisualStyleBackColor = false;
+            this.btnSurface.Click += new System.EventHandler(this.btnSurface_Click);
             // 
             // btnCancel
             // 
@@ -355,14 +342,22 @@
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.pnlGraph, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.button1, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.button2, 0, 2);
+            this.tableLayoutPanel4.Controls.Add(this.button3, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.button4, 0, 3);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowCount = 5;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(870, 398);
             this.tableLayoutPanel4.TabIndex = 1;
@@ -370,11 +365,68 @@
             // pnlGraph
             // 
             this.pnlGraph.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGraph.Location = new System.Drawing.Point(100, 0);
+            this.pnlGraph.Location = new System.Drawing.Point(99, 0);
             this.pnlGraph.Margin = new System.Windows.Forms.Padding(0);
             this.pnlGraph.Name = "pnlGraph";
-            this.pnlGraph.Size = new System.Drawing.Size(770, 398);
+            this.tableLayoutPanel4.SetRowSpan(this.pnlGraph, 5);
+            this.pnlGraph.Size = new System.Drawing.Size(771, 398);
             this.pnlGraph.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 30);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "V. Sampl.";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.testVerticalSamplingResult_Click);
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(0, 60);
+            this.button2.Margin = new System.Windows.Forms.Padding(0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(99, 30);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "H. Sampl.";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.testHorizontalSamplingResult_Click);
+            // 
+            // button3
+            // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Location = new System.Drawing.Point(0, 30);
+            this.button3.Margin = new System.Windows.Forms.Padding(0);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(99, 30);
+            this.button3.TabIndex = 1;
+            this.button3.Text = "V. Differ.";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.testVerticalDerivedResult_Click);
+            // 
+            // button4
+            // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button4.ForeColor = System.Drawing.Color.White;
+            this.button4.Location = new System.Drawing.Point(0, 90);
+            this.button4.Margin = new System.Windows.Forms.Padding(0);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(99, 30);
+            this.button4.TabIndex = 1;
+            this.button4.Text = "H. Differ.";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.testHorizontalDerivedResult_Click);
             // 
             // pnlDisplay
             // 
@@ -489,8 +541,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel tlpTeachingPage;
         private System.Windows.Forms.Button btnDistance;
-        private System.Windows.Forms.Button btnCoating;
-        private System.Windows.Forms.Button btnNonCoating;
+        private System.Windows.Forms.Button btnSurface;
         private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }

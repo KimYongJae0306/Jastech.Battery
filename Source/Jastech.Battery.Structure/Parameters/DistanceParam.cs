@@ -1,19 +1,18 @@
-﻿using Jastech.Framework.Device.LightCtrls;
-using Jastech.Framework.Util.Helper;
-using System;
-using System.Collections.Generic;
+﻿using Jastech.Framework.Util.Helper;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jastech.Battery.Structure.Parameters
 {
     public class DistanceParam
     {
+        #region 필드
+        public Rectangle _Roi = Rectangle.Empty;
+        #endregion
+
         #region 속성
-        public int LaneCount { get; set; } = 0;
+        public int LaneCount { get; set; } = 1;
+
+        public int ROIThreshold { get; set; } = 50;
 
         public int ROIMarginLeft { get; set; } = 0;
 
@@ -24,26 +23,30 @@ namespace Jastech.Battery.Structure.Parameters
         public int ROIMarginBottom { get; set; } = 0;
 
 
-        public int ROIThreshold { get; set; } = 20;
+        public int CoatingThreshold { get; set; } = 30;
 
-        public int CoatingThreshold { get; set; } = 20;
-
-        public int NonCoatingThreshold { get; set; } = 20;
-
-        public double CoatingMinimumLength { get; set; } = 400.0;
+        public double CoatingMinimumLength { get; set; } = 10.0;
 
         public double CoatingMinimumWidth { get; set; } = 280.0;
 
-        public double CoatingMaximumWidth { get; set; } = 320.0;
+        public double CoatingMaximumWidth { get; set; } = 310.0;
 
-        public double NonCoatingMinimumWidth { get; set; } = 5.0;
+        public int NonCoatingThreshold { get; set; } = 30;
+
+        public double NonCoatingMinimumWidth { get; set; } = 15.0;
 
         public double NonCoatingMaximumWidth { get; set; } = 50.0;
 
 
-        public int WidthSamplingScale { get; set; } = 300;
+        public int WidthSamplingScale { get; set; } = 100;
 
-        public int HeightSamplingScale { get; set; } = 300;
+        public int HeightSamplingScale { get; set; } = 100;
+
+        /// <summary>Slitting 후 좌측 전극이 없는 이미지에서 사용</summary>
+        public bool LeftElectrodeSlitted { get; set; } = false;
+
+        /// <summary>Slitting 후 우측 전극이 없는 이미지에서 사용</summary>
+        public bool RightElectrodeSlitted { get; set; } = false;
         #endregion
 
         #region 메서드
