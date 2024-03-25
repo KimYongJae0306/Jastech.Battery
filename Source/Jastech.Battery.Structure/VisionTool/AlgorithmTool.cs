@@ -976,7 +976,32 @@ namespace Jastech.Battery.Structure.VisionTool
                     break;
             }
 
-            return true;
+            rect1.Width = inspSizeX;
+            rect1.Height = inspSizeY;
+
+            rect2.Width = inspSizeX;
+            rect2.Height = inspSizeY;
+
+            rect1 = ShapeHelper.GetValidRectangle(rect1, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+            rect2 = ShapeHelper.GetValidRectangle(rect2, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+
+            List<Rectangle> rectList = new List<Rectangle>();
+            rectList.Add(rect1);
+            rectList.Add(rect2);
+
+            List<int> averageList = new List<int>();
+            foreach (Rectangle rect in rectList)
+            {
+                int average = ShapeHelper.GetAverageLevel(imageBuffer.ImageData, imageBuffer.ImageWidth, rect);
+                averageList.Add(average);
+            }
+
+            int diffLevel = averageList.Max() - averageList.Min();
+
+            if (diffLevel >= edgeLevel)
+                return true;
+
+            return false;
         }
     }
 
