@@ -328,7 +328,7 @@ namespace Jastech.Battery.Structure.VisionTool
                     referenceSizeY = surfaceParam.LineParam.LineSizeY;
                 }
 
-                var blobList = BlobContour(workBuff, workArea, threshold, 255);
+                var blobList = BlobContour(workBuff, imageBuffer.WorkBuffer.BuffWidth, imageBuffer.WorkBuffer.BuffHeight, workArea, threshold, 255);
 
                 foreach (var item in blobList)
                 {
@@ -470,7 +470,7 @@ namespace Jastech.Battery.Structure.VisionTool
                 workArea.Y = 0;
                 workArea.Height = buffHeight;
 
-                var blobList = BlobContour(diffBuff, workArea, threshold, 255);
+                var blobList = BlobContour(diffBuff, buffWidth, buffHeight, workArea, threshold, 255);
 
                 foreach (var item in blobList)
                 {
@@ -581,7 +581,7 @@ namespace Jastech.Battery.Structure.VisionTool
                         if (edgeRect.Bottom > inspArea.Bottom)
                             edgeRect.Height = inspArea.Bottom - edgeRect.Y;
 
-                        var blobList = BlobContour(imageBuffer.ImageData, edgeRect, threshold, 255);
+                        var blobList = BlobContour(imageBuffer.ImageData, imageBuffer.ImageWidth, imageBuffer.ImageHeight, edgeRect, threshold, 255);
 
                         foreach (var item in blobList)
                         {
@@ -618,7 +618,7 @@ namespace Jastech.Battery.Structure.VisionTool
                     inspArea.Width = pinholeRight - pinholeLeft;
                     threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.PinHoleEdgeParam.PinHoleLevel;
 
-                    var blobList = BlobContour(imageBuffer.ImageData, inspArea, threshold, 255);
+                    var blobList = BlobContour(imageBuffer.ImageData, imageBuffer.ImageWidth, imageBuffer.ImageHeight, inspArea, threshold, 255);
                     foreach (var item in blobList)
                     {
                         int blobLeft = item.Left;
@@ -691,6 +691,8 @@ namespace Jastech.Battery.Structure.VisionTool
                 var smallArea = ShapeHelper.GetValidRectangle(inspArea, smallBuffer.BufferWidth, smallBuffer.BufferHeight);
                 if (smallArea.Width < PixelLength40mm && smallArea.Height < PixelLength5mm)
                     continue;
+
+                BlobContour(smallBuffer.BwBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, smallArea, 250, 251);
             }
         }
 
@@ -884,25 +886,23 @@ namespace Jastech.Battery.Structure.VisionTool
             return false;
         }
 
-        private List<BlobContourResult> BlobContour(byte[] imageData, /*int width, int height,*/ Rectangle inputRect, int lowThreshold, int highThreshold)
+        private List<BlobContourResult> BlobContour(byte[] buffer, int bufferWidth, int bufferHeight, Rectangle inputRect, int lowThreshold, int highThreshold)
         {
-            int width = inputRect.Width;
-            int height = inputRect.Height;
-
-            if (ShapeHelper.CheckValidRectangle(inputRect, width, height) == false)
+            if (ShapeHelper.CheckValidRectangle(inputRect, bufferWidth, bufferHeight) == false)
                 return null;
+
+            //int x = inputRect.Left;
+            //int width = inputRect.Width;
+            //int height = inputRect.Height;
 
             List<BlobContourResult> resultList = new List<BlobContourResult>();
 
-            int x = inputRect.Left;
-            int y = 0;
+            byte[] tempBuff = new byte[inputRect.Width * inputRect.Height];
 
-            byte[] tempBuff = new byte[width * height];
-
-            for (int h = 0; h < height; h++)
+            for (int h = 0; h < inputRect.Height; h++)
             {
-                y = inputRect.Top + h;
-                Array.Copy(imageData, y * width + x, tempBuff, h * width, width);
+                int y = inputRect.Top + h;
+                Array.Copy(buffer, y * bufferWidth + inputRect.Left, tempBuff, h * inputRect.Width, inputRect.Width);
             }
 
             int fillValue = 0;
@@ -912,27 +912,27 @@ namespace Jastech.Battery.Structure.VisionTool
             else
                 fillValue = 255;
 
-            ShapeHelper.FillBound(tempBuff, width, height, fillValue);
+            ShapeHelper.FillBound(tempBuff, inputRect.Width, inputRect.Height, fillValue);
 
-            List<Point> pointList = ShapeHelper.GetPointListBetweenThresholdRange(imageData, width, height, new Point(0, 0), lowThreshold, highThreshold);
+            List<Point> pointList = ShapeHelper.GetPointListBetweenThresholdRange(buffer, inputRect.Width, inputRect.Height, new Point(0, 0), lowThreshold, highThreshold);
 
             foreach (var point in pointList)
             {
                 if (point.X == -1 && point.Y == -1)
                     break;
 
-                Rectangle foundrect = ShapeHelper.DetectEdge(imageData, width, height, point, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
+                Rectangle foundrect = ShapeHelper.DetectEdge(buffer, inputRect.Width, inputRect.Height, point, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
 
                 if (foundrect.Left == 0 || foundrect.Top == 0 || foundrect.Right == 0 || foundrect.Bottom == 0)
                     break;
 
                 if (foundrect.Left == -1 || foundrect.Top == -1 || foundrect.Right == -1 || foundrect.Bottom == -1)
                 {
-                    imageData[point.Y * width + point.X] = (byte)fillValue;
+                    buffer[point.Y * inputRect.Width + point.X] = (byte)fillValue;
                     continue;
                 }
 
-                ShapeHelper.FillValueWithCount(imageData, foundrect, fillValue, lowThreshold, highThreshold, out int fillCount);
+                ShapeHelper.FillValueWithCount(buffer, foundrect, fillValue, lowThreshold, highThreshold, out int fillCount);
 
                 BlobContourResult blobContourResult = new BlobContourResult();
 
