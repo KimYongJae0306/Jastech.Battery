@@ -12,23 +12,15 @@ using Jastech.Framework.Winform.Helper;
 using Jastech.Battery.Structure;
 using Jastech.Battery.Structure.Parameters;
 using OpenTK.Platform.Windows;
+using MetroFramework.Controls;
+using MetroFramework.Components;
 
 namespace Jastech.Battery.Winform.UI.Controls
 {
     public partial class DistanceControl : UserControl
     {
-
         #region 필드
         private DistanceParam _distanceParam = null;
-        #endregion
-
-        #region 속성
-        #endregion
-
-        #region 이벤트
-        #endregion
-
-        #region 델리게이트
         #endregion
 
         #region 생성자
@@ -63,6 +55,9 @@ namespace Jastech.Battery.Winform.UI.Controls
             lblROIMarginTop.Text = _distanceParam.ROIMarginTop.ToString();
             lblROIMarginRight.Text = _distanceParam.ROIMarginRight.ToString();
             lblROIMarginBottom.Text = _distanceParam.ROIMarginBottom.ToString();
+
+            mtgShapeLeftSlitted.Checked = _distanceParam.LeftElectrodeSlitted;
+            mtgShapeRightSlitted.Checked = _distanceParam.RightElectrodeSlitted;
         }
 
         private void DrawComboboxCenterAlign(object sender, DrawItemEventArgs e)
@@ -213,6 +208,24 @@ namespace Jastech.Battery.Winform.UI.Controls
 
             var control = sender as Control;
             _distanceParam.ROIThreshold = KeyPadHelper.SetLabelIntegerData(control);
+        }
+
+        private void mtgShapeLeftSlitted_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control = sender as MetroToggle;
+            _distanceParam.LeftElectrodeSlitted = control.Checked;
+        }
+
+        private void mtgShapeRightSlitted_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control = sender as MetroToggle;
+            _distanceParam.RightElectrodeSlitted = control.Checked;
         }
     }
 }

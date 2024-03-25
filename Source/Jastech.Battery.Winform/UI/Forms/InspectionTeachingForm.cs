@@ -57,9 +57,9 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private DistanceControl DistanceControl { get; set; } = null;
 
-        private CoatingControl CoatingControl { get; set; } = null;
+        private SurfaceControl SurfaceControl { get; set; } = null;
 
-        private NonCoatingControl NonCoatingControl { get; set; } = null;
+        private DistanceInspResult LastDistanceResult { get; set; } = null;
         #endregion
 
         #region 이벤트
@@ -107,7 +107,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             //pnlDisplay.Controls.Add(DrawBoxControl);
 
             PixelValueGraphControl = new PixelValueGraphControl();
-            PixelValueGraphControl.DataPen = new Pen(Color.LightYellow);
+            PixelValueGraphControl.DataPen = new Pen(Color.DodgerBlue);
             PixelValueGraphControl.Dock = DockStyle.Fill;
             pnlGraph.Controls.Add(PixelValueGraphControl);
 
@@ -119,13 +119,9 @@ namespace Jastech.Battery.Winform.UI.Forms
             DistanceControl.Dock = DockStyle.Fill;
             pnlTeach.Controls.Add(DistanceControl);
 
-            CoatingControl = new CoatingControl();
-            CoatingControl.Dock = DockStyle.Fill;
-            pnlTeach.Controls.Add(CoatingControl);
-
-            NonCoatingControl = new NonCoatingControl();
-            NonCoatingControl.Dock = DockStyle.Fill;
-            pnlTeach.Controls.Add(NonCoatingControl);
+            SurfaceControl = new SurfaceControl();
+            SurfaceControl.Dock = DockStyle.Fill;
+            pnlTeach.Controls.Add(SurfaceControl);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -187,14 +183,9 @@ namespace Jastech.Battery.Winform.UI.Forms
             SelectPage(DisplayType.Distance);
         }
 
-        private void btnCoating_Click(object sender, EventArgs e)
+        private void btnSurface_Click(object sender, EventArgs e)
         {
-            SelectPage(DisplayType.Coating);
-        }
-
-        private void btnNonCoating_Click(object sender, EventArgs e)
-        {
-            SelectPage(DisplayType.NonCoating);
+            SelectPage(DisplayType.Surface);
         }
 
         private void SelectPage(DisplayType displayType)
@@ -230,14 +221,9 @@ namespace Jastech.Battery.Winform.UI.Forms
                     pnlTeach.Controls.Add(DistanceControl);
                     break;
 
-                case DisplayType.Coating:
-                    btnCoating.BackColor = _selectedColor;
-                    pnlTeach.Controls.Add(CoatingControl);
-                    break;
-
-                case DisplayType.NonCoating:
-                    btnNonCoating.BackColor = _selectedColor;
-                    pnlTeach.Controls.Add(NonCoatingControl);
+                case DisplayType.Surface:
+                    btnSurface.BackColor = _selectedColor;
+                    pnlTeach.Controls.Add(SurfaceControl);
                     break;
 
                 default:
@@ -254,10 +240,10 @@ namespace Jastech.Battery.Winform.UI.Forms
             Stopwatch stopwatch = Stopwatch.StartNew();
             WriteTactTime(stopwatch, "=================================Test Start=================================");
 
-            var model = ModelManager.Instance().CurrentModel as AppsInspModel;
-            DistanceParam distanceParam = model.GetUnit(UnitName.ToString())?.DistanceParam;
+            var unit = TeachingData.Instance().GetUnit(UnitName.ToString());
+            DistanceParam distanceParam = unit?.DistanceParam;
 
-            if (model == null)
+            if (unit == null)
             {
                 MessageBox.Show("CurrentModel이 Null 입니다.");
                 return;
@@ -272,7 +258,6 @@ namespace Jastech.Battery.Winform.UI.Forms
             SliceInspResult sliceInspResult = new SliceInspResult();
             AlgorithmTool algorithmTool = new AlgorithmTool();
 
-
             WriteTactTime(stopwatch, "Before converting image");
             _grayImage = ImageHelper.ConvertRGB24ToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요
             WriteTactTime(stopwatch, "After converting image to grayscale");
@@ -283,23 +268,25 @@ namespace Jastech.Battery.Winform.UI.Forms
             imageBuffer.ImageHeight = _orgBmp.Height;
             WriteTactTime(stopwatch, "After converting image to byte array");
 
-            Rectangle searchROI = new Rectangle
+
+            WriteTactTime(stopwatch, "Initializing finished");
+
+            DistanceInspResult distanceInspResult = new DistanceInspResult();
+            distanceParam._Roi = new Rectangle
             {
                 X = distanceParam.ROIMarginLeft,
                 Y = distanceParam.ROIMarginLeft,
                 Width = imageBuffer.ImageWidth - distanceParam.ROIMarginRight,
                 Height = imageBuffer.ImageHeight - distanceParam.ROIMarginBottom,
             };
-
-            WriteTactTime(stopwatch, "Initializing finished");
-
-            DistanceInspResult distanceInspResult = algorithmTool.ExecuteDistanceInspection(imageBuffer, distanceParam, searchROI);
+            algorithmTool.FindSearchAreas(distanceInspResult, imageBuffer, distanceParam);
+            algorithmTool.FindInspectionAreas(distanceInspResult, imageBuffer, distanceParam);
             sliceInspResult.DistanceResult = distanceInspResult;
 
             WriteTactTime(stopwatch, "DistanceInspecitonFinished");
 
             // 추가 검증용 코드
-            PixelValueGraphControl.SetData(distanceInspResult.HorizontalDifferentials.ToArray());
+            LastDistanceResult = distanceInspResult;
             ShowTestResults(distanceInspResult);
 
             WriteTactTime(stopwatch, "=================================Test Finished==============================");
@@ -311,33 +298,33 @@ namespace Jastech.Battery.Winform.UI.Forms
                 return;
 
             int imageWidth = _orgBmp.Width;
-
-            Pen coatingWidthPen = new Pen(Color.LawnGreen, imageWidth/100)
+            int penSize = (int)(Math.Sqrt(imageWidth) / Math.Log10(imageWidth));
+            Pen coatingWidthPen = new Pen(Color.LawnGreen, penSize)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen nonCoatingWidthPen = new Pen(Color.Crimson, imageWidth / 100)
+            Pen nonCoatingWidthPen = new Pen(Color.Crimson, penSize)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen coatingROIpen = new Pen(Color.Yellow, imageWidth / 100) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
-            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, imageWidth / 100) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            Pen coatingROIpen = new Pen(Color.Yellow, penSize) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, penSize) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
             Bitmap convertedBitmap = ImageHelper.ConvertGrayscaleToRGB24(_orgBmp);
             {
                 using (Graphics g = Graphics.FromImage(convertedBitmap))
                 {
-                    foreach (Rectangle coatingArea in distanceResult.CoatingAreas)
-                    {
-                        g.DrawLine(coatingWidthPen, coatingArea.Left, coatingArea.Top + coatingArea.Height / 2, coatingArea.Right, coatingArea.Top + coatingArea.Height / 2);
-                        g.DrawRectangle(coatingROIpen, coatingArea.Left, coatingArea.Top, coatingArea.Width, coatingArea.Height);
-                    }
-
                     foreach (Rectangle nonCoatingArea in distanceResult.NonCoatingAreas)
                     {
                         g.DrawLine(nonCoatingWidthPen, nonCoatingArea.Left, nonCoatingArea.Top + nonCoatingArea.Height / 2, nonCoatingArea.Right, nonCoatingArea.Top + nonCoatingArea.Height / 2);
                         g.DrawRectangle(nonCoatingROIpen, nonCoatingArea.Left, nonCoatingArea.Top, nonCoatingArea.Width, nonCoatingArea.Height);
+                    }
+
+                    foreach (Rectangle coatingArea in distanceResult.CoatingAreas)
+                    {
+                        g.DrawLine(coatingWidthPen, coatingArea.Left, coatingArea.Top + coatingArea.Height / 2, coatingArea.Right, coatingArea.Top + coatingArea.Height / 2);
+                        g.DrawRectangle(coatingROIpen, coatingArea.Left, coatingArea.Top, coatingArea.Width, coatingArea.Height);
                     }
 
                     g.Save();
@@ -394,12 +381,35 @@ namespace Jastech.Battery.Winform.UI.Forms
             string fileName = Path.Combine(ConfigSet.Instance().Path.Model, model.Name, InspModel.FileName);
             InspModelService?.Save(fileName, model);
         }
+
+        private void testVerticalSamplingResult_Click(object sender, EventArgs e)
+        {
+            if (LastDistanceResult != null)
+                PixelValueGraphControl.SetData(LastDistanceResult?.VerticalSamplingResults.ToArray());
+        }
+
+        private void testHorizontalSamplingResult_Click(object sender, EventArgs e)
+        {
+            if (LastDistanceResult != null)
+                PixelValueGraphControl.SetData(LastDistanceResult?.HorizontalSamplingResults.ToArray());
+        }
+
+        private void testVerticalDerivedResult_Click(object sender, EventArgs e)
+        {
+            if (LastDistanceResult != null)
+                PixelValueGraphControl.SetData(LastDistanceResult?.VerticalDifferentials.ToArray());
+        }
+
+        private void testHorizontalDerivedResult_Click(object sender, EventArgs e)
+        {
+            if (LastDistanceResult != null)
+                PixelValueGraphControl.SetData(LastDistanceResult?.HorizontalDifferentials.ToArray());
+        }
     }
 
     public enum DisplayType
     {
         Distance,
-        Coating,
-        NonCoating,
+        Surface,
     }
 }
