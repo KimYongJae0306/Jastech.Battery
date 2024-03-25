@@ -59,11 +59,13 @@ namespace Jastech.Battery.Structure.Data
             if (imageData == null || buffWidth < 1 || buffHeight < 1)
                 return;
 
+            int dataLength = buffWidth * buffHeight;
+
             if (OriginBuffer == null)
             {
-                OriginBuffer = new byte[buffWidth * buffHeight];
-                BwBuffer = new byte[buffWidth * buffHeight];
-                MasterBuffer = new byte[buffWidth * buffHeight];
+                OriginBuffer = new byte[dataLength];
+                BwBuffer = new byte[dataLength];
+                MasterBuffer = new byte[dataLength];
 
                 //ProjectionWidth = new byte[buffWidth];
                 //MagnifyFactor = new double[buffWidth];
@@ -81,9 +83,9 @@ namespace Jastech.Battery.Structure.Data
             {
                 if (buffWidth != ImageWidth || buffHeight != ImageHeight)
                 {
-                    Array.Resize(ref OriginBuffer, buffWidth * buffHeight);
-                    Array.Resize(ref BwBuffer, buffWidth * buffHeight);
-                    Array.Resize(ref MasterBuffer, buffWidth * buffHeight);
+                    Array.Resize(ref OriginBuffer, dataLength);
+                    Array.Resize(ref BwBuffer, dataLength);
+                    Array.Resize(ref MasterBuffer, dataLength);
 
                     //Array.Resize(ref ProjectionWidth, buffWidth);
                     //Array.Resize(ref MagnifyFactor, buffWidth);
@@ -119,11 +121,11 @@ namespace Jastech.Battery.Structure.Data
     {
         public byte[] OriginBuffer = null;
 
-        //public byte[] StretchBuffer = null;
+        public byte[] StretchBuffer = null;
 
-        //public byte[] MagnifiedBuffer = null;
+        public byte[] MagnifiedBuffer = null;
 
-        //public byte[] BwBuffer = null;
+        public byte[] BwBuffer = null;
 
         public byte[] AverageBuffer = null;
 
@@ -141,9 +143,9 @@ namespace Jastech.Battery.Structure.Data
             if (OriginBuffer != null)
             {
                 OriginBuffer = new byte[buffWidth * buffHeight];
-                //StretchBuffer = new byte[buffWidth * buffHeight];
-                //MagnifiedBuffer = new byte[buffWidth * buffHeight];
-                //BwBuffer = new byte[buffWidth * buffHeight];
+                StretchBuffer = new byte[buffWidth * buffHeight];
+                MagnifiedBuffer = new byte[buffWidth * buffHeight];
+                BwBuffer = new byte[buffWidth * buffHeight];
                 AverageBuffer = new byte[buffWidth * buffHeight];
                 DifferentialBuffer = new byte[buffWidth * buffHeight];
             }
@@ -152,9 +154,9 @@ namespace Jastech.Battery.Structure.Data
                 if (buffWidth != BufferWidth || buffHeight != BufferHeight)
                 {
                     Array.Resize(ref OriginBuffer, buffWidth * buffHeight);
-                    //Array.Resize(ref StretchBuffer, buffWidth * buffHeight);
-                    //Array.Resize(ref MagnifiedBuffer, buffWidth * buffHeight);
-                    //Array.Resize(ref BwBuffer, buffWidth * buffHeight);
+                    Array.Resize(ref StretchBuffer, buffWidth * buffHeight);
+                    Array.Resize(ref MagnifiedBuffer, buffWidth * buffHeight);
+                    Array.Resize(ref BwBuffer, buffWidth * buffHeight);
                     Array.Resize(ref AverageBuffer, buffWidth * buffHeight);
                     Array.Resize(ref DifferentialBuffer, buffWidth * buffHeight);
                 }
@@ -169,9 +171,9 @@ namespace Jastech.Battery.Structure.Data
         private void ClearBuffer()
         {
             Array.Clear(OriginBuffer, 0, BufferWidth * BufferHeight);
-            //Array.Clear(StretchBuffer, 0, BufferWidth * BufferHeight);
-            //Array.Clear(MagnifiedBuffer, 0, BufferWidth * BufferHeight);
-            //Array.Clear(BwBuffer, 0, BufferWidth * BufferHeight);
+            Array.Clear(StretchBuffer, 0, BufferWidth * BufferHeight);
+            Array.Clear(MagnifiedBuffer, 0, BufferWidth * BufferHeight);
+            Array.Clear(BwBuffer, 0, BufferWidth * BufferHeight);
             Array.Clear(AverageBuffer, 0, BufferWidth * BufferHeight);
             Array.Clear(DifferentialBuffer, 0, BufferWidth * BufferHeight);
         }
@@ -179,9 +181,9 @@ namespace Jastech.Battery.Structure.Data
         public void Dispose()
         {
             OriginBuffer = null;
-            //StretchBuffer = null;
-            //MagnifiedBuffer = null;
-            //BwBuffer = null;
+            StretchBuffer = null;
+            MagnifiedBuffer = null;
+            BwBuffer = null;
             AverageBuffer = null;
             DifferentialBuffer = null;
         }
@@ -255,12 +257,9 @@ namespace Jastech.Battery.Structure.Data
                 for (int w = 0; w < buffWidth; w++)
                 {
                     int x = WorkArea.Left + w * workRatioX;
-
                     OriginBuffer[h * BuffWidth + w] = imageData[y * imageWidth + x];
                 }
             }
-
-            return;
         }
 
         public byte[] GetWorkBuffer()
