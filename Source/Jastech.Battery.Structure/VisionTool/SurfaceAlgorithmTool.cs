@@ -1,23 +1,10 @@
 ﻿using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Structure.Parameters;
-using Jastech.Framework.Util.Helper;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design;
-using System.Xml.Schema;
-using Emgu.CV.BgSegm;
-using System.Reflection;
-using System.Data;
-using Emgu.CV.Cuda;
-using System.Security.Cryptography;
-using System.Diagnostics;
-using System.Security.Principal;
 
 namespace Jastech.Battery.Structure.VisionTool
 {
@@ -32,6 +19,8 @@ namespace Jastech.Battery.Structure.VisionTool
         public const double PixelLength40mm = 40.0 / CalibrationX;
         #endregion
 
+        public double PixelResolution_mm = 0.0423;
+
         public void Inspect()
         {
         }
@@ -41,32 +30,13 @@ namespace Jastech.Battery.Structure.VisionTool
 
         }
 
-        public void SetParam()
-        {
-
-        }
-
-        public Rectangle GetInspectionArea(int maxLaneCount)
-        {
-            Rectangle rect = new Rectangle();
-
-            int x1 = 0;
-            int y1 = 0;
-
-            int x2 = 0;
-            int y2 = 0;
-
-
-            return rect;
-        }
-
-        private void CheckCoatingArea_Line(ImageBuffer imageBuffer, List<SurfaceInfo> coatingInfoList, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, bool isTapeInsp)
+        public void CheckCoatingArea_Line(ImageBuffer imageBuffer, List<SurfaceInfo> coatingInfoList, SurfaceParam surfaceParam, SurfaceInspResult surfaceInspResult, bool isTapeInsp)
         {
             if (surfaceParam.LineParam.EnableCheckLine == false)
                 return;
 
-            int pix5mm = (int)(5.0 / CalibrationX);
-            int pix40mm = (int)(40.0 / CalibrationX);
+            int pix5mm = (int)(5.0 / PixelResolution_mm);
+            int pix40mm = (int)(40.0 / PixelResolution_mm);
 
             int workRatioX = surfaceParam.LineParam.WorkRatioX;
             int workRatioY = surfaceParam.LineParam.WorkRatioY;

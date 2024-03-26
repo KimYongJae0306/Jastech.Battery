@@ -255,14 +255,13 @@ namespace Jastech.Battery.Winform.UI.Forms
                 return;
             }
 
-
             SliceInspResult sliceInspResult = new SliceInspResult();
             var camera = LineCamera.Camera;
-            double resolution_mm = camera.PixelResolution_um / camera.LensScale / 1000;
+			double resolution_mm = (camera.PixelResolution_um / camera.LensScale) / 1000;
+
             FindAreaAlgorithmTool findAreaAlgorithmTool = new FindAreaAlgorithmTool();
             findAreaAlgorithmTool.pixelResolution_mm = resolution_mm;
 
-            SurfaceAlgorithmTool surfaceAlgorithmTool = new SurfaceAlgorithmTool();
 
             WriteTactTime(stopwatch, "Before converting image");
             _grayImage = ImageHelper.ConvertRGB24ToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요
@@ -292,9 +291,23 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             // 추가 검증용 코드
             LastDistanceResult = distanceInspResult;
-            ShowTestResults(distanceInspResult);
+            //ShowTestResults(distanceInspResult);
 
             WriteTactTime(stopwatch, "=================================Test Finished==============================");
+
+            WriteTactTime(stopwatch, "=============================Start Surface Test=============================");
+            SurfaceParam surfaceParam = unit?.SurfaceParam;
+            SurfaceInspResult surfaceInspResult = new SurfaceInspResult();
+
+            SurfaceAlgorithmTool surfaceAlgorithmTool = new SurfaceAlgorithmTool();
+            surfaceAlgorithmTool.PixelResolution_mm = resolution_mm;
+
+            var coatingInfoList = distanceInspResult.CoatingInfoList;
+
+            surfaceParam.LineParam.EnableCheckLine = true;
+            surfaceAlgorithmTool.CheckCoatingArea_Line(imageBuffer, coatingInfoList, surfaceParam, surfaceInspResult, true);
+
+            sliceInspResult.SurfaceInspResult = surfaceInspResult;
         }
 
         private void ShowTestResults(FindAreaResult distanceResult)
