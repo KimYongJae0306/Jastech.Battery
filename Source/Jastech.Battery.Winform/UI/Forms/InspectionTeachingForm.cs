@@ -257,9 +257,10 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             SliceInspResult sliceInspResult = new SliceInspResult();
             var camera = LineCamera.Camera;
-            double resolution_mm = (camera.PixelResolution_um / camera.LensScale) / 1000;
+			double resolution_mm = (camera.PixelResolution_um / camera.LensScale) / 1000;
+
             FindAreaAlgorithmTool findAreaAlgorithmTool = new FindAreaAlgorithmTool();
-            findAreaAlgorithmTool.pixelResolution_mm = resolution_mm;
+
 
             WriteTactTime(stopwatch, "Before converting image");
             _grayImage = ImageHelper.ConvertRGB24ToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요

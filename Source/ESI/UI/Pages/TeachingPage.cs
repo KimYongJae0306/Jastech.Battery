@@ -55,6 +55,7 @@ namespace ESI.UI.Pages
             //form.InspDirection = InspDirection.Lower;
             form.LineCamera = LineCameraManager.Instance().GetLineCamera("LowerCamera");
             form.UnitName = UnitName.Lower;
+            form.LineCamera = LineCameraManager.Instance().GetLineCamera("LowerCamera");
             form.InspModelService = ESIInspModelService;
             form.ShowDialog();
         }
@@ -65,6 +66,7 @@ namespace ESI.UI.Pages
             //form.InspDirection = InspDirection.Upper;
             form.LineCamera = LineCameraManager.Instance().GetLineCamera("UpperCamera");
             form.UnitName = UnitName.Upper;
+            form.LineCamera = LineCameraManager.Instance().GetLineCamera("UpperCamera");
             form.InspModelService = ESIInspModelService;
             form.ShowDialog();
         }
