@@ -33,13 +33,20 @@ namespace Jastech.Battery.Structure.Data
     public class SurfaceInfo
     {
         #region 속성
-        public int Lane { get; set; }
+        public int Lane { get; set; } = 0;
 
-        public string Type { get; set; }
+        public string Type { get; set; } = "";
 
-        public Rectangle Area { get; set; }
+        public Rectangle Area { get; set; } = Rectangle.Empty;
 
-        public double LevelAverage { get; set; }
+        public double LevelAverage { get; set; } = 0.0;
+        #endregion
+
+        #region 메서드
+        public SurfaceInfo Clone()
+        {
+            return MemberwiseClone() as SurfaceInfo;
+        }
         #endregion
     }
 }

@@ -54,6 +54,7 @@ namespace ESI.UI.Pages
             InspectionTeachingForm form = new InspectionTeachingForm();
             //form.InspDirection = InspDirection.Lower;
             form.UnitName = UnitName.Lower;
+            form.LineCamera = LineCameraManager.Instance().GetLineCamera("LowerCamera");
             form.InspModelService = ESIInspModelService;
             form.ShowDialog();
         }
@@ -63,6 +64,7 @@ namespace ESI.UI.Pages
             InspectionTeachingForm form = new InspectionTeachingForm();
             //form.InspDirection = InspDirection.Upper;
             form.UnitName = UnitName.Upper;
+            form.LineCamera = LineCameraManager.Instance().GetLineCamera("UpperCamera");
             form.InspModelService = ESIInspModelService;
             form.ShowDialog();
         }

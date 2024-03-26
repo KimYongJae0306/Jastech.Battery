@@ -94,14 +94,13 @@ namespace Jastech.Battery.Structure.VisionTool
                 double coatingAreaWidthMin = pixelResolution_mm * parameters.CoatingWidthMin;
                 double coatingAreaWidthMax = pixelResolution_mm * parameters.CoatingWidthMax;
                 var coatingPeakPairs = MakePeakPairs(horizontalLevelDifferences, parameters.CoatingThreshold, coatingAreaWidthMin, coatingAreaWidthMax);
-                //coatingInfoList = MakeAreaFromPeakPairs(coatingPeakPairs, searchArea);
-                //coatingInfoList.AddRange(MakeAreaFromPeakPairs());
+                coatingInfoList.AddRange(MakeSurfaceInfoList("Coating", parameters.LaneCount, coatingPeakPairs, searchArea));
 
                 // 미분 데이터에서 피크 쌍을 추출하여 NonCoatingArea를 저장한다.
                 double nonCoatingAreaWidthMin = pixelResolution_mm * parameters.NonCoatingWidthMin;
                 double nonCoatingAreaWidthMax = pixelResolution_mm * parameters.NonCoatingWidthMax;
                 var nonCoatingPeakPairs = MakePeakPairs(horizontalLevelDifferences, parameters.NonCoatingThreshold, nonCoatingAreaWidthMin, nonCoatingAreaWidthMax);
-                //nonCoatingInfoList = MakeAreaFromPeakPairs(nonCoatingPeakPairs, searchArea);
+                nonCoatingInfoList.AddRange(MakeSurfaceInfoList("NonCoating", parameters.LaneCount, nonCoatingPeakPairs, searchArea));
             }
 
             distanceResult.CoatingInfoList = coatingInfoList;
@@ -153,23 +152,57 @@ namespace Jastech.Battery.Structure.VisionTool
             return positionIndices;
         }
 
-        private List<SurfaceInfo> MakeSurfaceInfoList(string type, List<(int, int)> peakPairs, Rectangle searchArea, int laneCount)
+        private List<SurfaceInfo> MakeSurfaceInfoList(string type, int laneCount, List<(int, int)> peakPairs, Rectangle searchArea)
         {
             List<SurfaceInfo> surfaceInfoList = new List<SurfaceInfo>();
 
-            double aaaaaaaaaaaa = searchArea.Width / laneCount;
-            foreach ((int startX, int endX) in peakPairs)
+            double laneDivider = (double)searchArea.Width / laneCount;
+            for (int index = 0; index < peakPairs.Count; index++)
             {
-                SurfaceInfo surfaceInfo = new SurfaceInfo();
-                surfaceInfo.Type = type;
-                surfaceInfo.Area = new Rectangle
+                (int startX, int endX) = peakPairs[index];
+
+                if (type != "NonCoating" || index == 0 || index == peakPairs.Count - 1)
                 {
-                    X = searchArea.Left + startX,
-                    Y = searchArea.Top,
-                    Width = endX - startX,
-                    Height = searchArea.Height
-                };
-                surfaceInfoList.Add(surfaceInfo);
+                    SurfaceInfo surfaceInfo = new SurfaceInfo();
+                    surfaceInfo.Type = type;
+                    surfaceInfo.Area = new Rectangle
+                    {
+                        X = searchArea.Left + startX,
+                        Y = searchArea.Top,
+                        Width = endX - startX,
+                        Height = searchArea.Height
+                    };
+                    surfaceInfo.Lane = Math.Max(1, (int)Math.Ceiling(surfaceInfo.Area.X / laneDivider));
+                    surfaceInfoList.Add(surfaceInfo);
+                }
+                else
+                {
+                    int halfWidth = (endX - startX) / 2;
+
+                    SurfaceInfo leftSurfaceInfo = new SurfaceInfo();
+                    leftSurfaceInfo.Type = type;
+                    leftSurfaceInfo.Area = new Rectangle
+                    {
+                        X = searchArea.Left + startX,
+                        Y = searchArea.Top,
+                        Width = halfWidth,
+                        Height = searchArea.Height
+                    };
+                    leftSurfaceInfo.Lane = Math.Max(1, (int)Math.Ceiling(leftSurfaceInfo.Area.X / laneDivider));
+                    surfaceInfoList.Add(leftSurfaceInfo);
+
+                    SurfaceInfo rightSurfaceInfo = new SurfaceInfo();
+                    rightSurfaceInfo.Type = type;
+                    rightSurfaceInfo.Area = new Rectangle
+                    {
+                        X = searchArea.Left + startX + halfWidth,
+                        Y = searchArea.Top,
+                        Width = halfWidth,
+                        Height = searchArea.Height
+                    };
+                    rightSurfaceInfo.Lane = leftSurfaceInfo.Lane + 1;
+                    surfaceInfoList.Add(rightSurfaceInfo);
+                }
             }
 
             return surfaceInfoList;
