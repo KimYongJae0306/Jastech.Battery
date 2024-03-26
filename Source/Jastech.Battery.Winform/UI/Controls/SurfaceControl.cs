@@ -22,6 +22,7 @@ namespace Jastech.Battery.Winform.UI.Controls
         public SurfaceControl()
         {
             InitializeComponent();
+            UpdateCaptions();
         }
         #endregion
 
@@ -60,29 +61,13 @@ namespace Jastech.Battery.Winform.UI.Controls
             }
         }
 
-        //private void UpdateCaptions()
-        //{
-        //    if (_distanceParam == null)
-        //        return;
+        private void UpdateCaptions()
+        {
+            if (_surfaceParam == null)
+                return;
 
-        //    lblCoatingMinimumLength.Text = _distanceParam.CoatingMinimumLength.ToString();
-        //    lblCoatingThreshold.Text = _distanceParam.CoatingThreshold.ToString();
-        //    lblCoatingMinimumWidth.Text = _distanceParam.CoatingMinimumWidth.ToString();
-        //    lblCoatingMaximumWidth.Text = _distanceParam.CoatingMaximumWidth.ToString();
-
-        //    lblNonCoatingThreshold.Text = _distanceParam.NonCoatingThreshold.ToString();
-        //    lblNonCoatingMinimumWidth.Text = _distanceParam.NonCoatingMinimumWidth.ToString();
-        //    lblNonCoatingMaximumWidth.Text = _distanceParam.NonCoatingMaximumWidth.ToString();
-
-        //    lblROIThreshold.Text = _distanceParam.ROIThreshold.ToString();
-        //    lblROIMarginLeft.Text = _distanceParam.ROIMarginLeft.ToString();
-        //    lblROIMarginTop.Text = _distanceParam.ROIMarginTop.ToString();
-        //    lblROIMarginRight.Text = _distanceParam.ROIMarginRight.ToString();
-        //    lblROIMarginBottom.Text = _distanceParam.ROIMarginBottom.ToString();
-
-        //    mtgShapeLeftSlitted.Checked = _distanceParam.LeftElectrodeSlitted;
-        //    mtgShapeRightSlitted.Checked = _distanceParam.RightElectrodeSlitted;
-        //}
+            
+        }
         #endregion
     }
 }

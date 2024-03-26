@@ -10,6 +10,7 @@ namespace Jastech.Battery.Structure.Parameters
         public int ImageWidth { get; set; } = 0;
 
         public int ImageHeight { get; set; } = 0;
+
         public int CornerMargin { get; set; } = 0;
 
         public int CoatingEdgeLevel { get; set; } = 0;

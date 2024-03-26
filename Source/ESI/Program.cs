@@ -1,4 +1,4 @@
-﻿using Jastech.Battery.Structure.Parameters;
+﻿using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Winform;
 using Jastech.Battery.Winform.Forms;
 using Jastech.Battery.Winform.Settings;

@@ -41,6 +41,8 @@ namespace Jastech.Battery.Winform.UI.Controls
             if (_distanceParam == null)
                 return;
 
+            cmbLaneSelection.Text = _distanceParam.LaneCount.ToString();
+
             lblCoatingMinimumLength.Text = _distanceParam.CoatingMinimumLength.ToString();
             lblCoatingThreshold.Text = _distanceParam.CoatingThreshold.ToString();
             lblCoatingMinimumWidth.Text = _distanceParam.CoatingMinimumWidth.ToString();
@@ -226,6 +228,15 @@ namespace Jastech.Battery.Winform.UI.Controls
 
             var control = sender as MetroToggle;
             _distanceParam.RightElectrodeSlitted = control.Checked;
+        }
+
+        private void cmbLaneSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_distanceParam == null)
+                return;
+
+            var control = sender as ComboBox;
+            _distanceParam.LaneCount = Convert.ToInt32(control.Text);
         }
     }
 }

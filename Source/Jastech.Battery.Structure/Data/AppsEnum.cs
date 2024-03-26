@@ -11,4 +11,11 @@ namespace Jastech.Battery.Structure.Data
         Upper,
         Lower,
     }
+    public enum ProcessType
+    {
+        None,
+        Coating,
+        Press,
+        Slitting,
+    }
 }

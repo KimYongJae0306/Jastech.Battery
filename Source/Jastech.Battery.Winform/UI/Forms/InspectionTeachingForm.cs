@@ -281,6 +281,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             };
             algorithmTool.FindSearchAreas(distanceInspResult, imageBuffer, distanceParam);
             algorithmTool.FindInspectionAreas(distanceInspResult, imageBuffer, distanceParam);
+            algorithmTool.SeparateRegionsByLane(distanceInspResult, distanceParam);
             sliceInspResult.DistanceResult = distanceInspResult;
 
             WriteTactTime(stopwatch, "DistanceInspecitonFinished");

@@ -16,6 +16,8 @@ using System.Reflection;
 using System.Data;
 using Emgu.CV.Cuda;
 using System.Security.Cryptography;
+using System.Diagnostics;
+using System.Security.Principal;
 
 namespace Jastech.Battery.Structure.VisionTool
 {
@@ -1008,12 +1010,12 @@ namespace Jastech.Battery.Structure.VisionTool
     public partial class AlgorithmTool
     {
         #region 폭 검사 관련 메소드
-        public void FindSearchAreas(DistanceInspResult distanceResult, ImageBuffer imageBuffer, DistanceParam parameters)
+        public bool FindSearchAreas(DistanceInspResult distanceResult, ImageBuffer imageBuffer, DistanceParam parameters)
         {
             if (imageBuffer == null || imageBuffer.ImageData == null)
-                return;
+                return false;
             if (distanceResult == null || parameters == null)
-                return;
+                return false;
 
             var Roi = parameters._Roi;
 
@@ -1041,14 +1043,16 @@ namespace Jastech.Battery.Structure.VisionTool
             distanceResult.VerticalSamplingResults = verticalSamplingResult;
             distanceResult.VerticalDifferentials = verticalLevelDifferences;
             distanceResult.SearchAreas = searchAreas;
+
+            return true;
         }
 
-        public void FindInspectionAreas(DistanceInspResult distanceResult, ImageBuffer imageBuffer, DistanceParam parameters)
+        public bool FindInspectionAreas(DistanceInspResult distanceResult, ImageBuffer imageBuffer, DistanceParam parameters)
         {
             if (imageBuffer == null || imageBuffer.ImageData.Length == 0)
-                return;
+                return false;
             if (distanceResult == null || distanceResult.SearchAreas.Count == 0 || parameters == null)
-                return;
+                return false;
 
             var coatingAreas = new List<Rectangle>();
             var nonCoatingAreas = new List<Rectangle>();
@@ -1088,20 +1092,63 @@ namespace Jastech.Battery.Structure.VisionTool
             distanceResult.NonCoatingAreas = nonCoatingAreas;
             distanceResult.HorizontalSamplingResults = horizontalSamplingResult;
             distanceResult.HorizontalDifferentials = horizontalLevelDifferences;
+
+            return true;
         }
 
-        public void SeparateRegionsByLane(DistanceInspResult distanceResult, DistanceParam parameters)
+        public bool SeparateRegionsByLane(DistanceInspResult distanceResult, DistanceParam parameters)
         {
             if (distanceResult == null || parameters == null)
-                return;
+                return false;
 
+            int laneCount = parameters.LaneCount;
+            if (laneCount < 1)
+            {
+                Debug.WriteLine("LaneCount is under 1");
+                return false;
+            }
+            else if (distanceResult.CoatingAreas.Count != laneCount || distanceResult.CoatingAreas.Count == 0)
+            {
+                Debug.WriteLine("Coating Areas not matched with LaneCount");
+                return false;
+            }
+            List<Rectangle> separatedAreas = new List<Rectangle>();
+            for (int index = 0; index < distanceResult.NonCoatingAreas.Count; index++)
+            {
+                if (index == 0 || index == distanceResult.NonCoatingAreas.Count - 1)
+                    separatedAreas.Add(distanceResult.NonCoatingAreas[index]);
+                else
+                {
+                    Rectangle leftArea = new Rectangle
+                    {
+                        X = distanceResult.NonCoatingAreas[index].X,
+                        Y = distanceResult.NonCoatingAreas[index].Y,
+                        Width = distanceResult.NonCoatingAreas[index].Width / 2,
+                        Height = distanceResult.NonCoatingAreas[index].Height,
+                    };
+                    Rectangle rightArea = new Rectangle
+                    {
+                        X = distanceResult.NonCoatingAreas[index].X + (distanceResult.NonCoatingAreas[index].Width / 2),
+                        Y = distanceResult.NonCoatingAreas[index].Y,
+                        Width = distanceResult.NonCoatingAreas[index].Width / 2,
+                        Height = distanceResult.NonCoatingAreas[index].Height,
+                    };
+                    separatedAreas.Add(leftArea);
+                    separatedAreas.Add(rightArea);
+                }
+            }
 
+            distanceResult.NonCoatingAreas = separatedAreas;
+            return true;
         }
 
-        public void CaluateAveragesAreas(DistanceInspResult distanceResult)
+        public bool CaluateAveragesAreas(DistanceInspResult distanceResult)
         {
             if (distanceResult == null)
-                return;
+                return false;
+
+
+            return true;
         }
 
         private double GetHorizontalMeanSampledLevel(DistanceParam distanceParam, ImageBuffer image, int rowStartIndex, int rowEndIndex, int horizontalOffset)
