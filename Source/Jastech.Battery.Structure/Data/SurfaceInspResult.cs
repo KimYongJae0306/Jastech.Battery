@@ -20,6 +20,8 @@ namespace Jastech.Battery.Structure.Data
         public List<int> CoatingAverageLevel { get; set; } = new List<int>();
 
         public List<int> DoubleCoatingPosY { get; set; } = new List<int>();
+
+        public List<DefectInfo> DefectList { get; set; } = new List<DefectInfo>();
         #endregion
 
         #region 이벤트
