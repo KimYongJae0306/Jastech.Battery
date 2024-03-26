@@ -23,6 +23,7 @@ namespace Jastech.Battery.Structure.VisionTool
                 return false;
 
             var Roi = parameters._Roi;
+            double pixelLength_mm = 1 / pixelResolution_mm;
 
             // 수직방향 샘플링 결과를 저장한다.
             var verticalSamplingResult = new List<byte>();
@@ -37,7 +38,7 @@ namespace Jastech.Battery.Structure.VisionTool
             verticalLevelDifferences[verticalLevelDifferences.Count - 1] = byte.MaxValue;
 
             // 피크 쌍 추출
-            double minimumSearchAreaHeight = pixelResolution_mm * parameters.CoatingLengthMin;
+            double minimumSearchAreaHeight = pixelLength_mm * parameters.CoatingLengthMin;
             double maximumSearchAreaHeight = Roi.Height;
             var verticalPeaks = MakePeakPairs(verticalLevelDifferences, parameters.ROIThreshold, minimumSearchAreaHeight, maximumSearchAreaHeight);
 
@@ -69,6 +70,8 @@ namespace Jastech.Battery.Structure.VisionTool
             if (distanceResult == null || distanceResult.SearchAreas.Count == 0 || parameters == null)
                 return false;
 
+            double pixelLength_mm = 1 / pixelResolution_mm;
+
             var coatingInfoList = new List<SurfaceInfo>();
             var nonCoatingInfoList = new List<SurfaceInfo>();
             var horizontalSamplingResult = new List<byte>();
@@ -91,14 +94,14 @@ namespace Jastech.Battery.Structure.VisionTool
                     horizontalLevelDifferences[horizontalLevelDifferences.Count - 1] = byte.MaxValue;
 
                 // 미분 데이터에서 피크 쌍을 추출하여 CoatingArea를 저장한다.
-                double coatingAreaWidthMin = pixelResolution_mm * parameters.CoatingWidthMin;
-                double coatingAreaWidthMax = pixelResolution_mm * parameters.CoatingWidthMax;
+                double coatingAreaWidthMin = pixelLength_mm * parameters.CoatingWidthMin;
+                double coatingAreaWidthMax = pixelLength_mm * parameters.CoatingWidthMax;
                 var coatingPeakPairs = MakePeakPairs(horizontalLevelDifferences, parameters.CoatingThreshold, coatingAreaWidthMin, coatingAreaWidthMax);
                 coatingInfoList.AddRange(MakeSurfaceInfoList("Coating", parameters.LaneCount, coatingPeakPairs, searchArea));
 
                 // 미분 데이터에서 피크 쌍을 추출하여 NonCoatingArea를 저장한다.
-                double nonCoatingAreaWidthMin = pixelResolution_mm * parameters.NonCoatingWidthMin;
-                double nonCoatingAreaWidthMax = pixelResolution_mm * parameters.NonCoatingWidthMax;
+                double nonCoatingAreaWidthMin = pixelLength_mm * parameters.NonCoatingWidthMin;
+                double nonCoatingAreaWidthMax = pixelLength_mm * parameters.NonCoatingWidthMax;
                 var nonCoatingPeakPairs = MakePeakPairs(horizontalLevelDifferences, parameters.NonCoatingThreshold, nonCoatingAreaWidthMin, nonCoatingAreaWidthMax);
                 nonCoatingInfoList.AddRange(MakeSurfaceInfoList("NonCoating", parameters.LaneCount, nonCoatingPeakPairs, searchArea));
             }

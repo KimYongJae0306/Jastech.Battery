@@ -260,7 +260,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             var camera = LineCamera.Camera;
             double resolution_mm = camera.PixelResolution_um / camera.LensScale / 1000;
             FindAreaAlgorithmTool findAreaAlgorithmTool = new FindAreaAlgorithmTool();
-            findAreaAlgorithmTool.pixelResolution_mm = 1 / resolution_mm;
+            findAreaAlgorithmTool.pixelResolution_mm = resolution_mm;
 
             SurfaceAlgorithmTool surfaceAlgorithmTool = new SurfaceAlgorithmTool();
 
