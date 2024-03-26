@@ -76,7 +76,8 @@
     <Compile Include="Parameters\SurfaceParam.cs" />
     <Compile Include="Parameters\DistanceParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VisionTool\AlgorithmTool.cs" />
+    <Compile Include="VisionTool\SurfaceAlgorithmTool.cs" />
+    <Compile Include="VisionTool\IdentifyAlgorithmTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Jastech.Core\src\Jastech.Framework.Device\Jastech.Framework.Device.csproj">

@@ -256,7 +256,12 @@ namespace Jastech.Battery.Winform.UI.Forms
 
 
             SliceInspResult sliceInspResult = new SliceInspResult();
-            AlgorithmTool algorithmTool = new AlgorithmTool();
+            var camera = LineCamera.Camera;
+            double resolution_mm = (camera.PixelResolution_um / camera.LensScale) * 1000;
+            IdentifyAlgorithmTool identifyAlgorithmTool = new IdentifyAlgorithmTool();
+            identifyAlgorithmTool.pixelResolution_mm = resolution_mm;
+
+            SurfaceAlgorithmTool surfaceAlgorithmTool = new SurfaceAlgorithmTool();
 
             WriteTactTime(stopwatch, "Before converting image");
             _grayImage = ImageHelper.ConvertRGB24ToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요
@@ -268,20 +273,19 @@ namespace Jastech.Battery.Winform.UI.Forms
             imageBuffer.ImageHeight = _orgBmp.Height;
             WriteTactTime(stopwatch, "After converting image to byte array");
 
-
             WriteTactTime(stopwatch, "Initializing finished");
 
             DistanceInspResult distanceInspResult = new DistanceInspResult();
             distanceParam._Roi = new Rectangle
             {
                 X = distanceParam.ROIMarginLeft,
-                Y = distanceParam.ROIMarginLeft,
+                Y = distanceParam.ROIMarginTop,
                 Width = imageBuffer.ImageWidth - distanceParam.ROIMarginRight,
                 Height = imageBuffer.ImageHeight - distanceParam.ROIMarginBottom,
             };
-            algorithmTool.FindSearchAreas(distanceInspResult, imageBuffer, distanceParam);
-            algorithmTool.FindInspectionAreas(distanceInspResult, imageBuffer, distanceParam);
-            algorithmTool.SeparateRegionsByLane(distanceInspResult, distanceParam);
+            identifyAlgorithmTool.FindSearchAreas(distanceInspResult, imageBuffer, distanceParam);
+            identifyAlgorithmTool.FindInspectionAreas(distanceInspResult, imageBuffer, distanceParam);
+            identifyAlgorithmTool.SeparateRegionsByLane(distanceInspResult, distanceParam);
             sliceInspResult.DistanceResult = distanceInspResult;
 
             WriteTactTime(stopwatch, "DistanceInspecitonFinished");

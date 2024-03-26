@@ -15,7 +15,7 @@ namespace ESI.Core.AppsTask
     public class InspProcessTask
     {
         #region 필드
-        private AlgorithmTool _algorithmTool { get; set; } = new AlgorithmTool();
+        private SurfaceAlgorithmTool _algorithmTool { get; set; } = new SurfaceAlgorithmTool();
         #endregion
 
         #region 속성
