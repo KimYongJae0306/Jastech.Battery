@@ -448,11 +448,17 @@ namespace Jastech.Battery.Structure.VisionTool
             double defectMinSizeDent = 0.0;
             double defectMinSizeCrater = 0.0;
 
-            if (surfaceParam.PinHoleParam.EnablePinHole)
-                defectMinSizeWhite = surfaceParam.PinHoleParam.PinHoleSize;
+            int smallRatioX = 0;
+            int smallRatioY = 0;
 
-            if (surfaceParam.NonCoatingDentParam.EnableDent)
-                defectMinSizeDent = surfaceParam.NonCoatingDentParam.DentSize;
+            int pix5mm = (int)PixelLength5mm / smallRatioX;
+            int pix40mm = (int)PixelLength40mm / smallRatioX;
+
+            //if (surfaceParam.PinHoleParam.EnablePinHole)
+            //    defectMinSizeWhite = surfaceParam.PinHoleParam.PinHoleSize;
+
+            //if (surfaceParam.NonCoatingDentParam.EnableDent)
+            //    defectMinSizeDent = surfaceParam.NonCoatingDentParam.DentSize;
 
             if (surfaceParam.CraterParam.EnableCrater)
             {
@@ -475,7 +481,7 @@ namespace Jastech.Battery.Structure.VisionTool
                 surfaceInspResult.CoatingAverageLevel.Add(averageLevel);
 
                 var smallBuffer = imageBuffer.SmallBuffer;
-                int coatingLinePosY = GetDoubleCoatingLine(imageBuffer, smallBuffer.OriginBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, inspArea);
+                int coatingLinePosY = GetDoubleCoatingLine(imageBuffer, smallBuffer.OriginBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, inspArea, smallRatioX);
 
                 surfaceInspResult.DoubleCoatingPosY.Add(coatingLinePosY);
 
@@ -483,7 +489,77 @@ namespace Jastech.Battery.Structure.VisionTool
                 if (smallArea.Width < PixelLength40mm && smallArea.Height < PixelLength5mm)
                     continue;
 
-                BlobContour(smallBuffer.BwBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, smallArea, 250, 251);
+                CheckCorner(imageBuffer, surfaceParam, smallArea, smallRatioX, out bool isTopCorner, out bool isBottomCorner);
+
+                // 두 번해
+                GetPinHole(smallBuffer, smallArea, smallRatioX, smallRatioY, surfaceParam, ref surfaceInspResult);
+
+
+                defectMinSize = defectMinSizeWhite;
+
+                BlobContour(smallBuffer.BwBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, smallArea, 50, 251);
+            }
+        }
+
+        private void GetPinHole(SmallBuffer smallBuffer, Rectangle smallArea, int smallRatioX, int smallRatioY, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
+        {
+            double pinHoleSize = 100000.0;
+            if (surfaceParam.PinHoleParam.EnablePinHole)
+                pinHoleSize = surfaceParam.PinHoleParam.PinHoleSize;
+
+            var blobList = BlobContour(smallBuffer.BwBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, smallArea, 250, 251);
+            foreach (var item in blobList)
+            {
+                int blobLeft = item.Left * smallRatioX;
+                int blobRight = item.Right * smallRatioX;
+                int blobTop = item.Top * smallRatioY;
+                int blobBottom = item.Bottom * smallRatioY;
+
+                double findWidth = blobRight - blobLeft;
+                double findHeight = blobBottom - blobTop;
+
+                int distanceTop = blobTop - smallArea.Top;
+                int distanceBottom = smallArea.Bottom - blobBottom;
+
+                SizeF defectSize = new SizeF();
+                defectSize.Width = (float)((findWidth + 1) * CalibrationX);
+                defectSize.Height = (float)((distanceBottom + 1) * CalibrationY);
+
+                DefectInfo defectInfo = new DefectInfo();
+                defectInfo.DefectType = DefectDefine.DefectTypes.Pinhole;
+                defectInfo.Size = new SizeF((float)pinHoleSize, (float)pinHoleSize);
+                surfaceInspResult.DefectList.Add(defectInfo);
+            }
+        }
+
+        private void GetDent(SmallBuffer smallBuffer, Rectangle smallArea, int smallRatioX, int smallRatioY, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
+        {
+            double dentSize = 100000.0;
+            if (surfaceParam.NonCoatingDentParam.EnableDent)
+                dentSize = surfaceParam.NonCoatingDentParam.DentSize;
+
+            var blobList = BlobContour(smallBuffer.BwBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, smallArea, 50, 250);
+            foreach (var item in blobList)
+            {
+                int blobLeft = item.Left * smallRatioX;
+                int blobRight = item.Right * smallRatioX;
+                int blobTop = item.Top * smallRatioY;
+                int blobBottom = item.Bottom * smallRatioY;
+
+                double findWidth = blobRight - blobLeft;
+                double findHeight = blobBottom - blobTop;
+
+                int distanceTop = blobTop - smallArea.Top;
+                int distanceBottom = smallArea.Bottom - blobBottom;
+
+                SizeF defectSize = new SizeF();
+                defectSize.Width = (float)((findWidth + 1) * CalibrationX);
+                defectSize.Height = (float)((distanceBottom + 1) * CalibrationY);
+
+                DefectInfo defectInfo = new DefectInfo();
+                defectInfo.DefectType = DefectDefine.DefectTypes.Pinhole;
+                defectInfo.Size = new SizeF((float)dentSize, (float)dentSize);
+                surfaceInspResult.DefectList.Add(defectInfo);
             }
         }
 
@@ -745,7 +821,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return false;
         }
 
-        private int GetDoubleCoatingLine(ImageBuffer imageBuffer, byte[] buffer, int buffWidth, int buffHeight, Rectangle rectangle)
+        private int GetDoubleCoatingLine(ImageBuffer imageBuffer, byte[] buffer, int buffWidth, int buffHeight, Rectangle rectangle, int smallRatio)
         {
             Array.Clear(imageBuffer.HorizontalData, 0, imageBuffer.ImageHeight);
 
@@ -792,9 +868,9 @@ namespace Jastech.Battery.Structure.VisionTool
                 if (end < 0)
                     continue;
 
-                int x1 = (rectangle.Left + 100) * 1; /*Config.SmallRatioX;*/
-                int x2 = (rectangle.Right - 100) * 1; /*Config.SmallRatioX;*/
-                int y1 = 1 * /*Config.SmallRatioX;*/ (start + end) / 2;
+                int x1 = (rectangle.Left + 100) * smallRatio;
+                int x2 = (rectangle.Right - 100) * smallRatio;
+                int y1 = smallRatio * (start + end) / 2;
                 int y2 = y1;
 
                 findPos = y1;
