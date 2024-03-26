@@ -112,14 +112,14 @@ namespace ESI
                 var upperCamera = new CameraVirtual("UpperCamera", 16384, 1024, ColorFormat.Gray, SensorType.Line);
                 upperCamera.OffsetX = 0;
                 upperCamera.PixelResolution_um = 3.52F;
-                upperCamera.LensScale = 0.2F;
+                upperCamera.LensScale = 0.0825F;
                 config.Add(upperCamera);
 
                 // Lower Linescanner
                 var lowerCamera = new CameraVirtual("LowerCamera", 16384, 1024, ColorFormat.Gray, SensorType.Line);
                 lowerCamera.OffsetX = 0;
                 lowerCamera.PixelResolution_um = 3.52F;
-                lowerCamera.LensScale = 0.2F;
+                lowerCamera.LensScale = 0.0825F;
                 config.Add(lowerCamera);
 
                 var light = new VirtualLightCtrl("Light", 6);

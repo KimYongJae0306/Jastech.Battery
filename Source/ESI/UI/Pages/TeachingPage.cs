@@ -36,7 +36,7 @@ namespace ESI.UI.Pages
             OpticTeachingForm form = new OpticTeachingForm();
             form.UnitName = UnitName.Upper;
             form.InspModelService = ESIInspModelService;
-            form.LineCamera = LineCameraManager.Instance().GetLineCamera("Upper");
+            form.LineCamera = LineCameraManager.Instance().GetLineCamera("UpperCamera");
             form.ShowDialog();
         }
 
@@ -45,7 +45,7 @@ namespace ESI.UI.Pages
             OpticTeachingForm form = new OpticTeachingForm();
             form.UnitName = UnitName.Lower;
             form.InspModelService = ESIInspModelService;
-            form.LineCamera = LineCameraManager.Instance().GetLineCamera("Lower");
+            form.LineCamera = LineCameraManager.Instance().GetLineCamera("LowerCamera");
             form.ShowDialog();
         }
 
@@ -53,6 +53,7 @@ namespace ESI.UI.Pages
         {
             InspectionTeachingForm form = new InspectionTeachingForm();
             //form.InspDirection = InspDirection.Lower;
+            form.LineCamera = LineCameraManager.Instance().GetLineCamera("LowerCamera");
             form.UnitName = UnitName.Lower;
             form.InspModelService = ESIInspModelService;
             form.ShowDialog();
@@ -62,6 +63,7 @@ namespace ESI.UI.Pages
         {
             InspectionTeachingForm form = new InspectionTeachingForm();
             //form.InspDirection = InspDirection.Upper;
+            form.LineCamera = LineCameraManager.Instance().GetLineCamera("UpperCamera");
             form.UnitName = UnitName.Upper;
             form.InspModelService = ESIInspModelService;
             form.ShowDialog();
