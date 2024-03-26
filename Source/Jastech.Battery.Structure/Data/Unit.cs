@@ -20,7 +20,7 @@ namespace Jastech.Battery.Structure.Data
 
         public LightParameter LightParam { get; set; } = null;
 
-        public DistanceParam DistanceParam { get; set; } = new DistanceParam();
+        public FindAreaParam DistanceParam { get; set; } = new FindAreaParam();
 
         public SurfaceParam SurfaceParam { get; set; } = new SurfaceParam();
         #endregion

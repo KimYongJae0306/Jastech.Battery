@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Jastech.Battery.Winform.UI.Forms
@@ -59,7 +60,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private SurfaceControl SurfaceControl { get; set; } = null;
 
-        private DistanceInspResult LastDistanceResult { get; set; } = null;
+        private FindAreaResult LastDistanceResult { get; set; } = null;
         #endregion
 
         #region 이벤트
@@ -241,7 +242,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             WriteTactTime(stopwatch, "=================================Test Start=================================");
 
             var unit = TeachingData.Instance().GetUnit(UnitName.ToString());
-            DistanceParam distanceParam = unit?.DistanceParam;
+            FindAreaParam distanceParam = unit?.DistanceParam;
 
             if (unit == null)
             {
@@ -258,8 +259,8 @@ namespace Jastech.Battery.Winform.UI.Forms
             SliceInspResult sliceInspResult = new SliceInspResult();
             var camera = LineCamera.Camera;
             double resolution_mm = (camera.PixelResolution_um / camera.LensScale) * 1000;
-            IdentifyAlgorithmTool identifyAlgorithmTool = new IdentifyAlgorithmTool();
-            identifyAlgorithmTool.pixelResolution_mm = resolution_mm;
+            FindAreaAlgorithmTool findAreaAlgorithmTool = new FindAreaAlgorithmTool();
+            findAreaAlgorithmTool.pixelResolution_mm = resolution_mm;
 
             SurfaceAlgorithmTool surfaceAlgorithmTool = new SurfaceAlgorithmTool();
 
@@ -275,17 +276,16 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             WriteTactTime(stopwatch, "Initializing finished");
 
-            DistanceInspResult distanceInspResult = new DistanceInspResult();
-            distanceParam._Roi = new Rectangle
+            FindAreaResult distanceInspResult = new FindAreaResult();
+            distanceParam._Roi = new Rectangle  //2024.03.26 + 안쓸 것 같음, 삭제 대기
             {
                 X = distanceParam.ROIMarginLeft,
                 Y = distanceParam.ROIMarginTop,
                 Width = imageBuffer.ImageWidth - distanceParam.ROIMarginRight,
                 Height = imageBuffer.ImageHeight - distanceParam.ROIMarginBottom,
             };
-            identifyAlgorithmTool.FindSearchAreas(distanceInspResult, imageBuffer, distanceParam);
-            identifyAlgorithmTool.FindInspectionAreas(distanceInspResult, imageBuffer, distanceParam);
-            identifyAlgorithmTool.SeparateRegionsByLane(distanceInspResult, distanceParam);
+            findAreaAlgorithmTool.FindSearchAreas(distanceInspResult, imageBuffer, distanceParam);
+            findAreaAlgorithmTool.FindInspectionAreas(distanceInspResult, imageBuffer, distanceParam);
             sliceInspResult.DistanceResult = distanceInspResult;
 
             WriteTactTime(stopwatch, "DistanceInspecitonFinished");
@@ -297,7 +297,7 @@ namespace Jastech.Battery.Winform.UI.Forms
             WriteTactTime(stopwatch, "=================================Test Finished==============================");
         }
 
-        private void ShowTestResults(DistanceInspResult distanceResult)
+        private void ShowTestResults(FindAreaResult distanceResult)
         {
             if (_orgBmp == null)
                 return;
@@ -320,13 +320,13 @@ namespace Jastech.Battery.Winform.UI.Forms
             {
                 using (Graphics g = Graphics.FromImage(convertedBitmap))
                 {
-                    foreach (Rectangle nonCoatingArea in distanceResult.NonCoatingAreas)
+                    foreach (Rectangle nonCoatingArea in distanceResult.NonCoatingInfoList.Select(info => info.Area))
                     {
                         g.DrawLine(nonCoatingWidthPen, nonCoatingArea.Left, nonCoatingArea.Top + nonCoatingArea.Height / 2, nonCoatingArea.Right, nonCoatingArea.Top + nonCoatingArea.Height / 2);
                         g.DrawRectangle(nonCoatingROIpen, nonCoatingArea.Left, nonCoatingArea.Top, nonCoatingArea.Width, nonCoatingArea.Height);
                     }
 
-                    foreach (Rectangle coatingArea in distanceResult.CoatingAreas)
+                    foreach (Rectangle coatingArea in distanceResult.CoatingInfoList.Select(info => info.Area))
                     {
                         g.DrawLine(coatingWidthPen, coatingArea.Left, coatingArea.Top + coatingArea.Height / 2, coatingArea.Right, coatingArea.Top + coatingArea.Height / 2);
                         g.DrawRectangle(coatingROIpen, coatingArea.Left, coatingArea.Top, coatingArea.Width, coatingArea.Height);

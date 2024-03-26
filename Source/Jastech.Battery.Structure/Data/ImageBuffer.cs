@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Jastech.Battery.Structure.VisionTool;
 
 namespace Jastech.Battery.Structure.Data
 {
@@ -292,22 +293,22 @@ namespace Jastech.Battery.Structure.Data
 
         //public byte[] GetFilledOriginBuffer(Rectangle inputRect, int fillValue)
         //{
-        //    return ShapeHelper.FillValue(OriginBuffer, BuffWidth, inputRect, fillValue);
+        //    return TempAlgorithmTool.FillValue(OriginBuffer, BuffWidth, inputRect, fillValue);
         //}
 
         //public byte[] GetFillStretchBuffer(Rectangle inputRect, int fillValue)
         //{
-        //    return ShapeHelper.FillValue(StrecthBuffer, BuffWidth, inputRect, fillValue);
+        //    return TempAlgorithmTool.FillValue(StrecthBuffer, BuffWidth, inputRect, fillValue);
         //}
 
         //public byte[] GetFillMagnifiedBuffer(Rectangle inputRect, int fillValue)
         //{
-        //    return ShapeHelper.FillValue(MagnifiedBuffer, BuffWidth, inputRect, fillValue);
+        //    return TempAlgorithmTool.FillValue(MagnifiedBuffer, BuffWidth, inputRect, fillValue);
         //}
 
         //public byte[] GetFillBwBuffer(Rectangle inputRect, int fillValue)
         //{
-        //    return ShapeHelper.FillValue(BwBuffer, BuffWidth, inputRect, fillValue);
+        //    return TempAlgorithmTool.FillValue(BwBuffer, BuffWidth, inputRect, fillValue);
         //}
 
         public byte[] GetFilledBuffer(BufferType workBufferType, Rectangle inputRect, int fillValue)
@@ -318,16 +319,16 @@ namespace Jastech.Battery.Structure.Data
                     return null;
 
                 case BufferType.Origin:
-                    return ShapeHelper.FillValue(OriginBuffer, BuffWidth, inputRect, fillValue);
+                    return TempAlgorithmTool.FillValue(OriginBuffer, BuffWidth, inputRect, fillValue);
 
                 case BufferType.Stretch:
-                    return ShapeHelper.FillValue(StrecthBuffer, BuffWidth, inputRect, fillValue);
+                    return TempAlgorithmTool.FillValue(StrecthBuffer, BuffWidth, inputRect, fillValue);
 
                 case BufferType.Magnify:
-                    return ShapeHelper.FillValue(MagnifiedBuffer, BuffWidth, inputRect, fillValue);
+                    return TempAlgorithmTool.FillValue(MagnifiedBuffer, BuffWidth, inputRect, fillValue);
 
                 case BufferType.BW:
-                    return ShapeHelper.FillValue(BwBuffer, BuffWidth, inputRect, fillValue);
+                    return TempAlgorithmTool.FillValue(BwBuffer, BuffWidth, inputRect, fillValue);
 
                 case BufferType.Average:
                     return null;

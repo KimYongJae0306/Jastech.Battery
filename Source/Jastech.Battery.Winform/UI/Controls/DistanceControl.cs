@@ -20,7 +20,7 @@ namespace Jastech.Battery.Winform.UI.Controls
     public partial class DistanceControl : UserControl
     {
         #region 필드
-        private DistanceParam _distanceParam = null;
+        private FindAreaParam _distanceParam = null;
         #endregion
 
         #region 생성자
@@ -43,14 +43,14 @@ namespace Jastech.Battery.Winform.UI.Controls
 
             cmbLaneSelection.Text = _distanceParam.LaneCount.ToString();
 
-            lblCoatingMinimumLength.Text = _distanceParam.CoatingMinimumLength.ToString();
+            lblCoatingMinimumLength.Text = _distanceParam.CoatingLengthMin.ToString();
             lblCoatingThreshold.Text = _distanceParam.CoatingThreshold.ToString();
-            lblCoatingMinimumWidth.Text = _distanceParam.CoatingMinimumWidth.ToString();
-            lblCoatingMaximumWidth.Text = _distanceParam.CoatingMaximumWidth.ToString();
+            lblCoatingMinimumWidth.Text = _distanceParam.CoatingWidthMin.ToString();
+            lblCoatingMaximumWidth.Text = _distanceParam.CoatingWidthMax.ToString();
 
             lblNonCoatingThreshold.Text = _distanceParam.NonCoatingThreshold.ToString();
-            lblNonCoatingMinimumWidth.Text = _distanceParam.NonCoatingMinimumWidth.ToString();
-            lblNonCoatingMaximumWidth.Text = _distanceParam.NonCoatingMaximumWidth.ToString();
+            lblNonCoatingMinimumWidth.Text = _distanceParam.NonCoatingWidthMin.ToString();
+            lblNonCoatingMaximumWidth.Text = _distanceParam.NonCoatingWidthMax.ToString();
 
             lblROIThreshold.Text = _distanceParam.ROIThreshold.ToString();
             lblROIMarginLeft.Text = _distanceParam.ROIMarginLeft.ToString();
@@ -96,7 +96,7 @@ namespace Jastech.Battery.Winform.UI.Controls
             }
         }
 
-        public void SetParam(DistanceParam param)
+        public void SetParam(FindAreaParam param)
         {
             if (param != null)
                 _distanceParam = param;
@@ -164,7 +164,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 return;
 
             var control = sender as Control;
-            _distanceParam.CoatingMinimumWidth= KeyPadHelper.SetLabelDoubleData(control);
+            _distanceParam.CoatingWidthMin= KeyPadHelper.SetLabelDoubleData(control);
         }
 
         private void lblCoatingMaximumWidth_Click(object sender, EventArgs e)
@@ -173,7 +173,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 return;
 
             var control = sender as Control;
-            _distanceParam.CoatingMaximumWidth = KeyPadHelper.SetLabelDoubleData(control);
+            _distanceParam.CoatingWidthMax = KeyPadHelper.SetLabelDoubleData(control);
         }
 
         private void lblNonCoatingMinimumWidth_Click(object sender, EventArgs e)
@@ -182,7 +182,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 return;
 
             var control = sender as Control;
-            _distanceParam.NonCoatingMinimumWidth = KeyPadHelper.SetLabelDoubleData(control);
+            _distanceParam.NonCoatingWidthMin = KeyPadHelper.SetLabelDoubleData(control);
         }
 
         private void lblNonCoatingMaximumWidth_Click(object sender, EventArgs e)
@@ -191,7 +191,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 return;
 
             var control = sender as Control;
-            _distanceParam.NonCoatingMaximumWidth = KeyPadHelper.SetLabelDoubleData(control);
+            _distanceParam.NonCoatingWidthMax = KeyPadHelper.SetLabelDoubleData(control);
         }
 
         private void lblCoatingMinimumLength_Click(object sender, EventArgs e)
@@ -200,7 +200,7 @@ namespace Jastech.Battery.Winform.UI.Controls
                 return;
 
             var control = sender as Control;
-            _distanceParam.CoatingMinimumLength = KeyPadHelper.SetLabelDoubleData(control);
+            _distanceParam.CoatingLengthMin = KeyPadHelper.SetLabelDoubleData(control);
         }
 
         private void lblROIThreshold_Click(object sender, EventArgs e)

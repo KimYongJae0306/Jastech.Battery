@@ -60,7 +60,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return rect;
         }
 
-        private void CheckCoatingArea_Line(ImageBuffer imageBuffer, DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, bool isTapeInsp)
+        private void CheckCoatingArea_Line(ImageBuffer imageBuffer, List<SurfaceInfo> coatingInfoList, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult, bool isTapeInsp)
         {
             if (surfaceParam.LineParam.EnableCheckLine == false)
                 return;
@@ -80,9 +80,9 @@ namespace Jastech.Battery.Structure.VisionTool
             Rectangle workArea = new Rectangle();
             Rectangle findArea = new Rectangle();
 
-            foreach (var coatingArea in distanceInspResult.CoatingAreas)
+            foreach (SurfaceInfo coatingInfo in coatingInfoList)
             {
-                var inspArea = ShapeHelper.GetValidRectangle(coatingArea, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+                var inspArea = TempAlgorithmTool.GetValidRectangle(coatingInfo.Area, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
                 if (inspArea.Width < pix40mm && inspArea.Height < pix5mm)
                     continue;
 
@@ -92,7 +92,7 @@ namespace Jastech.Battery.Structure.VisionTool
                 if (workBuff == null)
                     continue;
 
-                int averageLevel = ShapeHelper.GetAverageLevel(workBuff, imageBuffer.WorkBuffer.BuffWidth, imageBuffer.WorkBuffer.BuffHeight);
+                int averageLevel = TempAlgorithmTool.GetAverageLevel(workBuff, imageBuffer.WorkBuffer.BuffWidth, imageBuffer.WorkBuffer.BuffHeight);
 
                 surfaceInspResult.CoatingAverageLevel.Add(averageLevel);
 
@@ -161,7 +161,7 @@ namespace Jastech.Battery.Structure.VisionTool
             }
         }
 
-        private void CheckCoatingArea_LineBlack(ImageBuffer imageBuffer, DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
+        private void CheckCoatingArea_LineBlack(ImageBuffer imageBuffer, FindAreaResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
         {
             if (surfaceParam.LineBlackParam.EnableCheckLine == false)
                 return;
@@ -196,9 +196,9 @@ namespace Jastech.Battery.Structure.VisionTool
             if (samplingStep < 1)
                 samplingStep = 1;
 
-            foreach (var coatingArea in distanceInspResult.CoatingAreas)
+            foreach (SurfaceInfo coatingInfo in distanceInspResult.CoatingInfoList)
             {
-                var inspArea = ShapeHelper.GetValidRectangle(coatingArea, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+                var inspArea = TempAlgorithmTool.GetValidRectangle(coatingInfo.Area, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
                 if (inspArea.Width < pix40mm && inspArea.Height < pix5mm)
                     continue;
 
@@ -292,15 +292,15 @@ namespace Jastech.Battery.Structure.VisionTool
             }
         }
 
-        private void CheckCoatingArea_Edge(ImageBuffer imageBuffer, DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
+        private void CheckCoatingArea_Edge(ImageBuffer imageBuffer, FindAreaResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
         {
             int pixRefernceHeight = (int)((surfaceParam.LineParam.LineSizeY + 1.0) / CalibrationY);
 
             Rectangle findArea = new Rectangle();
 
-            foreach (var conatingArea in distanceInspResult.CoatingAreas)
+            foreach (SurfaceInfo conatingInfo in distanceInspResult.CoatingInfoList)
             {
-                var inspArea = ShapeHelper.GetValidRectangle(conatingArea, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+                var inspArea = TempAlgorithmTool.GetValidRectangle(conatingInfo.Area, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
                 if (inspArea.Width < PixelLength40mm && inspArea.Height < PixelLength5mm)
                     continue;
 
@@ -351,7 +351,7 @@ namespace Jastech.Battery.Structure.VisionTool
                     inspArea.X = left;
                     inspArea.Width = right - left;
 
-                    inspArea = ShapeHelper.GetValidRectangle(inspArea, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+                    inspArea = TempAlgorithmTool.GetValidRectangle(inspArea, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
                 }
 
                 if (surfaceParam.LineParam.EnableCheckLine)
@@ -438,7 +438,7 @@ namespace Jastech.Battery.Structure.VisionTool
             }
         }
 
-        private void CheckCoatingArea(ImageBuffer imageBuffer, DistanceInspResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
+        private void CheckCoatingArea(ImageBuffer imageBuffer, FindAreaResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
         {
             Rectangle originArea = new Rectangle();
 
@@ -469,15 +469,15 @@ namespace Jastech.Battery.Structure.VisionTool
                     defectMinSizeCrater = surfaceParam.CraterParam.CraterSmallSize;
             }
 
-            foreach (var coatingArea in distanceInspResult.CoatingAreas)
+            foreach (SurfaceInfo coatingInfo in distanceInspResult.CoatingInfoList)
             {
-                var inspArea = ShapeHelper.GetValidRectangle(coatingArea, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+                var inspArea = TempAlgorithmTool.GetValidRectangle(coatingInfo.Area, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
                 if (inspArea.Width < 2 && inspArea.Height < 2)
                     continue;
 
                 byte[] smallBuff = MakeBinary(imageBuffer, surfaceParam, inspArea, surfaceInspResult);
 
-                int averageLevel = ShapeHelper.GetAverageLevel(smallBuff, imageBuffer.SmallBuffer.BufferWidth, inspArea);
+                int averageLevel = TempAlgorithmTool.GetAverageLevel(smallBuff, imageBuffer.SmallBuffer.BufferWidth, inspArea);
                 surfaceInspResult.CoatingAverageLevel.Add(averageLevel);
 
                 var smallBuffer = imageBuffer.SmallBuffer;
@@ -485,7 +485,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 surfaceInspResult.DoubleCoatingPosY.Add(coatingLinePosY);
 
-                var smallArea = ShapeHelper.GetValidRectangle(inspArea, smallBuffer.BufferWidth, smallBuffer.BufferHeight);
+                var smallArea = TempAlgorithmTool.GetValidRectangle(inspArea, smallBuffer.BufferWidth, smallBuffer.BufferHeight);
                 if (smallArea.Width < PixelLength40mm && smallArea.Height < PixelLength5mm)
                     continue;
 
@@ -755,7 +755,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
         private List<BlobContourResult> BlobContour(byte[] buffer, int bufferWidth, int bufferHeight, Rectangle inputRect, int lowThreshold, int highThreshold)
         {
-            if (ShapeHelper.CheckValidRectangle(inputRect, bufferWidth, bufferHeight) == false)
+            if (TempAlgorithmTool.CheckValidRectangle(inputRect, bufferWidth, bufferHeight) == false)
                 return null;
 
             //int x = inputRect.Left;
@@ -779,16 +779,16 @@ namespace Jastech.Battery.Structure.VisionTool
             else
                 fillValue = 255;
 
-            ShapeHelper.FillBound(tempBuff, inputRect.Width, inputRect.Height, fillValue);
+            TempAlgorithmTool.FillBound(tempBuff, inputRect.Width, inputRect.Height, fillValue);
 
-            List<Point> pointList = ShapeHelper.GetPointListBetweenThresholdRange(buffer, inputRect.Width, inputRect.Height, new Point(0, 0), lowThreshold, highThreshold);
+            List<Point> pointList = TempAlgorithmTool.GetPointListBetweenThresholdRange(buffer, inputRect.Width, inputRect.Height, new Point(0, 0), lowThreshold, highThreshold);
 
             foreach (var point in pointList)
             {
                 if (point.X == -1 && point.Y == -1)
                     break;
 
-                Rectangle foundrect = ShapeHelper.DetectEdge(buffer, inputRect.Width, inputRect.Height, point, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
+                Rectangle foundrect = TempAlgorithmTool.DetectEdge(buffer, inputRect.Width, inputRect.Height, point, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
 
                 if (foundrect.Left == 0 || foundrect.Top == 0 || foundrect.Right == 0 || foundrect.Bottom == 0)
                     break;
@@ -799,7 +799,7 @@ namespace Jastech.Battery.Structure.VisionTool
                     continue;
                 }
 
-                ShapeHelper.FillValueWithCount(buffer, foundrect, fillValue, lowThreshold, highThreshold, out int fillCount);
+                TempAlgorithmTool.FillValueWithCount(buffer, foundrect, fillValue, lowThreshold, highThreshold, out int fillCount);
 
                 BlobContourResult blobContourResult = new BlobContourResult();
 
@@ -844,7 +844,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
             Array.Copy(imageBuffer.HorizontalData, imageBuffer.AverageHorizontalData, buffHeight);
 
-            imageBuffer.AverageHorizontalData = ShapeHelper.GetSmooth1D(imageBuffer.AverageHorizontalData, buffHeight, 0, buffHeight, 100);
+            imageBuffer.AverageHorizontalData = TempAlgorithmTool.GetSmooth1D(imageBuffer.AverageHorizontalData, buffHeight, 0, buffHeight, 100);
 
             for (int h = rectangle.Top; h < rectangle.Bottom; h++)
                 imageBuffer.DifferentialHorizontalData[h] = imageBuffer.HorizontalData[h] - imageBuffer.AverageHorizontalData[h];
@@ -994,7 +994,7 @@ namespace Jastech.Battery.Structure.VisionTool
                 if (clearY2 > imageBuffer.SmallBuffer.BufferHeight)
                     clearY2 = imageBuffer.SmallBuffer.BufferHeight;
 
-                imageBuffer.SmallBuffer.BwBuffer = ShapeHelper.FillValue(imageBuffer.SmallBuffer.BwBuffer, imageBuffer.SmallBuffer.BufferWidth, cornerRect, 0);
+                imageBuffer.SmallBuffer.BwBuffer = TempAlgorithmTool.FillValue(imageBuffer.SmallBuffer.BwBuffer, imageBuffer.SmallBuffer.BufferWidth, cornerRect, 0);
 
                 if (cornerType == CornerType.LeftTop || cornerType == CornerType.RightTop)
                     isTopCorner = true;
@@ -1060,8 +1060,8 @@ namespace Jastech.Battery.Structure.VisionTool
             rect2.Width = inspSizeX;
             rect2.Height = inspSizeY;
 
-            rect1 = ShapeHelper.GetValidRectangle(rect1, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
-            rect2 = ShapeHelper.GetValidRectangle(rect2, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+            rect1 = TempAlgorithmTool.GetValidRectangle(rect1, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
+            rect2 = TempAlgorithmTool.GetValidRectangle(rect2, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
 
             List<Rectangle> rectList = new List<Rectangle>();
             rectList.Add(rect1);
@@ -1070,7 +1070,7 @@ namespace Jastech.Battery.Structure.VisionTool
             List<int> averageList = new List<int>();
             foreach (Rectangle rect in rectList)
             {
-                int average = ShapeHelper.GetAverageLevel(imageBuffer.ImageData, imageBuffer.ImageWidth, rect);
+                int average = TempAlgorithmTool.GetAverageLevel(imageBuffer.ImageData, imageBuffer.ImageWidth, rect);
                 averageList.Add(average);
             }
 

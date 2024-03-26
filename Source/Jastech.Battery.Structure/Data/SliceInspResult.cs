@@ -13,7 +13,7 @@ namespace Jastech.Battery.Structure.Data
 
         public InspDirection InspDirection { get; set; }
 
-        public DistanceInspResult DistanceResult { get; set; }
+        public FindAreaResult DistanceResult { get; set; }
 
         public SurfaceInspResult SurfaceInspResult { get; set; }
     }

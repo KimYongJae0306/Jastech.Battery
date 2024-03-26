@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Jastech.Battery.Structure.Parameters
 {
-    public class DistanceParam
+    public class FindAreaParam
     {
         #region 필드
         public Rectangle _Roi = Rectangle.Empty;
@@ -14,6 +14,7 @@ namespace Jastech.Battery.Structure.Parameters
 
         public int ROIThreshold { get; set; } = 50;
 
+        #region 2024.03.26 + 안쓸 것 같음, 삭제 대기
         public int ROIMarginLeft { get; set; } = 0;
 
         public int ROIMarginRight { get; set; } = 0;
@@ -21,21 +22,22 @@ namespace Jastech.Battery.Structure.Parameters
         public int ROIMarginTop { get; set; } = 0;
 
         public int ROIMarginBottom { get; set; } = 0;
+        #endregion
 
 
         public int CoatingThreshold { get; set; } = 30;
 
-        public double CoatingMinimumLength { get; set; } = 10.0;
+        public double CoatingLengthMin { get; set; } = 10.0;
 
-        public double CoatingMinimumWidth { get; set; } = 280.0;
+        public double CoatingWidthMin { get; set; } = 280.0;
 
-        public double CoatingMaximumWidth { get; set; } = 310.0;
+        public double CoatingWidthMax { get; set; } = 310.0;
 
         public int NonCoatingThreshold { get; set; } = 30;
 
-        public double NonCoatingMinimumWidth { get; set; } = 15.0;
+        public double NonCoatingWidthMin { get; set; } = 15.0;
 
-        public double NonCoatingMaximumWidth { get; set; } = 50.0;
+        public double NonCoatingWidthMax { get; set; } = 50.0;
 
 
         public int WidthSamplingScale { get; set; } = 100;
@@ -50,9 +52,9 @@ namespace Jastech.Battery.Structure.Parameters
         #endregion
 
         #region 메서드
-        public DistanceParam DeepCopy()
+        public FindAreaParam DeepCopy()
         {
-            return JsonConvertHelper.DeepCopy(this) as DistanceParam;
+            return JsonConvertHelper.DeepCopy(this) as FindAreaParam;
         }
         #endregion
     }
