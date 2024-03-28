@@ -45,7 +45,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return validRect;
         }
 
-        public static Point RotateCW45(Point inputPoint)
+        public static Point RotateCW45(ref Point inputPoint)
         {
             Point resultPoint = new Point();
 
@@ -96,7 +96,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return resultPoint;
         }
 
-        public static Point RotateCW90(Point inputPoint)
+        public static Point RotateCW90(ref Point inputPoint)
         {
             Point resultPoint = new Point();
 
@@ -148,7 +148,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return resultPoint;
         }
 
-        public static Point RotateCCW45(Point inputPoint)
+        public static Point RotateCCW45(ref Point inputPoint)
         {
             Point resultPoint = new Point();
 
@@ -199,7 +199,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return resultPoint;
         }
 
-        public static Point RotateCCW90(Point inputPoint)
+        public static Point RotateCCW90(ref Point inputPoint)
         {
             Point resultPoint = new Point();
 
@@ -293,7 +293,7 @@ namespace Jastech.Battery.Structure.VisionTool
             return resultPoint;
         }
 
-        public static List<Point> GetPointListBetweenThresholdRange(byte[] imageData, int width, int height, Point startPoint, int lowThreshold, int highThreshold)
+        public static List<Point> GetPointListBetweenThresholdRange(byte[] buffer, int width, int height, Point startPoint, int lowThreshold, int highThreshold)
         {
             List<Point> resultPointList = new List<Point>();
 
@@ -301,7 +301,7 @@ namespace Jastech.Battery.Structure.VisionTool
             {
                 for (int x = startPoint.X; x < width; x++)
                 {
-                    int value = imageData[y * width + x];
+                    int value = buffer[y * width + x];
 
                     if (value >= lowThreshold && value <= highThreshold)
                         resultPointList.Add(new Point(x, y));
@@ -311,24 +311,48 @@ namespace Jastech.Battery.Structure.VisionTool
             return resultPointList;
         }
 
-        public static Rectangle DetectEdge(byte[] imageData, int width, int height, Point startPos, int lowThreshold, int highThreshold)
+        //public static Point GetPointListBetweenThresholdRange(byte[] buffer, int width, int height, Point startPoint, int lowThreshold, int highThreshold)
+        //{
+        //    Point resultPoint = new Point(-1, -1);
+
+        //    for (int y = startPoint.Y; y < height; y++)
+        //    {
+        //        for (int x = startPoint.X; x < width; x++)
+        //        {
+        //            int value = buffer[y * width + x];
+
+        //            if (value >= lowThreshold && value <= highThreshold)
+        //            {
+        //                resultPoint.X = x;
+        //                resultPoint.Y = y;
+        //                return resultPoint;
+        //            }
+        //        }
+
+        //        startPoint.X = 0;
+        //    }
+
+        //    return resultPoint;
+        //}
+
+        public static Rectangle DetectEdge(byte[] buffer, int width, int height, Point startPos, int lowThreshold, int highThreshold)
         {
             Rectangle resultRect = new Rectangle(width, height, -width, -height);
             int rotationCount = 0;
 
             Point startVector = new Point(1, 0);
-            Point nextVector = RotateCCW90(startVector);
+            Point nextVector = RotateCCW90(ref startVector);
             Point currentPoint = startPos;
 
             while (true)
             {
-                int x = startPos.X + nextVector.X;
-                int y = startPos.Y + nextVector.Y;
+                int x = currentPoint.X + nextVector.X;
+                int y = currentPoint.Y + nextVector.Y;
 
                 if (x < 0 || y < 0)
                     return resultRect;
 
-                int value = imageData[y * width + x];
+                int value = buffer[y * width + x];
 
                 if (value >= lowThreshold && value <= highThreshold)
                 {
@@ -356,17 +380,17 @@ namespace Jastech.Battery.Structure.VisionTool
                     if (currentPoint.X == startPos.X && currentPoint.Y == startPos.Y)
                         return resultRect;
 
-                    nextVector = RotateCCW90(nextVector);
+                    nextVector = RotateCCW90(ref nextVector);
                     rotationCount = 0;
                 }
                 else
                 {
-                    nextVector = RotateCW45(nextVector);
+                    nextVector = RotateCW45(ref nextVector);
                     rotationCount++;
 
                     if (rotationCount >= 7)
                     {
-                        imageData[currentPoint.Y * width + currentPoint.X] = 0;
+                        buffer[currentPoint.Y * width + currentPoint.X] = 0;
                         resultRect.X = currentPoint.X;
                         resultRect.Y = currentPoint.Y;
                         resultRect.Width = 0;
@@ -405,7 +429,7 @@ namespace Jastech.Battery.Structure.VisionTool
         {
             fillCount = 0;
 
-            byte[] returnData = new byte[inputRect.Width * inputRect.Height];
+            //byte[] returnData = new byte[inputRect.Width * inputRect.Height];
 
             for (int vertical = inputRect.Top; vertical < inputRect.Bottom; vertical++)
             {
@@ -421,7 +445,7 @@ namespace Jastech.Battery.Structure.VisionTool
                 }
             }
 
-            return returnData;
+            return imageData;
         }
 
         public static byte[] FillValue(byte[] data, int dataWidth, Rectangle inputRect, int fillValue)
@@ -468,6 +492,31 @@ namespace Jastech.Battery.Structure.VisionTool
             {
                 for (int w = rectangle.Left; w < rectangle.Right; w += stepX)
                     datas.Add(imageData[h * buffWidth + w]);
+            }
+
+            if (datas.Count <= 0)
+                return 0;
+
+            return (int)datas.Average();
+        }
+
+        public static int GetAverageLevel(ImageBuffer imageBuffer, int samplingRate = 100)
+        {
+            int stepX = imageBuffer.WorkBuffer.BuffWidth / samplingRate;
+            int stepY = imageBuffer.WorkBuffer.BuffHeight / samplingRate;
+
+            if (stepX < 1)
+                stepX = 1;
+
+            if (stepY < 1)
+                stepY = 1;
+
+            List<int> datas = new List<int>();
+
+            for (int h = 0; h < imageBuffer.WorkBuffer.BuffHeight; h += stepY)
+            {
+                for (int w = 0; w < imageBuffer.WorkBuffer.BuffWidth; w += stepX)
+                    datas.Add(imageBuffer.WorkBuffer.OriginBuffer[h * imageBuffer.WorkBuffer.BuffWidth + w]);
             }
 
             if (datas.Count <= 0)

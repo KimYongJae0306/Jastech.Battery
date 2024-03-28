@@ -1,8 +1,12 @@
-﻿using Jastech.Battery.Structure.Data;
+﻿using Emgu.CV;
+using Jastech.Battery.Structure.Data;
 using Jastech.Battery.Structure.Parameters;
+using Jastech.Framework.Imaging.Helper;
+using Jastech.Framework.Util.Helper;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,9 +45,6 @@ namespace Jastech.Battery.Structure.VisionTool
             int workRatioX = surfaceParam.LineParam.WorkRatioX;
             int workRatioY = surfaceParam.LineParam.WorkRatioY;
 
-            int buffWidth = 0;
-            int buffHeight = 0;
-
             double referenceSizeX = 0.0;
             double referenceSizeY = 0.0;
 
@@ -56,22 +57,26 @@ namespace Jastech.Battery.Structure.VisionTool
                 if (inspArea.Width < pix40mm && inspArea.Height < pix5mm)
                     continue;
 
-                imageBuffer.WorkBuffer.SetWorkBuffer(imageBuffer.ImageData, imageBuffer.ImageWidth, inspArea, workRatioX, workRatioY);
+                imageBuffer.InitializeWorkBuffer(inspArea, workRatioX, workRatioY);
 
                 byte[] workBuff = imageBuffer.WorkBuffer.GetWorkBuffer();
                 if (workBuff == null)
                     continue;
 
-                int averageLevel = TempAlgorithmTool.GetAverageLevel(workBuff, imageBuffer.WorkBuffer.BuffWidth, imageBuffer.WorkBuffer.BuffHeight);
+                //int averageLevel = TempAlgorithmTool.GetAverageLevel(workBuff, imageBuffer.WorkBuffer.BuffWidth, imageBuffer.WorkBuffer.BuffHeight);
+                int averageLevel = TempAlgorithmTool.GetAverageLevel(imageBuffer);
+
+                Mat mat = MatHelper.ByteArrayToMat(workBuff, imageBuffer.WorkBuffer.BuffWidth, imageBuffer.WorkBuffer.BuffHeight, 1);
+                mat.Save(@"D:\test123.bmp");
 
                 surfaceInspResult.CoatingAverageLevel.Add(averageLevel);
 
                 int threshold = 0;
 
                 workArea.X = 0;
-                workArea.Width = buffWidth;
+                workArea.Width = imageBuffer.WorkBuffer.BuffWidth;
                 workArea.Y = 0;
-                workArea.Height = buffHeight;
+                workArea.Height = imageBuffer.WorkBuffer.BuffHeight;
 
                 if (isTapeInsp == true)
                 {
@@ -172,7 +177,7 @@ namespace Jastech.Battery.Structure.VisionTool
                 if (inspArea.Width < pix40mm && inspArea.Height < pix5mm)
                     continue;
 
-                imageBuffer.WorkBuffer.SetWorkBuffer(imageBuffer.ImageData, imageBuffer.ImageWidth, inspArea, workRatioX, workRatioY);
+                imageBuffer.WorkBuffer.InitializeWorkBuffer(imageBuffer.ImageData, imageBuffer.ImageWidth, inspArea, workRatioX, workRatioY);
 
                 byte[] workBuff = imageBuffer.WorkBuffer.GetWorkBuffer();
                 if (workBuff == null)
@@ -723,9 +728,9 @@ namespace Jastech.Battery.Structure.VisionTool
             return false;
         }
 
-        private List<BlobContourResult> BlobContour(byte[] buffer, int bufferWidth, int bufferHeight, Rectangle inputRect, int lowThreshold, int highThreshold)
+        private List<BlobContourResult> BlobContour(byte[] buffer, int bufferWidth, int bufferHeight, Rectangle area, int lowThreshold, int highThreshold)
         {
-            if (TempAlgorithmTool.CheckValidRectangle(inputRect, bufferWidth, bufferHeight) == false)
+            if (TempAlgorithmTool.CheckValidRectangle(area, bufferWidth, bufferHeight) == false)
                 return null;
 
             //int x = inputRect.Left;
@@ -734,12 +739,12 @@ namespace Jastech.Battery.Structure.VisionTool
 
             List<BlobContourResult> resultList = new List<BlobContourResult>();
 
-            byte[] tempBuff = new byte[inputRect.Width * inputRect.Height];
+            byte[] tempBuff = new byte[area.Width * area.Height];
 
-            for (int h = 0; h < inputRect.Height; h++)
+            for (int h = 0; h < area.Height; h++)
             {
-                int y = inputRect.Top + h;
-                Array.Copy(buffer, y * bufferWidth + inputRect.Left, tempBuff, h * inputRect.Width, inputRect.Width);
+                int y = area.Top + h;
+                Array.Copy(buffer, y * bufferWidth + area.Left, tempBuff, h * area.Width, area.Width);
             }
 
             int fillValue = 0;
@@ -749,36 +754,80 @@ namespace Jastech.Battery.Structure.VisionTool
             else
                 fillValue = 255;
 
-            TempAlgorithmTool.FillBound(tempBuff, inputRect.Width, inputRect.Height, fillValue);
+            TempAlgorithmTool.FillBound(tempBuff, area.Width, area.Height, fillValue);
 
-            List<Point> pointList = TempAlgorithmTool.GetPointListBetweenThresholdRange(buffer, inputRect.Width, inputRect.Height, new Point(0, 0), lowThreshold, highThreshold);
+            Mat mat = MatHelper.ByteArrayToMat(tempBuff, area.Width, area.Height, 1);
+            mat.Save(@"D:\test123.bmp");
+
+            //Point returnPoint = new Point();
+            //Point startPoint = new Point(0, 0);
+            //Rectangle foundRect = new Rectangle();
+
+            //while (true)
+            //{
+            //    returnPoint = TempAlgorithmTool.GetPointListBetweenThresholdRange(tempBuff, area.Width, area.Height, startPoint, lowThreshold, highThreshold);
+            //    startPoint = returnPoint;
+
+            //    if (returnPoint.X == -1 && returnPoint.Y == -1)
+            //        break;
+
+            //    foundRect = TempAlgorithmTool.DetectEdge(tempBuff, area.Width, area.Height, returnPoint, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
+
+            //    if (foundRect.Left == 0 || foundRect.Top == 0 || foundRect.Right == 0 || foundRect.Bottom == 0)
+            //        break;
+
+            //    if (foundRect.Left == -1 || foundRect.Top == -1 || foundRect.Right == -1 || foundRect.Bottom == -1)
+            //    {
+            //        tempBuff[returnPoint.Y * area.Width + returnPoint.X] = (byte)fillValue;
+            //        continue;
+            //    }
+
+            //    tempBuff = TempAlgorithmTool.FillValueWithCount(tempBuff, foundRect, fillValue, lowThreshold, highThreshold, out int fillCount);
+
+            //    if (resultList.Count < 10000)
+            //    {
+            //        BlobContourResult blobContourResult = new BlobContourResult();
+
+            //        blobContourResult.Left = area.X + foundRect.Left;
+            //        blobContourResult.Top = area.Y + foundRect.Top;
+            //        blobContourResult.Right = area.X + foundRect.Right;
+            //        blobContourResult.Bottom = area.Y + foundRect.Bottom;
+            //        blobContourResult.PixelCount = fillCount;
+
+            //        blobContourResult.ContourPointList.Add(new Point(area.X + returnPoint.X, area.Y + returnPoint.Y));
+
+            //        resultList.Add(blobContourResult);
+            //    }
+            //}
+
+            List<Point> pointList = TempAlgorithmTool.GetPointListBetweenThresholdRange(tempBuff, area.Width, area.Height, new Point(0, 0), lowThreshold, highThreshold);
 
             foreach (var point in pointList)
             {
                 if (point.X == -1 && point.Y == -1)
                     break;
 
-                Rectangle foundrect = TempAlgorithmTool.DetectEdge(buffer, inputRect.Width, inputRect.Height, point, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
+                Rectangle foundRect = TempAlgorithmTool.DetectEdge(tempBuff, area.Width, area.Height, point, lowThreshold, highThreshold);     // point 이새끼가 m_pContourPosX, m_pContourPosY, m_ContourCount 이거임
 
-                if (foundrect.Left == 0 || foundrect.Top == 0 || foundrect.Right == 0 || foundrect.Bottom == 0)
+                if (foundRect.Left == 0 || foundRect.Top == 0 || foundRect.Right == 0 || foundRect.Bottom == 0)
                     break;
 
-                if (foundrect.Left == -1 || foundrect.Top == -1 || foundrect.Right == -1 || foundrect.Bottom == -1)
+                if (foundRect.Left == -1 || foundRect.Top == -1 || foundRect.Right == -1 || foundRect.Bottom == -1)
                 {
-                    buffer[point.Y * inputRect.Width + point.X] = (byte)fillValue;
+                    tempBuff[point.Y * area.Width + point.X] = (byte)fillValue;
                     continue;
                 }
 
-                TempAlgorithmTool.FillValueWithCount(buffer, foundrect, fillValue, lowThreshold, highThreshold, out int fillCount);
+                TempAlgorithmTool.FillValueWithCount(tempBuff, foundRect, fillValue, lowThreshold, highThreshold, out int fillCount);
 
                 BlobContourResult blobContourResult = new BlobContourResult();
 
-                blobContourResult.Left = inputRect.X + foundrect.Left;
-                blobContourResult.Top = inputRect.Y + foundrect.Top;
-                blobContourResult.Right = inputRect.X + foundrect.Right;
-                blobContourResult.Bottom = inputRect.Y + foundrect.Bottom;
+                blobContourResult.Left = area.X + foundRect.Left;
+                blobContourResult.Top = area.Y + foundRect.Top;
+                blobContourResult.Right = area.X + foundRect.Right;
+                blobContourResult.Bottom = area.Y + foundRect.Bottom;
                 blobContourResult.PixelCount = fillCount;
-                blobContourResult.ContourPointList.Add(new Point(inputRect.X + point.X, inputRect.Y + point.Y));
+                blobContourResult.ContourPointList.Add(new Point(area.X + point.X, area.Y + point.Y));
 
                 resultList.Add(blobContourResult);
             }
