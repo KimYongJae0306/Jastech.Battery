@@ -12,7 +12,7 @@ namespace Jastech.Battery.Structure.VisionTool
 {
     public class FindAreaAlgorithmTool
     {
-        public double pixelResolution_mm = 1;
+        public double pixelResolution_mm { get; set; } = 1;
 
         #region 메소드
         public bool FindSearchAreas(FindAreaResult distanceResult, ImageBuffer imageBuffer, FindAreaParam parameters)
@@ -191,7 +191,7 @@ namespace Jastech.Battery.Structure.VisionTool
                         Width = halfWidth,
                         Height = searchArea.Height
                     };
-                    leftSurfaceInfo.Lane = Math.Max(1, (int)Math.Ceiling(leftSurfaceInfo.Area.X / laneDivider));
+                    leftSurfaceInfo.Lane = Math.Max(1, (int)Math.Ceiling((leftSurfaceInfo.Area.X + halfWidth) / laneDivider));
                     surfaceInfoList.Add(leftSurfaceInfo);
 
                     SurfaceInfo rightSurfaceInfo = new SurfaceInfo();

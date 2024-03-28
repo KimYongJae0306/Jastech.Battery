@@ -54,6 +54,8 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private DisplayType _displayType { get; set; } = DisplayType.Distance;
 
+        private GraphResultType _graphResultType { get; set; } = GraphResultType.VerticalSampling;
+
         public LineCamera LineCamera { get; set; }
 
         private DistanceControl DistanceControl { get; set; } = null;
@@ -85,12 +87,13 @@ namespace Jastech.Battery.Winform.UI.Forms
             TeachingData.Instance().UpdateTeachingData();
 
             SelectPage(DisplayType.Distance);
+            UpdateGraph(_graphResultType);
         }
 
         private void InitializeUI()
         {
             _selectedColor = Color.FromArgb(104, 104, 104);
-            _nonSelectedColor = Color.FromArgb(26, 26, 26);
+            _nonSelectedColor = Color.FromArgb(52, 52, 52);
 
             if (LineCamera == null)
                 lblDirection.Text = $"CAM : ";
@@ -231,7 +234,6 @@ namespace Jastech.Battery.Winform.UI.Forms
                     break;
             }
         }
-        #endregion
 
         private void btnTest_Click(object sender, EventArgs e)
         {
@@ -290,7 +292,24 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             // 추가 검증용 코드
             LastDistanceResult = distanceInspResult;
-            //ShowTestResults(distanceInspResult);
+            DistanceControl.dgvReviewOnlyTest1.DataSource = LastDistanceResult.CoatingInfoList;
+            DistanceControl.dgvReviewOnlyTest2.DataSource = LastDistanceResult.NonCoatingInfoList;
+            UpdateGraph(_graphResultType);
+            ShowTestResults(distanceInspResult);
+
+            //WriteTactTime(stopwatch, "=============================Start Surface Test=============================");
+            //SurfaceParam surfaceParam = unit?.SurfaceParam;
+            //SurfaceInspResult surfaceInspResult = new SurfaceInspResult();
+            //
+            //SurfaceAlgorithmTool surfaceAlgorithmTool = new SurfaceAlgorithmTool();
+            //surfaceAlgorithmTool.PixelResolution_mm = resolution_mm;
+            //
+            //var coatingInfoList = distanceInspResult.CoatingInfoList;
+            //
+            //surfaceParam.LineParam.EnableCheckLine = true;
+            //surfaceAlgorithmTool.CheckCoatingArea_Line(imageBuffer, coatingInfoList, surfaceParam, surfaceInspResult, true);
+            //
+            //sliceInspResult.SurfaceInspResult = surfaceInspResult;
 
             WriteTactTime(stopwatch, "=================================Test Finished==============================");
 
@@ -317,6 +336,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             int imageWidth = _orgBmp.Width;
             int penSize = (int)(Math.Sqrt(imageWidth) / Math.Log10(imageWidth));
+            Font textFont = new Font(Font.FontFamily, (float)Math.Sqrt(imageWidth) / 1.5f, FontStyle.Bold);
             Pen coatingWidthPen = new Pen(Color.LawnGreen, penSize)
             {
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
@@ -327,31 +347,36 @@ namespace Jastech.Battery.Winform.UI.Forms
                 StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor,
                 EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor
             };
-            Pen coatingROIpen = new Pen(Color.Yellow, penSize) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
-            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, penSize) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
-            Bitmap convertedBitmap = ImageHelper.ConvertGrayscaleToRGB24(_orgBmp);
+            Pen coatingROIpen = new Pen(Color.Yellow, penSize) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot };
+            Pen nonCoatingROIpen = new Pen(Color.DarkGreen, penSize) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot };
+
+            using (Bitmap convertedBitmap = ImageHelper.ConvertGrayscaleToRGB24(_orgBmp))
             {
                 using (Graphics g = Graphics.FromImage(convertedBitmap))
                 {
-                    foreach (Rectangle nonCoatingArea in distanceResult.NonCoatingInfoList.Select(info => info.Area))
+                    foreach (SurfaceInfo nonCoatingInfo in distanceResult.NonCoatingInfoList)
                     {
+                        Rectangle nonCoatingArea = nonCoatingInfo.Area;
+                        var laneString = $"Lane{nonCoatingInfo.Lane}";
+                        var stringSize = g.MeasureString(laneString, textFont);
                         g.DrawLine(nonCoatingWidthPen, nonCoatingArea.Left, nonCoatingArea.Top + nonCoatingArea.Height / 2, nonCoatingArea.Right, nonCoatingArea.Top + nonCoatingArea.Height / 2);
                         g.DrawRectangle(nonCoatingROIpen, nonCoatingArea.Left, nonCoatingArea.Top, nonCoatingArea.Width, nonCoatingArea.Height);
+                        g.DrawString(laneString, textFont, Brushes.Black, new PointF(nonCoatingArea.X + ((nonCoatingArea.Width-stringSize.Width) / 2), nonCoatingArea.Height / 3));
                     }
 
-                    foreach (Rectangle coatingArea in distanceResult.CoatingInfoList.Select(info => info.Area))
+                    foreach (SurfaceInfo coatingInfo in distanceResult.CoatingInfoList)
                     {
+                        Rectangle coatingArea = coatingInfo.Area;
+                        var laneString = $"Lane{coatingInfo.Lane}";
+                        var stringSize = g.MeasureString(laneString, textFont);
                         g.DrawLine(coatingWidthPen, coatingArea.Left, coatingArea.Top + coatingArea.Height / 2, coatingArea.Right, coatingArea.Top + coatingArea.Height / 2);
                         g.DrawRectangle(coatingROIpen, coatingArea.Left, coatingArea.Top, coatingArea.Width, coatingArea.Height);
+                        g.DrawString(laneString, textFont, Brushes.Black, new PointF(coatingArea.X + ((coatingArea.Width-stringSize.Width) / 2), coatingArea.Height / 4));
                     }
 
                     g.Save();
                 }
-                ImageViewerControl.SetInternalImage((Bitmap)convertedBitmap);
-
-                //var tempDiag = new Form { Size = new Size(500, 500), StartPosition = FormStartPosition.CenterParent };
-                //tempDiag.Controls.Add(new PictureBox { Image = cloneBitmap, Dock = DockStyle.Fill, SizeMode = PictureBoxSizeMode.Zoom });
-                //tempDiag.ShowDialog();
+                ImageViewerControl.SetInternalImage(convertedBitmap);
             }
         }
 
@@ -400,28 +425,114 @@ namespace Jastech.Battery.Winform.UI.Forms
             InspModelService?.Save(fileName, model);
         }
 
-        private void testVerticalSamplingResult_Click(object sender, EventArgs e)
+        private void btnShowVerticalSamplingResult_Click(object sender, EventArgs e)
         {
-            if (LastDistanceResult != null)
-                PixelValueGraphControl.SetData(LastDistanceResult?.VerticalSamplingResults.ToArray());
+            UpdateGraph(GraphResultType.VerticalSampling);
         }
 
-        private void testHorizontalSamplingResult_Click(object sender, EventArgs e)
+        private void btnShowVerticalDifferentials_Click(object sender, EventArgs e)
         {
-            if (LastDistanceResult != null)
-                PixelValueGraphControl.SetData(LastDistanceResult?.HorizontalSamplingResults.ToArray());
+            UpdateGraph(GraphResultType.VerticalDifferentials);
         }
 
-        private void testVerticalDerivedResult_Click(object sender, EventArgs e)
+        private void btnShowHorizontalSamplingResult_Click(object sender, EventArgs e)
         {
-            if (LastDistanceResult != null)
-                PixelValueGraphControl.SetData(LastDistanceResult?.VerticalDifferentials.ToArray());
+            UpdateGraph(GraphResultType.HorizontalSampling);
         }
 
-        private void testHorizontalDerivedResult_Click(object sender, EventArgs e)
+        private void btnShowHorizontalDifferentials_Click(object sender, EventArgs e)
         {
-            if (LastDistanceResult != null)
-                PixelValueGraphControl.SetData(LastDistanceResult?.HorizontalDifferentials.ToArray());
+            UpdateGraph(GraphResultType.HorizontalDifferentials);
+        }
+
+        private void UpdateGraph(GraphResultType resultType)
+        {
+            pnlVerticalSampleResult.BorderStyle = BorderStyle.None;
+            pnlVerticalDifferentials.BorderStyle = BorderStyle.None;
+            pnlHorizontalSampleResult.BorderStyle = BorderStyle.None;
+            pnlHorizontalDifferentials.BorderStyle = BorderStyle.None;
+
+            lblSelectVerticalSampling.BackColor = _nonSelectedColor;
+            lblSelectVerticalDifferentials.BackColor = _nonSelectedColor;
+            lblSelectHorizontalSampling.BackColor = _nonSelectedColor;
+            lblSelectHorizontalDifferentials.BackColor = _nonSelectedColor;
+
+            _graphResultType = resultType;
+            byte[] datas = null;
+            switch (_graphResultType)
+            {
+                case GraphResultType.VerticalSampling:
+                    lblSelectVerticalSampling.BackColor = Color.DodgerBlue;
+                    pnlVerticalSampleResult.BorderStyle = BorderStyle.FixedSingle;
+                    datas = LastDistanceResult?.VerticalSamplingResults?.ToArray();
+                    break;
+                case GraphResultType.VerticalDifferentials:
+                    lblSelectVerticalDifferentials.BackColor = Color.DodgerBlue;
+                    pnlVerticalDifferentials.BorderStyle = BorderStyle.FixedSingle;
+                    datas = LastDistanceResult?.VerticalDifferentials?.ToArray();
+                    break;
+                case GraphResultType.HorizontalSampling:
+                    lblSelectHorizontalSampling.BackColor = Color.DodgerBlue;
+                    pnlHorizontalSampleResult.BorderStyle = BorderStyle.FixedSingle;
+                    datas = LastDistanceResult?.HorizontalSamplingResults?.ToArray();
+                    break;
+                case GraphResultType.HorizontalDifferentials:
+                    lblSelectHorizontalDifferentials.BackColor = Color.DodgerBlue;
+                    pnlHorizontalDifferentials.BorderStyle = BorderStyle.FixedSingle;
+                    datas = LastDistanceResult?.HorizontalDifferentials?.ToArray();
+                    break;
+            }
+
+            if (datas != null)
+                PixelValueGraphControl.SetData(datas);
+        }
+        #endregion
+        private void btnHorizontalSampleResults_MouseEnter(object sender, EventArgs e)
+        {
+            if (lblSelectHorizontalSampling.BackColor != Color.DodgerBlue)
+                lblSelectHorizontalSampling.BackColor = _selectedColor;
+        }
+
+        private void btnHorizontalSampleResults_MouseLeave(object sender, EventArgs e)
+        {
+            if (lblSelectHorizontalSampling.BackColor != Color.DodgerBlue)
+                lblSelectHorizontalSampling.BackColor = _nonSelectedColor;
+        }
+
+        private void btnVerticalSampleResults_MouseEnter(object sender, EventArgs e)
+        {
+            if (lblSelectVerticalSampling.BackColor != Color.DodgerBlue)
+                lblSelectVerticalSampling.BackColor = _selectedColor;
+        }
+
+        private void btnVerticalSampleResults_MouseLeave(object sender, EventArgs e)
+        {
+            if (lblSelectVerticalSampling.BackColor != Color.DodgerBlue)
+                lblSelectVerticalSampling.BackColor = _nonSelectedColor;
+        }
+
+        private void btnVerticalDifferentials_MouseEnter(object sender, EventArgs e)
+        {
+            if (lblSelectVerticalDifferentials.BackColor != Color.DodgerBlue)
+                lblSelectVerticalDifferentials.BackColor = _selectedColor;
+        }
+
+        private void btnVerticalDifferentials_MouseLeave(object sender, EventArgs e)
+        {
+            if (lblSelectVerticalDifferentials.BackColor != Color.DodgerBlue)
+                lblSelectVerticalDifferentials.BackColor = _nonSelectedColor;
+        }
+
+        private void btnHorizontalDifferentials_MouseEnter(object sender, EventArgs e)
+        {
+            if (lblSelectHorizontalDifferentials.BackColor != Color.DodgerBlue)
+                lblSelectHorizontalDifferentials.BackColor = _selectedColor;
+        }
+
+        private void btnHorizontalDifferentials_MouseLeave(object sender, EventArgs e)
+        {
+            if (lblSelectHorizontalDifferentials.BackColor != Color.DodgerBlue)
+                lblSelectHorizontalDifferentials.BackColor = _nonSelectedColor;
         }
     }
 
@@ -429,5 +540,13 @@ namespace Jastech.Battery.Winform.UI.Forms
     {
         Distance,
         Surface,
+    }
+
+    public enum GraphResultType
+    {
+        VerticalSampling,
+        VerticalDifferentials,
+        HorizontalSampling,
+        HorizontalDifferentials,
     }
 }
