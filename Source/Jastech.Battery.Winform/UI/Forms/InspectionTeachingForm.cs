@@ -262,7 +262,6 @@ namespace Jastech.Battery.Winform.UI.Forms
             FindAreaAlgorithmTool findAreaAlgorithmTool = new FindAreaAlgorithmTool();
             findAreaAlgorithmTool.pixelResolution_mm = resolution_mm;
 
-
             WriteTactTime(stopwatch, "Before converting image");
             _grayImage = ImageHelper.ConvertRGB24ToGrayscale(_orgBmp);  // 2024.03.12 임시 변환 추가, 2064*1000 기준 100ms 정도 소요
             WriteTactTime(stopwatch, "After converting image to grayscale");
@@ -304,8 +303,9 @@ namespace Jastech.Battery.Winform.UI.Forms
 
             var coatingInfoList = distanceInspResult.CoatingInfoList;
 
+            imageBuffer.InitializeSmallBuffer(smallRatioX: 5, smallRatioY: 5);
             surfaceParam.LineParam.EnableCheckLine = true;
-            surfaceAlgorithmTool.CheckCoatingArea_Line(imageBuffer, coatingInfoList, surfaceParam, surfaceInspResult, true);
+            surfaceAlgorithmTool.CheckCoatingArea_Line(imageBuffer, coatingInfoList, surfaceParam, surfaceInspResult, false);
 
             sliceInspResult.SurfaceInspResult = surfaceInspResult;
         }

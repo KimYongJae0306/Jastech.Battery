@@ -55,53 +55,67 @@ namespace Jastech.Battery.Structure.Data
         #endregion
 
         #region 메서드
-        public void InitializeWorkBuffer(byte[] imageData, int buffWidth, int buffHeight)
+        public void InitializeWorkBuffer(Rectangle workArea, int smallRatioX, int smallRatioY)
         {
-            if (imageData == null || buffWidth < 1 || buffHeight < 1)
-                return;
-
-            int dataLength = buffWidth * buffHeight;
-
-            if (OriginBuffer == null)
+            if (ImageData != null)
             {
-                OriginBuffer = new byte[dataLength];
-                BwBuffer = new byte[dataLength];
-                MasterBuffer = new byte[dataLength];
-
-                //ProjectionWidth = new byte[buffWidth];
-                //MagnifyFactor = new double[buffWidth];
-
-                HorizontalData = new double[buffWidth];
-                VerticalData = new double[buffHeight];
-
-                AverageHorizontalData = new double[buffWidth];
-                AverageVerticalData = new double[buffHeight];
-
-                DifferentialHorizontalData = new double[buffWidth];
-                DifferentiaVerticalData = new double[buffHeight];
-            }
-            else
-            {
-                if (buffWidth != ImageWidth || buffHeight != ImageHeight)
-                {
-                    Array.Resize(ref OriginBuffer, dataLength);
-                    Array.Resize(ref BwBuffer, dataLength);
-                    Array.Resize(ref MasterBuffer, dataLength);
-
-                    //Array.Resize(ref ProjectionWidth, buffWidth);
-                    //Array.Resize(ref MagnifyFactor, buffWidth);
-
-                    Array.Resize(ref HorizontalData, buffWidth);
-                    Array.Resize(ref VerticalData, buffHeight);
-
-                    Array.Resize(ref AverageHorizontalData, buffWidth);
-                    Array.Resize(ref AverageVerticalData, buffHeight);
-
-                    Array.Resize(ref DifferentialHorizontalData, buffWidth);
-                    Array.Resize(ref DifferentiaVerticalData, buffHeight);
-                }
+                WorkBuffer = new WorkBuffer();
+                WorkBuffer.InitializeWorkBuffer(ImageData, ImageWidth, workArea, smallRatioX, smallRatioY);
             }
 
+            //if (imageData == null || buffWidth < 1 || buffHeight < 1)
+            //    return;
+
+            //int dataLength = buffWidth * buffHeight;
+
+            //if (OriginBuffer == null)
+            //{
+            //    OriginBuffer = new byte[dataLength];
+            //    BwBuffer = new byte[dataLength];
+            //    MasterBuffer = new byte[dataLength];
+
+            //    //ProjectionWidth = new byte[buffWidth];
+            //    //MagnifyFactor = new double[buffWidth];
+
+            //    HorizontalData = new double[buffWidth];
+            //    VerticalData = new double[buffHeight];
+
+            //    AverageHorizontalData = new double[buffWidth];
+            //    AverageVerticalData = new double[buffHeight];
+
+            //    DifferentialHorizontalData = new double[buffWidth];
+            //    DifferentiaVerticalData = new double[buffHeight];
+            //}
+            //else
+            //{
+            //    if (buffWidth != ImageWidth || buffHeight != ImageHeight)
+            //    {
+            //        Array.Resize(ref OriginBuffer, dataLength);
+            //        Array.Resize(ref BwBuffer, dataLength);
+            //        Array.Resize(ref MasterBuffer, dataLength);
+
+            //        //Array.Resize(ref ProjectionWidth, buffWidth);
+            //        //Array.Resize(ref MagnifyFactor, buffWidth);
+
+            //        Array.Resize(ref HorizontalData, buffWidth);
+            //        Array.Resize(ref VerticalData, buffHeight);
+
+            //        Array.Resize(ref AverageHorizontalData, buffWidth);
+            //        Array.Resize(ref AverageVerticalData, buffHeight);
+
+            //        Array.Resize(ref DifferentialHorizontalData, buffWidth);
+            //        Array.Resize(ref DifferentiaVerticalData, buffHeight);
+            //    }
+            //}
+        }
+
+        public void InitializeSmallBuffer(int smallRatioX, int smallRatioY)
+        {
+            if (ImageData != null)
+            {
+                SmallBuffer = new SmallBuffer();
+                SmallBuffer.InitializeSmallBuffer(ImageData, ImageWidth, ImageHeight, smallRatioX, smallRatioY);
+            }
         }
 
         public void Dispose()
@@ -214,20 +228,22 @@ namespace Jastech.Battery.Structure.Data
 
         public int WorkRatioY { get; set; } = 1;
 
-        public void SetWorkBuffer(byte[] imageData, int imageWidth, Rectangle workRect, int workRatioX, int workRatioY)
+        public void InitializeWorkBuffer(byte[] imageData, int imageWidth, Rectangle workRect, int workRatioX, int workRatioY)
         {
             int buffWidth = workRect.Width / workRatioX;
             int buffHeight = workRect.Height / workRatioY;
 
-            if (BuffWidth < 1 || BuffHeight < 1)
+            if (buffWidth < 1 || buffHeight < 1)
                 return;
+
+            int dataLength = buffWidth * buffHeight;
 
             if (OriginBuffer == null)
             {
-                OriginBuffer = new byte[buffWidth * buffHeight];
-                StrecthBuffer = new byte[buffWidth * buffHeight];
-                MagnifiedBuffer = new byte[buffWidth * buffHeight];
-                BwBuffer = new byte[buffWidth * buffHeight];
+                OriginBuffer = new byte[dataLength];
+                StrecthBuffer = new byte[dataLength];
+                MagnifiedBuffer = new byte[dataLength];
+                BwBuffer = new byte[dataLength];
                 //AverageBuffer = new byte[buffWidth * buffHeight];
                 //DifferentialBuffer = new byte[buffWidth * buffHeight];
             }
@@ -235,10 +251,10 @@ namespace Jastech.Battery.Structure.Data
             {
                 if (buffWidth != BuffWidth || buffHeight != BuffHeight)
                 {
-                    Array.Resize(ref OriginBuffer, buffWidth * buffHeight);
-                    Array.Resize(ref StrecthBuffer, buffWidth * buffHeight);
-                    Array.Resize(ref MagnifiedBuffer, buffWidth * buffHeight);
-                    Array.Resize(ref BwBuffer, buffWidth * buffHeight);
+                    Array.Resize(ref OriginBuffer, dataLength);
+                    Array.Resize(ref StrecthBuffer, dataLength);
+                    Array.Resize(ref MagnifiedBuffer, dataLength);
+                    Array.Resize(ref BwBuffer, dataLength);
                     //Array.Resize(ref AverageBuffer, buffWidth * buffHeight);
                     //Array.Resize(ref DifferentialBuffer, buffWidth * buffHeight);
                 }
