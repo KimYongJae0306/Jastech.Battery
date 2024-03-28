@@ -227,6 +227,7 @@ namespace Jastech.Battery.Winform.UI.Forms
 
                 case DisplayType.Surface:
                     btnSurface.BackColor = _selectedColor;
+                    SurfaceControl.SetParam(currentUnit.SurfaceParam);
                     pnlTeach.Controls.Add(SurfaceControl);
                     break;
 
@@ -433,11 +434,6 @@ namespace Jastech.Battery.Winform.UI.Forms
 
         private void UpdateGraph(GraphResultType resultType)
         {
-            pnlVerticalSampleResult.BorderStyle = BorderStyle.None;
-            pnlVerticalDifferentials.BorderStyle = BorderStyle.None;
-            pnlHorizontalSampleResult.BorderStyle = BorderStyle.None;
-            pnlHorizontalDifferentials.BorderStyle = BorderStyle.None;
-
             lblSelectVerticalSampling.BackColor = _nonSelectedColor;
             lblSelectVerticalDifferentials.BackColor = _nonSelectedColor;
             lblSelectHorizontalSampling.BackColor = _nonSelectedColor;
@@ -448,23 +444,19 @@ namespace Jastech.Battery.Winform.UI.Forms
             switch (_graphResultType)
             {
                 case GraphResultType.VerticalSampling:
-                    lblSelectVerticalSampling.BackColor = Color.DodgerBlue;
-                    pnlVerticalSampleResult.BorderStyle = BorderStyle.FixedSingle;
+                    lblSelectVerticalSampling.BackColor = SystemColors.Highlight;
                     datas = LastDistanceResult?.VerticalSamplingResults?.ToArray();
                     break;
                 case GraphResultType.VerticalDifferentials:
-                    lblSelectVerticalDifferentials.BackColor = Color.DodgerBlue;
-                    pnlVerticalDifferentials.BorderStyle = BorderStyle.FixedSingle;
+                    lblSelectVerticalDifferentials.BackColor = SystemColors.Highlight;
                     datas = LastDistanceResult?.VerticalDifferentials?.ToArray();
                     break;
                 case GraphResultType.HorizontalSampling:
-                    lblSelectHorizontalSampling.BackColor = Color.DodgerBlue;
-                    pnlHorizontalSampleResult.BorderStyle = BorderStyle.FixedSingle;
+                    lblSelectHorizontalSampling.BackColor = SystemColors.Highlight;
                     datas = LastDistanceResult?.HorizontalSamplingResults?.ToArray();
                     break;
                 case GraphResultType.HorizontalDifferentials:
-                    lblSelectHorizontalDifferentials.BackColor = Color.DodgerBlue;
-                    pnlHorizontalDifferentials.BorderStyle = BorderStyle.FixedSingle;
+                    lblSelectHorizontalDifferentials.BackColor = SystemColors.Highlight;
                     datas = LastDistanceResult?.HorizontalDifferentials?.ToArray();
                     break;
             }
@@ -475,49 +467,49 @@ namespace Jastech.Battery.Winform.UI.Forms
         #endregion
         private void btnHorizontalSampleResults_MouseEnter(object sender, EventArgs e)
         {
-            if (lblSelectHorizontalSampling.BackColor != Color.DodgerBlue)
+            if (lblSelectHorizontalSampling.BackColor != SystemColors.Highlight)
                 lblSelectHorizontalSampling.BackColor = _selectedColor;
         }
 
         private void btnHorizontalSampleResults_MouseLeave(object sender, EventArgs e)
         {
-            if (lblSelectHorizontalSampling.BackColor != Color.DodgerBlue)
+            if (lblSelectHorizontalSampling.BackColor != SystemColors.Highlight)
                 lblSelectHorizontalSampling.BackColor = _nonSelectedColor;
         }
 
         private void btnVerticalSampleResults_MouseEnter(object sender, EventArgs e)
         {
-            if (lblSelectVerticalSampling.BackColor != Color.DodgerBlue)
+            if (lblSelectVerticalSampling.BackColor != SystemColors.Highlight)
                 lblSelectVerticalSampling.BackColor = _selectedColor;
         }
 
         private void btnVerticalSampleResults_MouseLeave(object sender, EventArgs e)
         {
-            if (lblSelectVerticalSampling.BackColor != Color.DodgerBlue)
+            if (lblSelectVerticalSampling.BackColor != SystemColors.Highlight)
                 lblSelectVerticalSampling.BackColor = _nonSelectedColor;
         }
 
         private void btnVerticalDifferentials_MouseEnter(object sender, EventArgs e)
         {
-            if (lblSelectVerticalDifferentials.BackColor != Color.DodgerBlue)
+            if (lblSelectVerticalDifferentials.BackColor != SystemColors.Highlight)
                 lblSelectVerticalDifferentials.BackColor = _selectedColor;
         }
 
         private void btnVerticalDifferentials_MouseLeave(object sender, EventArgs e)
         {
-            if (lblSelectVerticalDifferentials.BackColor != Color.DodgerBlue)
+            if (lblSelectVerticalDifferentials.BackColor != SystemColors.Highlight)
                 lblSelectVerticalDifferentials.BackColor = _nonSelectedColor;
         }
 
         private void btnHorizontalDifferentials_MouseEnter(object sender, EventArgs e)
         {
-            if (lblSelectHorizontalDifferentials.BackColor != Color.DodgerBlue)
+            if (lblSelectHorizontalDifferentials.BackColor != SystemColors.Highlight)
                 lblSelectHorizontalDifferentials.BackColor = _selectedColor;
         }
 
         private void btnHorizontalDifferentials_MouseLeave(object sender, EventArgs e)
         {
-            if (lblSelectHorizontalDifferentials.BackColor != Color.DodgerBlue)
+            if (lblSelectHorizontalDifferentials.BackColor != SystemColors.Highlight)
                 lblSelectHorizontalDifferentials.BackColor = _nonSelectedColor;
         }
     }

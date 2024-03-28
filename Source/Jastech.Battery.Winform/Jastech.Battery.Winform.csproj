@@ -89,6 +89,12 @@
     <Compile Include="UI\Controls\DefectInfoControl.Designer.cs">
       <DependentUpon>DefectInfoControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\EditParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\EditParameterControl.Designer.cs">
+      <DependentUpon>EditParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controls\SurfaceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -255,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\DefectInfoControl.resx">
       <DependentUpon>DefectInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\EditParameterControl.resx">
+      <DependentUpon>EditParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\SurfaceControl.resx">
       <DependentUpon>SurfaceControl.cs</DependentUpon>

@@ -48,17 +48,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlGraph = new System.Windows.Forms.Panel();
-            this.pnlVerticalSampleResult = new System.Windows.Forms.Panel();
-            this.lblSelectVerticalSampling = new System.Windows.Forms.Label();
             this.btnVerticalSampleResults = new System.Windows.Forms.Button();
-            this.pnlVerticalDifferentials = new System.Windows.Forms.Panel();
             this.btnVerticalDifferentials = new System.Windows.Forms.Button();
-            this.lblSelectVerticalDifferentials = new System.Windows.Forms.Label();
-            this.pnlHorizontalSampleResult = new System.Windows.Forms.Panel();
             this.btnHorizontalSampleResults = new System.Windows.Forms.Button();
-            this.lblSelectHorizontalSampling = new System.Windows.Forms.Label();
-            this.pnlHorizontalDifferentials = new System.Windows.Forms.Panel();
             this.btnHorizontalDifferentials = new System.Windows.Forms.Button();
+            this.lblSelectVerticalSampling = new System.Windows.Forms.Label();
+            this.lblSelectVerticalDifferentials = new System.Windows.Forms.Label();
+            this.lblSelectHorizontalSampling = new System.Windows.Forms.Label();
             this.lblSelectHorizontalDifferentials = new System.Windows.Forms.Label();
             this.pnlDisplay = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -75,10 +71,6 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            this.pnlVerticalSampleResult.SuspendLayout();
-            this.pnlVerticalDifferentials.SuspendLayout();
-            this.pnlHorizontalSampleResult.SuspendLayout();
-            this.pnlHorizontalDifferentials.SuspendLayout();
             this.tlpTeachingPage.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -356,13 +348,17 @@
             this.tableLayoutPanel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 7F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.pnlGraph, 2, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pnlVerticalSampleResult, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pnlVerticalDifferentials, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.pnlHorizontalSampleResult, 0, 2);
-            this.tableLayoutPanel4.Controls.Add(this.pnlHorizontalDifferentials, 0, 3);
+            this.tableLayoutPanel4.Controls.Add(this.btnVerticalSampleResults, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.btnVerticalDifferentials, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.btnHorizontalSampleResults, 0, 2);
+            this.tableLayoutPanel4.Controls.Add(this.btnHorizontalDifferentials, 0, 3);
+            this.tableLayoutPanel4.Controls.Add(this.lblSelectVerticalSampling, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.lblSelectVerticalDifferentials, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.lblSelectHorizontalSampling, 1, 2);
+            this.tableLayoutPanel4.Controls.Add(this.lblSelectHorizontalDifferentials, 1, 3);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
@@ -381,39 +377,18 @@
             // pnlGraph
             // 
             this.pnlGraph.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
+            this.pnlGraph.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlGraph.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGraph.Location = new System.Drawing.Point(117, 0);
+            this.pnlGraph.Location = new System.Drawing.Point(115, 0);
             this.pnlGraph.Margin = new System.Windows.Forms.Padding(0);
             this.pnlGraph.Name = "pnlGraph";
             this.tableLayoutPanel4.SetRowSpan(this.pnlGraph, 7);
-            this.pnlGraph.Size = new System.Drawing.Size(753, 398);
+            this.pnlGraph.Size = new System.Drawing.Size(755, 398);
             this.pnlGraph.TabIndex = 0;
-            // 
-            // pnlVerticalSampleResult
-            // 
-            this.tableLayoutPanel4.SetColumnSpan(this.pnlVerticalSampleResult, 2);
-            this.pnlVerticalSampleResult.Controls.Add(this.btnVerticalSampleResults);
-            this.pnlVerticalSampleResult.Controls.Add(this.lblSelectVerticalSampling);
-            this.pnlVerticalSampleResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlVerticalSampleResult.Location = new System.Drawing.Point(0, 0);
-            this.pnlVerticalSampleResult.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlVerticalSampleResult.Name = "pnlVerticalSampleResult";
-            this.pnlVerticalSampleResult.Size = new System.Drawing.Size(117, 60);
-            this.pnlVerticalSampleResult.TabIndex = 6;
-            // 
-            // lblSelectVerticalSampling
-            // 
-            this.lblSelectVerticalSampling.BackColor = System.Drawing.Color.DodgerBlue;
-            this.lblSelectVerticalSampling.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSelectVerticalSampling.Location = new System.Drawing.Point(87, 0);
-            this.lblSelectVerticalSampling.Margin = new System.Windows.Forms.Padding(0);
-            this.lblSelectVerticalSampling.Name = "lblSelectVerticalSampling";
-            this.lblSelectVerticalSampling.Size = new System.Drawing.Size(30, 60);
-            this.lblSelectVerticalSampling.TabIndex = 2;
             // 
             // btnVerticalSampleResults
             // 
-            this.btnVerticalSampleResults.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnVerticalSampleResults.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnVerticalSampleResults.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnVerticalSampleResults.FlatAppearance.BorderSize = 0;
             this.btnVerticalSampleResults.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -429,26 +404,14 @@
             this.btnVerticalSampleResults.MouseEnter += new System.EventHandler(this.btnVerticalSampleResults_MouseEnter);
             this.btnVerticalSampleResults.MouseLeave += new System.EventHandler(this.btnVerticalSampleResults_MouseLeave);
             // 
-            // pnlVerticalDifferentials
-            // 
-            this.tableLayoutPanel4.SetColumnSpan(this.pnlVerticalDifferentials, 2);
-            this.pnlVerticalDifferentials.Controls.Add(this.btnVerticalDifferentials);
-            this.pnlVerticalDifferentials.Controls.Add(this.lblSelectVerticalDifferentials);
-            this.pnlVerticalDifferentials.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlVerticalDifferentials.Location = new System.Drawing.Point(0, 60);
-            this.pnlVerticalDifferentials.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlVerticalDifferentials.Name = "pnlVerticalDifferentials";
-            this.pnlVerticalDifferentials.Size = new System.Drawing.Size(117, 60);
-            this.pnlVerticalDifferentials.TabIndex = 5;
-            // 
             // btnVerticalDifferentials
             // 
-            this.btnVerticalDifferentials.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnVerticalDifferentials.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnVerticalDifferentials.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnVerticalDifferentials.FlatAppearance.BorderSize = 0;
             this.btnVerticalDifferentials.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVerticalDifferentials.ForeColor = System.Drawing.Color.White;
-            this.btnVerticalDifferentials.Location = new System.Drawing.Point(0, 0);
+            this.btnVerticalDifferentials.Location = new System.Drawing.Point(0, 60);
             this.btnVerticalDifferentials.Margin = new System.Windows.Forms.Padding(0);
             this.btnVerticalDifferentials.Name = "btnVerticalDifferentials";
             this.btnVerticalDifferentials.Size = new System.Drawing.Size(110, 60);
@@ -459,36 +422,14 @@
             this.btnVerticalDifferentials.MouseEnter += new System.EventHandler(this.btnVerticalDifferentials_MouseEnter);
             this.btnVerticalDifferentials.MouseLeave += new System.EventHandler(this.btnVerticalDifferentials_MouseLeave);
             // 
-            // lblSelectVerticalDifferentials
-            // 
-            this.lblSelectVerticalDifferentials.BackColor = System.Drawing.Color.DodgerBlue;
-            this.lblSelectVerticalDifferentials.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSelectVerticalDifferentials.Location = new System.Drawing.Point(87, 0);
-            this.lblSelectVerticalDifferentials.Margin = new System.Windows.Forms.Padding(0);
-            this.lblSelectVerticalDifferentials.Name = "lblSelectVerticalDifferentials";
-            this.lblSelectVerticalDifferentials.Size = new System.Drawing.Size(30, 60);
-            this.lblSelectVerticalDifferentials.TabIndex = 2;
-            // 
-            // pnlHorizontalSampleResult
-            // 
-            this.tableLayoutPanel4.SetColumnSpan(this.pnlHorizontalSampleResult, 2);
-            this.pnlHorizontalSampleResult.Controls.Add(this.btnHorizontalSampleResults);
-            this.pnlHorizontalSampleResult.Controls.Add(this.lblSelectHorizontalSampling);
-            this.pnlHorizontalSampleResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlHorizontalSampleResult.Location = new System.Drawing.Point(0, 120);
-            this.pnlHorizontalSampleResult.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlHorizontalSampleResult.Name = "pnlHorizontalSampleResult";
-            this.pnlHorizontalSampleResult.Size = new System.Drawing.Size(117, 60);
-            this.pnlHorizontalSampleResult.TabIndex = 4;
-            // 
             // btnHorizontalSampleResults
             // 
-            this.btnHorizontalSampleResults.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnHorizontalSampleResults.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnHorizontalSampleResults.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnHorizontalSampleResults.FlatAppearance.BorderSize = 0;
             this.btnHorizontalSampleResults.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHorizontalSampleResults.ForeColor = System.Drawing.Color.White;
-            this.btnHorizontalSampleResults.Location = new System.Drawing.Point(0, 0);
+            this.btnHorizontalSampleResults.Location = new System.Drawing.Point(0, 120);
             this.btnHorizontalSampleResults.Margin = new System.Windows.Forms.Padding(0);
             this.btnHorizontalSampleResults.Name = "btnHorizontalSampleResults";
             this.btnHorizontalSampleResults.Size = new System.Drawing.Size(110, 60);
@@ -499,36 +440,14 @@
             this.btnHorizontalSampleResults.MouseEnter += new System.EventHandler(this.btnHorizontalSampleResults_MouseEnter);
             this.btnHorizontalSampleResults.MouseLeave += new System.EventHandler(this.btnHorizontalSampleResults_MouseLeave);
             // 
-            // lblSelectHorizontalSampling
-            // 
-            this.lblSelectHorizontalSampling.BackColor = System.Drawing.Color.DodgerBlue;
-            this.lblSelectHorizontalSampling.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSelectHorizontalSampling.Location = new System.Drawing.Point(87, 0);
-            this.lblSelectHorizontalSampling.Margin = new System.Windows.Forms.Padding(0);
-            this.lblSelectHorizontalSampling.Name = "lblSelectHorizontalSampling";
-            this.lblSelectHorizontalSampling.Size = new System.Drawing.Size(30, 60);
-            this.lblSelectHorizontalSampling.TabIndex = 2;
-            // 
-            // pnlHorizontalDifferentials
-            // 
-            this.tableLayoutPanel4.SetColumnSpan(this.pnlHorizontalDifferentials, 2);
-            this.pnlHorizontalDifferentials.Controls.Add(this.btnHorizontalDifferentials);
-            this.pnlHorizontalDifferentials.Controls.Add(this.lblSelectHorizontalDifferentials);
-            this.pnlHorizontalDifferentials.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlHorizontalDifferentials.Location = new System.Drawing.Point(0, 180);
-            this.pnlHorizontalDifferentials.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlHorizontalDifferentials.Name = "pnlHorizontalDifferentials";
-            this.pnlHorizontalDifferentials.Size = new System.Drawing.Size(117, 60);
-            this.pnlHorizontalDifferentials.TabIndex = 3;
-            // 
             // btnHorizontalDifferentials
             // 
-            this.btnHorizontalDifferentials.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnHorizontalDifferentials.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnHorizontalDifferentials.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnHorizontalDifferentials.FlatAppearance.BorderSize = 0;
             this.btnHorizontalDifferentials.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHorizontalDifferentials.ForeColor = System.Drawing.Color.White;
-            this.btnHorizontalDifferentials.Location = new System.Drawing.Point(0, 0);
+            this.btnHorizontalDifferentials.Location = new System.Drawing.Point(0, 180);
             this.btnHorizontalDifferentials.Margin = new System.Windows.Forms.Padding(0);
             this.btnHorizontalDifferentials.Name = "btnHorizontalDifferentials";
             this.btnHorizontalDifferentials.Size = new System.Drawing.Size(110, 60);
@@ -539,14 +458,44 @@
             this.btnHorizontalDifferentials.MouseEnter += new System.EventHandler(this.btnHorizontalDifferentials_MouseEnter);
             this.btnHorizontalDifferentials.MouseLeave += new System.EventHandler(this.btnHorizontalDifferentials_MouseLeave);
             // 
+            // lblSelectVerticalSampling
+            // 
+            this.lblSelectVerticalSampling.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectVerticalSampling.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectVerticalSampling.Location = new System.Drawing.Point(110, 0);
+            this.lblSelectVerticalSampling.Margin = new System.Windows.Forms.Padding(0);
+            this.lblSelectVerticalSampling.Name = "lblSelectVerticalSampling";
+            this.lblSelectVerticalSampling.Size = new System.Drawing.Size(5, 60);
+            this.lblSelectVerticalSampling.TabIndex = 2;
+            // 
+            // lblSelectVerticalDifferentials
+            // 
+            this.lblSelectVerticalDifferentials.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectVerticalDifferentials.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectVerticalDifferentials.Location = new System.Drawing.Point(110, 60);
+            this.lblSelectVerticalDifferentials.Margin = new System.Windows.Forms.Padding(0);
+            this.lblSelectVerticalDifferentials.Name = "lblSelectVerticalDifferentials";
+            this.lblSelectVerticalDifferentials.Size = new System.Drawing.Size(5, 60);
+            this.lblSelectVerticalDifferentials.TabIndex = 2;
+            // 
+            // lblSelectHorizontalSampling
+            // 
+            this.lblSelectHorizontalSampling.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectHorizontalSampling.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectHorizontalSampling.Location = new System.Drawing.Point(110, 120);
+            this.lblSelectHorizontalSampling.Margin = new System.Windows.Forms.Padding(0);
+            this.lblSelectHorizontalSampling.Name = "lblSelectHorizontalSampling";
+            this.lblSelectHorizontalSampling.Size = new System.Drawing.Size(5, 60);
+            this.lblSelectHorizontalSampling.TabIndex = 2;
+            // 
             // lblSelectHorizontalDifferentials
             // 
-            this.lblSelectHorizontalDifferentials.BackColor = System.Drawing.Color.DodgerBlue;
-            this.lblSelectHorizontalDifferentials.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSelectHorizontalDifferentials.Location = new System.Drawing.Point(87, 0);
+            this.lblSelectHorizontalDifferentials.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.lblSelectHorizontalDifferentials.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSelectHorizontalDifferentials.Location = new System.Drawing.Point(110, 180);
             this.lblSelectHorizontalDifferentials.Margin = new System.Windows.Forms.Padding(0);
             this.lblSelectHorizontalDifferentials.Name = "lblSelectHorizontalDifferentials";
-            this.lblSelectHorizontalDifferentials.Size = new System.Drawing.Size(30, 60);
+            this.lblSelectHorizontalDifferentials.Size = new System.Drawing.Size(5, 60);
             this.lblSelectHorizontalDifferentials.TabIndex = 2;
             // 
             // pnlDisplay
@@ -633,10 +582,6 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
-            this.pnlVerticalSampleResult.ResumeLayout(false);
-            this.pnlVerticalDifferentials.ResumeLayout(false);
-            this.pnlHorizontalSampleResult.ResumeLayout(false);
-            this.pnlHorizontalDifferentials.ResumeLayout(false);
             this.tlpTeachingPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -675,10 +620,6 @@
         private System.Windows.Forms.Label lblSelectVerticalDifferentials;
         private System.Windows.Forms.Label lblSelectHorizontalSampling;
         private System.Windows.Forms.Label lblSelectHorizontalDifferentials;
-        private System.Windows.Forms.Panel pnlHorizontalDifferentials;
         private System.Windows.Forms.Button btnHorizontalDifferentials;
-        private System.Windows.Forms.Panel pnlHorizontalSampleResult;
-        private System.Windows.Forms.Panel pnlVerticalDifferentials;
-        private System.Windows.Forms.Panel pnlVerticalSampleResult;
     }
 }

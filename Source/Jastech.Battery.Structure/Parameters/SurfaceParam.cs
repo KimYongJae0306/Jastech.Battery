@@ -62,19 +62,19 @@ namespace Jastech.Battery.Structure.Parameters
     public class LineParam
     {
         [JsonProperty]
-        public bool EnableCheckLine { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
         [JsonProperty]
-        public int LineLevel { get; set; } = 0;
+        public int Level { get; set; } = 0;
 
         [JsonProperty]
-        public double LineSizeX { get; set; } = 0.1;
+        public double SizeX { get; set; } = 0.1;
 
         [JsonProperty]
-        public double LineSizeY { get; set; } = 5;
+        public double SizeY { get; set; } = 5;
 
         [JsonProperty]
-        public int LineEdgeLevel { get; set; } = 0;
+        public int EdgeLevel { get; set; } = 0;
 
         [JsonProperty]
         public int WorkRatioX { get; set; } = 2;
@@ -86,7 +86,7 @@ namespace Jastech.Battery.Structure.Parameters
     public class PinHoleParam
     {
         [JsonProperty]
-        public bool EnablePinHole { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
         [JsonProperty]
         public int MarginIn { get; set; } = 0;
@@ -95,110 +95,110 @@ namespace Jastech.Battery.Structure.Parameters
         public int MarginOut { get; set; } = 0;
 
         [JsonProperty]
-        public int PinHoleLevel { get; set; } = 0;
+        public int Level { get; set; } = 0;
 
         [JsonProperty]
-        public double PinHoleSize { get; set; } = 0.2;
+        public double Size { get; set; } = 0.2;
     }
 
     public class CraterParam
     {
         [JsonProperty]
-        public bool EnableCrater { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
         [JsonProperty]
-        public int CraterLevel { get; set; } = 0;
+        public int Level { get; set; } = 0;
 
         [JsonProperty]
-        public double CraterLargeSize { get; set; } = 2.0;
+        public double LargeSize { get; set; } = 2.0;
 
         [JsonProperty]
-        public double CraterLargeCount { get; set; } = 1;
+        public double LargeCount { get; set; } = 1;
 
         [JsonProperty]
-        public double CraterSmallSize { get; set; } = 2.0;
+        public double SmallSize { get; set; } = 2.0;
 
         [JsonProperty]
-        public double CraterSmallCount { get; set; } = 3;
+        public double SmallCount { get; set; } = 3;
     }
 
     public class DentParam
     {
         [JsonProperty]
-        public bool EnableDent { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
         [JsonProperty]
-        public int DentLevel { get; set; } = 0;
+        public int Level { get; set; } = 0;
 
         [JsonProperty]
-        public double DentLargeSize { get; set; } = 0.5;
+        public double LargeSize { get; set; } = 0.5;
 
         [JsonProperty]
-        public int DentLargetCount { get; set; } = 1;
+        public int LargeCount { get; set; } = 1;
 
         [JsonProperty]
-        public double DentSmallSize { get; set; } = 1.0;
+        public double SmallSize { get; set; } = 1.0;
 
         [JsonProperty]
-        public int DentSmallCount { get; set; } = 1;
+        public int SmallCount { get; set; } = 1;
     }
 
     public class NonCoatingDentParam
     {
         [JsonProperty]
-        public bool EnableDent { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
         [JsonProperty]
-        public double DentSize { get; set; } = 1.0;
+        public double Size { get; set; } = 1.0;
     }
 
     public class ScratchParam
     {
         [JsonProperty]
-        public bool EnableScratchBlack { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
         [JsonProperty]
-        public int ScratchBlackLevel { get; set; } = 0;
+        public int Level { get; set; } = 0;
 
         [JsonProperty]
-        public double ScratchBlackSize { get; set; } = 10.0;
+        public double Size { get; set; } = 10.0;
 
         [JsonProperty]
-        public double ScratchBlackWidth { get; set; } = 2.0;
+        public double Width { get; set; } = 2.0;
     }
 
     public class TapeParam
     {
         [JsonProperty]
-        public bool EnableConnectionTape { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
         [JsonProperty]
-        public int ConnectionTapeLevel { get; set; } = 0;
+        public int Level { get; set; } = 0;
     }
 
     public class CopperParam
     {
-        public double CopperMarginX { get; set; } = 1;
+        public double MarginX { get; set; } = 1;
 
-        public double CopperMarginY { get; set; } = 1;
+        public double MarginY { get; set; } = 1;
     }
 
     public class IslandParam
     {
-        public bool EnableIsland { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
-        public int IslandLevel { get; set; } = 0;
+        public int Level { get; set; } = 0;
 
-        public double IslandSize { get; set; } = 1.0;
+        public double Size { get; set; } = 1.0;
     }
 
     public class DragParam
     {
-        public bool EnableDrag { get; set; } = false;
+        public bool Enable { get; set; } = false;
 
-        public int DragLevel { get; set; } = 0;
+        public int Level { get; set; } = 0;
 
-        public double DragSize { get; set; } = 0.0;
+        public double Size { get; set; } = 0.0;
     }
     #endregion
 }

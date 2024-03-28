@@ -32,7 +32,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
         public void CheckCoatingArea_Line(ImageBuffer imageBuffer, List<SurfaceInfo> coatingInfoList, SurfaceParam surfaceParam, SurfaceInspResult surfaceInspResult, bool isTapeInsp)
         {
-            if (surfaceParam.LineParam.EnableCheckLine == false)
+            if (surfaceParam.LineParam.Enable == false)
                 return;
 
             int pix5mm = (int)(5.0 / PixelResolution_mm);
@@ -75,18 +75,18 @@ namespace Jastech.Battery.Structure.VisionTool
 
                 if (isTapeInsp == true)
                 {
-                    if (surfaceParam.TapeParam.EnableConnectionTape)
+                    if (surfaceParam.TapeParam.Enable)
                     {
-                        threshold = averageLevel + surfaceParam.TapeParam.ConnectionTapeLevel;
+                        threshold = averageLevel + surfaceParam.TapeParam.Level;
                         referenceSizeX = inspArea.Width / 2 * CalibrationX;
                         referenceSizeY = 1.0;
                     }
                 }
                 else
                 {
-                    threshold = averageLevel + surfaceParam.LineParam.LineLevel;
-                    referenceSizeX = surfaceParam.LineParam.LineSizeX;
-                    referenceSizeY = surfaceParam.LineParam.LineSizeY;
+                    threshold = averageLevel + surfaceParam.LineParam.Level;
+                    referenceSizeX = surfaceParam.LineParam.SizeX;
+                    referenceSizeY = surfaceParam.LineParam.SizeY;
                 }
 
                 var blobList = BlobContour(workBuff, imageBuffer.WorkBuffer.BuffWidth, imageBuffer.WorkBuffer.BuffHeight, workArea, threshold, 255);
@@ -133,7 +133,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
         private void CheckCoatingArea_LineBlack(ImageBuffer imageBuffer, FindAreaResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
         {
-            if (surfaceParam.LineBlackParam.EnableCheckLine == false)
+            if (surfaceParam.LineBlackParam.Enable == false)
                 return;
 
             int buffWidth = imageBuffer.WorkBuffer.BuffWidth;
@@ -148,7 +148,7 @@ namespace Jastech.Battery.Structure.VisionTool
             Rectangle workArea = new Rectangle();
             Rectangle findArea = new Rectangle();
 
-            int threshold = 128 - surfaceParam.LineBlackParam.LineLevel;
+            int threshold = 128 - surfaceParam.LineBlackParam.Level;
 
             int tapePosY1 = 0;
             int tapePosY2 = imageBuffer.ImageHeight;
@@ -248,7 +248,7 @@ namespace Jastech.Battery.Structure.VisionTool
                     double findWidth = (findArea.Width + 1) * CalibrationX;
                     double findHeight = (findArea.Height + 1) * CalibrationY;
 
-                    if (findWidth < surfaceParam.LineParam.LineSizeY)
+                    if (findWidth < surfaceParam.LineParam.SizeY)
                         continue;
 
                     bool samePos = CheckAlreadySaved();
@@ -264,7 +264,7 @@ namespace Jastech.Battery.Structure.VisionTool
 
         private void CheckCoatingArea_Edge(ImageBuffer imageBuffer, FindAreaResult distanceInspResult, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
         {
-            int pixRefernceHeight = (int)((surfaceParam.LineParam.LineSizeY + 1.0) / CalibrationY);
+            int pixRefernceHeight = (int)((surfaceParam.LineParam.SizeY + 1.0) / CalibrationY);
 
             Rectangle findArea = new Rectangle();
 
@@ -324,9 +324,9 @@ namespace Jastech.Battery.Structure.VisionTool
                     inspArea = TempAlgorithmTool.GetValidRectangle(inspArea, imageBuffer.ImageWidth, imageBuffer.ImageHeight);
                 }
 
-                if (surfaceParam.LineParam.EnableCheckLine)
+                if (surfaceParam.LineParam.Enable)
                 {
-                    threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.LineParam.LineEdgeLevel;
+                    threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.LineParam.EdgeLevel;
 
                     int divideCount = inspArea.Height / pixRefernceHeight;
 
@@ -362,7 +362,7 @@ namespace Jastech.Battery.Structure.VisionTool
                             double findWidth = (findArea.Width + 1) * CalibrationX;
                             double findHeight = (findArea.Height + 1) * CalibrationY;
 
-                            if (findHeight > surfaceParam.LineParam.LineSizeY)
+                            if (findHeight > surfaceParam.LineParam.SizeY)
                             {
                                 Rectangle drawArea = new Rectangle();
                                 drawArea = findArea;
@@ -373,11 +373,11 @@ namespace Jastech.Battery.Structure.VisionTool
                     }
                 }
 
-                if (surfaceParam.PinHoleParam.EnablePinHole)
+                if (surfaceParam.PinHoleParam.Enable)
                 {
                     inspArea.X = pinholeLeft;
                     inspArea.Width = pinholeRight - pinholeLeft;
-                    threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.PinHoleEdgeParam.PinHoleLevel;
+                    threshold = (int)(surfaceInspResult.CoatingAverageLevel.Average()) + surfaceParam.PinHoleEdgeParam.Level;
 
                     var blobList = BlobContour(imageBuffer.ImageData, imageBuffer.ImageWidth, imageBuffer.ImageHeight, inspArea, threshold, 255);
                     foreach (var item in blobList)
@@ -395,7 +395,7 @@ namespace Jastech.Battery.Structure.VisionTool
                         double findWidth = (findArea.Width + 1) * CalibrationX;
                         double findHeight = (findArea.Height + 1) * CalibrationY;
 
-                        var pinholeSize = surfaceParam.PinHoleEdgeParam.PinHoleSize;
+                        var pinholeSize = surfaceParam.PinHoleEdgeParam.Size;
                         if (findWidth >= pinholeSize && findHeight >= pinholeSize)
                         {
                             Rectangle drawArea = new Rectangle();
@@ -430,13 +430,13 @@ namespace Jastech.Battery.Structure.VisionTool
             //if (surfaceParam.NonCoatingDentParam.EnableDent)
             //    defectMinSizeDent = surfaceParam.NonCoatingDentParam.DentSize;
 
-            if (surfaceParam.CraterParam.EnableCrater)
+            if (surfaceParam.CraterParam.Enable)
             {
-                if (surfaceParam.CraterParam.CraterLargeSize > 0 && surfaceParam.CraterParam.CraterLargeSize < defectMinSizeDent)
-                    defectMinSizeCrater = surfaceParam.CraterParam.CraterLargeSize;
+                if (surfaceParam.CraterParam.LargeSize > 0 && surfaceParam.CraterParam.LargeSize < defectMinSizeDent)
+                    defectMinSizeCrater = surfaceParam.CraterParam.LargeSize;
 
-                if (surfaceParam.CraterParam.CraterSmallSize > 0 && surfaceParam.CraterParam.CraterSmallSize < defectMinSizeDent)
-                    defectMinSizeCrater = surfaceParam.CraterParam.CraterSmallSize;
+                if (surfaceParam.CraterParam.SmallSize > 0 && surfaceParam.CraterParam.SmallSize < defectMinSizeDent)
+                    defectMinSizeCrater = surfaceParam.CraterParam.SmallSize;
             }
 
             foreach (SurfaceInfo coatingInfo in distanceInspResult.CoatingInfoList)
@@ -474,8 +474,8 @@ namespace Jastech.Battery.Structure.VisionTool
         private void GetPinHole(SmallBuffer smallBuffer, Rectangle smallArea, int smallRatioX, int smallRatioY, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
         {
             double pinHoleSize = 100000.0;
-            if (surfaceParam.PinHoleParam.EnablePinHole)
-                pinHoleSize = surfaceParam.PinHoleParam.PinHoleSize;
+            if (surfaceParam.PinHoleParam.Enable)
+                pinHoleSize = surfaceParam.PinHoleParam.Size;
 
             var blobList = BlobContour(smallBuffer.BwBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, smallArea, 250, 251);
             foreach (var item in blobList)
@@ -505,8 +505,8 @@ namespace Jastech.Battery.Structure.VisionTool
         private void GetDent(SmallBuffer smallBuffer, Rectangle smallArea, int smallRatioX, int smallRatioY, SurfaceParam surfaceParam, ref SurfaceInspResult surfaceInspResult)
         {
             double dentSize = 100000.0;
-            if (surfaceParam.NonCoatingDentParam.EnableDent)
-                dentSize = surfaceParam.NonCoatingDentParam.DentSize;
+            if (surfaceParam.NonCoatingDentParam.Enable)
+                dentSize = surfaceParam.NonCoatingDentParam.Size;
 
             var blobList = BlobContour(smallBuffer.BwBuffer, smallBuffer.BufferWidth, smallBuffer.BufferHeight, smallArea, 50, 250);
             foreach (var item in blobList)
@@ -590,16 +590,16 @@ namespace Jastech.Battery.Structure.VisionTool
             smallArea.Height = smallArea.Width / smallRatioY;
 
             int defectWhiteLevel = 255;
-            if (surfaceParam.PinHoleParam.EnablePinHole && surfaceParam.PinHoleParam.PinHoleLevel < defectWhiteLevel)
-                defectWhiteLevel = surfaceParam.PinHoleParam.PinHoleLevel;
+            if (surfaceParam.PinHoleParam.Enable && surfaceParam.PinHoleParam.Level < defectWhiteLevel)
+                defectWhiteLevel = surfaceParam.PinHoleParam.Level;
 
             int defectDentLevel = 255;
-            if (surfaceParam.DentParam.EnableDent && surfaceParam.DentParam.DentLevel < defectDentLevel)
-                defectDentLevel = surfaceParam.DentParam.DentLevel;
+            if (surfaceParam.DentParam.Enable && surfaceParam.DentParam.Level < defectDentLevel)
+                defectDentLevel = surfaceParam.DentParam.Level;
 
             int defectCraterLevel = 255;
-            if (surfaceParam.CraterParam.EnableCrater && surfaceParam.CraterParam.CraterLevel < defectCraterLevel)
-                defectCraterLevel = surfaceParam.CraterParam.CraterLevel;
+            if (surfaceParam.CraterParam.Enable && surfaceParam.CraterParam.Level < defectCraterLevel)
+                defectCraterLevel = surfaceParam.CraterParam.Level;
 
             if (true /* Congfig.bUseParallel == true*/)
             {
